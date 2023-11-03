@@ -4,7 +4,7 @@ namespace Gamerize.DAL.Entities.Shop
 {
     public class Feedback
     {
-        int Id { get; set; }
+        public int Id { get; set; }
         [MaxLength(30)]
         public string CustomerName { get; set; }
         public string Text { get; set; }
@@ -12,6 +12,6 @@ namespace Gamerize.DAL.Entities.Shop
         public int Rate { get; set; }
 
         public int ProductId { get; set; }
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
     }
 }
