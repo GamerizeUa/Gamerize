@@ -1,5 +1,5 @@
-﻿using Gamerize.DAL.Entities.Shop;
-using Gamerize.DAL.Repositories.Interfaces;
+﻿using Gamerize.BLL.Services;
+using Gamerize.DAL.Entities.Shop;
 using Microsoft.AspNetCore.Mvc;
 
 namespace webapi.Controllers
@@ -8,16 +8,17 @@ namespace webapi.Controllers
 	[Route("api/[controller]")]
 	public class CategoryController : ControllerBase
 	{
-		private readonly IRepository<Category> _repository;
-        public CategoryController(IRepository<Category> repository)
-        {
-				_repository = repository;
-        }
+		private readonly ShopService _shopService;
+
+		public CategoryController(ShopService shopService)
+		{
+			_shopService = shopService;
+		}
 
 		[HttpGet]
 		public async Task<ActionResult<ICollection<Category>>> Get()
 		{
-			return Ok(await _repository.GetAllAsync());
+			return Ok(await _shopService.GetCategoriesAsync());
 		}
-    }
+	}
 }

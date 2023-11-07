@@ -1,6 +1,9 @@
+using Gamerize.BLL.Services;
 using Gamerize.DAL.Contexts;
 using Gamerize.DAL.Repositories;
 using Gamerize.DAL.Repositories.Interfaces;
+using Gamerize.DAL.UnitOfWork;
+using Gamerize.DAL.UnitOfWork.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +14,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApiDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("SqlConnection")));
-builder.Services.AddScoped(typeof(IRepository<>), typeof(ShopRepository<>));
+builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ShopService>();
 builder.Services.AddControllers();
 
 var app = builder.Build();

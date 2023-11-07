@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Gamerize.BLL\Gamerize.BLL.csproj" />
     <ProjectReference Include="..\Gamerize.DAL\Gamerize.DAL.csproj" />
   </ItemGroup>
 
