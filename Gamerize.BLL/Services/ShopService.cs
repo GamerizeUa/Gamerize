@@ -63,7 +63,24 @@ namespace Gamerize.BLL.Services
 			catch (ArgumentException ex)
 			{
 				//TODO Add the logger in UpdateCategoryAsync method
-				_logger.LogError("Error {ex}", ex.InnerException.Message ?? ex.Message);
+				_logger.LogError("Error: {ex}", ex.InnerException.Message ?? ex.Message);
+				return false;
+			}
+		}
+
+		public async Task<bool> DeleteCategoryAsync(int id)
+		{
+			try
+			{
+				var category = categoryRepository.GetById(id) ?? throw new ArgumentException("Invalid ID!!!");
+				await categoryRepository.DeleteAsync(category);
+				await _unitOfWork.SaveChangesAsync();
+				return true;
+			}
+			catch
+			(ArgumentException ex)
+			{
+				_logger.LogError("Error: {ex}", ex.Message);
 				return false;
 			}
 		}

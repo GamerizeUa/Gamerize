@@ -49,5 +49,13 @@ namespace webapi.Controllers
 				return NoContent();
 			return BadRequest();
 		}
+
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> Delete(int id)
+		{
+			if (ModelState.IsValid && await _shopService.DeleteCategoryAsync(id))
+				return NoContent();
+			return BadRequest();
+		}
 	}
 }

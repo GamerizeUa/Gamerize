@@ -120,7 +120,7 @@ namespace Gamerize.DAL.Repositories
 		}
 		public TEntity? GetById(int id)
 		{
-			return _context.Set<TEntity>().Find(id) ?? throw new ArgumentException("Invalid Id");
+			return _context.Set<TEntity>().Find(id);
 		}
 		public async Task<TEntity?> GetByIdAsync(int id)
 		{
