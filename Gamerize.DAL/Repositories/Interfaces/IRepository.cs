@@ -6,8 +6,8 @@ namespace Gamerize.DAL.Repositories.Interfaces
 	{
 		ICollection<TEntity> GetAll();
 		Task<ICollection<TEntity>> GetAllAsync();
-		TEntity GetById(int id);
-		Task<TEntity> GetByIdAsync(int id);
+		TEntity? GetById(int id);
+		Task<TEntity?> GetByIdAsync(int id);
 		void Add(TEntity entity);
 		Task AddAsync(TEntity entity);
 		void AddRange(ICollection<TEntity> entities);

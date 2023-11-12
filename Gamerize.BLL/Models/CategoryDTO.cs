@@ -1,10 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Gamerize.BLL.Models
 {
-	public record CategoryDTO(int Id, string Name, string Description);
+	public class CategoryDTO
+	{
+		public int Id { get; set; }
+		[Required, MaxLength(50)]
+		public string Name { get; set; }
+		[Required]
+		public string Description { get; set; }
+	}
 }

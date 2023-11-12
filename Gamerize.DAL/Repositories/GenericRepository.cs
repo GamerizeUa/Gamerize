@@ -33,7 +33,7 @@ namespace Gamerize.DAL.Repositories
 			}
 			catch (DbUpdateException ex)
 			{
-				throw new ArgumentException(ex.Message);
+				throw new ArgumentException($"Update failed!{entity}",ex);
 			}
 		}
 		public void AddRange(ICollection<TEntity> entities)
@@ -118,13 +118,13 @@ namespace Gamerize.DAL.Repositories
 		{
 			return await _context.Set<TEntity>().ToListAsync();
 		}
-		public TEntity GetById(int id)
+		public TEntity? GetById(int id)
 		{
 			return _context.Set<TEntity>().Find(id) ?? throw new ArgumentException("Invalid Id");
 		}
-		public async Task<TEntity> GetByIdAsync(int id)
+		public async Task<TEntity?> GetByIdAsync(int id)
 		{
-			return await _context.Set<TEntity>().FindAsync(id) ?? throw new ArgumentException("Invalid ID");
+			return await _context.Set<TEntity>().FindAsync(id);
 		}
 		public void Update(TEntity entity)
 		{
@@ -134,7 +134,7 @@ namespace Gamerize.DAL.Repositories
 			}
 			catch (DbUpdateException ex)
 			{
-				throw new ArgumentException(ex.Message);
+				throw new ArgumentException(ex.Message, ex);
 			}
 		}
 		public async Task UpdateAsync(TEntity entity)
@@ -145,7 +145,7 @@ namespace Gamerize.DAL.Repositories
 			}
 			catch (DbUpdateException ex)
 			{
-				throw new ArgumentException(ex.Message);
+				throw new ArgumentException(ex.Message, ex);
 			}
 		}
 		public void UpdateRange(ICollection<TEntity> entities)
