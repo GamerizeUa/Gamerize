@@ -9,6 +9,9 @@ namespace Gamerize.BLL.AutoMapper
         public ToDtoMappingProfile()
         {
             CreateMap<Category, CategoryDTO>().ReverseMap();
+            CreateMap<Product, ProductShortDTO>()
+                .ForMember(dest => dest.GameRateAvg,
+                opt => opt.MapFrom(o => AutoMapperHelper.CalculateAverageRating(o.Feedbacks)));
         }
     }
 }

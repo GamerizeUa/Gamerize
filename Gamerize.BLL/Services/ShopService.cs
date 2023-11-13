@@ -12,6 +12,8 @@ namespace Gamerize.BLL.Services
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;
 		private readonly IRepository<Category> categoryRepository;
+		private readonly IRepository<Feedback> feedbackRepository;
+		private readonly IRepository<Product> productRepository;
 		private readonly ILogger _logger;
 
 		public ShopService(IUnitOfWork unitOfWork, IMapper mapper, ILogger<ShopService> logger)
@@ -20,19 +22,19 @@ namespace Gamerize.BLL.Services
 			_mapper = mapper;
 			_logger = logger;
 			categoryRepository = _unitOfWork.GetRepository<Category>();
+			feedbackRepository = _unitOfWork.GetRepository<Feedback>();
+			productRepository = _unitOfWork.GetRepository<Product>();
 
 		}
-
+		#region Category services
 		public async Task<ICollection<CategoryDTO>> GetCategoriesAsync()
 		{
 			return _mapper.Map<ICollection<CategoryDTO>>(await categoryRepository.GetAllAsync());
 		}
-
 		public async Task<CategoryDTO> GetCategoryByIdAsync(int id)
 		{
 			return _mapper.Map<CategoryDTO>(await categoryRepository.GetByIdAsync(id) ?? throw new ArgumentException("Invalid Id"));
 		}
-
 		public async Task<bool> AddCategoryAsync(CategoryDTO categoryDTO)
 		{
 			try
@@ -48,7 +50,6 @@ namespace Gamerize.BLL.Services
 				return false;
 			}
 		}
-
 		public async Task<bool> UpdateCategoryAsync(CategoryDTO categoryDTO)
 		{
 			try
@@ -63,11 +64,10 @@ namespace Gamerize.BLL.Services
 			catch (ArgumentException ex)
 			{
 				//TODO Add the logger in UpdateCategoryAsync method
-				_logger.LogError("Error: {ex}", ex.InnerException.Message ?? ex.Message);
+				_logger.LogError("Error: {ex}", (ex.InnerException?.Message ?? ex.Message));
 				return false;
 			}
 		}
-
 		public async Task<bool> DeleteCategoryAsync(int id)
 		{
 			try
@@ -84,5 +84,76 @@ namespace Gamerize.BLL.Services
 				return false;
 			}
 		}
+		#endregion
+		#region Product services
+
+		#endregion
+		#region Feedback services
+		public async Task<ICollection<FeedbackDTO>> GetFeedbacksAsync()
+		{
+			return _mapper.Map<ICollection<FeedbackDTO>>(await feedbackRepository.GetAllAsync());
+		}
+		public async Task<ICollection<FeedbackDTO>> GetFeedbacksByProductId(int id)
+		{
+			var t = (await feedbackRepository.GetAllAsync()).Where(x => x.ProductId == id);
+			return _mapper.Map<ICollection<FeedbackDTO>>(t);
+		}
+		public async Task<FeedbackDTO> GetFeedbackByIdAsync(int id)
+		{
+			return _mapper.Map<FeedbackDTO>(await feedbackRepository.GetByIdAsync(id) ?? throw new ArgumentException("Invalid Feedback Id!"));
+		}
+		public async Task<bool> AddFeedbackAsync(FeedbackDTO feedbackDTO)
+		{
+			try
+			{
+				await (productRepository.GetByIdAsync(feedbackDTO.ProductId)
+					?? throw new ArgumentException($"Invalid Product Id: {feedbackDTO.ProductId}"));
+
+				var feedback = _mapper.Map<Feedback>(feedbackDTO);
+				await feedbackRepository.AddAsync(feedback);
+				await _unitOfWork.SaveChangesAsync();
+				return true;
+			}
+			catch (ArgumentException ex)
+			{
+				_logger.LogError("ex}", ex.InnerException.Message ?? ex.Message);
+				return false;
+			}
+		}
+		public async Task<bool> UpdateFeedbackAsync(FeedbackDTO feedbackDTO)
+		{
+			try
+			{
+				await (productRepository.GetByIdAsync(feedbackDTO.ProductId) ?? throw new ArgumentException("Invalid Product Id!"));
+				var feedback = await feedbackRepository.GetByIdAsync(feedbackDTO.Id) ?? throw new ArgumentException("Ivalid Feedback ID!");
+				feedback.CustomerName = feedbackDTO.CustomerName;
+				feedback.Text = feedbackDTO.Text;
+				feedback.Rate = feedbackDTO.Rate;
+				await feedbackRepository.UpdateAsync(feedback);
+				await _unitOfWork.SaveChangesAsync();
+				return true;
+			}
+			catch (ArgumentException ex)
+			{
+				_logger.LogError("{ex}", ex.InnerException?.Message ?? ex.Message);
+				return false;
+			}
+		}
+		public async Task<bool> DeleteFeedbackAsync(int id)
+		{
+			try
+			{
+				var feedback = await feedbackRepository.GetByIdAsync(id) ?? throw new ArgumentException("Invalid Feedback ID!");
+				await feedbackRepository.DeleteAsync(feedback);
+				await _unitOfWork.SaveChangesAsync();
+				return true;
+			}
+			catch (ArgumentException ex)
+			{
+				_logger.LogError("{ex}", ex.InnerException?.Message ?? ex.Message);
+				return false;
+			}
+		}
+		#endregion
 	}
 }

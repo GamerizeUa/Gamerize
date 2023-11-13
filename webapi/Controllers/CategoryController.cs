@@ -15,13 +15,13 @@ namespace webapi.Controllers
 			_shopService = shopService;
 		}
 
-		[HttpGet]
+		[HttpGet("GetAllCategories")]
 		public async Task<ActionResult<ICollection<CategoryDTO>>> Get()
 		{
 			return Ok(await _shopService.GetCategoriesAsync());
 		}
 
-		[HttpGet("{id}")]
+		[HttpGet("GetCategoryById/{id}")]
 		public async Task<ActionResult<CategoryDTO>> Get(int id)
 		{
 			try
@@ -34,7 +34,7 @@ namespace webapi.Controllers
 			}
 		}
 
-		[HttpPost]
+		[HttpPost("AddCategory")]
 		public async Task<IActionResult> Add([FromBody] CategoryDTO categoryDTO)
 		{
 			if (ModelState.IsValid && await _shopService.AddCategoryAsync(categoryDTO))
@@ -42,7 +42,7 @@ namespace webapi.Controllers
 			return BadRequest();
 		}
 
-		[HttpPatch]
+		[HttpPatch("UpdateCategory")]
 		public async Task<IActionResult> Update([FromBody] CategoryDTO categoryDTO)
 		{
 			if (ModelState.IsValid && await _shopService.UpdateCategoryAsync(categoryDTO))
@@ -50,7 +50,7 @@ namespace webapi.Controllers
 			return BadRequest();
 		}
 
-		[HttpDelete("{id}")]
+		[HttpDelete("DeleteCategoryById/{id}")]
 		public async Task<IActionResult> Delete(int id)
 		{
 			if (ModelState.IsValid && await _shopService.DeleteCategoryAsync(id))
