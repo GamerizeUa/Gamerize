@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Gamerize.DAL\Gamerize.DAL.csproj" />
+  </ItemGroup>
+
 </Project>
