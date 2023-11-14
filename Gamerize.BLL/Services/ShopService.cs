@@ -54,7 +54,7 @@ namespace Gamerize.BLL.Services
 		{
 			try
 			{
-				var category = categoryRepository.GetById(categoryDTO.Id);
+				var category = categoryRepository.GetById(categoryDTO.Id) ?? throw new ArgumentException("Invalid Category ID!");
 				category.Name = categoryDTO.Name;
 				category.Description = categoryDTO.Description;
 				await categoryRepository.UpdateAsync(category);
@@ -100,15 +100,14 @@ namespace Gamerize.BLL.Services
 		}
 		public async Task<FeedbackDTO> GetFeedbackByIdAsync(int id)
 		{
-			return _mapper.Map<FeedbackDTO>(await feedbackRepository.GetByIdAsync(id) ?? throw new ArgumentException("Invalid Feedback Id!"));
+			return _mapper.Map<FeedbackDTO>(await feedbackRepository.GetByIdAsync(id) ?? throw new ArgumentException("Invalid Feedback ID!"));
 		}
 		public async Task<bool> AddFeedbackAsync(FeedbackDTO feedbackDTO)
 		{
 			try
 			{
-				await (productRepository.GetByIdAsync(feedbackDTO.ProductId)
-					?? throw new ArgumentException($"Invalid Product Id: {feedbackDTO.ProductId}"));
-
+				if (await productRepository.GetByIdAsync(feedbackDTO.ProductId) is null)
+					throw new ArgumentException("Invalid Product Id");
 				var feedback = _mapper.Map<Feedback>(feedbackDTO);
 				await feedbackRepository.AddAsync(feedback);
 				await _unitOfWork.SaveChangesAsync();
@@ -116,7 +115,7 @@ namespace Gamerize.BLL.Services
 			}
 			catch (ArgumentException ex)
 			{
-				_logger.LogError("ex}", ex.InnerException.Message ?? ex.Message);
+				_logger.LogError("{ex}", ex.InnerException?.Message ?? ex.Message);
 				return false;
 			}
 		}
@@ -124,7 +123,8 @@ namespace Gamerize.BLL.Services
 		{
 			try
 			{
-				await (productRepository.GetByIdAsync(feedbackDTO.ProductId) ?? throw new ArgumentException("Invalid Product Id!"));
+				if (await productRepository.GetByIdAsync(feedbackDTO.ProductId) is null)
+					throw new ArgumentException("Invalid Product Id");
 				var feedback = await feedbackRepository.GetByIdAsync(feedbackDTO.Id) ?? throw new ArgumentException("Ivalid Feedback ID!");
 				feedback.CustomerName = feedbackDTO.CustomerName;
 				feedback.Text = feedbackDTO.Text;

@@ -12,40 +12,45 @@ namespace webapi.Controllers
 		private readonly ShopService _shopService;
 
 		public FeedbackController(ShopService shopService)
-        {
+		{
 			_shopService = shopService;
 		}
 
 
-        [HttpGet("GetAllFeedbacks")]
+		[HttpGet("GetAll")]
 		public async Task<ActionResult<ICollection<FeedbackDTO>>> GetAllFeedbacks()
 		{
 			return Ok(await _shopService.GetFeedbacksAsync());
 		}
-		[HttpGet("GetFeedbacksByProductId/{id}")]
-		public async Task<ActionResult<ICollection<FeedbackDTO>>> GetFeedbacksByProductId(int id)
+		[HttpGet("GetAllByProductId")]
+		public async Task<ActionResult<ICollection<FeedbackDTO>>> GetFeedbacksByProductId([FromQuery] int id)
 		{
 			return Ok(await _shopService.GetFeedbacksByProductId(id));
 		}
-		[HttpGet("GetFeedbackById")]
-		public async Task<ActionResult<FeedbackDTO>> GetFeedbackById(int id)
+		[HttpGet("GetById")]
+		public async Task<ActionResult<FeedbackDTO>> GetFeedbackById([FromQuery] int id)
 		{
 			try
 			{
 				return Ok(await _shopService.GetFeedbackByIdAsync(id));
 			}
-			catch(ArgumentException ex)
+			catch (ArgumentException ex)
 			{
 				return BadRequest(ex.Message);
 			}
 		}
-		[HttpPut("UpdateFeedback")]
-		public async Task<IActionResult> UpdateFeedback([FromBody] FeedbackDTO feedbackDTO)
+		[HttpPost("Create")]
+		public async Task<ActionResult<ICollection<FeedbackDTO>>> Create([FromBody] FeedbackDTO feedbackDTO)
 		{
-			return await _shopService.UpdateFeedbackAsync(feedbackDTO) ? NoContent() : BadRequest();
+			return (ModelState.IsValid && await _shopService.AddFeedbackAsync(feedbackDTO)) ? Ok(await _shopService.GetFeedbacksAsync()) : BadRequest();
 		}
-		[HttpDelete("DeleteFeedback/{id}")]
-		public async Task<IActionResult> DeleteFeedback(int id)
+		[HttpPut("Update")]
+		public async Task<ActionResult<ICollection<FeedbackDTO>>> UpdateFeedback([FromBody] FeedbackDTO feedbackDTO)
+		{
+			return (ModelState.IsValid && await _shopService.UpdateFeedbackAsync(feedbackDTO)) ? Ok(await _shopService.GetFeedbacksAsync()) : BadRequest();
+		}
+		[HttpDelete("Delete")]
+		public async Task<IActionResult> DeleteFeedback([FromQuery] int id)
 		{
 			return await _shopService.DeleteFeedbackAsync(id) ? NoContent() : BadRequest();
 		}

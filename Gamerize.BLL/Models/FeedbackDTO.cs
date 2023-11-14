@@ -11,6 +11,7 @@ namespace Gamerize.BLL.Models
 		public string Text { get; set; }
 		public DateTime CreatedDate { get; set; }
 		public int Rate { get; set; }
+		[Required]
 		public int ProductId { get; set; }
 	}
 }

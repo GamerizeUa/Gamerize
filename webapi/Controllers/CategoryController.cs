@@ -15,14 +15,14 @@ namespace webapi.Controllers
 			_shopService = shopService;
 		}
 
-		[HttpGet("GetAllCategories")]
+		[HttpGet("GetAll")]
 		public async Task<ActionResult<ICollection<CategoryDTO>>> Get()
 		{
 			return Ok(await _shopService.GetCategoriesAsync());
 		}
 
-		[HttpGet("GetCategoryById/{id}")]
-		public async Task<ActionResult<CategoryDTO>> Get(int id)
+		[HttpGet("GetById")]
+		public async Task<ActionResult<CategoryDTO>> GetById([FromQuery] int id)
 		{
 			try
 			{
@@ -34,28 +34,28 @@ namespace webapi.Controllers
 			}
 		}
 
-		[HttpPost("AddCategory")]
-		public async Task<IActionResult> Add([FromBody] CategoryDTO categoryDTO)
+		[HttpPost("Create")]
+		public async Task<ActionResult<ICollection<CategoryDTO>>> Create([FromBody] CategoryDTO categoryDTO)
 		{
-			if (ModelState.IsValid && await _shopService.AddCategoryAsync(categoryDTO))
-				return NoContent();
-			return BadRequest();
+			return (ModelState.IsValid && await _shopService.AddCategoryAsync(categoryDTO))
+				? Ok(await _shopService.GetCategoriesAsync())
+				: BadRequest();
 		}
 
-		[HttpPatch("UpdateCategory")]
-		public async Task<IActionResult> Update([FromBody] CategoryDTO categoryDTO)
+		[HttpPatch("Update")]
+		public async Task<ActionResult<ICollection<CategoryDTO>>> Update([FromBody] CategoryDTO categoryDTO)
 		{
-			if (ModelState.IsValid && await _shopService.UpdateCategoryAsync(categoryDTO))
-				return NoContent();
-			return BadRequest();
+			return (ModelState.IsValid && await _shopService.UpdateCategoryAsync(categoryDTO)) 
+				? Ok(await _shopService.GetCategoriesAsync()) 
+				: BadRequest();
 		}
 
-		[HttpDelete("DeleteCategoryById/{id}")]
-		public async Task<IActionResult> Delete(int id)
+		[HttpDelete("Delete")]
+		public async Task<IActionResult> Delete([FromQuery] int id)
 		{
-			if (ModelState.IsValid && await _shopService.DeleteCategoryAsync(id))
-				return NoContent();
-			return BadRequest();
+			return (ModelState.IsValid && await _shopService.DeleteCategoryAsync(id)) 
+				? NoContent() 
+				: BadRequest();
 		}
 	}
 }

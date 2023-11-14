@@ -12,6 +12,7 @@ namespace Gamerize.BLL.AutoMapper
             CreateMap<Product, ProductShortDTO>()
                 .ForMember(dest => dest.GameRateAvg,
                 opt => opt.MapFrom(o => AutoMapperHelper.CalculateAverageRating(o.Feedbacks)));
+            CreateMap<Feedback, FeedbackDTO>().ReverseMap();
         }
     }
 }
