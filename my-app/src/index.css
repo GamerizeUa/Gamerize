@@ -58,6 +58,14 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
 }
 
+#root {
+	--white-white : #FFF;
+	--light-blue-gray : #EEF1FF;
+	--dark-purple : #6566AC;
+	--blue: #AAC4FF;
+	--white: #FEFEFE;
+}
+
 /* @media (prefers-color-scheme: light) {
     :root {
       color: #213547;
@@ -70,3 +78,4 @@ h1, h2, h3, h4, h5, h6 {
       background-color: #f9f9f9;
     }
   } */
+
