@@ -1,8 +1,10 @@
-.footer{
-    padding: 48px 80px 30px 80px;
+.footerWrap {
     background-color: #AAC4FF;
     color: #FEFEFE;
     font-size: 16px;
+}
+.footer{
+    padding: 48px 80px 30px 80px;
 }
 
 .footerListWrapper{
