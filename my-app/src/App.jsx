@@ -26,7 +26,7 @@ function App() {
         /> */}
         <Route path="/catalog" element={<Catalog />} />
         <Route path="catalog/:Id" element={<ProductPage />}>
-          {/* <Route path="cast" element={<Cast />} />
+          {/* <Route path="feature" element={<Feature />} />
           <Route path="reviews" element={<Reviews />} /> */}
         </Route>
       </Route>
