@@ -8,7 +8,9 @@ import styles from "./Header.module.css";
 const Header = () => {
   return (
     <div className={styles.header}>
-      <h1 className={styles.logo}>Gamerise</h1>
+      <a href="/">
+        <h1 className={styles.logo}>Gamerise</h1>
+      </a>
       <div className={styles.inputWrapper}>
         <input className={styles.headerSearchInput} placeholder="Пошук"></input>
         <div className={styles.searchIcon}>

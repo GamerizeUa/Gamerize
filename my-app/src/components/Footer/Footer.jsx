@@ -7,7 +7,9 @@ const Footer = () => {
   return (
     <div className={styles.footer}>
       <div className={styles.footerListWrapper}>
-        <h1 className={styles.logo}>Gamerise</h1>
+        <a href="/">
+          <h1 className={styles.logo}>Gamerise</h1>
+        </a>
         <ul className={styles.toUsersList}>
           <p className={styles.footerListHeader}>Користувачам</p>
           <li>
