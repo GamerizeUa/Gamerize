@@ -52,7 +52,7 @@ namespace Gamerize.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Admin.OrderItem", b =>
@@ -81,7 +81,7 @@ namespace Gamerize.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", (string)null);
                 });
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Admin.OrderStatus", b =>
@@ -98,7 +98,7 @@ namespace Gamerize.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrderStatuses");
+                    b.ToTable("OrderStatuses", (string)null);
                 });
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Admin.Role", b =>
@@ -117,7 +117,7 @@ namespace Gamerize.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Admin.User", b =>
@@ -177,7 +177,7 @@ namespace Gamerize.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Category", b =>
@@ -198,7 +198,7 @@ namespace Gamerize.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Shop.DiscountCoupon", b =>
@@ -221,7 +221,7 @@ namespace Gamerize.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DiscountCoupons");
+                    b.ToTable("DiscountCoupons", (string)null);
                 });
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Feedback", b =>
@@ -254,7 +254,7 @@ namespace Gamerize.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Feedbacks");
+                    b.ToTable("Feedbacks", (string)null);
                 });
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Genre", b =>
@@ -271,7 +271,7 @@ namespace Gamerize.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genres");
+                    b.ToTable("Genres", (string)null);
                 });
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Language", b =>
@@ -288,7 +288,7 @@ namespace Gamerize.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Languages");
+                    b.ToTable("Languages", (string)null);
                 });
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Product", b =>
@@ -334,7 +334,7 @@ namespace Gamerize.DAL.Migrations
 
                     b.HasIndex("LanguageId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Tag", b =>
@@ -351,7 +351,7 @@ namespace Gamerize.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("GenreProduct", b =>
@@ -366,7 +366,7 @@ namespace Gamerize.DAL.Migrations
 
                     b.HasIndex("ProductsId");
 
-                    b.ToTable("GenreProduct");
+                    b.ToTable("GenreProduct", (string)null);
                 });
 
             modelBuilder.Entity("ProductTag", b =>
@@ -381,7 +381,7 @@ namespace Gamerize.DAL.Migrations
 
                     b.HasIndex("TagsId");
 
-                    b.ToTable("ProductTag");
+                    b.ToTable("ProductTag", (string)null);
                 });
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Admin.Order", b =>

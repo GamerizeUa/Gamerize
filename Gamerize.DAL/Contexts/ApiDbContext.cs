@@ -14,6 +14,8 @@ namespace Gamerize.DAL.Contexts
 		public virtual DbSet<Language> Languages { get; set; }
 		public virtual DbSet<Product> Products { get; set; }
 		public virtual DbSet<Tag> Tags { get; set; }
+		public virtual DbSet<WishList> WishLists { get; set; }
+		public virtual DbSet<Theme> Themes { get; set; }
 		#endregion
 		#region AdminDatas
 		public virtual DbSet<User> Users { get; set; }
