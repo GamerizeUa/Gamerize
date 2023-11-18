@@ -6,7 +6,7 @@ import styles from "./Footer.module.css";
 const Footer = () => {
   return (
     <div className={styles.footerWrap}>
-      <div className={styles.footer}>
+      <div className={styles.footer + " container"}>
         <div className={styles.footerListWrapper}>
           <a href="/">
             <h1 className={styles.logo}>Gamerise</h1>
