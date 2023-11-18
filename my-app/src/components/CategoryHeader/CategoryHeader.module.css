@@ -1,0 +1,11 @@
+.categoryHeader{
+    padding: 16px 246px;
+    background-color: #EEF1FF;
+}
+
+.categoryList{
+    display: flex;
+    gap: 112px;
+    font-size: 20px;
+    font-weight: 500;
+}
