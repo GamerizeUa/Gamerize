@@ -14,6 +14,7 @@ namespace Gamerize.BLL.Services
 		private readonly IRepository<Category> categoryRepository;
 		private readonly IRepository<Feedback> feedbackRepository;
 		private readonly IRepository<Product> productRepository;
+		private readonly IRepository<Tag> tagRepository;
 		private readonly ILogger _logger;
 
 		public ShopService(IUnitOfWork unitOfWork, IMapper mapper, ILogger<ShopService> logger)
@@ -24,7 +25,7 @@ namespace Gamerize.BLL.Services
 			categoryRepository = _unitOfWork.GetRepository<Category>();
 			feedbackRepository = _unitOfWork.GetRepository<Feedback>();
 			productRepository = _unitOfWork.GetRepository<Product>();
-
+			tagRepository = _unitOfWork.GetRepository<Tag>();
 		}
 		#region Category services
 		public async Task<ICollection<CategoryDTO>> GetCategoriesAsync()
@@ -153,6 +154,16 @@ namespace Gamerize.BLL.Services
 				_logger.LogError("{ex}", ex.InnerException?.Message ?? ex.Message);
 				return false;
 			}
+		}
+		#endregion
+		#region Tag services
+		public async Task<ICollection<TagDTO>> GetTagsAsync()
+		{
+				return _mapper.Map<ICollection<TagDTO>>(await tagRepository.GetAllAsync());
+		}
+		public async Task<TagDTO> GetTagById(int id)
+		{
+			return _mapper.Map<TagDTO>(await tagRepository.GetByIdAsync(id) ?? throw new ArgumentException("Invalid tag ID!"));
 		}
 		#endregion
 	}

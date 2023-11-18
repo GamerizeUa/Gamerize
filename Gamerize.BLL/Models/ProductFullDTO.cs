@@ -1,12 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gamerize.BLL.Models
+﻿namespace Gamerize.BLL.Models
 {
 	public class ProductFullDTO
 	{
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Description { get; set; }
+		public decimal Price { get; set; }
+		public int MinPlayers { get; set; }
+		public int MaxPlayers { get; set; }
+		public int MinAge { get; set; }
+		public int GameTimeMinutes { get; set; }
+		public LanguageDTO Language { get; set; }
+		public CategoryDTO Category { get; set; }
+		public GenreDTO Genre { get; set; }
+		public ThemeDTO Theme { get; set; }
+
+		public ICollection<FeedbackDTO> Feedbacks { get; set; }
+		public ICollection<TagDTO> Tags { get; set; }
 	}
 }
