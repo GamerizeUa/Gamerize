@@ -21,7 +21,7 @@ export default function ProductCard({configurationObject = {isOldPrice : false, 
                     </div>
             </div>
             <div className={styles.cardBottom}>
-                <div className={styles.title}><h6>{name}</h6></div>
+                <div className={styles.title}><p>{name}</p></div>
                 <div className={styles.prices}>
                     {configurationObject.isOldPrice && <div className={styles.price + " " + styles.oldPrice}><p>{`${oldPrice}₴`}</p></div>}
                     <div className={styles.price + " " + styles.currentPrice}><p>{`${price}₴`}</p></div>

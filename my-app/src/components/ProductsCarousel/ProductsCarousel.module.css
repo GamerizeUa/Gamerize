@@ -16,11 +16,10 @@
 .titleContainer {
     text-align: center;
 }
-.titleContainer h4 {
+.titleContainer {
     color: var(--dark-purple);
     
     /* H4 Medium 36px */
-    font-family: Oswald;
     font-size: 36px;
     font-style: normal;
     font-weight: 400;

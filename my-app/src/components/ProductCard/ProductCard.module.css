@@ -52,7 +52,6 @@
     text-align: center;
     
     /* Body Medium Bold 16px */
-    font-family: Noto Sans;
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
@@ -86,7 +85,6 @@
     color: var(--black);
 
     /* Body Small Text Medium 14px */
-    font-family: Noto Sans;
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
@@ -95,7 +93,6 @@
     color: var(--black);
 
     /* Body Large Medium 20px */
-    font-family: Noto Sans;
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
@@ -106,7 +103,7 @@
     margin-bottom: 8px;
 }
 .price {
-    font-family: Noto Sans;
+    line-height: 0.9;
     font-style: normal;
     font-weight: 700;
 }
@@ -130,7 +127,6 @@
     color: var(--black);
 
     /* Body Medium Bold 16px */
-    font-family: Noto Sans;
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
