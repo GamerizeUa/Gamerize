@@ -1,6 +1,8 @@
 import {useEffect, useState } from "react";
-import styles from "./style/ProductsCarousel.module.css"
-import ProductCard from "./ProductCard.jsx";
+import styles from "./ProductsCarousel.module.css"
+import ProductCard from "../ProductCard/ProductCard";
+import ArrowLeftIcon from "../icons/ArrowLeftIcon";
+import ArrowRightIcon from "../icons/ArrowRightIcon";
 
 export default function ProductsCarousel({productsList, sectionTitle, productConfigurationObject}) {
     let [windowWidth, setWindowWidth] = useState(null) // in future it can become a global redux state
@@ -33,8 +35,8 @@ export default function ProductsCarousel({productsList, sectionTitle, productCon
         <section className={styles.wrap}>
             <div style={{paddingLeft: `${padding}px`, paddingRight: `${padding}px`}} className={'container ' + styles.container}>
                 <div className={styles.titleContainer}><h4>{sectionTitle}</h4></div>
-                <div className={styles.chevron + " " + styles.chevronRight} onClick={slideRightOnclick}><img src="/src/assets/images/products-slider/chevron-right.png" alt="chevron-right" /></div>
-                <div className={styles.chevron + " " + styles.chevronLeft} onClick={slideLeftOnclick}><img src="/src/assets/images/products-slider/chevron-left.png" alt="chevron-left" /></div>
+                <div className={styles.chevron + " " + styles.chevronRight} onClick={slideRightOnclick}><ArrowRightIcon/></div>
+                <div className={styles.chevron + " " + styles.chevronLeft} onClick={slideLeftOnclick}><ArrowLeftIcon/></div>
                 <div className={styles.bodyContainer}>
                     <div style={{columnGap:`${columnGap}px`, left : `${-(productWidth + columnGap) * carouselPosition}px`}} className={styles.body}>
                         {productsList.map((product, i)=> {

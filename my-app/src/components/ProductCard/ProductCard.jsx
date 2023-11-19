@@ -1,4 +1,5 @@
-import styles from './style/ProductCard.module.css'
+import styles from './ProductCard.module.css'
+import HeartBlueIcon from "../icons/HeartBlueIcon";
 
 export default function ProductCard({configurationObject = {isOldPrice : false, isDiscount : false, isCartView : false}, product : {id,discount, name, minPlayers, maxPlayers, minAge, price, oldPrice, gameTimeMinutes,photo}}) {
     return (
@@ -10,7 +11,7 @@ export default function ProductCard({configurationObject = {isOldPrice : false, 
                             <div className={styles.leftIcon + " " + styles.discountIcon}><p>{`-${discount}%`}</p></div>
                             : <div className={styles.leftIcon + " " + styles.hitIcon}><p>Хіт</p></div>
                         }
-                        <div className={styles.wishListIcon}><img src="./src/assets/images/product-card/wish-list-icon.svg" alt="wish list icon" /></div> 
+                        <div className={styles.wishListIcon}><HeartBlueIcon/></div> 
                     </div>
                     <div className={styles.imageContainer}><img src={photo} alt={`product ${name} # ${id}`}/></div>
                     <div className={styles.featuresBar}>

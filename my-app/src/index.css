@@ -63,7 +63,11 @@ h1, h2, h3, h4, h5, h6 {
 	--light-blue-gray : #EEF1FF;
 	--dark-purple : #6566AC;
 	--blue: #AAC4FF;
+	--light-blue: #D2DAFF;
+	--blue-transparent: rgba(177, 178, 255, 0.30);
 	--white: #FEFEFE;
+	--orange-sale : #FF5E00;
+	--black: #2B2B2B;
 }
 
 .container {
