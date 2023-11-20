@@ -7,7 +7,7 @@ import CategoryHeader from "../CategoryHeader/CategoryHeader";
 
 const Layout = () => {
   return (
-    <>
+    <div className={styles.wrapper}>
       <Header />
       <CategoryHeader />
       <main className={styles.container}>
@@ -16,7 +16,7 @@ const Layout = () => {
         </Suspense>
       </main>
       <Footer />
-    </>
+    </div>
   );
 };
 
