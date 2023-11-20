@@ -12,3 +12,61 @@
     height: 100%;
     background-color: var(--light-blue-gray);
 }
+.top {
+    width: 100%;
+    height: 173px;
+
+    /* TEMPORARY!! */
+
+    background: url('../../assets/images/game_picker_title_background1.png') no-repeat;
+}
+.titleContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 50%;
+}
+.title {
+    color: var(--black);
+    /* H1 Medium 64px */
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 400; 
+}
+.main {
+    display: flex;
+    justify-content: space-evenly;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+.button {
+    display: flex;
+    width: 521px;
+    height: 53px;
+    padding: 16px 48px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background: var(--light-blue);
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+}
+.buttonTitle {
+    color: var(--black);
+
+    /* Body Medium Bold 16px */
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+}
+.image {
+    width: 394px;
+    height: 471px;
+    flex-shrink: 0;
+    background: url('../../assets/images/game_picker_backround2.png') no-repeat;
+    box-shadow: 29px 42px 34px 0px var(--light-blue);
+}

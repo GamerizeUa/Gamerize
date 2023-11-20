@@ -8,14 +8,14 @@ import CategoryHeader from "../CategoryHeader/CategoryHeader";
 const Layout = () => {
   return (
     <div className={styles.wrapper}>
-      <Header />
-      <CategoryHeader />
+      {/* <Header /> */}
+      {/* <CategoryHeader /> */}
       <main className={styles.container}>
         <Suspense fallback={<div>Loading...</div>}>
           <Outlet />
         </Suspense>
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

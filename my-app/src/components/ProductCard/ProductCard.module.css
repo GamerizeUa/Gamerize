@@ -122,10 +122,8 @@
     width: fit-content;
     background-color: var(--blue);
     border-radius: 13px;
-}
-.buyBtn{
-    color: var(--black);
 
+    color: var(--black);
     /* Body Medium Bold 16px */
     font-size: 16px;
     font-style: normal;
