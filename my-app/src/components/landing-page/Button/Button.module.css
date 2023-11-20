@@ -1,13 +1,14 @@
 .landingPage_button{
+    display: flex;
     width: 305px;
     height: 53px;
-    padding: 20px 64px;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
     background: #AAC4FF;
     border: #AAC4FF;
     text-align: center;
+    color: #2B2B2B;
     font-size: 16px;
     font-weight: 700;
     line-height: 16%;

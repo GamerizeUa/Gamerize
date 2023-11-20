@@ -40,43 +40,45 @@ export const QuestioningForm = () => {
 
     return (
         <section className={styles.feedback}>
-            <div className={styles.feedback_container + " container"}>
-                <div className={styles.feedback_formBlock}>
-                    <p className={styles.feedback_title}>Виникли запитання?</p>
-                    <form className={styles.feedback_form} ref={formRef}  onSubmit={handleSubmit(onSubmit)}>
-                        <div className={`${styles.input_container} ${isFocusedName ? styles.focusedInput : ''}`}>
-                            <FontAwesomeIcon icon={faUser} className={styles.input_icon}/>
-                            <input
-                                type="text"
-                                placeholder="Ім'я"
-                                className={styles.input_field}
-                                onFocus={() => handleFocus(setFocusedName, setFocusedEmail, setFocusedDescription)}
-                                {...register("name")} />
-                            <p className={styles.input_error}>{errors.name?.message}</p>
-                        </div>
-                        <div className={`${styles.input_container} ${isFocusedEmail ? styles.focusedInput : ''}`}>
-                            <FontAwesomeIcon icon={faEnvelope} className={styles.input_icon}/>
-                            <input
-                                type="email"
-                                placeholder="Е-пошта"
-                                className={styles.input_field}
-                                onFocus={() => handleFocus(setFocusedEmail, setFocusedName, setFocusedDescription)}
-                                {...register("email")} />
-                            <p className={styles.input_error}>{errors.email?.message}</p>
-                        </div>
-                        <div className={styles.input_textareaContainer}>
+            <div className={styles.feedback_outerContainer + " container"}>
+                <div className={styles.feedback_container }>
+                    <div className={styles.feedback_formBlock}>
+                        <p className={styles.feedback_title}>Виникли запитання?</p>
+                        <form className={styles.feedback_form} ref={formRef}  onSubmit={handleSubmit(onSubmit)}>
+                            <div className={`${styles.input_container} ${isFocusedName ? styles.focusedInput : ''}`}>
+                                <FontAwesomeIcon icon={faUser} className={styles.input_icon}/>
+                                <input
+                                    type="text"
+                                    placeholder="Ім'я"
+                                    className={styles.input_field}
+                                    onFocus={() => handleFocus(setFocusedName, setFocusedEmail, setFocusedDescription)}
+                                    {...register("name")} />
+                                <p className={styles.input_error}>{errors.name?.message}</p>
+                            </div>
+                            <div className={`${styles.input_container} ${isFocusedEmail ? styles.focusedInput : ''}`}>
+                                <FontAwesomeIcon icon={faEnvelope} className={styles.input_icon}/>
+                                <input
+                                    type="email"
+                                    placeholder="Е-пошта"
+                                    className={styles.input_field}
+                                    onFocus={() => handleFocus(setFocusedEmail, setFocusedName, setFocusedDescription)}
+                                    {...register("email")} />
+                                <p className={styles.input_error}>{errors.email?.message}</p>
+                            </div>
+                            <div className={styles.input_textareaContainer}>
                         <textarea
                             placeholder="Напишіть чим ми можемо вам допомогти..."
                             className={styles.input_textarea}
                             onFocus={() => handleFocus(setFocusedDescription, setFocusedName, setFocusedEmail)}
                             {...register("description")} />
-                            <p className={`${styles.input_error} ${styles.inputTextarea_input}`}>{errors.description?.message}</p>
-                        </div>
-                        <Button buttonText="Надіслати запитання"/>
-                    </form>
-                </div>
-                <div>
-                    <img src={feedbackImage} alt="Feedback"/>
+                                <p className={`${styles.input_error} ${styles.inputTextarea_input}`}>{errors.description?.message}</p>
+                            </div>
+                            <Button buttonText="Надіслати запитання"/>
+                        </form>
+                    </div>
+                    <div className={styles.feedback_imageContainer}>
+                        <img src={feedbackImage} className={styles.feedback_image} alt="Feedback"/>
+                    </div>
                 </div>
             </div>
         </section>
