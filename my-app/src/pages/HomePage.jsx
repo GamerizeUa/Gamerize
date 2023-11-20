@@ -1,3 +1,4 @@
+import GamePicker from "../components/GamePicker/GamePicker";
 import ProductsCarousel from "../components/ProductsCarousel/ProductsCarousel";
 
 const HomePage = () => {
@@ -21,6 +22,7 @@ const HomePage = () => {
   // productsList just for tests
   return (
   <>
+    <GamePicker/>
     <ProductsCarousel productsList={productsList} sectionTitle={'Популярні товари'} productConfigurationObject={{isOldPrice : false, isDiscount : false, isCartView : false}}/>
     <ProductsCarousel productsList={productsList} sectionTitle={'Розпродаж'} productConfigurationObject={{isOldPrice : true, isDiscount : true,isCartView : false}}/>
   </>
