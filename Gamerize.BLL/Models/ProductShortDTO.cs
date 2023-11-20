@@ -1,4 +1,6 @@
-﻿namespace Gamerize.BLL.Models
+﻿using Gamerize.DAL.Entities.Shop;
+
+namespace Gamerize.BLL.Models
 {
 	public class ProductShortDTO
 	{
@@ -9,5 +11,6 @@
 		public int MinAge { get; set; }
 		public int GameTimeMinutes { get; set; }
 		public double GameRateAvg { get; set; }
+		public Image Image { get; set; }
 	}
 }

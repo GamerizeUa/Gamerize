@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Gamerize.BLL.Models
@@ -28,5 +29,6 @@ namespace Gamerize.BLL.Models
 		public int GenreId { get; set; }
 		[Required]
 		public int ThemeId { get; set; }
+		public ICollection<IFormFile> Images { get; set; }
 	}
 }

@@ -1,4 +1,7 @@
-﻿namespace Gamerize.DAL.Entities.Admin
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Gamerize.DAL.Entities.Admin
 {
 	public class Order
 	{
@@ -8,6 +11,7 @@
 		public DateTime CreatedAt { get; set; }
 		public DateTime? UpdatedAd { get; set; }
 		public DateTime? ClosedAt { get; set; }
+		[Column(TypeName = "tinyint")]
 		public int OrderStatusId { get; set; }
 		public virtual OrderStatus Status { get; set; }
 

@@ -16,6 +16,7 @@ namespace Gamerize.DAL.Contexts
 		public virtual DbSet<Tag> Tags { get; set; }
 		public virtual DbSet<WishList> WishLists { get; set; }
 		public virtual DbSet<Theme> Themes { get; set; }
+		public virtual DbSet<Image> Images { get; set; }
 		#endregion
 		#region AdminDatas
 		public virtual DbSet<User> Users { get; set; }

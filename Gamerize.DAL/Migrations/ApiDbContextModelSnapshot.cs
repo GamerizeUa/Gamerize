@@ -17,7 +17,7 @@ namespace Gamerize.DAL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.14")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -36,8 +36,8 @@ namespace Gamerize.DAL.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("OrderStatusId")
-                        .HasColumnType("int");
+                    b.Property<byte>("OrderStatusId")
+                        .HasColumnType("tinyint");
 
                     b.Property<DateTime?>("UpdatedAd")
                         .HasColumnType("datetime2");
@@ -85,11 +85,11 @@ namespace Gamerize.DAL.Migrations
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Admin.OrderStatus", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<byte>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("tinyint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<byte>("Id"));
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -102,8 +102,11 @@ namespace Gamerize.DAL.Migrations
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Admin.Role", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
@@ -184,15 +187,15 @@ namespace Gamerize.DAL.Migrations
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Category", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<byte>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("tinyint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<byte>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -239,8 +242,7 @@ namespace Gamerize.DAL.Migrations
 
                     b.Property<string>("CustomerName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -251,7 +253,7 @@ namespace Gamerize.DAL.Migrations
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasMaxLength(1500)
-                        .HasColumnType("nvarchar(1500)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -262,11 +264,11 @@ namespace Gamerize.DAL.Migrations
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Genre", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<byte>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("tinyint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<byte>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -277,13 +279,35 @@ namespace Gamerize.DAL.Migrations
                     b.ToTable("Genres");
                 });
 
-            modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Language", b =>
+            modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Image", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Images");
+                });
+
+            modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Language", b =>
+                {
+                    b.Property<byte>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<byte>("Id"));
 
                     b.Property<string>("Value")
                         .IsRequired()
@@ -302,21 +326,21 @@ namespace Gamerize.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                    b.Property<byte>("CategoryId")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<byte>("GameTimeMinutes")
                         .HasColumnType("tinyint");
 
-                    b.Property<int>("GenreId")
-                        .HasColumnType("int");
+                    b.Property<byte>("GenreId")
+                        .HasColumnType("tinyint");
 
-                    b.Property<int>("LanguageId")
-                        .HasColumnType("int");
+                    b.Property<byte>("LanguageId")
+                        .HasColumnType("tinyint");
 
                     b.Property<byte>("MaxPlayers")
                         .HasColumnType("tinyint");
@@ -334,8 +358,8 @@ namespace Gamerize.DAL.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(6,2)");
 
-                    b.Property<int>("ThemeId")
-                        .HasColumnType("int");
+                    b.Property<byte>("ThemeId")
+                        .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 
@@ -360,7 +384,8 @@ namespace Gamerize.DAL.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
 
@@ -369,19 +394,20 @@ namespace Gamerize.DAL.Migrations
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Theme", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<byte>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("tinyint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<byte>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -468,6 +494,17 @@ namespace Gamerize.DAL.Migrations
                 {
                     b.HasOne("Gamerize.DAL.Entities.Shop.Product", "Product")
                         .WithMany("Feedbacks")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Image", b =>
+                {
+                    b.HasOne("Gamerize.DAL.Entities.Shop.Product", "Product")
+                        .WithMany("Images")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -572,6 +609,8 @@ namespace Gamerize.DAL.Migrations
             modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Product", b =>
                 {
                     b.Navigation("Feedbacks");
+
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Theme", b =>

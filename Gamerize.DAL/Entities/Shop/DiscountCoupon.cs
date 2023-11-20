@@ -1,4 +1,6 @@
-﻿namespace Gamerize.DAL.Entities.Shop
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Gamerize.DAL.Entities.Shop
 {
 	public class DiscountCoupon
 	{
