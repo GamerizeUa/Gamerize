@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Gamerize.DAL.Contexts
 {
-	public class ApiDbContext : IdentityDbContext
+	public class ApiDbContext : IdentityDbContext<User, Role, int>
 	{
 		#region ShopDatas
 		public virtual DbSet<Category> Categories { get; set; }
@@ -18,10 +18,9 @@ namespace Gamerize.DAL.Contexts
 		public virtual DbSet<WishList> WishLists { get; set; }
 		public virtual DbSet<Theme> Themes { get; set; }
 		public virtual DbSet<Image> Images { get; set; }
+		public virtual DbSet<Discount> Discounts { get; set; }
 		#endregion
 		#region AdminDatas
-		public virtual DbSet<User> Users { get; set; }
-		public virtual DbSet<Role> Roles { get; set; }
 		public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
 		public virtual DbSet<OrderItem> OrderItems { get; set; }
 		public virtual DbSet<Order> Orders { get; set; }

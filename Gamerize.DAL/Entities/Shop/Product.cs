@@ -17,7 +17,9 @@ namespace Gamerize.DAL.Entities.Shop
 		[Column(TypeName = "tinyint")]
 		public int MinAge { get; set; }
 		[Column(TypeName = "tinyint")]
-		public int GameTimeMinutes { get; set; }
+		public int MinGameTimeMinutes { get; set; }
+		[Column(TypeName = "tinyint")]
+		public int MaxGameTimeMinutes { get; set; }
 		[Column(TypeName = "tinyint")]
 		public int LanguageId { get; set; }
 		public virtual Language Language { get; set; }
@@ -34,5 +36,6 @@ namespace Gamerize.DAL.Entities.Shop
 		public virtual ICollection<Feedback> Feedbacks { get; set; }
 		public virtual ICollection<Tag> Tags { get; set; }
 		public virtual ICollection<Image> Images { get; set; }
+		public virtual ICollection<Discount> Discounts { get; set; }
 	}
 }
