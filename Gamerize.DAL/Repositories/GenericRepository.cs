@@ -118,11 +118,11 @@ namespace Gamerize.DAL.Repositories
 		{
 			return await _context.Set<TEntity>().ToListAsync();
 		}
-		public TEntity? GetById(int id)
+		public TEntity? GetById(object id)
 		{
 			return _context.Set<TEntity>().Find(id);
 		}
-		public async Task<TEntity?> GetByIdAsync(int id)
+		public async Task<TEntity?> GetByIdAsync(object id)
 		{
 			return await _context.Set<TEntity>().FindAsync(id);
 		}

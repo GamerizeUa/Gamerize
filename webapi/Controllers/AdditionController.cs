@@ -26,12 +26,31 @@ namespace webapi.Controllers
 		{
 			try
 			{
-				return StatusCode(200,await _shopService.GetTagsAsync());
+				return Ok(await _shopService.GetTagsAsync());
 			}
 			catch
 			{
 				return StatusCode(500, "No connection to database");
 			}
+		}
+		[HttpGet("GetTagById")]
+		public async Task<ActionResult<TagDTO>> GetTagById([FromQuery]int id)
+		{
+			try
+			{
+				return Ok(await _shopService.GetTagById(id));
+			}
+			catch (ArgumentException ex)
+			{
+				return BadRequest(ex.Message);
+			}
+		}
+		[HttpPost("CreateTag")]
+		public async Task<IActionResult> CreateTag([FromBody] TagDTO tagDTO)
+		{
+			return (ModelState.IsValid && await _shopService.AddTagAsync(tagDTO)) ?
+				Created() :
+				BadRequest();
 		}
 		[HttpGet("GetAllThemes")]
 		public async Task<ActionResult<ICollection<ThemeDTO>>> GetAllThemes()

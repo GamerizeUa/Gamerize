@@ -1,6 +1,9 @@
 ﻿using Gamerize.BLL.Models;
 using Gamerize.BLL.Services;
+using Gamerize.BLL.Services.Interfaces;
+using Gamerize.DAL.Entities.Shop;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace webapi.Controllers
 {
@@ -8,54 +11,87 @@ namespace webapi.Controllers
 	[Route("api/[controller]")]
 	public class CategoryController : ControllerBase
 	{
-		private readonly ShopService _shopService;
+		private readonly IService<Category, CategoryDTO> _shopService;
 
-		public CategoryController(ShopService shopService)
+		public CategoryController(IService<Category, CategoryDTO> shopService)
 		{
 			_shopService = shopService;
 		}
 
 		[HttpGet("GetAll")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		public async Task<ActionResult<ICollection<CategoryDTO>>> Get()
-		{
-			return Ok(await _shopService.GetCategoriesAsync());
-		}
-
-		[HttpGet("GetById")]
-		public async Task<ActionResult<CategoryDTO>> GetById([FromQuery] int id)
 		{
 			try
 			{
-				return Ok(await _shopService.GetCategoryByIdAsync(id));
+				return Ok(await _shopService.GetAllAsync());
 			}
-			catch (ArgumentException ex)
+			catch
 			{
-				return BadRequest(ex.Message);
+				return StatusCode(500, "Internal Server Error. Please try again later.");
+			}
+		}
+
+		[HttpGet("GetById/{id:int}")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		public async Task<ActionResult<CategoryDTO>> GetById(int id)
+		{
+			try
+			{
+				return Ok(await _shopService.GetByIdAsync(id));
+			}
+			catch
+			{
+				return StatusCode(500, "Internal Server Error. Please try again later.");
 			}
 		}
 
 		[HttpPost("Create")]
-		public async Task<ActionResult<ICollection<CategoryDTO>>> Create([FromBody] CategoryDTO categoryDTO)
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		public async Task<IActionResult> Create([FromBody] CategoryDTO categoryDTO)
 		{
-			return (ModelState.IsValid && await _shopService.AddCategoryAsync(categoryDTO))
-				? Ok(await _shopService.GetCategoriesAsync())
-				: BadRequest();
+			try
+			{
+				if (!ModelState.IsValid)
+					return BadRequest();
+				await _shopService.CreateAsync(categoryDTO);
+				return NoContent();
+			}
+			catch
+			{
+				return StatusCode(500, "Internal Server Error. Please try again later.");
+			}
 		}
 
 		[HttpPatch("Update")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		public async Task<ActionResult<ICollection<CategoryDTO>>> Update([FromBody] CategoryDTO categoryDTO)
 		{
-			return (ModelState.IsValid && await _shopService.UpdateCategoryAsync(categoryDTO)) 
-				? Ok(await _shopService.GetCategoriesAsync()) 
-				: BadRequest();
+			try
+			{
+				if (!ModelState.IsValid)
+					return BadRequest();
+				await _shopService.UpdateAsync(categoryDTO, categoryDTO.Id);
+				return NoContent();
+			}
+			catch
+			{
+				return StatusCode(500, "Internal Server Error. Please try again later.");
+			}
 		}
 
-		[HttpDelete("Delete")]
-		public async Task<IActionResult> Delete([FromQuery] int id)
-		{
-			return (ModelState.IsValid && await _shopService.DeleteCategoryAsync(id)) 
-				? NoContent() 
-				: BadRequest();
-		}
+		//[HttpDelete("Delete")]
+		//public async Task<IActionResult> Delete([FromBody] int id)
+		//{
+		//	return (ModelState.IsValid && await _shopService.DeleteCategoryAsync(id)) 
+		//		? NoContent() 
+		//		: BadRequest();
+		//}
 	}
 }
