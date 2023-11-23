@@ -1,5 +1,6 @@
 import ProductsCarousel from "../components/ProductsCarousel/ProductsCarousel";
 import {QuestioningForm} from "@/components/landing-page/QuestioningForm/QuestioningForm.jsx";
+import {SelectionOfGames} from "@/components/landing-page/SelectionOfGames/SelectionOfGames.jsx";
 
 const HomePage = () => {
   // productsList just for tests
@@ -24,6 +25,7 @@ const HomePage = () => {
   <>
     <ProductsCarousel productsList={productsList} sectionTitle={'Популярні товари'} productConfigurationObject={{isOldPrice : false, isDiscount : false, isCartView : false}}/>
     <ProductsCarousel productsList={productsList} sectionTitle={'Розпродаж'} productConfigurationObject={{isOldPrice : true, isDiscount : true,isCartView : false}}/>
+    <SelectionOfGames />
     <QuestioningForm />
   </>
   )
