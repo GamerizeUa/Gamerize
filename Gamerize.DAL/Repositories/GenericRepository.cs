@@ -58,6 +58,23 @@ namespace Gamerize.DAL.Repositories
 				throw new ArgumentException(ex.Message);
 			}
 		}
+		public void DeleteById(object id)
+		{
+			try
+			{
+				var entity = _context.Set<TEntity>().Find(id);
+				_context.Set<TEntity>().Remove(entity);
+			}
+			catch (DbUpdateException ex)
+			{
+				throw new ArgumentException(ex.Message);
+			}
+		}
+		public async Task DeleteByIdAsync(object id)
+		{
+			var entity = await _context.Set<TEntity>().FindAsync(id) ?? throw new ArgumentException($"Invalid Id: {id}");
+				_context.Set<TEntity>().Remove(entity);
+		}
 		public void Delete(TEntity entity)
 		{
 			try
@@ -118,11 +135,11 @@ namespace Gamerize.DAL.Repositories
 		{
 			return await _context.Set<TEntity>().ToListAsync();
 		}
-		public TEntity? GetById(int id)
+		public TEntity? GetById(object id)
 		{
 			return _context.Set<TEntity>().Find(id);
 		}
-		public async Task<TEntity?> GetByIdAsync(int id)
+		public async Task<TEntity?> GetByIdAsync(object id)
 		{
 			return await _context.Set<TEntity>().FindAsync(id);
 		}

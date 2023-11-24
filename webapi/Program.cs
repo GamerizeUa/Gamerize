@@ -1,6 +1,6 @@
-using AutoMapper;
 using Gamerize.BLL.AutoMapper;
 using Gamerize.BLL.Services;
+using Gamerize.BLL.Services.Interfaces;
 using Gamerize.DAL.Contexts;
 using Gamerize.DAL.Repositories;
 using Gamerize.DAL.Repositories.Interfaces;
@@ -15,9 +15,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApiDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("SqlConnection")));
+	builder.Configuration.GetConnectionString("SqlConnection")));
 builder.Services.AddAutoMapper(typeof(ToDtoMappingProfile));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+builder.Services.AddTransient(typeof(IService<,>), typeof(GenericService<,>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ShopService>();
 builder.Services.AddControllers();

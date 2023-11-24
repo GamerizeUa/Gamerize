@@ -6,8 +6,8 @@ namespace Gamerize.DAL.Repositories.Interfaces
 	{
 		ICollection<TEntity> GetAll();
 		Task<ICollection<TEntity>> GetAllAsync();
-		TEntity? GetById(int id);
-		Task<TEntity?> GetByIdAsync(int id);
+		TEntity? GetById(object id);
+		Task<TEntity?> GetByIdAsync(object id);
 		void Add(TEntity entity);
 		Task AddAsync(TEntity entity);
 		void AddRange(ICollection<TEntity> entities);
@@ -18,6 +18,8 @@ namespace Gamerize.DAL.Repositories.Interfaces
 		Task UpdateRangeAsync(ICollection<TEntity> entities);
 		void Delete(TEntity entity);
 		Task DeleteAsync(TEntity entity);
+		void DeleteById(object id);
+		Task DeleteByIdAsync(object id);
 		void DeleteRange(ICollection<TEntity> entities);
 		Task DeleteRangeAsync(ICollection<TEntity> entities);
 		ICollection<TEntity> Find(Expression<Func<TEntity, bool>> predicate);

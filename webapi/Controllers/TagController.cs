@@ -5,19 +5,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace webapi.Controllers
 {
-	[ApiController]
 	[Route("api/[controller]")]
-	public class CategoryController : ControllerBase
+	[ApiController]
+	public class TagController : ControllerBase
 	{
-		private readonly IService<Category, CategoryDTO> _shopService;
+		private readonly IService<Tag, TagDTO> _shopService;
 
-		public CategoryController(IService<Category, CategoryDTO> shopService)
+		public TagController(IService<Tag, TagDTO> shopService)
 		{
 			_shopService = shopService;
 		}
 
 		[HttpGet("GetAll")]
-		public async Task<ActionResult<ICollection<CategoryDTO>>> Get()
+		public async Task<ActionResult<ICollection<TagDTO>>> Get()
 		{
 			try
 			{
@@ -30,7 +30,7 @@ namespace webapi.Controllers
 		}
 
 		[HttpGet("GetById/{id:int}")]
-		public async Task<ActionResult<CategoryDTO>> GetById(int id)
+		public async Task<ActionResult<TagDTO>> GetById(int id)
 		{
 			try
 			{
@@ -43,7 +43,7 @@ namespace webapi.Controllers
 		}
 
 		[HttpPost("Create")]
-		public async Task<IActionResult> Create([FromBody] CategoryDTO categoryDTO)
+		public async Task<IActionResult> Create([FromBody] TagDTO categoryDTO)
 		{
 			try
 			{
@@ -59,7 +59,7 @@ namespace webapi.Controllers
 		}
 
 		[HttpPatch("Update")]
-		public async Task<ActionResult<ICollection<CategoryDTO>>> Update([FromBody] CategoryDTO categoryDTO)
+		public async Task<ActionResult<ICollection<TagDTO>>> Update([FromBody] TagDTO categoryDTO)
 		{
 			try
 			{

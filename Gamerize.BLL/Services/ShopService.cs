@@ -14,6 +14,7 @@ namespace Gamerize.BLL.Services
 		private readonly IRepository<Category> categoryRepository;
 		private readonly IRepository<Feedback> feedbackRepository;
 		private readonly IRepository<Product> productRepository;
+		private readonly IRepository<Tag> tagRepository;
 		private readonly ILogger _logger;
 
 		public ShopService(IUnitOfWork unitOfWork, IMapper mapper, ILogger<ShopService> logger)
@@ -24,7 +25,7 @@ namespace Gamerize.BLL.Services
 			categoryRepository = _unitOfWork.GetRepository<Category>();
 			feedbackRepository = _unitOfWork.GetRepository<Feedback>();
 			productRepository = _unitOfWork.GetRepository<Product>();
-
+			tagRepository = _unitOfWork.GetRepository<Tag>();
 		}
 		#region Category services
 		public async Task<ICollection<CategoryDTO>> GetCategoriesAsync()
@@ -33,7 +34,7 @@ namespace Gamerize.BLL.Services
 		}
 		public async Task<CategoryDTO> GetCategoryByIdAsync(int id)
 		{
-			return _mapper.Map<CategoryDTO>(await categoryRepository.GetByIdAsync(id) ?? throw new ArgumentException("Invalid Id"));
+			return _mapper.Map<CategoryDTO>(await categoryRepository.GetByIdAsync(id) ?? throw new ArgumentException("Invalid Category Id"));
 		}
 		public async Task<bool> AddCategoryAsync(CategoryDTO categoryDTO)
 		{
@@ -151,6 +152,63 @@ namespace Gamerize.BLL.Services
 			catch (ArgumentException ex)
 			{
 				_logger.LogError("{ex}", ex.InnerException?.Message ?? ex.Message);
+				return false;
+			}
+		}
+		#endregion
+		#region Tag services
+		public async Task<ICollection<TagDTO>> GetTagsAsync()
+		{
+			return _mapper.Map<ICollection<TagDTO>>(await tagRepository.GetAllAsync());
+		}
+		public async Task<TagDTO> GetTagById(int id)
+		{
+			return _mapper.Map<TagDTO>(await tagRepository.GetByIdAsync(id) ?? throw new ArgumentException("Invalid Tag ID!"));
+		}
+		public async Task<bool> AddTagAsync(TagDTO tagDTO)
+		{
+			try
+			{
+				var tag = _mapper.Map<Tag>(tagDTO);
+				await tagRepository.AddAsync(tag);
+				await _unitOfWork.SaveChangesAsync();
+				return true;
+			}
+			catch (ArgumentException ex)
+			{
+				_logger.LogError("Method AddTagAsync catched exeption: {ex}", ex.InnerException?.Message ?? ex.Message);
+				return false;
+			}
+		}
+		public async Task<bool> UpdateTagAsync(TagDTO tagDTO)
+		{
+			try
+			{
+				var tag = tagRepository.GetById(tagDTO.Id) ?? throw new ArgumentException("Invalid Tag ID!");
+				tag.Name = tagDTO.Name;
+				await tagRepository.UpdateAsync(tag);
+				await _unitOfWork.SaveChangesAsync();
+				return true;
+			}
+			catch (ArgumentException ex)
+			{
+				//TODO Add the logger in UpdateCategoryAsync method
+				_logger.LogError("Method UpdateTagAsync catched exeption: {ex}", ex.InnerException?.Message ?? ex.Message);
+				return false;
+			}
+		}
+		public async Task<bool> DeleteTagAsync(int id)
+		{
+			try
+			{
+				var tag = tagRepository.GetById(id) ?? throw new ArgumentException("Invalid Tag ID!!!");
+				await tagRepository.DeleteAsync(tag);
+				await _unitOfWork.SaveChangesAsync();
+				return true;
+			}
+			catch (ArgumentException ex)
+			{
+				_logger.LogError("Method DeleteTagAsync catched exeption: {ex}", ex.Message);
 				return false;
 			}
 		}

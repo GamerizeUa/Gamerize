@@ -1,8 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Gamerize.DAL.Entities.Shop
+﻿namespace Gamerize.BLL.Models
 {
-	public class DiscountCoupon
+	public class DiscountCouponDTO
 	{
 		public int Id { get; set; }
 		public string Code { get; set; }
