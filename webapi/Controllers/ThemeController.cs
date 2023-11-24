@@ -5,19 +5,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace webapi.Controllers
 {
-	[ApiController]
 	[Route("api/[controller]")]
-	public class CategoryController : ControllerBase
+	[ApiController]
+	public class ThemeController : ControllerBase
 	{
-		private readonly IService<Category, CategoryDTO> _shopService;
+		private readonly IService<Theme, ThemeDTO> _shopService;
 
-		public CategoryController(IService<Category, CategoryDTO> shopService)
+		public ThemeController(IService<Theme, ThemeDTO> shopService)
 		{
 			_shopService = shopService;
 		}
 
 		[HttpGet("GetAll")]
-		public async Task<ActionResult<ICollection<CategoryDTO>>> Get()
+		public async Task<ActionResult<ICollection<ThemeDTO>>> Get()
 		{
 			try
 			{
@@ -30,7 +30,7 @@ namespace webapi.Controllers
 		}
 
 		[HttpGet("GetById/{id:int}")]
-		public async Task<ActionResult<CategoryDTO>> GetById(int id)
+		public async Task<ActionResult<ThemeDTO>> GetById(int id)
 		{
 			try
 			{
@@ -43,7 +43,7 @@ namespace webapi.Controllers
 		}
 
 		[HttpPost("Create")]
-		public async Task<IActionResult> Create([FromBody] CategoryDTO categoryDTO)
+		public async Task<IActionResult> Create([FromBody] ThemeDTO categoryDTO)
 		{
 			try
 			{
@@ -59,7 +59,7 @@ namespace webapi.Controllers
 		}
 
 		[HttpPatch("Update")]
-		public async Task<ActionResult<ICollection<CategoryDTO>>> Update([FromBody] CategoryDTO categoryDTO)
+		public async Task<ActionResult<ICollection<ThemeDTO>>> Update([FromBody] ThemeDTO categoryDTO)
 		{
 			try
 			{

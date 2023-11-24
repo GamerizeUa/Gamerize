@@ -5,19 +5,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace webapi.Controllers
 {
-	[ApiController]
 	[Route("api/[controller]")]
-	public class CategoryController : ControllerBase
+	[ApiController]
+	public class LanguageController : ControllerBase
 	{
-		private readonly IService<Category, CategoryDTO> _shopService;
+		private readonly IService<Language, LanguageDTO> _shopService;
 
-		public CategoryController(IService<Category, CategoryDTO> shopService)
+		public LanguageController(IService<Language, LanguageDTO> shopService)
 		{
 			_shopService = shopService;
 		}
 
 		[HttpGet("GetAll")]
-		public async Task<ActionResult<ICollection<CategoryDTO>>> Get()
+		public async Task<ActionResult<ICollection<LanguageDTO>>> Get()
 		{
 			try
 			{
@@ -30,7 +30,7 @@ namespace webapi.Controllers
 		}
 
 		[HttpGet("GetById/{id:int}")]
-		public async Task<ActionResult<CategoryDTO>> GetById(int id)
+		public async Task<ActionResult<LanguageDTO>> GetById(int id)
 		{
 			try
 			{
@@ -43,7 +43,7 @@ namespace webapi.Controllers
 		}
 
 		[HttpPost("Create")]
-		public async Task<IActionResult> Create([FromBody] CategoryDTO categoryDTO)
+		public async Task<IActionResult> Create([FromBody] LanguageDTO categoryDTO)
 		{
 			try
 			{
@@ -59,7 +59,7 @@ namespace webapi.Controllers
 		}
 
 		[HttpPatch("Update")]
-		public async Task<ActionResult<ICollection<CategoryDTO>>> Update([FromBody] CategoryDTO categoryDTO)
+		public async Task<ActionResult<ICollection<LanguageDTO>>> Update([FromBody] LanguageDTO categoryDTO)
 		{
 			try
 			{

@@ -9,7 +9,8 @@
 		public int MinPlayers { get; set; }
 		public int MaxPlayers { get; set; }
 		public int MinAge { get; set; }
-		public int GameTimeMinutes { get; set; }
+		public int MinGameTimeMinutes { get; set; }
+		public int MaxGameTimeMinutes { get; set; }
 		public LanguageDTO Language { get; set; }
 		public CategoryDTO Category { get; set; }
 		public GenreDTO Genre { get; set; }

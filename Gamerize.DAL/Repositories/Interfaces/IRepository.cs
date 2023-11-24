@@ -18,6 +18,8 @@ namespace Gamerize.DAL.Repositories.Interfaces
 		Task UpdateRangeAsync(ICollection<TEntity> entities);
 		void Delete(TEntity entity);
 		Task DeleteAsync(TEntity entity);
+		void DeleteById(object id);
+		Task DeleteByIdAsync(object id);
 		void DeleteRange(ICollection<TEntity> entities);
 		Task DeleteRangeAsync(ICollection<TEntity> entities);
 		ICollection<TEntity> Find(Expression<Func<TEntity, bool>> predicate);

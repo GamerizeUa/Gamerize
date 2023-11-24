@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Gamerize.DAL.Contexts
 {
-	public class ApiDbContext : IdentityDbContext<User, Role, int>
+    public class ApiDbContext : IdentityDbContext<User, Role, int>
 	{
 		#region ShopDatas
 		public virtual DbSet<Category> Categories { get; set; }

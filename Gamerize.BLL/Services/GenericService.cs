@@ -40,18 +40,10 @@ namespace Gamerize.BLL.Services
 			await _unitOfWork.GetRepository<TIn>().UpdateAsync(upduted);
 			await _unitOfWork.SaveChangesAsync();
 		}
-		public async Task DeleteAsync(TOut entity)
+		public async Task DeleteAsync(object id)
 		{
-			try
-			{
-				var search = await _unitOfWork.GetRepository<TIn>().GetByIdAsync(entity);
-				await _unitOfWork.GetRepository<TIn>().DeleteAsync(search);
-				await _unitOfWork.SaveChangesAsync();
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError("DeleteAsync method caught an exception: {ex}", ex);
-			}
+			await _unitOfWork.GetRepository<TIn>().DeleteByIdAsync(id);
+			await _unitOfWork.SaveChangesAsync();
 		}
 		public async Task<ICollection<TOut>> FindAsync(Expression<Func<TIn, bool>> predicate)
 		{

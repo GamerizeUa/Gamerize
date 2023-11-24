@@ -58,6 +58,30 @@ namespace Gamerize.DAL.Repositories
 				throw new ArgumentException(ex.Message);
 			}
 		}
+		public void DeleteById(object id)
+		{
+			try
+			{
+				var entity = _context.Set<TEntity>().Find(id);
+				_context.Set<TEntity>().Remove(entity);
+			}
+			catch (DbUpdateException ex)
+			{
+				throw new ArgumentException(ex.Message);
+			}
+		}
+		public async Task DeleteByIdAsync(object id)
+		{
+			try
+			{
+				var entity = await _context.Set<TEntity>().FindAsync(id);
+				await Task.Run(() => _context.Set<TEntity>().Remove(entity));
+			}
+			catch (DbUpdateException ex)
+			{
+				throw new ArgumentException(ex.Message);
+			}
+		}
 		public void Delete(TEntity entity)
 		{
 			try

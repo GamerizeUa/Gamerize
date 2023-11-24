@@ -10,7 +10,7 @@ namespace Gamerize.BLL.Services.Interfaces
 		Task<TOut> GetByIdAsync(int id);
 		Task CreateAsync(TOut entity);
 		Task UpdateAsync(TOut entity, object id);
-		Task DeleteAsync(TOut entity);
+		Task DeleteAsync(object id);
 		Task<ICollection<TOut>> FindAsync(Expression<Func<TIn, bool>> predicate);
 	}
 }
