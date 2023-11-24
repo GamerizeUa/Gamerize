@@ -77,8 +77,15 @@ namespace webapi.Controllers
 		[HttpDelete("Delete/{id:int}")]
 		public async Task<IActionResult> Delete(int id)
 		{
-			await _shopService.DeleteAsync(id);
-			return NoContent();
+			try
+			{
+				await _shopService.DeleteAsync(id);
+				return NoContent();
+			}
+			catch (ArgumentException ex)
+			{
+				return BadRequest(ex.Message);
+			}
 		}
 	}
 }

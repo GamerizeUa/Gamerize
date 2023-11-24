@@ -42,8 +42,16 @@ namespace Gamerize.BLL.Services
 		}
 		public async Task DeleteAsync(object id)
 		{
-			await _unitOfWork.GetRepository<TIn>().DeleteByIdAsync(id);
-			await _unitOfWork.SaveChangesAsync();
+			try
+			{
+				await _unitOfWork.GetRepository<TIn>().DeleteByIdAsync(id);
+				await _unitOfWork.SaveChangesAsync();
+			}
+			catch (ArgumentException ex)
+			{
+				_logger.LogError("DeleteAsync catched exception {ex}", ex.Message);
+				throw new ArgumentException(ex.Message);
+			}
 		}
 		public async Task<ICollection<TOut>> FindAsync(Expression<Func<TIn, bool>> predicate)
 		{

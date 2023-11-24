@@ -72,15 +72,8 @@ namespace Gamerize.DAL.Repositories
 		}
 		public async Task DeleteByIdAsync(object id)
 		{
-			try
-			{
-				var entity = await _context.Set<TEntity>().FindAsync(id);
-				await Task.Run(() => _context.Set<TEntity>().Remove(entity));
-			}
-			catch (DbUpdateException ex)
-			{
-				throw new ArgumentException(ex.Message);
-			}
+			var entity = await _context.Set<TEntity>().FindAsync(id) ?? throw new ArgumentException($"Invalid Id: {id}");
+				_context.Set<TEntity>().Remove(entity);
 		}
 		public void Delete(TEntity entity)
 		{

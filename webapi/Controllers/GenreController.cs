@@ -7,17 +7,17 @@ namespace webapi.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class LanguageController : ControllerBase
+	public class GenreController : ControllerBase
 	{
-		private readonly IService<Language, LanguageDTO> _shopService;
+		private readonly IService<Genre, GenreDTO> _shopService;
 
-		public LanguageController(IService<Language, LanguageDTO> shopService)
+		public GenreController(IService<Genre, GenreDTO> shopService)
 		{
 			_shopService = shopService;
 		}
 
 		[HttpGet("GetAll")]
-		public async Task<ActionResult<ICollection<LanguageDTO>>> Get()
+		public async Task<ActionResult<ICollection<GenreDTO>>> Get()
 		{
 			try
 			{
@@ -30,7 +30,7 @@ namespace webapi.Controllers
 		}
 
 		[HttpGet("GetById/{id:int}")]
-		public async Task<ActionResult<LanguageDTO>> GetById(int id)
+		public async Task<ActionResult<GenreDTO>> GetById(int id)
 		{
 			try
 			{
@@ -43,7 +43,7 @@ namespace webapi.Controllers
 		}
 
 		[HttpPost("Create")]
-		public async Task<IActionResult> Create([FromBody] LanguageDTO categoryDTO)
+		public async Task<IActionResult> Create([FromBody] GenreDTO categoryDTO)
 		{
 			try
 			{
@@ -59,7 +59,7 @@ namespace webapi.Controllers
 		}
 
 		[HttpPatch("Update")]
-		public async Task<ActionResult<ICollection<LanguageDTO>>> Update([FromBody] LanguageDTO categoryDTO)
+		public async Task<ActionResult<ICollection<GenreDTO>>> Update([FromBody] GenreDTO categoryDTO)
 		{
 			try
 			{
