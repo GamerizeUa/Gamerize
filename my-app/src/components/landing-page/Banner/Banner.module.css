@@ -1,0 +1,115 @@
+.banner{
+    padding-bottom: 120px;
+}
+
+.banner_outerContainer{
+    padding: 0 80px;
+}
+
+.banner_container{
+    background-color: #EEF1FF;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 617px;
+}
+
+.banner_leftPart{
+    position: relative;
+    width: 42.5%
+}
+
+.banner_title{
+    position: absolute;
+    top: 11.6%;
+    left: 19.8%;
+}
+
+.banner_highTitle, .banner_lowTitle{
+    color: #6566AC;
+    font-family: Oswald;
+    font-weight: 400;
+}
+
+.banner_highTitle{
+    font-size: 44px;
+}
+
+.banner_lowTitle{
+    font-size: 64px;
+}
+
+.banner_presentBox{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 55.9%;
+    min-width: 210px;
+}
+
+.banner_starContainerThirty{
+    position: absolute;
+    top: 37.11%;
+    right: 6.43%;
+}
+
+.banner_starPromo{
+    color: #6566AC;
+    font-family: Oswald;
+    font-size: 44px;
+    font-weight: 400;
+    position: absolute;
+    top: 34.29%;
+    left: 15.36%;
+    z-index: 10;
+}
+
+.banner_rightPart{
+    position: relative;
+    width: 57.5%;
+}
+
+.banner_starContainerFifty{
+    position: absolute;
+    top: 5.02%;
+    left: 0;
+}
+
+.banner_starContainerTwentyFive{
+    position: absolute;
+    bottom: 4.21%;
+    left: 0;
+}
+
+.banner_product{
+    position: absolute;
+    width: 61.2%;
+    min-width: 350px;
+    top: 13.2%;
+    right: 9.21%;
+}
+
+@media all and (max-width: 1024px) {
+    .banner_starContainerThirty{
+        min-width: 120px;
+        min-height: 120px;
+    }
+
+    .banner_starThirty, .banner_starFifty, .banner_starTwentyFive{
+        width: 120px;
+        height: 120px;
+    }
+
+    .banner_starPromo{
+        font-size: 38px;
+    }
+
+    .banner_product{
+        top: 20%;
+        right: 1%;
+    }
+
+    .banner_starContainerThirty{
+        top: 32.11%;
+    }
+}
