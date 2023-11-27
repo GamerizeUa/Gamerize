@@ -11,7 +11,7 @@
 }
 
 body {
-  min-width: 320px;
+  /* min-width: 320px; */
   font-family: "Noto Sans";
 }
 
@@ -65,6 +65,7 @@ h1, h2, h3, h4, h5, h6 {
 	--light-blue-gray : #EEF1FF;
 	--dark-purple : #6566AC;
 	--blue: #AAC4FF;
+  --dark-blue: #84A9FC;
 	--light-blue: #D2DAFF;
 	--blue-transparent: rgba(177, 178, 255, 0.30);
 	--white: #FEFEFE;
