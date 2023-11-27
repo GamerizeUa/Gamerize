@@ -5,6 +5,8 @@
     background-color: var(--white-white);
 }
 .container {
+    max-width: 1440px;
+    margin: 0 auto;
     position: relative;
     height: 100%;
     display: flex;

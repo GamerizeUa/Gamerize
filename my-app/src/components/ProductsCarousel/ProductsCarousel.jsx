@@ -93,7 +93,7 @@ export default function ProductsCarousel({productsList, carouselTitle, productCo
 
     return (
         <section className={styles.wrap}>
-            <div style={{paddingLeft: `${padding}px`, paddingRight: `${padding}px`}} className={'container ' + styles.container}>
+            <div style={{paddingLeft: `${padding}px`, paddingRight: `${padding}px`}} className={styles.container}>
                 <div className={styles.titleContainer}><h4>{carouselTitle}</h4></div>
                 <div className={styles.chevron + " " + styles.chevronRight} onClick={arrowRightOnclick}><ArrowRightIcon/></div>
                 <div className={styles.chevron + " " + styles.chevronLeft} onClick={arrowLeftOnclick}><ArrowLeftIcon/></div>
