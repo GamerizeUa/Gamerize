@@ -1,0 +1,41 @@
+.footerWrap {
+    background-color: #AAC4FF;
+    color: #FEFEFE;
+    font-size: 16px;
+}
+.footer{
+    padding: 48px 80px 30px 80px;
+}
+
+.footerListWrapper{
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 44px;
+    color: #FEFEFE;
+    cursor: pointer;
+}
+
+.toUsersList, .navList, .contactsList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.footerListHeader{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.telLink {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    color: #FEFEFE;
+}
+
+.fbIcon{
+    margin-left: 23px;
+}

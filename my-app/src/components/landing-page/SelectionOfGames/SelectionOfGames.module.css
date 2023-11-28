@@ -1,0 +1,56 @@
+.gamesSelection{
+    padding-bottom: 120px;
+}
+
+.gamesSelection_outerContainer{
+    padding: 0 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 120px;
+    align-items: center;
+    justify-content: center;
+}
+
+.gamesSelection_title{
+    color: #6566AC;
+    font-family: Oswald;
+    font-size: 36px;
+    font-weight: 400;
+}
+
+.gamesSelection_container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 1.50%;
+    cursor: pointer;
+}
+
+.gamesSelection_choice{
+    display: flex;
+    flex-direction: column;
+    width: 32.8%;
+    gap: 12px;
+}
+
+.gamesSelection_choice:hover p{
+    color: #6566AC;
+}
+.gamesSelection_choice:hover img{
+    transform: scale(1.05);
+}
+
+.gamesSelection_image{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.gamesSelection_category{
+    text-align: center;
+    text-decoration: none;
+    color: #2B2B2B;
+    font-family: Noto Sans;
+    font-size: 20px;
+    font-weight: 700;
+}
