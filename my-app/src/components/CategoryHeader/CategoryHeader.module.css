@@ -1,6 +1,12 @@
-.categoryHeader{
-    padding: 16px 246px;
+.categoryHeaderWrap{
+    width: 100%;
     background-color: #EEF1FF;
+}
+
+.categoryHeader{
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 6px 246px;
 }
 
 .categoryList{
@@ -8,4 +14,11 @@
     gap: 112px;
     font-size: 20px;
     font-weight: 500;
+}
+
+.categoryListItem{
+    position: relative;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 10px;
 }

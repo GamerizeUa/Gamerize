@@ -1,13 +1,17 @@
+import { useState } from "react";
 import ShoppingCartIcon from "../icons/CartIcon";
 import HeartIcon from "../icons/HeartIcon";
 import PhoneIcon from "../icons/PhoneIcon";
 import SearchIcon from "../icons/SearchIcon";
 import UserIcon from "../icons/UserIcon";
 import styles from "./Header.module.css";
+import AccountInformation from "./AccountInformation";
 
-const Header = () => {
+const Header = ({ openCart }) => {
+  const [accountInformation, setAccountInformation] = useState(false);
+
   return (
-    <div className={styles.header}>
+    <section className={styles.header}>
       <a href="/">
         <h1 className={styles.logo}>Gamerise</h1>
       </a>
@@ -28,23 +32,36 @@ const Header = () => {
             <p>+380 98 7067 447</p>
           </a>
         </li>
-        <li>
+        <li
+          onClick={() => {
+            openCart();
+          }}
+        >
           <button className={styles.headerButton}>
             <ShoppingCartIcon />
           </button>
         </li>
-        <li>
-          <button className={styles.headerButton}>
+        <li
+          className={styles.headerListItem}
+          onMouseEnter={() => {
+            setAccountInformation(true);
+          }}
+          onMouseLeave={() => {
+            setAccountInformation(false);
+          }}
+        >
+          <a href="/login" className={styles.headerButton}>
             <UserIcon />
-          </button>
+          </a>
+          {accountInformation && <AccountInformation />}
         </li>
         <li>
-          <button className={styles.headerButton}>
+          <a href="/favorites" className={styles.headerButton}>
             <HeartIcon />
-          </button>
+          </a>
         </li>
       </ul>
-    </div>
+    </section>
   );
 };
 

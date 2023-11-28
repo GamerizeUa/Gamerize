@@ -1,0 +1,43 @@
+.themesList {
+    position: absolute;
+    top: 35px;
+    left: 50%;
+    transform: translateX(-50%) scale(1);
+    padding: 32px 24px 24px 24px;
+    border-radius: 10px;
+    z-index: 10;
+    background-color: #fff;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-column-gap: 64px;
+    grid-row-gap: 22px;
+}
+
+.themesList::after {
+    display: block;
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    right: 50%;
+    border: 6px solid transparent;
+    top: -15px;
+    border-bottom: 10px solid #fff;
+}
+
+.themesListItem {
+    align-items: center;
+    height: 34px;
+    display: flex;
+    gap: 16px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.themesListItem:hover,
+.themesListItem:focus {
+    background-color: #EEF1FF;
+}
