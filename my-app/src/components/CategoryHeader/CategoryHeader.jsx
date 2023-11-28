@@ -2,10 +2,12 @@ import { useState } from "react";
 import Category from "./Category";
 import styles from "./CategoryHeader.module.css";
 import Genres from "./Genres";
+import Themes from "./Themes";
 
 const CategoryHeader = () => {
   const [isCategory, setIsCategory] = useState(false);
   const [isGenre, setIsGenre] = useState(false);
+  const [isTheme, setIsTheme] = useState(false);
 
   return (
     <section className={styles.categoryHeaderWrap}>
@@ -35,7 +37,18 @@ const CategoryHeader = () => {
             Жанри
             {isGenre && <Genres />}
           </li>
-          <li className={styles.categoryListItem}>Тематика</li>
+          <li
+            className={styles.categoryListItem}
+            onMouseEnter={() => {
+              setIsTheme(true);
+            }}
+            onMouseLeave={() => {
+              setIsTheme(false);
+            }}
+          >
+            Тематика
+            {isTheme && <Themes />}
+          </li>
           <li className={styles.categoryListItem}>Пазли</li>
           <li className={styles.categoryListItem}>Головоломки</li>
         </ul>
