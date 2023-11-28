@@ -19,28 +19,28 @@ namespace Gamerize.BLL.Services
 			_mapper = mapper;
 			_logger = logger;
 		}
-		public async Task<ICollection<TOut>> GetAllAsync()
+		public virtual async Task<ICollection<TOut>> GetAllAsync()
 		{
 			return _mapper.Map<ICollection<TOut>>(await _unitOfWork.GetRepository<TIn>().GetAllAsync());
 		}
-		public async Task<TOut> GetByIdAsync(int id)
+		public virtual async Task<TOut> GetByIdAsync(int id)
 		{
 			return _mapper.Map<TOut>(await _unitOfWork.GetRepository<TIn>().GetByIdAsync(id));
 		}
-		public async Task CreateAsync(TOut entity)
+		public virtual async Task CreateAsync(TOut entity)
 		{
 			var create = _mapper.Map<TIn>(entity);
 			await _unitOfWork.GetRepository<TIn>().AddAsync(create);
 			await _unitOfWork.SaveChangesAsync();
 		}
-		public async Task UpdateAsync(TOut entity, object id)
+		public virtual async Task UpdateAsync(TOut entity, object id)
 		{
 			var search = await _unitOfWork.GetRepository<TIn>().GetByIdAsync(id);
 			var upduted = _mapper.Map(entity, search);
 			await _unitOfWork.GetRepository<TIn>().UpdateAsync(upduted);
 			await _unitOfWork.SaveChangesAsync();
 		}
-		public async Task DeleteAsync(object id)
+		public virtual async Task DeleteAsync(object id)
 		{
 			try
 			{
@@ -53,7 +53,7 @@ namespace Gamerize.BLL.Services
 				throw new ArgumentException(ex.Message);
 			}
 		}
-		public async Task<ICollection<TOut>> FindAsync(Expression<Func<TIn, bool>> predicate)
+		public virtual async Task<ICollection<TOut>> FindAsync(Expression<Func<TIn, bool>> predicate)
 		{
 			return _mapper.Map<ICollection<TOut>>(await _unitOfWork.GetRepository<TIn>().FindAsync(predicate));
 		}

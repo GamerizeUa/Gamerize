@@ -1,6 +1,8 @@
-﻿namespace Gamerize.BLL.Models
+﻿using Gamerize.BLL.Models.Interfaces;
+
+namespace Gamerize.BLL.Models
 {
-	public class ProductFullDTO
+	public class ProductFullDTO : IEntity
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }

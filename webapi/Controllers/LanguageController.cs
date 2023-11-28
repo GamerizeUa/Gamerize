@@ -2,90 +2,14 @@
 using Gamerize.BLL.Services.Interfaces;
 using Gamerize.DAL.Entities.Shop;
 using Microsoft.AspNetCore.Mvc;
+using webapi.Controllers.Common;
 
 namespace webapi.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
-	public class LanguageController : ControllerBase
+	public class LanguageController : GenericController<Language, LanguageDTO>
 	{
-		private readonly IService<Language, LanguageDTO> _shopService;
-
-		public LanguageController(IService<Language, LanguageDTO> shopService)
-		{
-			_shopService = shopService;
-		}
-
-		[HttpGet("GetAll")]
-		public async Task<ActionResult<ICollection<LanguageDTO>>> Get()
-		{
-			try
-			{
-				return Ok(await _shopService.GetAllAsync());
-			}
-			catch
-			{
-				return StatusCode(500, "Internal Server Error. Please try again later.");
-			}
-		}
-
-		[HttpGet("GetById/{id:int}")]
-		public async Task<ActionResult<LanguageDTO>> GetById(int id)
-		{
-			try
-			{
-				return Ok(await _shopService.GetByIdAsync(id));
-			}
-			catch
-			{
-				return StatusCode(500, "Internal Server Error. Please try again later.");
-			}
-		}
-
-		[HttpPost("Create")]
-		public async Task<IActionResult> Create([FromBody] LanguageDTO categoryDTO)
-		{
-			try
-			{
-				if (!ModelState.IsValid)
-					return BadRequest();
-				await _shopService.CreateAsync(categoryDTO);
-				return NoContent();
-			}
-			catch
-			{
-				return StatusCode(500, "Internal Server Error. Please try again later.");
-			}
-		}
-
-		[HttpPatch("Update")]
-		public async Task<ActionResult<ICollection<LanguageDTO>>> Update([FromBody] LanguageDTO categoryDTO)
-		{
-			try
-			{
-				if (!ModelState.IsValid)
-					return BadRequest();
-				await _shopService.UpdateAsync(categoryDTO, categoryDTO.Id);
-				return NoContent();
-			}
-			catch
-			{
-				return StatusCode(500, "Internal Server Error. Please try again later.");
-			}
-		}
-
-		[HttpDelete("Delete/{id:int}")]
-		public async Task<IActionResult> Delete(int id)
-		{
-			try
-			{
-				await _shopService.DeleteAsync(id);
-				return NoContent();
-			}
-			catch (ArgumentException ex)
-			{
-				return BadRequest(ex.Message);
-			}
-		}
-	}
+        public LanguageController(IService<Language, LanguageDTO> service) : base(service) { }
+    }
 }

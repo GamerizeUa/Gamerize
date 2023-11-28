@@ -1,8 +1,9 @@
-﻿using Gamerize.DAL.Entities.Shop;
+﻿using Gamerize.BLL.Models.Interfaces;
+using Gamerize.DAL.Entities.Shop;
 
 namespace Gamerize.BLL.Models
 {
-	public class ProductShortDTO
+	public class ProductShortDTO : IEntity
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }

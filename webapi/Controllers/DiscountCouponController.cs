@@ -8,8 +8,8 @@ namespace webapi.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class ThemeController : GenericController<Theme, ThemeDTO>
+	public class DiscountCouponController : GenericController<DiscountCoupon, DiscountCouponDTO>
 	{
-		public ThemeController(IService<Theme, ThemeDTO> service) : base(service) { }
+		public DiscountCouponController(IService<DiscountCoupon, DiscountCouponDTO> service) : base(service) { }
 	}
 }

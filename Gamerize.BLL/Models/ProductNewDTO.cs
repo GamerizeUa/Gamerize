@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Gamerize.BLL.Models.Interfaces;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Gamerize.BLL.Models
 {
-	public class ProductNewDTO
+	public class ProductNewDTO : IEntity
 	{
 		public int Id { get; set; }
 		[Required]

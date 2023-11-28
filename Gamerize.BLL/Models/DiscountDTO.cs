@@ -1,6 +1,8 @@
-﻿namespace Gamerize.BLL.Models
+﻿using Gamerize.BLL.Models.Interfaces;
+
+namespace Gamerize.BLL.Models
 {
-	public class DiscountDTO
+	public class DiscountDTO : IEntity
 	{
 		public int Id { get; set; }
 		public int ProductId { get; set; }

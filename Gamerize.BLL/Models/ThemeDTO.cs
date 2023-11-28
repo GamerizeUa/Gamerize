@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Gamerize.BLL.Models.Interfaces;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gamerize.BLL.Models
 {
-	public class ThemeDTO
+	public class ThemeDTO : IEntity
 	{
 		public int Id { get; set; }
 		[Required]
