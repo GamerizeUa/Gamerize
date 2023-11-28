@@ -39,7 +39,14 @@
     justify-content: center;
     align-items: center;
     padding: 4px 14px;
-    border-radius: 33px;        
+    border-radius: 33px;    
+    color: var(--white);
+    text-align: center;
+    
+    /* Body Medium Bold 16px */
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;    
 }
 .hitIcon {
     background: var(--blue);
@@ -47,18 +54,9 @@
 .discountIcon {
     background: var(--orange-sale);
 }
-.leftIcon{
-    color: var(--white);
-    text-align: center;
-    
-    /* Body Medium Bold 16px */
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-}
 .imageContainer {
-    margin: 0 6%;
-    width: 94%;
+    margin: 0 auto;
+    width: 91%;
     height: 206px;
 }
 .imageContainer img {
@@ -69,8 +67,9 @@
 .featuresBar {
     display: flex;
     width: 100%;
-    height: 20px;
-    padding: 0px 8px;
+    text-align: center;
+    min-height: 20px;
+    padding: 2px 8px;
     justify-content: space-between;
     align-items: center;
 
@@ -90,6 +89,7 @@
     font-weight: 500;
 } 
 .title {
+    text-align: center;
     color: var(--black);
 
     /* Body Large Medium 20px */
@@ -101,9 +101,9 @@
     display: flex;
     align-items: end;
     margin-bottom: 8px;
+    line-height: 0.7;
 }
 .price {
-    line-height: 0.9;
     font-style: normal;
     font-weight: 700;
 }
@@ -122,12 +122,57 @@
     width: fit-content;
     background-color: var(--blue);
     border-radius: 13px;
-}
-.buyBtn{
-    color: var(--black);
 
+    color: var(--black);
     /* Body Medium Bold 16px */
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
+}
+.buyBtn:hover {
+    background: var(--dark-blue);
+}
+@media screen and (max-width: 834px) {
+    .cardTop {
+        height: 70%;
+        padding : 12.5px 5px 10px ;
+    }
+    .iconsBar {
+        padding: 0 7px;
+    }
+    .leftIcon {
+        width: 42px;
+        height: 22px;
+        padding: 6px;
+        font-size: 12px;   
+    }
+    .wishListIcon {
+        width: 24px;
+        height: 21px;
+    }
+    .cardBottom {
+        height: 30%;
+        padding-top: 11px;
+    }
+    .imageContainer {
+        width: 100%;
+        height: 138px;
+    }
+    .featuresBarElement{
+        font-size: 10px;
+    } 
+    .title {
+        font-size: 14px;
+    }
+    .prices {
+        margin-top: 11px;
+        margin-bottom: 0;
+    }
+    .currentPrice {
+        font-size: 20px;
+    }
+    .oldPrice {  
+        font-size: 14px;
+        margin-right: 10px;
+    }
 }
