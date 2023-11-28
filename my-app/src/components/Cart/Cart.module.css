@@ -41,8 +41,6 @@
     gap:50px;
 }
 
-.cartList{
-}
 .cartListItem{
     display: flex;
     gap: 12px;
@@ -51,8 +49,6 @@
 .cartListItem:not(:last-child){
     margin-bottom: 20px;
 }
-
-.cartListImg{}
 
 .cartItemDescription{
     display: flex;
@@ -86,10 +82,6 @@ gap: 143px;
     border: 1px solid #8E8E8E;
 }
 
-/* .cartProductCounterBtn{
-    background-color: transparent;
-} */
-
 .cartProductPriceWrapper{
     display: flex;
     gap: 4px;
@@ -105,8 +97,6 @@ gap: 143px;
     font-size: 24px;
 
 }
-.totalPriceText{}
-.totalPrice{}
 
 .cartBtnWrapper{
     border-top: 1px solid #DEE0E3;
