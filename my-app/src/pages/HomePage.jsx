@@ -22,7 +22,7 @@ const HomePage = () => {
   // productsList just for tests
   return (
   <>
-    {/* <GamePicker/> */}
+    <GamePicker/>
     <ProductsCarousel productsList={productsList} carouselTitle={'Популярні товари'} productConfigurationObject={{isOldPrice : false, isDiscount : false, isCartView : false}}/>
     <ProductsCarousel productsList={productsList} carouselTitle={'Розпродаж'} productConfigurationObject={{isOldPrice : true, isDiscount : true,isCartView : false}}/>
   </>
