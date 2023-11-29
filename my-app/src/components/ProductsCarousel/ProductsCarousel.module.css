@@ -71,9 +71,6 @@
 }
 
 @media screen and (max-width: 834px) {
-    .body {
-        height: 460px;
-    }
     .wrap {
         height: 460px;
     }
@@ -81,10 +78,16 @@
         font-size: 20px;
     }
     .container {
-        padding-bottom: 45px;
+        padding-bottom: 31px;
+    }
+    .body {
+        height: 372px;
     }
     .productWrap {
         height: 358px;
+    }
+    .productWrap:hover {
+        height: 372px;
     }
     .chevron  {
         display: none;
