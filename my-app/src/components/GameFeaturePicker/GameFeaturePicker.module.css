@@ -25,3 +25,16 @@
     font-style: normal;
     font-weight: 500;
 }
+@media screen and (max-width: 834px) {
+    .container {
+        padding: 14px;
+        height: 44px;
+    }
+    .title {
+        font-size: 14px; 
+    }
+    .icon {
+        width: 21px;
+        height: 21px;
+    }
+}

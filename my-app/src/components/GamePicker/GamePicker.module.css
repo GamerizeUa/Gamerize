@@ -11,6 +11,7 @@
     display: flex;
     width: 100%;
     height: 100%;
+    border-radius: 10px;
     background-color: var(--light-blue-gray);
 }
 .left {
@@ -29,6 +30,7 @@
     padding-right: 22%;
     height: 173px;
     width: 100%;
+    border-top-left-radius: 10px;
     background: url('../../assets/images/game_picker_title_background.png') no-repeat;
     background-size: 100% 100%;
 }
@@ -52,12 +54,13 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
 }
 .button {
     display: flex;
     width: 100%;
     height: 53px;
-    padding: 16px 48px;
+    padding: 16px 0;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
@@ -68,6 +71,7 @@
     background: var(--blue)
 }
 .buttonTitle {
+    text-align: center;
     color: var(--black);
 
     /* Body Medium Bold 16px */
@@ -84,13 +88,39 @@
     background-position: center;
 }
 @media screen and (max-width: 834px) {
+    .wrap {
+        height: 453px;
+    }
+    .container {
+        padding-top: 30px;
+        padding-bottom: 44px;
+    }
     .right {
         display: none;
     }
     .left {
         width: 100%;
+        padding-bottom: 28px;
+    }
+    .titleContainer {
+        padding-left: 0;
+        padding-right: 0;
+        justify-content: center;
+        border-top-right-radius: 10px;
+        height: 87px;
+        background: url('../../assets/images/game_picker_mobile_title_background.png') no-repeat;
+        background-size: 100% 100%;
     }
     .title {
         font-size: 28px; 
+    }
+    .form {
+        height: 232px;
+        width: 86%;
+        margin-right: 0;
+    }
+    .button {
+        width: 73%;
+        height: 48px;
     }
 }
