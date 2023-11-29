@@ -57,10 +57,10 @@
     height: 100%;
 }
 .chevronRight {
-    right: 4.5%;
+    right: 5%;
 }
 .chevronLeft {
-    left: 4.5%;
+    left: 5%;
 }
 
 @media screen and (max-width: 1200px) {
