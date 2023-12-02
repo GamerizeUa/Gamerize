@@ -87,6 +87,41 @@
     background-size: contain;
     background-position: center;
 }
+@media screen and (min-width: 394px) and (max-width: 834px) {
+    .wrap {
+        height: 503px;
+    }
+    .container {
+        padding-top: 40px;
+        padding-bottom: 84px;
+    }
+    .right {
+        padding-top: 81px;
+    }
+    .left {
+        align-items: flex-start;
+        padding-bottom: 42px;
+    }
+    .titleContainer {
+        height: 87px;
+        width: 121%;
+        padding-left: 22%;
+        padding-right: 17%;
+        background: url('../../assets/images/game_picker_tablet_title_background.png') no-repeat;
+        background-size: 100% 100%;
+    }
+    .title {
+        font-size: 36px;
+    }
+    .form {
+        margin-left: 12%;
+        height: 232px;
+        margin-right: 0;
+    }
+    .button {
+        height: 48px;
+    }
+}
 @media screen and (max-width: 393px) {
     .wrap {
         height: 453px;
