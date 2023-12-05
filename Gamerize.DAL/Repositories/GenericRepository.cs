@@ -1,5 +1,6 @@
 ﻿using Gamerize.DAL.Contexts;
 using Gamerize.DAL.Repositories.Interfaces;
+using Gamerize.DAL.Specifications;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -64,13 +65,25 @@ namespace Gamerize.DAL.Repositories
 		{
 			return await _context.Set<TEntity>().Where(predicate).ToListAsync();
 		}
-		public ICollection<TEntity> GetAll()
+		public ICollection<TEntity> GetAll(ISpecification<TEntity>? spec = null)
 		{
-			return _context.Set<TEntity>().ToList();
+			IQueryable<TEntity> query = _context.Set<TEntity>().AsNoTracking();
+			if (spec is not null && spec.Criteria is not null)
+			{
+				query = query.Where(spec.Criteria);
+				query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
+			}
+			return query.ToList();
 		}
-		public async Task<ICollection<TEntity>> GetAllAsync()
+		public async Task<ICollection<TEntity>> GetAllAsync(ISpecification<TEntity>? spec = null)
 		{
-			return await _context.Set<TEntity>().ToListAsync();
+			IQueryable<TEntity> query = _context.Set<TEntity>().AsNoTracking();
+			if (spec is not null && spec.Criteria is not null)
+			{
+				query = query.Where(spec.Criteria);
+				query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
+			}
+			return await query.ToListAsync();
 		}
 		public TEntity? GetById(object id)
 		{

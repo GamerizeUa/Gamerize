@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Gamerize.BLL.Services.Interfaces;
+using Gamerize.DAL.Specifications;
 using Gamerize.DAL.UnitOfWork.Interfaces;
 using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
@@ -19,9 +20,9 @@ namespace Gamerize.BLL.Services
 			_mapper = mapper;
 			_logger = logger;
 		}
-		public virtual async Task<ICollection<TOut>> GetAllAsync()
+		public virtual async Task<ICollection<TOut>> GetAllAsync(ISpecification<TIn>? spec = null)
 		{
-			return _mapper.Map<ICollection<TOut>>(await _unitOfWork.GetRepository<TIn>().GetAllAsync());
+			return _mapper.Map<ICollection<TOut>>(await _unitOfWork.GetRepository<TIn>().GetAllAsync(spec));
 		}
 		public virtual async Task<TOut> GetByIdAsync(int id)
 		{
@@ -35,7 +36,7 @@ namespace Gamerize.BLL.Services
 		}
 		public virtual async Task UpdateAsync(TOut entity, object id)
 		{
-			var search = await _unitOfWork.GetRepository<TIn>().GetByIdAsync(id);
+			var search = await _unitOfWork.GetRepository<TIn>().GetByIdAsync(id) ?? throw new ArgumentNullException($"Entity by Id: {id} has not been found!");
 			var upduted = _mapper.Map(entity, search);
 			await _unitOfWork.GetRepository<TIn>().UpdateAsync(upduted);
 			await _unitOfWork.SaveChangesAsync();

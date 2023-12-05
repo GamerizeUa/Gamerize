@@ -10,7 +10,8 @@ namespace Gamerize.BLL.Models
 		public decimal Price { get; set; }
 		public int MaxPlayers { get; set; }
 		public int MinAge { get; set; }
-		public int GameTimeMinutes { get; set; }
+		public int MinGameTimeMinutes { get; set; }
+		public int MaxGameTimeMinutes { get; set; }
 		public double GameRateAvg { get; set; }
 		public Image Image { get; set; }
 	}

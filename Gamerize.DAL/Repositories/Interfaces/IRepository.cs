@@ -1,11 +1,12 @@
-﻿using System.Linq.Expressions;
+﻿using Gamerize.DAL.Specifications;
+using System.Linq.Expressions;
 
 namespace Gamerize.DAL.Repositories.Interfaces
 {
 	public interface IRepository<TEntity> where TEntity : class
 	{
-		ICollection<TEntity> GetAll();
-		Task<ICollection<TEntity>> GetAllAsync();
+		ICollection<TEntity> GetAll(ISpecification<TEntity>? spec = null);
+		Task<ICollection<TEntity>> GetAllAsync(ISpecification<TEntity>? spec = null);
 		TEntity? GetById(object id);
 		Task<TEntity?> GetByIdAsync(object id);
 		void Add(TEntity entity);
