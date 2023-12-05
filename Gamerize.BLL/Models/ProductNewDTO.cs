@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Gamerize.BLL.Models.Interfaces;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Gamerize.BLL.Models
 {
-	public class ProductNewDTO
+	public class ProductNewDTO : IEntity
 	{
 		public int Id { get; set; }
 		[Required]
@@ -20,7 +21,9 @@ namespace Gamerize.BLL.Models
 		[Required, Range(0, 21)]
 		public int MinAge { get; set; }
 		[Required, Range(5, 240)]
-		public int GameTimeMinutes { get; set; }
+		public int MinGameTimeMinutes { get; set; }
+		[Required, Range(5, 240)]
+		public int MaxGameTimeMinutes { get; set; }
 		[Required]
 		public int LanguageId { get; set; }
 		[Required]
@@ -30,5 +33,6 @@ namespace Gamerize.BLL.Models
 		[Required]
 		public int ThemeId { get; set; }
 		public ICollection<IFormFile> Images { get; set; }
+		public ICollection<TagDTO> Tags { get; set; }
 	}
 }

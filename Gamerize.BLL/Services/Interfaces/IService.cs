@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using Gamerize.DAL.Specifications;
+using System.Linq.Expressions;
 
 namespace Gamerize.BLL.Services.Interfaces
 {
@@ -6,7 +7,7 @@ namespace Gamerize.BLL.Services.Interfaces
 		where TIn : class
 		where TOut : class
 	{
-		Task<ICollection<TOut>> GetAllAsync();
+		Task<ICollection<TOut>> GetAllAsync(ISpecification<TIn>? spec = null);
 		Task<TOut> GetByIdAsync(int id);
 		Task CreateAsync(TOut entity);
 		Task UpdateAsync(TOut entity, object id);

@@ -1,5 +1,6 @@
 ﻿using Gamerize.DAL.Contexts;
 using Gamerize.DAL.Repositories.Interfaces;
+using Gamerize.DAL.Specifications;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -16,108 +17,45 @@ namespace Gamerize.DAL.Repositories
 
 		public void Add(TEntity entity)
 		{
-			try
-			{
-				_context.Set<TEntity>().Add(entity);
-			}
-			catch (DbUpdateException ex)
-			{
-				throw new ArgumentException(ex.Message);
-			}
+			_context.Set<TEntity>().Add(entity);
 		}
 		public async Task AddAsync(TEntity entity)
 		{
-			try
-			{
-				await _context.Set<TEntity>().AddAsync(entity);
-			}
-			catch (DbUpdateException ex)
-			{
-				throw new ArgumentException($"Update failed!{entity}",ex);
-			}
+			await _context.Set<TEntity>().AddAsync(entity);
 		}
 		public void AddRange(ICollection<TEntity> entities)
 		{
-			try
-			{
-				_context.Set<TEntity>().AddRange(entities);
-			}
-			catch (DbUpdateException ex)
-			{
-				throw new ArgumentException(ex.Message);
-			}
+			_context.Set<TEntity>().AddRange(entities);
 		}
 		public async Task AddRangeAsync(ICollection<TEntity> entities)
 		{
-			try
-			{
-				await _context.AddRangeAsync(entities);
-			}
-			catch (DbUpdateException ex)
-			{
-				throw new ArgumentException(ex.Message);
-			}
+			await _context.AddRangeAsync(entities);
 		}
 		public void DeleteById(object id)
 		{
-			try
-			{
-				var entity = _context.Set<TEntity>().Find(id);
-				_context.Set<TEntity>().Remove(entity);
-			}
-			catch (DbUpdateException ex)
-			{
-				throw new ArgumentException(ex.Message);
-			}
+			var entity = _context.Set<TEntity>().Find(id) ?? throw new ArgumentException($"Invalid Id: {id}");
+			Delete(entity);
 		}
 		public async Task DeleteByIdAsync(object id)
 		{
 			var entity = await _context.Set<TEntity>().FindAsync(id) ?? throw new ArgumentException($"Invalid Id: {id}");
-				_context.Set<TEntity>().Remove(entity);
+			Delete(entity);
 		}
 		public void Delete(TEntity entity)
 		{
-			try
-			{
-				_context.Set<TEntity>().Remove(entity);
-			}
-			catch (DbUpdateException ex)
-			{
-				throw new ArgumentException(ex.Message);
-			}
+			_context.Set<TEntity>().Remove(entity);
 		}
 		public async Task DeleteAsync(TEntity entity)
 		{
-			try
-			{
-				await Task.Run(() => _context.Set<TEntity>().Remove(entity));
-			}
-			catch (DbUpdateException ex)
-			{
-				throw new ArgumentException(ex.Message);
-			}
+			await Task.Run(() => Delete(entity));
 		}
 		public void DeleteRange(ICollection<TEntity> entities)
 		{
-			try
-			{
-				_context.Set<TEntity>().RemoveRange(entities);
-			}
-			catch (DbUpdateException ex)
-			{
-				throw new ArgumentException(ex.Message);
-			}
+			_context.Set<TEntity>().RemoveRange(entities);
 		}
 		public async Task DeleteRangeAsync(ICollection<TEntity> entities)
 		{
-			try
-			{
-				await Task.Run(() => _context.Set<TEntity>().RemoveRange(entities));
-			}
-			catch (DbUpdateException ex)
-			{
-				throw new ArgumentException(ex.Message);
-			}
+			await Task.Run(() => _context.Set<TEntity>().RemoveRange(entities));
 		}
 		public ICollection<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
 		{
@@ -127,13 +65,25 @@ namespace Gamerize.DAL.Repositories
 		{
 			return await _context.Set<TEntity>().Where(predicate).ToListAsync();
 		}
-		public ICollection<TEntity> GetAll()
+		public ICollection<TEntity> GetAll(ISpecification<TEntity>? spec = null)
 		{
-			return _context.Set<TEntity>().ToList();
+			IQueryable<TEntity> query = _context.Set<TEntity>().AsNoTracking();
+			if (spec is not null && spec.Criteria is not null)
+			{
+				query = query.Where(spec.Criteria);
+				query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
+			}
+			return query.ToList();
 		}
-		public async Task<ICollection<TEntity>> GetAllAsync()
+		public async Task<ICollection<TEntity>> GetAllAsync(ISpecification<TEntity>? spec = null)
 		{
-			return await _context.Set<TEntity>().ToListAsync();
+			IQueryable<TEntity> query = _context.Set<TEntity>().AsNoTracking();
+			if (spec is not null && spec.Criteria is not null)
+			{
+				query = query.Where(spec.Criteria);
+				query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
+			}
+			return await query.ToListAsync();
 		}
 		public TEntity? GetById(object id)
 		{
@@ -145,47 +95,19 @@ namespace Gamerize.DAL.Repositories
 		}
 		public void Update(TEntity entity)
 		{
-			try
-			{
-				_context.Set<TEntity>().Update(entity);
-			}
-			catch (DbUpdateException ex)
-			{
-				throw new ArgumentException(ex.Message, ex);
-			}
+			_context.Set<TEntity>().Update(entity);
 		}
 		public async Task UpdateAsync(TEntity entity)
 		{
-			try
-			{
-				await Task.Run(() => _context.Set<TEntity>().Update(entity));
-			}
-			catch (DbUpdateException ex)
-			{
-				throw new ArgumentException(ex.Message, ex);
-			}
+			await Task.Run(() => _context.Set<TEntity>().Update(entity));
 		}
 		public void UpdateRange(ICollection<TEntity> entities)
 		{
-			try
-			{
-				_context.Set<TEntity>().UpdateRange(entities);
-			}
-			catch (DbUpdateException ex)
-			{
-				throw new ArgumentException(ex.Message);
-			}
+			_context.Set<TEntity>().UpdateRange(entities);
 		}
 		public async Task UpdateRangeAsync(ICollection<TEntity> entities)
 		{
-			try
-			{
-				await Task.Run(() => _context.Set<TEntity>().UpdateRange(entities));
-			}
-			catch (DbUpdateException ex)
-			{
-				throw new ArgumentException(ex.Message);
-			}
+			await Task.Run(() => _context.Set<TEntity>().UpdateRange(entities));
 		}
 	}
 }

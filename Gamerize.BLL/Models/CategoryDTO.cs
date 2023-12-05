@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Gamerize.BLL.Models.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace Gamerize.BLL.Models
 {
-	public class CategoryDTO
+	public class CategoryDTO : IEntity
 	{
 		public int Id { get; set; }
 		[Required, MaxLength(50)]
