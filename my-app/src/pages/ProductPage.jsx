@@ -1,5 +1,11 @@
+import {ProductOverview} from "@/components/ProductOverview/ProductOverview.jsx";
+
 const ProductPage = () => {
-  return <div>Сторінка 1 товару</div>;
+    return (
+        <>
+            <ProductOverview/>
+        </>
+    );
 };
 
 export default ProductPage;
