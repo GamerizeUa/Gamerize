@@ -7,7 +7,7 @@ namespace Gamerize.BLL.Models
 {
 	public class ProductNewDTO : IEntity
 	{
-		public int Id { get; set; }
+		public int Id { get; set; } = default;
 		[Required]
 		public string Name { get; set; }
 		[Required]
@@ -32,7 +32,7 @@ namespace Gamerize.BLL.Models
 		public int GenreId { get; set; }
 		[Required]
 		public int ThemeId { get; set; }
-		public ICollection<IFormFile> Images { get; set; } = new List<IFormFile>();
-		public int[] TagsId { get; set; } = Array.Empty<int>();
+		public ICollection<IFormFile> NewImages { get; set; } = new List<IFormFile>();
+		public int[] NewTags { get; set; } = Array.Empty<int>();
 	}
 }

@@ -26,9 +26,9 @@ namespace webapi.Controllers
 		{
 			try
 			{
-				var spec = new ProductSpecification().IncludeImage();
-				var test = await _unitOfWork.GetRepository<Product>().GetAllAsync(spec);
-				return Ok(_mapper.Map<ICollection<ProductShortDTO>>(test));
+				var spec = new ProductSpecification().IncludeAll();
+				var products = await _unitOfWork.GetRepository<Product>().GetAllAsync(spec);
+				return Ok(_mapper.Map<ICollection<ProductShortDTO>>(products));
 			}
 			catch
 			{
@@ -51,67 +51,77 @@ namespace webapi.Controllers
 		{
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
-
 			try
 			{
-				var tagIdsToKeep = newProduct.TagsId;
-				var tags = await _unitOfWork.GetRepository<Tag>().GetAllAsync();
-				var filteredTags = tags.Where(tag => tagIdsToKeep.Contains(tag.Id)).ToList();
+				if (!await EntityExistsAsync<Language>(newProduct.LanguageId))
+					return BadRequest($"Language with ID {newProduct.LanguageId} does not exist.");
 
-				var product = new Product()
-				{
-					Id = 0,
-					CategoryId = newProduct.CategoryId,
-					Name = newProduct.Name,
-					Description = newProduct.Description,
-					MinAge = newProduct.MinAge,
-					MinPlayers = newProduct.MinPlayers,
-					MaxPlayers = newProduct.MaxPlayers,
-					MinGameTimeMinutes = newProduct.MinGameTimeMinutes,
-					MaxGameTimeMinutes = newProduct.MaxGameTimeMinutes,
-					GenreId = newProduct.GenreId,
-					LanguageId = newProduct.LanguageId,
-					Price = newProduct.Price,
-					ThemeId = newProduct.ThemeId,
-					Tags = filteredTags
-				};
+				if (!await EntityExistsAsync<Category>(newProduct.CategoryId))
+					return BadRequest($"Category with ID {newProduct.CategoryId} does not exist.");
 
-				await _unitOfWork.GetRepository<Product>().AddAsync(product);
-				await _unitOfWork.SaveChangesAsync();
+				if (!await EntityExistsAsync<Genre>(newProduct.GenreId))
+					return BadRequest($"Genre with ID {newProduct.GenreId} does not exist.");
 
-				int productId = product.Id;
-				string folderPath = Path.Combine(Config.ProductImagesPath, productId.ToString());
+				if (!await EntityExistsAsync<Theme>(newProduct.ThemeId))
+					return BadRequest($"Theme with ID {newProduct.ThemeId} does not exist.");
 
-				if (!Directory.Exists(folderPath))
-					Directory.CreateDirectory(folderPath);
-
-				foreach (var image in newProduct.Images)
-				{
-					string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
-
-					string filePath = Path.Combine(folderPath, uniqueFileName);
-
-					using (var fileStream = new FileStream(filePath, FileMode.Create))
-					{
-						await image.CopyToAsync(fileStream);
-					}
-
-					var imageEntity = new Image
-					{
-						Path = filePath,
-						ProductId = productId
-					};
-
-					await _unitOfWork.GetRepository<Image>().AddAsync(imageEntity);
-				}
-				await _unitOfWork.SaveChangesAsync();
-				return Ok($"Product with ID {productId} and images created successfully.");
+				var product = await CreateProductAsync(newProduct);
+				await SaveImagesAsync(newProduct.NewImages, product.Id);
+				return Ok($"Product with ID {product.Id} and images created successfully.");
 
 			}
-			catch (AutoMapperMappingException ex)
+			catch
 			{
 				return StatusCode(500, "Internal Server Error. Please try again later.");
 			}
+		}
+
+		private async Task<Product> CreateProductAsync(ProductNewDTO newProduct)
+		{
+			var tagIdsToKeep = newProduct.NewTags;
+			var tags = await _unitOfWork.GetRepository<Tag>().GetAllAsync();
+			var filteredTags = tags.Where(tag => tagIdsToKeep.Contains(tag.Id)).ToList();
+
+			var product = _mapper.Map<Product>(newProduct);
+			product.Tags = filteredTags;
+
+			await _unitOfWork.GetRepository<Product>().AddAsync(product);
+			await _unitOfWork.SaveChangesAsync();
+
+			return product;
+		}
+		private async Task SaveImagesAsync(ICollection<IFormFile> images, int productId)
+		{
+			string folderPath = Path.Combine(Config.ProductImagesPath, productId.ToString());
+
+			if (!Directory.Exists(folderPath))
+				Directory.CreateDirectory(folderPath);
+
+			foreach (var image in images)
+			{
+				string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+				string filePath = Path.Combine(folderPath, uniqueFileName);
+
+				using (var fileStream = new FileStream(filePath, FileMode.Create))
+				{
+					await image.CopyToAsync(fileStream);
+				}
+
+				var imageEntity = new Image
+				{
+					Path = filePath,
+					ProductId = productId
+				};
+
+				await _unitOfWork.GetRepository<Image>().AddAsync(imageEntity);
+			}
+
+			await _unitOfWork.SaveChangesAsync();
+		}
+		private async Task<bool> EntityExistsAsync<TEntity>(int entityId) where TEntity : class
+		{
+			var entity = await _unitOfWork.GetRepository<TEntity>().GetByIdAsync(entityId);
+			return entity != null;
 		}
 	}
 }
