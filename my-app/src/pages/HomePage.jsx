@@ -3,6 +3,7 @@ import ProductsCarousel from "../components/ProductsCarousel/ProductsCarousel";
 import {QuestioningForm} from "@/components/landing-page/QuestioningForm/QuestioningForm.jsx";
 import {SelectionOfGames} from "@/components/landing-page/SelectionOfGames/SelectionOfGames.jsx";
 import {Banner} from "@/components/landing-page/Banner/Banner.jsx";
+import ProductRating from "../components/product-page/ProductRating/ProductRating";
 
 const HomePage = () => {
   // productsList just for tests
@@ -23,14 +24,40 @@ const HomePage = () => {
     //{id : 51261, discount : 20, name : "Дюна імперіум", minPlayers : 4, maxPlayers : 6, minAge : 16 , price : 2250, oldPrice: 2812, gameTimeMinutes : 80, photo : "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png"},
   ]
   // productsList just for tests
+  // feedbackList and some product rate just for tests
+  const feedbackList = [
+    {rate: 5},
+    {rate: 5},
+    {rate: 5},
+    {rate: 5},
+    {rate: 1},
+    {rate: 2},
+    {rate: 4},
+    {rate: 5},
+    {rate: 2},
+    {rate: 5},
+    {rate: 4},
+    {rate: 3},
+    {rate: 4},
+    {rate: 5},
+    {rate: 5},
+    {rate: 5},
+    {rate: 4},
+    {rate: 5},
+    {rate: 3},
+    {rate: 5},
+  ]
+  const rate = 3.9
+  // feedbackList just for tests
   return (
   <>
-    <GamePicker/>
-    <ProductsCarousel productsList={productsList} carouselTitle={'Популярні товари'} productConfigurationObject={{isOldPrice : false, isDiscount : false, isCartView : false}}/>
-    <ProductsCarousel productsList={productsList} carouselTitle={'Розпродаж'} productConfigurationObject={{isOldPrice : true, isDiscount : true,isCartView : false}}/>
-    <Banner />
-    <SelectionOfGames />
-    <QuestioningForm />
+    {/* <GamePicker/> */}
+    {/* <ProductsCarousel productsList={productsList} carouselTitle={'Популярні товари'} productConfigurationObject={{isOldPrice : false, isDiscount : false, isCartView : false}}/> */}
+    {/* <ProductsCarousel productsList={productsList} carouselTitle={'Розпродаж'} productConfigurationObject={{isOldPrice : true, isDiscount : true,isCartView : false}}/> */}
+    {/* <Banner /> */}
+    <ProductRating feedbacks={feedbackList} rate={rate}/>
+    {/* <SelectionOfGames /> */}
+    {/* <QuestioningForm /> */}
   </>
   )
 }

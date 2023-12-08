@@ -1,0 +1,89 @@
+.wrap {
+    height: 239px; 
+    margin-top: 64px;
+    margin-bottom: 104px;   
+}
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.title {
+    color: var(--black);
+    
+    /* Body Large Bold 20px */
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;  
+}
+.body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 173px;
+    max-width: 774px;
+}
+.overallRate {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 98px;
+}
+.overallDigit {
+    color: var(--black);
+
+    /* Body item mark */
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 700;
+}
+.overallStarsContainer {
+    width: 110px;
+    height: 14px;
+}
+.detailedRate {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 530px;
+}
+.detailedRateString {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.detailedRateStringLeft {
+    width: 437px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.percentString {
+    width: 345px;
+    height: 5px;
+    border-radius: 4px;
+    background: rgba(217, 217, 217, 0.70); 
+}
+.currentPercent {
+    height: 5px;
+    border-radius: 4px;
+    background: var(--dark-blue); 
+}
+.detailedStarsContainer {
+    height: 10px;
+    width: 78px;
+}
+.percentDigit, .reviewAmount {
+    color: var(--black);
+
+    /* Body Medium Regular 16px */
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400; 
+}
+.percentDigit {
+    margin-left: 7px;
+}
