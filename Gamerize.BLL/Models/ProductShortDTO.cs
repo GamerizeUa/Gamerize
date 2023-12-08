@@ -1,5 +1,4 @@
 ﻿using Gamerize.BLL.Models.Interfaces;
-using Gamerize.DAL.Entities.Shop;
 
 namespace Gamerize.BLL.Models
 {
@@ -13,6 +12,6 @@ namespace Gamerize.BLL.Models
 		public int MinGameTimeMinutes { get; set; }
 		public int MaxGameTimeMinutes { get; set; }
 		public double GameRateAvg { get; set; }
-		public Image Image { get; set; }
+		public string ImagePath { get; set; }
 	}
 }

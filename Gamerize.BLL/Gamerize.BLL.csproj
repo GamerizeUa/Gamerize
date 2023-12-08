@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Gamerize.Common\Gamerize.Common.csproj" />
     <ProjectReference Include="..\Gamerize.DAL\Gamerize.DAL.csproj" />
   </ItemGroup>
 
