@@ -67,21 +67,37 @@ namespace Gamerize.DAL.Repositories
 		}
 		public ICollection<TEntity> GetAll(ISpecification<TEntity>? spec = null)
 		{
-			IQueryable<TEntity> query = _context.Set<TEntity>().AsNoTracking();
-			if (spec is not null && spec.Criteria is not null)
+			IQueryable<TEntity> query = _context.Set<TEntity>();
+			if (spec is not null)
 			{
-				query = query.Where(spec.Criteria);
+				if (spec.Criteria is not null)
+					query = query.Where(spec.Criteria);
+
 				query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
+
+				if (spec.OrderBy is not null)
+					query = query.OrderBy(spec.OrderBy);
+
+				if (spec.OrderByDescending is not null)
+					query = query.OrderByDescending(spec.OrderByDescending);
 			}
 			return query.ToList();
 		}
 		public async Task<ICollection<TEntity>> GetAllAsync(ISpecification<TEntity>? spec = null)
 		{
-			IQueryable<TEntity> query = _context.Set<TEntity>().AsNoTracking();
-			if (spec is not null && spec.Criteria is not null)
+			IQueryable<TEntity> query = _context.Set<TEntity>();
+			if (spec is not null)
 			{
-				query = query.Where(spec.Criteria);
+				if (spec.Criteria is not null)
+					query = query.Where(spec.Criteria);
+
 				query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
+
+				if (spec.OrderBy is not null)
+					query = query.OrderBy(spec.OrderBy);
+
+				if (spec.OrderByDescending is not null)
+					query = query.OrderByDescending(spec.OrderByDescending);
 			}
 			return await query.ToListAsync();
 		}

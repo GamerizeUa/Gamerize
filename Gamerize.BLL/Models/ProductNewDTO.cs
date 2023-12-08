@@ -32,7 +32,7 @@ namespace Gamerize.BLL.Models
 		public int GenreId { get; set; }
 		[Required]
 		public int ThemeId { get; set; }
-		public ICollection<IFormFile> Images { get; set; }
-		public ICollection<TagDTO> Tags { get; set; }
+		public ICollection<IFormFile> Images { get; set; } = new List<IFormFile>();
+		public int[] TagsId { get; set; } = Array.Empty<int>();
 	}
 }

@@ -12,7 +12,7 @@ namespace webapi.Controllers.Common
 		public GenericController(IService<TInput, TOutput> service) => _service = service;
 
 		[HttpGet("GetAll")]
-		public async Task<ActionResult<ICollection<TOutput>>> Get()
+		public virtual async Task<ActionResult<ICollection<TOutput>>> Get()
 		{
 			try
 			{
@@ -38,7 +38,7 @@ namespace webapi.Controllers.Common
 		}
 
 		[HttpPost("Create")]
-		public async Task<IActionResult> Create([FromBody] TOutput entity)
+		public virtual async Task<IActionResult> Create([FromBody] TOutput entity)
 		{
 			try
 			{

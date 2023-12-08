@@ -1,4 +1,5 @@
-﻿using Gamerize.DAL.Entities.Shop;
+﻿using Gamerize.BLL.Models;
+using Gamerize.DAL.Entities.Shop;
 
 namespace Gamerize.BLL.AutoMapper
 {
