@@ -20,7 +20,6 @@ builder.Services.AddAutoMapper(typeof(ToDtoMappingProfile));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 builder.Services.AddTransient(typeof(IService<,>), typeof(GenericService<,>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<ShopService>();
 builder.Services.AddControllers();
 
 var app = builder.Build();

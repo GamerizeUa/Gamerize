@@ -26,9 +26,15 @@ namespace webapi.Controllers
 		{
 			try
 			{
-				var spec = new ProductSpecification().IncludeAll();
+				var spec = new ProductSpecification().IncludeShort();
 				var products = await _unitOfWork.GetRepository<Product>().GetAllAsync(spec);
-				return Ok(_mapper.Map<ICollection<ProductShortDTO>>(products));
+				var productsDTO = _mapper.Map<ICollection<ProductShortDTO>>(products)
+					.Select(item =>
+						{
+							item.ImagePath ??= Path.Combine(Config.ProductImagesPath, Config.NoImage);
+							return item;
+						});
+				return Ok(_mapper.Map<ICollection<ProductShortDTO>>(productsDTO));
 			}
 			catch
 			{
@@ -51,6 +57,7 @@ namespace webapi.Controllers
 		{
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
+
 			try
 			{
 				if (!await EntityExistsAsync<Language>(newProduct.LanguageId))
@@ -67,8 +74,8 @@ namespace webapi.Controllers
 
 				var product = await CreateProductAsync(newProduct);
 				await SaveImagesAsync(newProduct.NewImages, product.Id);
-				return Ok($"Product with ID {product.Id} and images created successfully.");
 
+				return Ok($"Product with ID {product.Id} and images created successfully.");
 			}
 			catch
 			{
@@ -76,6 +83,26 @@ namespace webapi.Controllers
 			}
 		}
 
+		[HttpDelete("Delete/{id:int}")]
+		public async Task<IActionResult> Delete(int id)
+		{
+			
+			var spec = new ProductSpecification().ById(id).IncludeAll();
+			var product = (await _unitOfWork.GetRepository<Product>().GetAllAsync(spec))
+			.FirstOrDefault();
+			if (product is null)
+				return BadRequest($"Invalid product Id:{id}!");
+			var folderPath = Path.Combine(Config.ProductImagesPath, product.Id.ToString());
+			await _unitOfWork.GetRepository<Product>().DeleteAsync(product);
+			await _unitOfWork.SaveChangesAsync();
+			
+			if (Directory.Exists(folderPath))
+				Directory.Delete(folderPath, true);
+
+			return NoContent();
+		}
+
+		#region Supporting methods
 		private async Task<Product> CreateProductAsync(ProductNewDTO newProduct)
 		{
 			var tagIdsToKeep = newProduct.NewTags;
@@ -83,6 +110,7 @@ namespace webapi.Controllers
 			var filteredTags = tags.Where(tag => tagIdsToKeep.Contains(tag.Id)).ToList();
 
 			var product = _mapper.Map<Product>(newProduct);
+			product.Id = default;
 			product.Tags = filteredTags;
 
 			await _unitOfWork.GetRepository<Product>().AddAsync(product);
@@ -123,5 +151,6 @@ namespace webapi.Controllers
 			var entity = await _unitOfWork.GetRepository<TEntity>().GetByIdAsync(entityId);
 			return entity != null;
 		}
+		#endregion
 	}
 }

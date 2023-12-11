@@ -44,6 +44,7 @@ namespace webapi.Controllers.Common
 			{
 				if (!ModelState.IsValid)
 					return BadRequest();
+				entity.Id = default;
 				await _service.CreateAsync(entity);
 				return NoContent();
 			}
