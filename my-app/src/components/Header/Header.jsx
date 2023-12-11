@@ -54,6 +54,7 @@ const Header = ({ openCart }) => {
             <UserIcon />
           </a>
           {accountInformation && <AccountInformation />}
+          <AccountInformation />
         </li>
         <li>
           <a href="/favorites" className={styles.headerButton}>

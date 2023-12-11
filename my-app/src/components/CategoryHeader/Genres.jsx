@@ -17,7 +17,7 @@ const Genres = () => {
     <div>
       <ul className={styles.genresList}>
         <li className={styles.genresListItem}>
-          <div>
+          <div className={styles.genresIcon}>
             <svg
               width="18"
               height="20"
@@ -34,7 +34,7 @@ const Genres = () => {
           <p>Стратегії</p>
         </li>
         <li className={styles.genresListItem}>
-          <div>
+          <div className={styles.genresIcon}>
             <svg
               width="20"
               height="20"
@@ -51,7 +51,7 @@ const Genres = () => {
           <p>Вікторина</p>
         </li>
         <li className={styles.genresListItem}>
-          <div>
+          <div className={styles.genresIcon}>
             <svg
               width="22"
               height="12"
@@ -68,7 +68,7 @@ const Genres = () => {
           <p>Рольові</p>
         </li>
         <li className={styles.genresListItem}>
-          <div>
+          <div className={styles.genresIcon}>
             <svg
               width="20"
               height="20"
@@ -85,7 +85,7 @@ const Genres = () => {
           <p>Пригоди</p>
         </li>
         <li className={styles.genresListItem}>
-          <div>
+          <div className={styles.genresIcon}>
             <svg
               width="20"
               height="20"
@@ -102,7 +102,7 @@ const Genres = () => {
           <p>Творчі</p>
         </li>
         <li className={styles.genresListItem}>
-          <div>
+          <div className={styles.genresIcon}>
             <svg
               width="20"
               height="20"
@@ -119,7 +119,7 @@ const Genres = () => {
           <p>Карткові</p>
         </li>
         <li className={styles.genresListItem}>
-          <div>
+          <div className={styles.genresIcon}>
             <svg
               width="22"
               height="20"
@@ -136,7 +136,7 @@ const Genres = () => {
           <p>Кооперативні</p>
         </li>
         <li className={styles.genresListItem}>
-          <div>
+          <div className={styles.genresIcon}>
             <svg
               width="20"
               height="20"
@@ -153,7 +153,7 @@ const Genres = () => {
           <p>Класичні</p>
         </li>
         <li className={styles.genresListItem}>
-          <div>
+          <div className={styles.genresIcon}>
             <svg
               width="20"
               height="20"
@@ -170,7 +170,7 @@ const Genres = () => {
           <p>Квести</p>
         </li>
         <li className={styles.genresListItem}>
-          <div>
+          <div className={styles.genresIcon}>
             <svg
               width="20"
               height="20"

@@ -15,7 +15,7 @@ const Category = () => {
     <div>
       <ul className={styles.categoryList}>
         <li className={styles.categoryListItem}>
-          <div>
+          <div className={styles.categoryIcon}>
             <svg
               width="22"
               height="18"
@@ -32,7 +32,7 @@ const Category = () => {
           <p>Для сім’ї</p>
         </li>
         <li className={styles.categoryListItem}>
-          <div>
+          <div className={styles.categoryIcon}>
             <svg
               width="22"
               height="16"
@@ -49,7 +49,7 @@ const Category = () => {
           <p>Для двох</p>
         </li>
         <li className={styles.categoryListItem}>
-          <div>
+          <div className={styles.categoryIcon}>
             <svg
               width="24"
               height="12"
@@ -66,7 +66,7 @@ const Category = () => {
           <p>Для компанії</p>
         </li>
         <li className={styles.categoryListItem}>
-          <div>
+          <div className={styles.categoryIcon}>
             <svg
               width="14"
               height="20"
@@ -83,7 +83,7 @@ const Category = () => {
           <p>В дорогу</p>
         </li>
         <li className={styles.categoryListItem}>
-          <div>
+          <div className={styles.categoryIcon}>
             <svg
               width="18"
               height="18"
@@ -100,7 +100,7 @@ const Category = () => {
           <p>Для дітей</p>
         </li>
         <li className={styles.categoryListItem}>
-          <div>
+          <div className={styles.categoryIcon}>
             <svg
               width="27"
               height="13"
@@ -117,7 +117,7 @@ const Category = () => {
           <p>Для дорослих</p>
         </li>
         <li className={styles.categoryListItem}>
-          <div>
+          <div className={styles.categoryIcon}>
             <svg
               width="20"
               height="20"
