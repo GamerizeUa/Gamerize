@@ -2,7 +2,6 @@
 using Gamerize.BLL.Services.Interfaces;
 using Gamerize.DAL.Specifications;
 using Gamerize.DAL.UnitOfWork.Interfaces;
-using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
 namespace Gamerize.BLL.Services
@@ -13,12 +12,10 @@ namespace Gamerize.BLL.Services
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;
-		private readonly ILogger _logger;
-		public GenericService(IUnitOfWork unitOfWork, IMapper mapper, ILogger<ShopService> logger)
+		public GenericService(IUnitOfWork unitOfWork, IMapper mapper)
 		{
 			_unitOfWork = unitOfWork;
 			_mapper = mapper;
-			_logger = logger;
 		}
 		public virtual async Task<ICollection<TOut>> GetAllAsync(ISpecification<TIn>? spec = null)
 		{
@@ -50,7 +47,6 @@ namespace Gamerize.BLL.Services
 			}
 			catch (ArgumentException ex)
 			{
-				_logger.LogError("DeleteAsync catched exception {ex}", ex.Message);
 				throw new ArgumentException(ex.Message);
 			}
 		}
