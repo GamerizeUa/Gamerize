@@ -1,3 +1,4 @@
+import { Logo } from "../Logo/Logo";
 import FacebookIcon from "../icons/FacebookIcon";
 import InstagramIcon from "../icons/InstagramIcon";
 import PhoneIcon from "../icons/PhoneIcon";
@@ -6,11 +7,9 @@ import styles from "./Footer.module.css";
 const Footer = () => {
   return (
     <div className={styles.footerWrap}>
-      <div className={styles.footer + " container"}>
+      <div className={styles.footer}>
         <div className={styles.footerListWrapper}>
-          <a href="/">
-            <h1 className={styles.logo}>Gamerise</h1>
-          </a>
+          <Logo />
           <ul className={styles.toUsersList}>
             <p className={styles.footerListHeader}>Користувачам</p>
             <li>
