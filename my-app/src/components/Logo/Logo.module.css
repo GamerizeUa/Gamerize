@@ -1,6 +1,19 @@
+@media (min-width: 320px) {
 .logo {
-    /* margin-right: 122px; */
-    font-size: 44px;
-    color: #FEFEFE;
-    cursor: pointer;
+        font-size: 44px;
+        color: #FEFEFE;
+        cursor: pointer;
+    }
+}
+
+@media (min-width: 834px) {
+.logo {
+        font-size: 36px;
+    }
+}
+
+@media (min-width: 1280px) {
+.logo {
+        font-size: 32px;
+    }
 }

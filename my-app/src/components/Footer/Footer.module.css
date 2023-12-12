@@ -1,7 +1,15 @@
+@media (min-width: 320px) {
 .footerWrap {
-    background-color: #AAC4FF;
-    color: #FEFEFE;
-    font-size: 16px;
+        background-color: #AAC4FF;
+        color: #FEFEFE;
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .footerWrap {
+        font-size: 16px;
+    }
 }
 
 @media (min-width: 320px) {
@@ -19,8 +27,8 @@
     margin: 0 auto;
     align-items: stretch;
     gap: 44px;
-    padding-left: 120px;
-    padding-right: 120px;
+    padding-left: 80px;
+    padding-right: 80px;
     }
 }
 
@@ -66,7 +74,7 @@
 @media (min-width: 320px) {
     .navList,
     .contactsList {
-        border-top:3px solid white ;
+        border-top:1px solid white ;
         padding: 22px 0;
     }
 }
@@ -90,10 +98,19 @@
     }
 }
 
-.footerListHeader{
-    font-size: 20px;
-    font-weight: 600;
+
+@media (min-width: 320px) {
+.footerListHeader {
+        font-size: 16px;
+        font-weight: 600;
+    }
 }
+
+@media (min-width: 1280px) {
+.footerListHeader {
+        font-size: 20px;
+}
+} 
 
 .telLink {
     display: flex;
@@ -104,4 +121,15 @@
 
 .fbIcon{
     margin-left: 23px;
+}
+
+@media (min-width: 320px) {
+.rights {
+    font-size: 14px;
+}
+}
+@media (min-width: 1280px) {
+    .rights {
+        font-size: 16px;
+    }
 }

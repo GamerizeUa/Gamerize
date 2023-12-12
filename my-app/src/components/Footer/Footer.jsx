@@ -56,7 +56,7 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-        <p>© 2023 Gamerise. All Rights Reserved.</p>
+        <p className={styles.rights}>© 2023 Gamerise. All Rights Reserved.</p>
       </div>
     </div>
   );
