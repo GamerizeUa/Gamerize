@@ -3,15 +3,29 @@
     background-color: #EEF1FF;
 }
 
-.categoryHeader{
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 6px 246px;
+@media (min-width: 320px) {
+.categoryHeader {
+        margin: 0 auto;
+        padding: 14.5px 24px;
+    }
+}
+
+@media (min-width: 834px) {
+.categoryHeader {
+        padding: 17px 113px;
+    }
+}
+
+@media (min-width: 1280px) {
+.categoryHeader {
+        max-width: 1440px;
+        padding: 6px 246px;
+    }
 }
 
 .categoryList{
     display: flex;
-    gap: 112px;
+    justify-content: space-between;
     font-size: 20px;
     font-weight: 500;
 }
