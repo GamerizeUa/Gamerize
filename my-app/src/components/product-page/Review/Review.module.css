@@ -2,5 +2,6 @@
     min-height: 92px;
     width: 330px;
 
-    background-color: blue;
+    background-color: aliceblue;
+    border: 1px solid black;
 }

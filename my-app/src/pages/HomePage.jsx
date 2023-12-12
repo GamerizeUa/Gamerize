@@ -4,6 +4,7 @@ import {QuestioningForm} from "@/components/landing-page/QuestioningForm/Questio
 import {SelectionOfGames} from "@/components/landing-page/SelectionOfGames/SelectionOfGames.jsx";
 import {Banner} from "@/components/landing-page/Banner/Banner.jsx";
 import ProductRating from "../components/product-page/ProductRating/ProductRating";
+import ReviewsList from "../components/product-page/ReviewsList/ReviewsList";
 
 const HomePage = () => {
   // productsList just for tests
@@ -52,10 +53,11 @@ const HomePage = () => {
   return (
   <>
     {/* <GamePicker/> */}
-    {/* <ProductsCarousel productsList={productsList} carouselTitle={'Популярні товари'} productConfigurationObject={{isOldPrice : false, isDiscount : false, isCartView : false}}/> */}
+    <ProductsCarousel productsList={productsList} carouselTitle={'Популярні товари'} productConfigurationObject={{isOldPrice : false, isDiscount : false, isCartView : false}}/>
     {/* <ProductsCarousel productsList={productsList} carouselTitle={'Розпродаж'} productConfigurationObject={{isOldPrice : true, isDiscount : true,isCartView : false}}/> */}
     {/* <Banner /> */}
     <ProductRating feedbacks={feedbackList} rate={rate}/>
+    <ReviewsList/>
     {/* <SelectionOfGames /> */}
     {/* <QuestioningForm /> */}
   </>
