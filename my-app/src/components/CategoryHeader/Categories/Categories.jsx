@@ -1,4 +1,4 @@
-import styles from "./Category.module.css";
+import styles from "./Categories.module.css";
 
 // const categories = [
 //   { id: 0, name: "Для сім’ї" },
@@ -10,7 +10,7 @@ import styles from "./Category.module.css";
 //   { id: 6, name: "Для дорослих" },
 // ];
 
-const Category = () => {
+const Categories = () => {
   return (
     <div>
       <ul className={styles.categoryList}>
@@ -138,4 +138,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default Categories;

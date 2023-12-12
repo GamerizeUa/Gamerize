@@ -143,7 +143,7 @@ const Themes = () => {
               />
             </svg>
           </div>
-          <p className={styles.themesText}>Економічні </p>
+          <p className={styles.themesText}>Економічні</p>
         </li>
         <li className={styles.themesListItem}>
           <div className={styles.themesIcon}>
