@@ -76,8 +76,20 @@ h1, h2, h3, h4, h5, h6 {
 .container {
   max-width: 1440px;
   margin: 0 auto;
-  padding-left: 5.5%;
-  padding-right: 5.5%;
+  padding-left: 80px;
+  padding-right: 80px;
+}
+@media screen and (max-width: 834px) {
+  .container {
+    padding-left: 64px;
+    padding-right: 64px;
+  }
+}
+@media screen and (max-width: 393px) {
+  .container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
 }
 
 /* @media (prefers-color-scheme: light) {
