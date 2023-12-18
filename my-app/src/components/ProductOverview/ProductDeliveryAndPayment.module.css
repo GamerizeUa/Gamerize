@@ -42,7 +42,7 @@
     width: 128px;
     height: 4px;
     border-radius: 4px;
-    transition: transform 1s ease;
+    transition: transform 0.6s ease;
 }
 
 .deliveryAndPayment_detailsContainer{
