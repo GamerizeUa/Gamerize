@@ -1,0 +1,218 @@
+@keyframes scaleIn {
+    0% {
+        transform: rotate(0deg);
+    }
+    30% {
+        transform: rotate(-20deg) scale(1.3);
+    }
+    50% {
+        transform: rotate(20deg) scale(1.3);
+    }
+    70% {
+        transform: rotate(-20deg) scale(1.3);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes setOpacity {
+    0% {
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.productInfo {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.productInfo_container {
+    width: 90.9%;
+    display: flex;
+    flex-direction: column;
+}
+
+.productInfo_mainPart {
+    padding-bottom: 47px;
+}
+
+.productInfo_topPart {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+    padding-bottom: 56px;
+}
+
+.productInfo_bottomPart {
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+}
+
+.productInfo_titleSku {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.productInfo_title {
+    color: #6566AC;
+    font-family: Oswald;
+    font-size: 44px;
+    font-weight: 400;
+}
+
+.productInfo_sku {
+    color: #8E8E8E;
+    font-family: Noto Sans;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.productInfo_actions {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    position: relative;
+}
+
+.productInfo_action {
+    display: inline-flex;
+    padding: 7px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background: #EEF1FF;
+    cursor: pointer;
+}
+
+.productInfo_actionIcon {
+    margin: 3px;
+}
+
+.productInfo_action:hover path {
+    stroke: #AAC4FF;
+}
+
+.productInfo_iconFilled {
+    fill: #AAC4FF;
+    animation: scaleIn 1s ease-in-out;
+}
+
+.productInfo_iconFilled path {
+    stroke: #AAC4FF;
+    stroke-width: 1px;
+}
+
+.productInfo_actionPhrase::before {
+    content: "Додано до списку бажань";
+    position: absolute;
+    top: 100%;
+    right: 0;
+    padding-top: 8px;
+    text-align: center;
+    font-size: 12px;
+    color: #AAC4FF;
+    height: 10px;
+    width: 151px;
+    opacity: 0;
+    animation: setOpacity 3s ease-in-out;
+}
+
+.productInfo_prices {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2.75%;
+}
+
+.productInfo_currentPrice {
+    color: #2B2B2B;
+    font-family: Noto Sans;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.productInfo_previousPrice {
+    color: #8E8E8E;
+    font-family: Noto Sans;
+    font-size: 20px;
+    font-weight: 400;
+    text-decoration-line: line-through;
+}
+
+.productInfo_description {
+    color: #000;
+    font-family: Noto Sans;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 150%;
+}
+
+.productInfo_buyButtons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4.12%;
+}
+
+.productInfo_buyOneClick, .productInfo_addToCart {
+    color: #2B2B2B;
+    font-family: Noto Sans;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.30);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.productInfo_buyOneClick:hover, .productInfo_addToCart:hover, .productInfo_buyOneClick:active,
+.productInfo_addToCart:active {
+    background-color: #84A9FC;
+    border-color: #84A9FC;
+}
+
+.productInfo_buyOneClick {
+    border: 1px solid #AAC4FF;
+    padding: 16px 48px;
+    background-color: white;
+
+}
+
+.productInfo_addToCart {
+    padding: 16px 72px;
+    background: #AAC4FF;
+    gap: 8px;
+}
+
+.productInfo_bonuses {
+    color: #000;
+    font-family: Noto Sans;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 64px;
+}

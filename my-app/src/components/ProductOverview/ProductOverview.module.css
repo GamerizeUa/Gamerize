@@ -1,13 +1,13 @@
-.productCore{
+.productOverview{
     padding-top: 72px;
     padding-bottom: 64px;
 }
 
-.productCore_outerContainer{
+.productOverview_outerContainer{
     padding: 0 80px;
 }
 
-.productCore_container{
+.productOverview_container{
     display: flex;
     flex-direction: row;
     width: 100%;
