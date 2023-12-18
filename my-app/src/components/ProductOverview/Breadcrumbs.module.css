@@ -1,0 +1,28 @@
+.breadcrumbs{
+    display: inline-flex;
+    flex-direction: row;
+    padding-bottom: 56px;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    column-gap: 2.74%;
+    row-gap: 10px;
+}
+
+.breadcrumbs_container{
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 16px;
+}
+
+.breadcrumbs_crumb{
+    color: #8E8E8E;
+    font-family: Noto Sans;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.breadcrumbs_crumb:hover{
+    color: #6566AC;
+}
