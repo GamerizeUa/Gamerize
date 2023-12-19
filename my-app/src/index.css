@@ -76,20 +76,22 @@ h1, h2, h3, h4, h5, h6 {
 .container {
   max-width: 1440px;
   margin: 0 auto;
-  padding-left: 80px;
-  padding-right: 80px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
-@media screen and (max-width: 834px) {
-  .container {
-    padding-left: 64px;
-    padding-right: 64px;
-  }
+
+@media screen and (min-width: 744px) {
+    .container {
+        padding-left: 32px;
+        padding-right: 32px;
+    }
 }
-@media screen and (max-width: 393px) {
-  .container {
-    padding-left: 24px;
-    padding-right: 24px;
-  }
+
+@media screen and (min-width: 1280px){
+    .container {
+        padding-left: 80px;
+        padding-right: 80px;
+    }
 }
 
 /* @media (prefers-color-scheme: light) {
