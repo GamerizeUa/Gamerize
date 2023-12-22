@@ -1,4 +1,5 @@
 ﻿using Gamerize.BLL.Models.Interfaces;
+using Gamerize.DAL.Entities.Shop;
 
 namespace Gamerize.BLL.Models
 {

@@ -19,6 +19,8 @@ namespace Gamerize.DAL.Contexts
 		public virtual DbSet<Theme> Themes { get; set; }
 		public virtual DbSet<Image> Images { get; set; }
 		public virtual DbSet<Discount> Discounts { get; set; }
+		public virtual DbSet<Question> Questions { get; set; }
+		public virtual DbSet<Answer> Answers { get; set; }
 		#endregion
 		#region AdminDatas
 		public virtual DbSet<OrderStatus> OrderStatuses { get; set; }

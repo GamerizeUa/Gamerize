@@ -124,7 +124,7 @@ namespace webapi.Controllers
 
 			if (!Directory.Exists(folderPath))
 				Directory.CreateDirectory(folderPath);
-
+			int number = 1;
 			foreach (var image in images)
 			{
 				string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
@@ -138,8 +138,10 @@ namespace webapi.Controllers
 				var imageEntity = new Image
 				{
 					Path = filePath,
+					Number = number,
 					ProductId = productId
 				};
+				number++;
 
 				await _unitOfWork.GetRepository<Image>().AddAsync(imageEntity);
 			}
