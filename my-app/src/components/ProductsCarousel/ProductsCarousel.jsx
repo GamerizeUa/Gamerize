@@ -13,7 +13,7 @@ export default function ProductsCarousel({productsList, carouselTitle, productCo
 
     const limitedWindowWidth = windowWidth < 1440 ? windowWidth : 1440 // width limited by website max-width 1440px
     const productCardsAmount = limitedWindowWidth < 744? 2 : (limitedWindowWidth < 1280? 3 : 4) // visible cards amount in the carousel depending on mobile/tablet/desctop versions   
-    const padding = limitedWindowWidth < 744? 24 : (limitedWindowWidth < 1280? 64 : 80 )
+    const padding = limitedWindowWidth < 744? 16 : (limitedWindowWidth < 1280? 32 : 80 )
     const productWidth = (limitedWindowWidth - 2 * padding) * 0.235 * 4 / productCardsAmount // productWidth in px
     const columnGap = (limitedWindowWidth - 2 * padding - productCardsAmount * productWidth) / (productCardsAmount - 1) // gap between products in px
 
