@@ -3,11 +3,11 @@
     height: 100%;
 }
 .cardTop {
-    height: 72.5%;
+    height: 70%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding : 18px 16px 16px ;
+    padding : 12.5px 5px 10px ;
     align-items: center;
     background: var(--white);
 }
@@ -15,36 +15,36 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 25px;
+    padding-top: 11px;
     justify-content: space-between;
-    height: 27.5%;
+    height: 30%;
 }
 .iconsBar {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    padding: 0 7px;
 }
 .wishListIcon {
     width: 27px;
     height: 24px;
 }
 .wishListIcon svg {
-    width: 100%;
-    height: 100%;
+    width: 24px;
+    height: 21px;
 }
 .leftIcon {
-    width: 50px;
-    height: 28px;
+    width: 42px;
+    height: 22px;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 4px 14px;
+    padding: 6px;
     border-radius: 33px;    
     color: var(--white);
     text-align: center;
     
-    /* Body Medium Bold 16px */
-    font-size: 16px;
+    font-size: 12px;
     font-style: normal;
     font-weight: 700;    
 }
@@ -56,8 +56,8 @@
 }
 .imageContainer {
     margin: 0 auto;
-    width: 91%;
-    height: 206px;
+    width: 100%;
+    height: 138px;
 }
 .imageContainer img {
     object-fit: contain;
@@ -76,15 +76,12 @@
     border-radius: 27px;
     background-color: var(--light-blue-gray);
 }
-.featuresBarElement {
+.featuresBarElement{
     margin: 0 5px;
     width: fit-content;
-}
-.featuresBarElement{
     color: var(--black);
 
-    /* Body Small Text Medium 14px */
-    font-size: 14px;
+    font-size: 10px;
     font-style: normal;
     font-weight: 500;
 } 
@@ -92,15 +89,15 @@
     text-align: center;
     color: var(--black);
 
-    /* Body Large Medium 20px */
-    font-size: 20px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 500;
 }
 .prices {
     display: flex;
     align-items: end;
-    margin-bottom: 8px;
+    margin-top: 11px; 
+    margin-bottom: 0;
     line-height: 0.7;
 }
 .price {
@@ -108,12 +105,12 @@
     font-weight: 700;
 }
 .currentPrice {
-    font-size: 24px;
+    font-size: 20px;
     color: var(--blue);
 }
-.oldPrice { 
-    margin-right: 5px; 
-    font-size: 16px;
+.oldPrice {
+    font-size: 14px;
+    margin-right: 10px; 
     color: var(--light-blue);
     text-decoration-line: line-through;
 }
@@ -124,36 +121,17 @@
     border-radius: 13px;
 
     color: var(--black);
-    /* Body Medium Bold 16px */
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
 }
-.buyBtn:hover {
-    background: var(--dark-blue);
-}
 
-@media screen and (max-width: 834px) {
+@media screen and (min-width: 744px) {
     .cardTop {
         height: 73.5%;
-        padding : 12.5px 5px 10px ;
-    }
-    .iconsBar {
-        padding: 0 7px;
-    }
-    .leftIcon {
-        width: 42px;
-        height: 22px;
-        padding: 6px;
-        font-size: 12px;   
-    }
-    .wishListIcon {
-        width: 24px;
-        height: 21px;
     }
     .cardBottom {
         height: 26.5%;
-        padding-top: 11px;
     }
     .imageContainer {
         width: 89%;
@@ -173,38 +151,56 @@
         margin-top: 8px;
         margin-bottom: 0;
     }
-    .currentPrice {
-        font-size: 20px;
-    }
-    .oldPrice {  
-        font-size: 14px;
-        margin-right: 10px;
-    }
 }
 
-@media screen and (max-width: 393px) {
+@media screen and (min-width: 1280px) {
     .cardTop {
-        height: 70%;
+        height: 72.5%;
+        padding : 18px 16px 16px ;
     }
     .cardBottom {
-        height: 30%;
+        height: 27.5%;
+        padding-top: 25px;
+    }
+    .iconsBar {
+        padding: 0;
+    }
+    .wishListIcon {
+        width: 27px;
+        height: 24px;
+    }
+    .leftIcon {
+        width: 50px;
+        height: 28px;
+        padding: 4px 14px;
+        font-size: 16px;   
     }
     .imageContainer {
-        width: 100%;
-        height: 138px;
+        width: 91%;
+        height: 206px;
     }
     .featuresBar {
         min-height: 20px;
         padding: 2px 8px;
     }
     .featuresBarElement{
-        font-size: 10px;
+        font-size: 14px;
     } 
     .title {
-        font-size: 14px;
+        font-size: 20px;
     }
     .prices {
-        margin-top: 11px;
-        margin-bottom: 0;
+        margin-top: 0;
+        margin-bottom: 8px;
+    }
+    .currentPrice {
+        font-size: 24px;
+    }
+    .oldPrice {  
+        margin-right: 5px; 
+        font-size: 16px;
+    }
+    .buyBtn:hover {
+        background: var(--dark-blue);
     }
 }
