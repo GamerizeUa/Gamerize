@@ -44,7 +44,6 @@
     color: var(--white);
     text-align: center;
     
-    /* Body Medium Bold 16px */
     font-size: 12px;
     font-style: normal;
     font-weight: 700;    
@@ -82,7 +81,6 @@
     width: fit-content;
     color: var(--black);
 
-    /* Body Small Text Medium 14px */
     font-size: 10px;
     font-style: normal;
     font-weight: 500;
@@ -91,7 +89,6 @@
     text-align: center;
     color: var(--black);
 
-    /* Body Large Medium 20px */
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
@@ -124,7 +121,6 @@
     border-radius: 13px;
 
     color: var(--black);
-    /* Body Medium Bold 16px */
     font-size: 16px;
     font-style: normal;
     font-weight: 700;

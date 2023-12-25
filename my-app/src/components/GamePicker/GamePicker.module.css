@@ -37,7 +37,6 @@
 .title {
     text-align: center;
     color: var(--black);
-    /* H1 Medium 64px */
     font-size: 64px;
     font-style: normal;
     font-weight: 400; 
@@ -74,7 +73,6 @@
     text-align: center;
     color: var(--black);
 
-    /* Body Medium Bold 16px */
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
