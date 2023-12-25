@@ -8,11 +8,12 @@ namespace Gamerize.DAL.UnitOfWork
 	public class UnitOfWork : IUnitOfWork
 	{
 		private readonly ApiDbContext _context;
-		private Dictionary<Type, object> _repositories;
+		private readonly Dictionary<Type, object> _repositories;
+		private bool _disposed = false;
 		public UnitOfWork(ApiDbContext context)
 		{
 			_context = context;
-			_repositories = new Dictionary<Type, object>();
+			_repositories = [];
 		}
 
 		public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class
@@ -29,7 +30,33 @@ namespace Gamerize.DAL.UnitOfWork
 
 		public void SaveChanges() => _context.SaveChanges();
 		public async Task SaveChangesAsync() => await _context.SaveChangesAsync();
-		public void Dispose() => _context.Dispose();
-		public async Task DisposeAsync() => await _context.DisposeAsync();
+		
+		protected virtual void Dispose(bool disposing)
+		{
+			if (!_disposed)
+			{
+				if (disposing)
+				{
+					foreach (var repository in _repositories.Values)
+					{
+						(repository as IDisposable)?.Dispose();
+					}
+					_context.Dispose();
+				}
+				_disposed = true;
+			}
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		public async Task DisposeAsync()
+		{
+			Dispose();
+			await Task.CompletedTask;
+		}
 	}
 }
