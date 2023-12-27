@@ -1,13 +1,32 @@
-.notFound{}
+.notFound{
+    padding: 167px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.notFoundTitle{
+    font-size: 48px;
+    line-height: 9.6px;
+}
+
+.notFoundText {
+    font-size: 20px;
+    line-height: 4px;
+    font-weight: 400;
+}
 
 .onMainPageBtn{
-    /* width: 304px;
+    width: 304px;
     height: 53px;
     border-radius: 10px;
     background: #AAC4FF;
+    color: black;
     font-size: 16px;
     font-weight: 700;
     line-height: 16%;
     cursor: pointer;
-    box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.30); */
+    box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.30);
 }

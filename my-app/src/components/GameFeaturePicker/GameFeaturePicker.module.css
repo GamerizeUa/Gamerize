@@ -1,8 +1,8 @@
 .container {
     display: flex;
     width: 100%;
-    height: 53px;
-    padding: 14px 16px;
+    height: 44px;
+    padding: 14px;
     align-items: center;
     justify-content: space-between;
     border-radius: 10px;
@@ -10,8 +10,8 @@
     background: var(--white);
 } 
 .icon {
-    width: 24px;
-    height: 24px;
+    width: 21px;
+    height: 21px;
 }
 .icon svg {
     width: 100%;
@@ -20,21 +20,20 @@
 .title {
     color: var(--black);
     
-    /* Body Medium Medium 16px */
-    font-size: 16px;
+    font-size: 14px; 
     font-style: normal;
     font-weight: 500;
 }
-@media screen and (max-width: 834px) {
+@media screen and (min-width: 744px) {
     .container {
-        padding: 14px;
-        height: 44px;
+        padding: 14px 16px;
+        height: 53px;
     }
     .title {
-        font-size: 14px; 
+        font-size: 16px; 
     }
     .icon {
-        width: 21px;
-        height: 21px;
+        width: 24px;
+        height: 24px;
     }
 }
