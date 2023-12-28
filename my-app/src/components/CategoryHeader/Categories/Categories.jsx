@@ -1,15 +1,5 @@
 import styles from "./Categories.module.css";
 
-// const categories = [
-//   { id: 0, name: "Для сім’ї" },
-//   { id: 1, name: "Для компанії" },
-//   { id: 2, name: "Для дітей" },
-//   { id: 3, name: "Для вечірок" },
-//   { id: 4, name: "Для двох" },
-//   { id: 5, name: "В дорогу" },
-//   { id: 6, name: "Для дорослих" },
-// ];
-
 const Categories = () => {
   return (
     <div>
