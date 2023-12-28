@@ -1,4 +1,7 @@
 import styles from "./Genres.module.css";
+import { fetchAllGenres } from "../../../redux/categories/genreSlice";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 // const genres = [
 //   { id: 0, name: "Стратегії" },
 //   { id: 1, name: "Пригоди" },
@@ -13,6 +16,11 @@ import styles from "./Genres.module.css";
 // ];
 
 const Genres = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAllGenres());
+  }, [dispatch]);
   return (
     <div>
       <ul className={styles.genresList}>
