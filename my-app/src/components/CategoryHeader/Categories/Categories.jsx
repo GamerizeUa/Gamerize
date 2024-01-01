@@ -1,21 +1,36 @@
-import styles from "./Category.module.css";
+import styles from "./Categories.module.css";
+import { fetchAllCategories } from "../../../redux/categories/categoriesSlice";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-// const categories = [
-//   { id: 0, name: "Для сім’ї" },
-//   { id: 1, name: "Для компанії" },
-//   { id: 2, name: "Для дітей" },
-//   { id: 3, name: "Для вечірок" },
-//   { id: 4, name: "Для двох" },
-//   { id: 5, name: "В дорогу" },
-//   { id: 6, name: "Для дорослих" },
-// ];
+// import axios from "axios";
 
-const Category = () => {
+// axios.defaults.baseURL = "https://predictor.ltd.ua";
+
+const Categories = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAllCategories());
+  }, [dispatch]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get("/api/Category/GetAll");
+
+  //       console.log(response.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
+
   return (
     <div>
       <ul className={styles.categoryList}>
         <li className={styles.categoryListItem}>
-          <div>
+          <div className={styles.categoryIcon}>
             <svg
               width="22"
               height="18"
@@ -32,7 +47,7 @@ const Category = () => {
           <p>Для сім’ї</p>
         </li>
         <li className={styles.categoryListItem}>
-          <div>
+          <div className={styles.categoryIcon}>
             <svg
               width="22"
               height="16"
@@ -49,7 +64,7 @@ const Category = () => {
           <p>Для двох</p>
         </li>
         <li className={styles.categoryListItem}>
-          <div>
+          <div className={styles.categoryIcon}>
             <svg
               width="24"
               height="12"
@@ -66,7 +81,7 @@ const Category = () => {
           <p>Для компанії</p>
         </li>
         <li className={styles.categoryListItem}>
-          <div>
+          <div className={styles.categoryIcon}>
             <svg
               width="14"
               height="20"
@@ -83,7 +98,7 @@ const Category = () => {
           <p>В дорогу</p>
         </li>
         <li className={styles.categoryListItem}>
-          <div>
+          <div className={styles.categoryIcon}>
             <svg
               width="18"
               height="18"
@@ -100,7 +115,7 @@ const Category = () => {
           <p>Для дітей</p>
         </li>
         <li className={styles.categoryListItem}>
-          <div>
+          <div className={styles.categoryIcon}>
             <svg
               width="27"
               height="13"
@@ -117,7 +132,7 @@ const Category = () => {
           <p>Для дорослих</p>
         </li>
         <li className={styles.categoryListItem}>
-          <div>
+          <div className={styles.categoryIcon}>
             <svg
               width="20"
               height="20"
@@ -138,4 +153,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default Categories;
