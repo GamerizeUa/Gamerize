@@ -21,7 +21,7 @@ export const QuestioningForm = () => {
         description: yup.string().required("Введіть запитання")
     });
 
-    const {register, handleSubmit, formState: {errors}} = useForm({
+    const {register, handleSubmit, formState: {errors}, reset} = useForm({
         resolver: yupResolver(schema)
     });
 
@@ -35,7 +35,10 @@ export const QuestioningForm = () => {
         // TODO post request
         //Axios.post('', data).then().catch()
 
-        formRef.current.reset();
+        reset();
+        setFocusedName(false);
+        setFocusedEmail(false);
+        setFocusedDescription(false);
     }
 
     return (
@@ -43,9 +46,11 @@ export const QuestioningForm = () => {
             <div className={styles.feedback_outerContainer + " container"}>
                 <div className={styles.feedback_container }>
                     <div className={styles.feedback_formBlock}>
-                        <p className={styles.feedback_title}>Виникли запитання?</p>
+                        <div className={styles.feedback_titleContainer}>
+                            <p className={styles.feedback_title}>Виникли запитання?</p>
+                        </div>
                         <form className={styles.feedback_form} ref={formRef}  onSubmit={handleSubmit(onSubmit)}>
-                            <div className={`${styles.input_container} ${isFocusedName ? styles.focusedInput : ''}`}>
+                            <div className={`${styles.input_container} ${errors.name?.message ? styles.input_errorBorder : ''} ${isFocusedName ? styles.focusedInput : ''} `}>
                                 <FontAwesomeIcon icon={faUser} className={styles.input_icon}/>
                                 <input
                                     type="text"
@@ -55,7 +60,7 @@ export const QuestioningForm = () => {
                                     {...register("name")} />
                                 <p className={styles.input_error}>{errors.name?.message}</p>
                             </div>
-                            <div className={`${styles.input_container} ${isFocusedEmail ? styles.focusedInput : ''}`}>
+                            <div className={`${styles.input_container} ${errors.email?.message ? styles.input_errorBorder : ''} ${isFocusedEmail ? styles.focusedInput : ''}`}>
                                 <FontAwesomeIcon icon={faEnvelope} className={styles.input_icon}/>
                                 <input
                                     type="email"
@@ -68,7 +73,7 @@ export const QuestioningForm = () => {
                             <div className={styles.input_textareaContainer}>
                         <textarea
                             placeholder="Напишіть чим ми можемо вам допомогти..."
-                            className={styles.input_textarea}
+                            className={`${styles.input_textarea} ${errors.description?.message ? styles.input_errorBorder : ''}`}
                             onFocus={() => handleFocus(setFocusedDescription, setFocusedName, setFocusedEmail)}
                             {...register("description")} />
                                 <p className={`${styles.input_error} ${styles.inputTextarea_input}`}>{errors.description?.message}</p>
