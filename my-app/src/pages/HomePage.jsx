@@ -1,4 +1,4 @@
-import GamePicker from "../components/GamePicker/GamePicker";
+import GamePicker from "../components/product-page/GamePicker/GamePicker";
 import ProductsCarousel from "../components/ProductsCarousel/ProductsCarousel";
 import { QuestioningForm } from "@/components/landing-page/QuestioningForm/QuestioningForm.jsx";
 import { SelectionOfGames } from "@/components/landing-page/SelectionOfGames/SelectionOfGames.jsx";

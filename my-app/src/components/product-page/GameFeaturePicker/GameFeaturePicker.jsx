@@ -1,4 +1,4 @@
-import ArrowDownIcon from "../icons/ArrowDownIcon";
+import ArrowDownIcon from "../../icons/ArrowDownIcon";
 import styles from "./GameFeaturePicker.module.css"
 
 export default function GameFeaturePicker ({featureTitle}){
