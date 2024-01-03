@@ -1,16 +1,31 @@
 import styles from "./Categories.module.css";
+import { fetchAllCategories } from "../../../redux/categories/categoriesSlice";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-// const categories = [
-//   { id: 0, name: "Для сім’ї" },
-//   { id: 1, name: "Для компанії" },
-//   { id: 2, name: "Для дітей" },
-//   { id: 3, name: "Для вечірок" },
-//   { id: 4, name: "Для двох" },
-//   { id: 5, name: "В дорогу" },
-//   { id: 6, name: "Для дорослих" },
-// ];
+// import axios from "axios";
+
+// axios.defaults.baseURL = "https://predictor.ltd.ua";
 
 const Categories = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAllCategories());
+  }, [dispatch]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get("/api/Category/GetAll");
+
+  //       console.log(response.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
+
   return (
     <div>
       <ul className={styles.categoryList}>

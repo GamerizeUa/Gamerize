@@ -1,6 +1,6 @@
 import styles from './Banner.module.css';
 import presentBox from '../../../assets/images/presentBox.png';
-import star from '../../../assets/images/star.png';
+import star from '../../../assets/images/star.svg';
 import product from '../../../assets/images/product.png';
 
 export const Banner = () => {
@@ -10,7 +10,7 @@ export const Banner = () => {
                 <div className={styles.banner_container}>
                     <div className={styles.banner_leftPart}>
                         <div className={styles.banner_title}>
-                            <p className={styles.banner_highTitle}>Осінні</p>
+                            <p className={styles.banner_highTitle}>Зимові</p>
                             <p className={styles.banner_lowTitle}>ЗНИЖКИ</p>
                         </div>
                         <img src={presentBox} className={styles.banner_presentBox} alt="Present box"/>
