@@ -41,21 +41,41 @@ hr{
 .productDelivery_info {
     display: flex;
     flex-direction: column;
-    gap: 7px;
+    gap: 12px;
 }
 
 .productDelivery_title{
     display: inline-flex;
     color: #2B2B2B;
     font-family: Noto Sans;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
 }
 
 .productDelivery_description{
     color: #8E8E8E;
     font-family: Noto Sans;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
     line-height: 130%;
+}
+
+@media screen and (min-width: 744px){
+    .productDelivery_info {
+        gap: 7px;
+    }
+}
+
+@media screen and (min-width: 1440px){
+    .productDelivery_title{
+        font-size: 16px;
+    }
+
+    .productDelivery_description{
+        color: #8E8E8E;
+        font-family: Noto Sans;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 130%;
+    }
 }
