@@ -1,4 +1,4 @@
-const ArrowRightIcon = () => {
+const ArrowRightIcon = ({ color = "#AAC4FF", strokeWidth = "2" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -9,8 +9,8 @@ const ArrowRightIcon = () => {
     >
       <path
         d="M18.75 37.5L31.25 25L18.75 12.5"
-        stroke="#AAC4FF"
-        strokeWidth="2"
+        stroke={color}
+        strokeWidth={strokeWidth}
         strokeLinecap="round"
         strokeLinejoin="round"
       />
