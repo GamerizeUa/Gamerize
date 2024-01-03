@@ -1,9 +1,10 @@
 import styles from './ProductCard.module.css'
 import HeartBlueIcon from "../icons/HeartBlueIcon";
+import { Link } from 'react-router-dom';
 
 export default function ProductCard({configurationObject = {isOldPrice : false, isDiscount : false, isCartView : false}, product : {id,discount, name, minPlayers, maxPlayers, minAge, price, oldPrice, gameTimeMinutes,photo}}) {
     return (
-        <div className={styles.allContent}>
+        <Link className={styles.allContent} to={"catalog/:product"}>
             <div className={styles.cardTop}>
                     <div className={styles.iconsBar}>
                         {
@@ -33,6 +34,6 @@ export default function ProductCard({configurationObject = {isOldPrice : false, 
                 </div>
                 <div className={styles.buyBtn}><p>Купити</p></div>
             </div>
-        </div>
+        </Link>
     );
 }

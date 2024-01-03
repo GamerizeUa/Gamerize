@@ -1,0 +1,17 @@
+.wrap {
+    width: 100%;
+}
+.container {
+
+}
+.reviewWrap {
+    margin-top: 58px;
+    width: 100%;
+}
+.reviewWrapBorder {
+    border-bottom: 1px solid var(--dark-purple);
+}
+.paginationBtnsWrap {
+    display: flex;
+    justify-content: center;
+}
