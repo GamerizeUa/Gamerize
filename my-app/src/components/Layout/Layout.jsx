@@ -19,15 +19,15 @@ const Layout = () => {
 
   return (
     <div className={styles.wrapper}>
-      {/* <Header openCart={openCart} /> */}
-      {/* <CategoryHeader /> */}
+      <Header openCart={openCart} />
+      <CategoryHeader />
       {cartOpen && <Cart cartClose={cartClose} />}
       <main className={styles.container}>
         <Suspense fallback={<div>Loading...</div>}>
           <Outlet />
         </Suspense>
       </main>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };
