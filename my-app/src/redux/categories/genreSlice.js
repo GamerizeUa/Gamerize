@@ -2,14 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-axios.defaults.baseURL = "https://predictor.ltd.ua/";
+axios.defaults.baseURL = "https://gamerize.ltd.ua/";
 
 export const fetchAllGenres = createAsyncThunk(
   "Genre/GetAll",
   async (_, thunkAPI) => {
     try {
       const response = await axios.get("api/Genre/GetAll");
-      console.log(response);
+      console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error.message);
@@ -57,7 +57,7 @@ export const fetchAllGenres = createAsyncThunk(
 // );
 
 const initialState = {
-  genres: [],
+  items: [],
   isLoading: false,
   error: null,
 };
@@ -72,7 +72,7 @@ const genresSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchAllGenres.fulfilled, (state, action) => {
-        state.categories = action.payload;
+        state.items = action.payload;
         state.isLoading = false;
         state.error = null;
       })

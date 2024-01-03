@@ -2,10 +2,7 @@ import styles from "./Categories.module.css";
 import { fetchAllCategories } from "../../../redux/categories/categoriesSlice";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-
-// import axios from "axios";
-
-// axios.defaults.baseURL = "https://predictor.ltd.ua";
+// import { selectCategories } from "@/redux/selectors";
 
 const Categories = () => {
   const dispatch = useDispatch();
@@ -13,18 +10,9 @@ const Categories = () => {
   useEffect(() => {
     dispatch(fetchAllCategories());
   }, [dispatch]);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get("/api/Category/GetAll");
 
-  //       console.log(response.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
+  // const categories = useSelector(selectCategories);
+  // console.log(categories);
 
   return (
     <div>

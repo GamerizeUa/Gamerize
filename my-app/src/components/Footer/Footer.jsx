@@ -13,25 +13,25 @@ const Footer = () => {
           <ul className={styles.toUsersList}>
             <p className={styles.footerListHeader}>Користувачам</p>
             <li>
-              <a>Оплата і доставка</a>
+              <a className={styles.footerListLink}>Оплата і доставка</a>
             </li>
             <li>
-              <a>Умови повернення</a>
+              <a className={styles.footerListLink}>Умови повернення</a>
             </li>
           </ul>
           <ul className={styles.navList}>
             <p className={styles.footerListHeader}>Навігація</p>
             <li>
-              <a>Настільні ігри</a>
+              <a className={styles.footerListLink}>Настільні ігри</a>
             </li>
             <li>
-              <a>Жанри</a>
+              <a className={styles.footerListLink}>Жанри</a>
             </li>
             <li>
-              <a>Пазли</a>
+              <a className={styles.footerListLink}>Пазли</a>
             </li>
             <li>
-              <a>Головоломки</a>
+              <a className={styles.footerListLink}>Головоломки</a>
             </li>
           </ul>
           <ul className={styles.contactsList}>
@@ -40,17 +40,17 @@ const Footer = () => {
               <a
                 href="tel:+380987067447"
                 rel="noopener noreferrer"
-                className={styles.telLink}
+                className={styles.telLink + " " + styles.footerListLink}
               >
                 <PhoneIcon />
                 <p>+380 98 7067 447</p>
               </a>
             </li>
             <li>
-              <a>
+              <a className={styles.footerListLink}>
                 <InstagramIcon />
               </a>
-              <a className={styles.fbIcon}>
+              <a className={styles.fbIcon + " " + styles.footerListLink}>
                 <FacebookIcon />
               </a>
             </li>
