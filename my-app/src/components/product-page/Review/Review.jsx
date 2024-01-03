@@ -4,10 +4,6 @@ import styles from "./Review.module.css"
 export default function Review({feedback:{customerName = "Anonim", text, createdDate = "2001-09-11", rate}}) {
     const dateElements = createdDate.split("-")
     const nameElements = customerName.split(" ")
-    console.log(nameElements)
-    console.log(nameElements[0])
-    console.log(nameElements[0][0])
-    console.log(nameElements[1])
     function getRandomColor() {
         var letters = '0123456789ABCDEF';
         var color = '#';
