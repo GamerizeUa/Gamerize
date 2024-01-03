@@ -1,12 +1,10 @@
-@media (min-width: 320px) {
 .logo {
-        font-size: 44px;
-        color: #FEFEFE;
-        cursor: pointer;
-    }
+    font-size: 32px;
+    color: #FEFEFE;
+    cursor: pointer;
 }
 
-@media (min-width: 834px) {
+@media (min-width: 744px) {
 .logo {
         font-size: 36px;
     }
@@ -14,6 +12,6 @@
 
 @media (min-width: 1280px) {
 .logo {
-        font-size: 32px;
+        font-size: 44px;
     }
 }

@@ -25,8 +25,8 @@ const CategoryHeader = () => {
   return (
     <section className={styles.categoryHeaderWrap}>
       <div className={styles.categoryHeader}>
-        {windowWidth <= 1280 && <SearchInput />}
-        {windowWidth > 1280 && (
+        {windowWidth < 1280 && <SearchInput />}
+        {windowWidth >= 1280 && (
           <ul className={styles.categoryList}>
             <li
               className={styles.categoryListItem}
