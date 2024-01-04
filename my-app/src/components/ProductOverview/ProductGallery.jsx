@@ -7,11 +7,13 @@ import imageCompanyGame from "../../assets/images/selection_company.jpg";
 import feedback from "../../assets/images/feedback.svg";
 import product from "../../assets/images/product.png";
 import box from "../../assets/images/presentBox.png";
+import {Breadcrumbs} from "./Breadcrumbs.jsx";
 
 export const ProductGallery = () => {
     const photoArray = [mainProductPhoto, imageCompanyGame, feedback, imageCompanyGame, product, box, feedback];
     const thumbnailsContainer = useRef(null);
     const mainPhotoContainer = useRef(null);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [thumbnailsContainerGap, setThumbnailsContainerGap] = useState(0);
     const [thumbnailsContainerWidth, setThumbnailsContainerWidth] = useState(0);
     const [mainPhotoContainerWidth, setMainPhotoContainerWidth] = useState(0);
@@ -46,6 +48,14 @@ export const ProductGallery = () => {
         return () => {
             observer.disconnect();
         };
+    }, []);
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowWidth(window.innerWidth);
+        }
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
     }, []);
 
     useLayoutEffect(() => {
@@ -156,6 +166,7 @@ export const ProductGallery = () => {
 
     return (
         <div className={styles.productGallery}>
+            {windowWidth < 1280 && <Breadcrumbs/>}
             <div className={styles.productGallery_mainImageContainer}>
                 <div className={styles.productGallery_mainImagesList}
                      ref={mainPhotoContainer}

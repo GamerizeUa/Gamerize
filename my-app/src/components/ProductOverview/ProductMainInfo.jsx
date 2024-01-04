@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styles from './ProductMainInfo.module.css';
 import {Breadcrumbs} from "./Breadcrumbs.jsx";
 import {ProductDeliveryAndPayment} from "./ProductDeliveryAndPayment.jsx";
@@ -9,6 +9,15 @@ import CoinsHandIcon from "./icons/CoinsHandIcon.jsx";
 
 export const ProductMainInfo = () => {
     const [isIconFilled, setIsIconFilled] = useState(false);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowWidth(window.innerWidth);
+        }
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const handleClick = () => {
         setIsIconFilled(!isIconFilled);
@@ -17,7 +26,7 @@ export const ProductMainInfo = () => {
     return (
         <div className={styles.productInfo}>
             <div className={styles.productInfo_container}>
-                <Breadcrumbs/>
+                {windowWidth >= 1280 && <Breadcrumbs/>}
                 <div className={styles.productInfo_mainPart}>
                     <div className={styles.productInfo_topPart}>
                         <div className={styles.productInfo_titleSku}>
