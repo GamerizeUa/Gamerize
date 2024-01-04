@@ -1,65 +1,30 @@
-@keyframes scaleIn {
-    0% {
-        transform: rotate(0deg);
-    }
-    30% {
-        transform: rotate(-20deg) scale(1.3);
-    }
-    50% {
-        transform: rotate(20deg) scale(1.3);
-    }
-    70% {
-        transform: rotate(-20deg) scale(1.3);
-    }
-    100% {
-        transform: rotate(0deg);
-    }
-}
-
-@keyframes setOpacity {
-    0% {
-        opacity: 0;
-    }
-    10% {
-        opacity: 1;
-    }
-    90% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
-}
-
 .productInfo {
-    width: 50%;
+    width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
 }
 
 .productInfo_container {
-    width: 90.9%;
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
 
 .productInfo_mainPart {
-    padding-bottom: 47px;
+    padding-bottom: 36px;
 }
 
 .productInfo_topPart {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
-    gap: 15px;
-    padding-bottom: 56px;
+    padding-bottom: 24px;
 }
 
 .productInfo_bottomPart {
     display: flex;
     flex-direction: column;
-    gap: 56px;
+    gap: 24px;
 }
 
 .productInfo_titleSku {
@@ -71,65 +36,15 @@
 .productInfo_title {
     color: #6566AC;
     font-family: Oswald;
-    font-size: 44px;
+    font-size: 28px;
     font-weight: 400;
 }
 
 .productInfo_sku {
     color: #8E8E8E;
     font-family: Noto Sans;
-    font-size: 16px;
-    font-weight: 400;
-}
-
-.productInfo_actions {
-    display: flex;
-    flex-direction: row;
-    gap: 8px;
-    position: relative;
-}
-
-.productInfo_action {
-    display: inline-flex;
-    padding: 7px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    background: #EEF1FF;
-    cursor: pointer;
-}
-
-.productInfo_actionIcon {
-    margin: 3px;
-}
-
-.productInfo_action:hover path {
-    stroke: #AAC4FF;
-}
-
-.productInfo_iconFilled {
-    fill: #AAC4FF;
-    animation: scaleIn 1s ease-in-out;
-}
-
-.productInfo_iconFilled path {
-    stroke: #AAC4FF;
-    stroke-width: 1px;
-}
-
-.productInfo_actionPhrase::before {
-    content: "Додано до списку бажань";
-    position: absolute;
-    top: 100%;
-    right: 0;
-    padding-top: 8px;
-    text-align: center;
     font-size: 12px;
-    color: #AAC4FF;
-    height: 10px;
-    width: 151px;
-    opacity: 0;
-    animation: setOpacity 3s ease-in-out;
+    font-weight: 400;
 }
 
 .productInfo_prices {
@@ -137,20 +52,20 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    gap: 2.75%;
+    gap: 16px;
 }
 
 .productInfo_currentPrice {
     color: #2B2B2B;
     font-family: Noto Sans;
-    font-size: 32px;
+    font-size: 20px;
     font-weight: 700;
 }
 
 .productInfo_previousPrice {
     color: #8E8E8E;
     font-family: Noto Sans;
-    font-size: 20px;
+    font-size: 12px;
     font-weight: 400;
     text-decoration-line: line-through;
 }
@@ -158,7 +73,8 @@
 .productInfo_description {
     color: #000;
     font-family: Noto Sans;
-    font-size: 16px;
+    font-size: 12px;
+    text-align: justify;
     font-weight: 400;
     line-height: 150%;
 }
@@ -168,13 +84,18 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 4.12%;
+    flex-wrap: wrap;
+    gap: 24px;
 }
 
 .productInfo_buyOneClick, .productInfo_addToCart {
     color: #2B2B2B;
     font-family: Noto Sans;
-    font-size: 16px;
+    /*width: 100%;*/
+    height: 53px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    font-size: 14px;
     font-weight: 700;
     border-radius: 10px;
     box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.30);
@@ -193,26 +114,169 @@
 
 .productInfo_buyOneClick {
     border: 1px solid #AAC4FF;
-    padding: 16px 48px;
     background-color: white;
-
+    flex-basis: 209px;
+    min-width: 209px;
+    max-width: 400px;
 }
 
 .productInfo_addToCart {
-    padding: 16px 72px;
     background: #AAC4FF;
     gap: 8px;
+    min-width: 288px;
+    flex-basis: 288px;
+    max-width: 400px;
 }
 
 .productInfo_bonuses {
     color: #000;
     font-family: Noto Sans;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 700;
     text-align: center;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     gap: 8px;
-    padding-bottom: 64px;
+    padding-bottom: 38px;
+}
+
+@media screen and (min-width: 744px) {
+    .productInfo_mainPart {
+        padding-bottom: 43px;
+    }
+
+    .productInfo_topPart {
+        padding-bottom: 32px;
+    }
+
+    .productInfo_bottomPart {
+        gap: 32px;
+    }
+
+    .productInfo_title {
+        font-size: 32px;
+    }
+
+    .productInfo_sku {
+        font-size: 12px;
+    }
+
+    .productInfo_currentPrice {
+        font-size: 24px;
+    }
+
+    .productInfo_previousPrice {
+        font-size: 14px;
+    }
+
+    .productInfo_description {
+        font-size: 14px;
+    }
+
+    .productInfo_buyButtons {
+        justify-content: flex-start;
+        gap: 40px;
+    }
+
+    .productInfo_buyOneClick, .productInfo_addToCart{
+        flex-basis: 0;
+        flex-grow: 0;
+        max-width: none;
+    }
+
+    .productInfo_buyOneClick {
+        width: 209px;
+        min-width: 209px;
+    }
+
+    .productInfo_addToCart {
+        width: 304px;
+        min-width: 304px;
+    }
+
+    .productInfo_bonuses {
+        font-size: 14px;
+        justify-content: flex-start;
+    }
+}
+
+@media screen and (min-width: 1280px){
+    .productInfo {
+        width: 51.97%;
+    }
+
+    .productInfo_mainPart {
+        padding-bottom: 47px;
+    }
+
+    .productInfo_topPart {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding-bottom: 44px;
+    }
+
+    .productInfo_bottomPart {
+        gap: 44px;
+    }
+
+    .productInfo_title {
+        font-size: 36px;
+    }
+
+    .productInfo_sku {
+        font-size: 14px;
+    }
+
+    .productInfo_buyButtons {
+        justify-content: center;
+    }
+}
+
+@media screen and (min-width: 1440px){
+    .productInfo {
+        width: 45.47%;
+    }
+
+    .productInfo_topPart {
+        padding-bottom: 60px;
+    }
+
+    .productInfo_bottomPart {
+        gap: 56px;
+    }
+
+    .productInfo_title {
+        font-size: 44px;
+    }
+
+    .productInfo_currentPrice {
+        font-size: 32px;
+    }
+
+    .productInfo_previousPrice {
+        font-size: 20px;
+    }
+
+    .productInfo_description {
+        font-size: 16px;
+    }
+
+    .productInfo_buyOneClick, .productInfo_addToCart{
+        font-size: 16px;
+    }
+
+    .productInfo_buyButtons {
+        gap: 24px;
+    }
+
+    .productInfo_buyOneClick {
+        width: 225px;
+        min-width: 225px;
+    }
+
+    .productInfo_bonuses {
+        font-size: 16px;
+    }
 }
