@@ -1,0 +1,25 @@
+﻿using Gamerize.DAL.Repositories.Interfaces;
+using Gamerize.DAL.Repositories;
+using Gamerize.BLL.Services.Interfaces;
+using Gamerize.BLL.Services;
+using Gamerize.DAL.UnitOfWork.Interfaces;
+using Gamerize.DAL.UnitOfWork;
+
+namespace webapi.Extensions.DI
+{
+	public static class DependencyInjections
+	{
+		public static void AddDependencyInjections(this IServiceCollection services)
+		{
+			services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+			services.AddScoped<IUnitOfWork, UnitOfWork>();
+			
+			services.AddTransient(typeof(IService<,>), typeof(GenericService<,>));
+			services.AddTransient<CategorySevice>();
+			services.AddTransient<TagService>();
+			services.AddTransient<ThemeService>();
+			services.AddTransient<LanguageService>();
+			services.AddTransient<GenreService>();
+		}
+	}
+}

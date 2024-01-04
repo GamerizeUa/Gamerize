@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gamerize.DAL.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20231122205011_InitDataBase")]
-    partial class InitDataBase
+    [Migration("20231222112416_InitDatabase")]
+    partial class InitDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -209,6 +209,59 @@ namespace Gamerize.DAL.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Gamerize.DAL.Entities.Admin.WishList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("WishLists");
+                });
+
+            modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Answer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ManagerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId")
+                        .IsUnique();
+
+                    b.ToTable("Answers");
+                });
+
             modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Category", b =>
                 {
                     b.Property<byte>("Id")
@@ -335,6 +388,9 @@ namespace Gamerize.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<byte>("Number")
+                        .HasColumnType("tinyint");
+
                     b.Property<string>("Path")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -425,6 +481,38 @@ namespace Gamerize.DAL.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Question", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsAnswered")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Questions");
+                });
+
             modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Tag", b =>
                 {
                     b.Property<int>("Id")
@@ -463,29 +551,6 @@ namespace Gamerize.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Themes");
-                });
-
-            modelBuilder.Entity("Gamerize.DAL.Entities.Shop.WishList", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("WishLists");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -644,6 +709,36 @@ namespace Gamerize.DAL.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("Gamerize.DAL.Entities.Admin.WishList", b =>
+                {
+                    b.HasOne("Gamerize.DAL.Entities.Shop.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Gamerize.DAL.Entities.Admin.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Answer", b =>
+                {
+                    b.HasOne("Gamerize.DAL.Entities.Shop.Question", "Question")
+                        .WithOne("Answer")
+                        .HasForeignKey("Gamerize.DAL.Entities.Shop.Answer", "QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Question");
+                });
+
             modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Discount", b =>
                 {
                     b.HasOne("Gamerize.DAL.Entities.Shop.Product", "Product")
@@ -712,7 +807,7 @@ namespace Gamerize.DAL.Migrations
                     b.Navigation("Theme");
                 });
 
-            modelBuilder.Entity("Gamerize.DAL.Entities.Shop.WishList", b =>
+            modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Question", b =>
                 {
                     b.HasOne("Gamerize.DAL.Entities.Shop.Product", "Product")
                         .WithMany()
@@ -720,15 +815,7 @@ namespace Gamerize.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Gamerize.DAL.Entities.Admin.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Product");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -829,6 +916,12 @@ namespace Gamerize.DAL.Migrations
                     b.Navigation("Feedbacks");
 
                     b.Navigation("Images");
+                });
+
+            modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Question", b =>
+                {
+                    b.Navigation("Answer")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Theme", b =>

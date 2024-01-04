@@ -5,6 +5,7 @@ namespace Gamerize.BLL.Models
 	public class ImageDTO : IEntity
 	{
 		public int Id { get; set; }
+		public int Number { get; set; }
 		public string Path { get; set; }
 		public int ProductId { get; set; }
 	}
