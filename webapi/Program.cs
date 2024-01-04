@@ -1,12 +1,7 @@
 using Gamerize.BLL.AutoMapper;
-using Gamerize.BLL.Services;
-using Gamerize.BLL.Services.Interfaces;
 using Gamerize.DAL.Contexts;
-using Gamerize.DAL.Repositories;
-using Gamerize.DAL.Repositories.Interfaces;
-using Gamerize.DAL.UnitOfWork;
-using Gamerize.DAL.UnitOfWork.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using webapi.Extensions.DI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,11 +12,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApiDbContext>(options => options.UseSqlServer(
 	builder.Configuration.GetConnectionString("SqlConnection")));
 builder.Services.AddAutoMapper(typeof(ToDtoMappingProfile));
-builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
-builder.Services.AddTransient(typeof(IService<,>), typeof(GenericService<,>));
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddTransient<CategorySevice>();
+
 builder.Services.AddControllers();
+
 builder.Services.AddCors(options =>
 	options.AddPolicy("AllowAnyOrigin", builder =>
 		{
@@ -31,6 +24,8 @@ builder.Services.AddCors(options =>
 		})
 	);
 
+// Add Dependency Injections to the container
+builder.Services.AddDependencyInjections();
 
 var app = builder.Build();
 
@@ -52,4 +47,5 @@ app.UseCors("AllowAnyOrigin");
 app.UseHttpsRedirection();
 
 app.MapControllers();
+//app.MapCateroryEndpoints();
 app.Run();

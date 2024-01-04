@@ -15,12 +15,12 @@ namespace Gamerize.BLL.Services
 		private readonly IMapper _mapper;
 		public CategorySevice(IUnitOfWork unitOfWork, IMapper mapper)
 		{
-			_mapper = mapper ?? throw new ArgumentNullException(nameof(unitOfWork));
-			_unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+			_mapper = mapper;
+			_unitOfWork = unitOfWork;
 			_repository = _unitOfWork.GetRepository<Category>();
 		}
 
-		public async Task<CategoryDTO> AddNewCategoryAsync(CategoryDTO newCategory)
+		public async Task<CategoryDTO> CreateAsync(CategoryDTO newCategory)
 		{
 			try
 			{
@@ -36,6 +36,7 @@ namespace Gamerize.BLL.Services
 					Name = newCategory.Name.Trim(),
 					Description = newCategory.Description.Trim(),
 				};
+
 				await _repository.AddAsync(category);
 				await _unitOfWork.SaveChangesAsync();
 				return _mapper.Map<CategoryDTO>(category);
@@ -45,19 +46,19 @@ namespace Gamerize.BLL.Services
 				throw new ServerErrorException(ex.Message, ex);
 			}
 		}
-		public async Task<CategoryDTO> GetCategoryAsync(int id)
+		public async Task<CategoryDTO> GetByIdAsync(int id)
 		{
 			try
 			{
-				return _mapper.Map<CategoryDTO>(await _repository.GetByIdAsync(id)
-					?? throw new InvalidIdException($"Категорії з id: {id} ще/вже не існує!"));
+				return _mapper.Map<CategoryDTO>(await _repository.GetByIdAsync(id) ?? 
+					throw new InvalidIdException($"Категорії з id: {id} ще/вже не існує!"));
 			}
 			catch (DbUpdateException ex)
 			{
 				throw new ServerErrorException(ex.Message, ex);
 			}
 		}
-		public async Task<ICollection<CategoryDTO>> GetAllCategoriesAsync()
+		public async Task<ICollection<CategoryDTO>> GetAllAsync()
 		{
 			try
 			{
@@ -68,14 +69,19 @@ namespace Gamerize.BLL.Services
 				throw new ServerErrorException(ex.Message, ex);
 			}
 		}
-		public async Task<CategoryDTO> UpdateCategoryAsync(CategoryDTO editCategory)
+		public async Task<CategoryDTO> UpdateAsync(CategoryDTO editCategory)
 		{
 			try
 			{
 				var category = await _repository.GetByIdAsync(editCategory.Id)
 					?? throw new InvalidIdException($"Категорії з id: {editCategory.Id} ще/вже не існує!");
-				var updated = _mapper.Map(editCategory, category);
-				await _repository.UpdateAsync(updated);
+				bool categoryExists = await _repository.Get()
+				.AnyAsync(cat => cat.Name.ToUpper() == editCategory.Name.ToUpper());
+
+				if (categoryExists)
+					throw new DuplicateItemException($"Категорія з назваю {editCategory.Name} вже існує");
+
+				_mapper.Map(editCategory, category);
 				await _unitOfWork.SaveChangesAsync();
 				return editCategory;
 			}
@@ -84,7 +90,7 @@ namespace Gamerize.BLL.Services
 				throw new ServerErrorException(ex.Message, ex);
 			}
 		}
-		public async Task DeleteCategoryAsync(int id)
+		public async Task DeleteAsync(int id)
 		{
 			try
 			{

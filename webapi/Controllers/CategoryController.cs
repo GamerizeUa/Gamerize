@@ -9,10 +9,10 @@ namespace webapi.Controllers
 	[Route("api/[controller]")]
 	public class CategoryController : ControllerBase
 	{
-		private readonly CategorySevice _sevice;
+		private readonly CategorySevice _service;
 		public CategoryController(CategorySevice service)
 		{
-			_sevice = service;
+			_service = service;
 		}
 
 		[HttpGet("GetAll")]
@@ -20,7 +20,7 @@ namespace webapi.Controllers
 		{
 			try
 			{
-				return Ok(await _sevice.GetAllCategoriesAsync());
+				return Ok(await _service.GetAllAsync());
 			}
 			catch (ServerErrorException ex)
 			{
@@ -33,11 +33,11 @@ namespace webapi.Controllers
 		{
 			try
 			{
-				return Ok(await _sevice.GetCategoryAsync(id));
+				return Ok(await _service.GetByIdAsync(id));
 			}
 			catch (InvalidIdException ex)
 			{
-				return StatusCode(400, ex.Message);
+				return StatusCode(404, ex.Message);
 			}
 			catch (ServerErrorException ex)
 			{
@@ -46,13 +46,13 @@ namespace webapi.Controllers
 		}
 
 		[HttpPost("Create")]
-		public async Task<ActionResult<CategoryDTO>> CreateCategoty([FromBody] CategoryDTO newCategory)
+		public async Task<ActionResult<CategoryDTO>> Create([FromBody] CategoryDTO newCategory)
 		{
 			try
 			{
 				return (!ModelState.IsValid) ?
 					BadRequest() :
-					Ok(await _sevice.AddNewCategoryAsync(newCategory));
+					Ok(await _service.CreateAsync(newCategory));
 			}
 			catch (DuplicateItemException ex)
 			{
@@ -71,9 +71,13 @@ namespace webapi.Controllers
 			{
 				return (!ModelState.IsValid) ? 
 					BadRequest() : 
-					Ok(await _sevice.UpdateCategoryAsync(updateCategory));
+					Ok(await _service.UpdateAsync(updateCategory));
 			}
 			catch (InvalidIdException ex)
+			{
+				return StatusCode(400, ex.Message);
+			}
+			catch (DuplicateItemException ex)
 			{
 				return StatusCode(400, ex.Message);
 			}
@@ -84,11 +88,11 @@ namespace webapi.Controllers
 		}
 
 		[HttpDelete("Delete/{id:int}")]
-		public async Task<IActionResult> Delete(int id)
+		public async Task<IActionResult> DeleteCategory(int id)
 		{
 			try
 			{
-				await _sevice.DeleteCategoryAsync(id);
+				await _service.DeleteAsync(id);
 				return NoContent();
 			}
 			catch (InvalidIdException ex)
