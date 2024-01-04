@@ -191,7 +191,7 @@ export const ProductGallery = () => {
             </div>
             <div className={styles.productGallery_gallery}>
                 <FontAwesomeIcon icon={faChevronLeft} className={styles.productGallery_arrow}
-                                 onClick={moveLeftGallery}/>
+                                 onClick={() => moveLeftGallery(1)}/>
                 <div className={styles.productGallery_thumbnailsContainer}>
                     <div className={styles.productGallery_thumbnailsList}
                          ref={thumbnailsContainer}
@@ -217,7 +217,7 @@ export const ProductGallery = () => {
                     </div>
                 </div>
                 <FontAwesomeIcon icon={faChevronRight} className={styles.productGallery_arrow}
-                                 onClick={moveRightGallery}/>
+                                 onClick={() => moveRightGallery(1)}/>
             </div>
         </div>
     )
