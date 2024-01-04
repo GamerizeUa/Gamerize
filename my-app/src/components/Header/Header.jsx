@@ -7,8 +7,9 @@ import styles from "./Header.module.css";
 import AccountInformation from "./AccountInformation";
 import { SearchInput } from "../SearchInput/SearchInput";
 import { Logo } from "../Logo/Logo";
+import BurgerMenuIcon from "../icons/BurgerMenuIcon";
 
-const Header = ({ openCart }) => {
+const Header = ({ openCart, openBurgerMenu }) => {
   const [accountInformation, setAccountInformation] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -28,30 +29,22 @@ const Header = ({ openCart }) => {
       <div className={styles.header}>
         <div className={styles.logoWrapper}>
           {windowWidth <= 1280 && (
-            <svg
+            <div
               className={styles.burgerMenu}
-              width="24"
-              height="25"
-              viewBox="0 0 24 25"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+              onClick={() => {
+                openBurgerMenu();
+              }}
             >
-              <path
-                d="M3 12.5H15M3 6.5H21M3 18.5H21"
-                stroke="#FEFEFE"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+              <BurgerMenuIcon />
+            </div>
           )}
-          {windowWidth >= 834 && <Logo />}
+          {windowWidth >= 744 && <Logo />}
         </div>
-        {windowWidth < 834 && <Logo />}
+        {windowWidth < 744 && <Logo />}
         <div className={styles.headerInfoBlock}>
-          {windowWidth > 1280 && <SearchInput />}
+          {windowWidth >= 1280 && <SearchInput />}
           <ul className={styles.headerList}>
-            {windowWidth >= 834 && (
+            {windowWidth >= 744 && (
               <li>
                 <a
                   href="tel:+380987067447"
@@ -72,7 +65,7 @@ const Header = ({ openCart }) => {
                 <ShoppingCartIcon />
               </button>
             </li>
-            {windowWidth >= 834 && (
+            {windowWidth >= 744 && (
               <li
                 className={styles.headerListItem}
                 onMouseEnter={() => {
@@ -88,7 +81,7 @@ const Header = ({ openCart }) => {
                 {accountInformation && <AccountInformation />}
               </li>
             )}
-            {windowWidth >= 834 && (
+            {windowWidth >= 744 && (
               <li>
                 <a href="/favorites" className={styles.headerButton}>
                   <HeartIcon />

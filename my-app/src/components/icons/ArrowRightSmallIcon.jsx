@@ -1,15 +1,15 @@
-const CrossIcon = () => {
+const ArrowRightSmallIcon = () => {
   return (
     <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
+      width="18"
+      height="18"
+      viewBox="0 0 18 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M18 6L6 18M6 6L18 18"
-        stroke="#FEFEFE"
+        d="M6.75 13.5L11.25 9L6.75 4.5"
+        stroke="#AAC4FF"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -18,4 +18,4 @@ const CrossIcon = () => {
   );
 };
 
-export default CrossIcon;
+export default ArrowRightSmallIcon;
