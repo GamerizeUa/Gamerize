@@ -6,16 +6,19 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
-    grid-column-gap: 51px;
-    grid-row-gap: 6px;
+    grid-column-gap: 30px;
+    grid-row-gap: 20px;
     position: absolute;
-    top: 35px;
+    top: 45px;
     left: 50%;
     transform: translateX(-50%) scale(1);
-    padding: 24px;
+    padding: 20px 32px;
     border-radius: 10px;
     z-index: 10;
     background-color: #fff;
+    box-shadow: rgba(170,
+                    196,
+                    255, 0.4) 0px 6px 20px;
 
     /* height: 195px;
     display: flex;
@@ -38,7 +41,7 @@
 
 .genresListItem {
     position: relative;
-    padding: 9px 8px 9px 49px;
+    padding: 9px 8px 9px 40px;
     border-radius: 10px;
     font-size: 16px;
 

@@ -6,25 +6,19 @@
 
 .categoryHeader {
     margin: 0 auto;
-    padding: 15.5px 14.5px;
+    padding: 7px 14.5px;
 }
 
 @media (min-width: 744px) {
 .categoryHeader {
-        padding: 17.5px 118px;
-    }
-}
-
-@media (min-width: 1280px) {
-.categoryHeader {
-        padding: 11px 116px;
+        padding: 11px 118px;
     }
 }
 
 @media (min-width: 1280px) {
     .categoryHeader {
         max-width: 1440px;
-        padding: 11px 174px;
+        padding: 3px 174px;
     }
 }
 
@@ -39,5 +33,5 @@
     position: relative;
     font-size: 20px;
     cursor: pointer;
-    padding: 10px;
+    padding: 15px;
 }
