@@ -46,6 +46,7 @@
     max-height: 521px;
     object-fit: contain;
     border: 2px solid transparent;
+    cursor: pointer;
 }
 
 .productGallery_gallery{
