@@ -1,14 +1,19 @@
-@media (min-width: 320px) {
-    .inputWrapper {
-        max-width: 608px;
-        margin: 0 auto;
-        position: relative;
-    }
+.inputWrapper {
+    max-width: 508px;
+    margin: 0 auto;
+    position: relative;
 }
 
 @media (min-width: 1280px) {
     .inputWrapper {
-        width: 608px;
+    width: 448px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .inputWrapper {
+    width: 608px;
+    max-width: 608px;
     }
 }
 
@@ -16,9 +21,8 @@
     width: 100%;
     height: 37px;
     padding-left: 24px;
-    border: 1px solid #6566AC;
+    border: 1px solid #D2DAFF;
     border-radius: 10px;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .searchIcon {

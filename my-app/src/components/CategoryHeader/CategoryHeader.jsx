@@ -4,11 +4,15 @@ import styles from "./CategoryHeader.module.css";
 import Genres from "./Genres/Genres";
 import Themes from "./Themes/Themes";
 import { SearchInput } from "../SearchInput/SearchInput";
+import Puzzles from "./Puzzles/Puzzles";
+import BrainTeasers from "./BrainTeasers/BrainTeasers";
 
 const CategoryHeader = () => {
   const [isCategory, setIsCategory] = useState(false);
   const [isGenre, setIsGenre] = useState(false);
   const [isTheme, setIsTheme] = useState(false);
+  const [isPuzzle, setIsPuzzle] = useState(false);
+  const [isBrainTeaser, setIsBrainTeaser] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const handleChangedSize = () => {
@@ -25,8 +29,8 @@ const CategoryHeader = () => {
   return (
     <section className={styles.categoryHeaderWrap}>
       <div className={styles.categoryHeader}>
-        {windowWidth <= 1280 && <SearchInput />}
-        {windowWidth > 1280 && (
+        {windowWidth < 1280 && <SearchInput />}
+        {windowWidth >= 1280 && (
           <ul className={styles.categoryList}>
             <li
               className={styles.categoryListItem}
@@ -64,8 +68,30 @@ const CategoryHeader = () => {
               Тематика
               {isTheme && <Themes />}
             </li>
-            <li className={styles.categoryListItem}>Пазли</li>
-            <li className={styles.categoryListItem}>Головоломки</li>
+            <li
+              className={styles.categoryListItem}
+              onMouseEnter={() => {
+                setIsPuzzle(true);
+              }}
+              onMouseLeave={() => {
+                setIsPuzzle(false);
+              }}
+            >
+              Пазли
+              {isPuzzle && <Puzzles />}
+            </li>
+            <li
+              className={styles.categoryListItem}
+              onMouseEnter={() => {
+                setIsBrainTeaser(true);
+              }}
+              onMouseLeave={() => {
+                setIsBrainTeaser(false);
+              }}
+            >
+              Головоломки
+              {isBrainTeaser && <BrainTeasers />}
+            </li>
           </ul>
         )}
       </div>

@@ -1,0 +1,63 @@
+.backdrop{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .2);
+    opacity: 1;
+    transition-property: opacity;
+    z-index: 20;
+}
+
+.burgerMenuWrapper{
+    width: 320px;
+    height: 100%;
+    position: fixed;
+    overflow-y: scroll;
+    top: 0;
+    left: 0;
+    z-index: 50;
+    font-size: 14px;
+    background-color: #FFFFFF;
+}
+
+.closeIcon{
+    position: absolute;
+    top: 10px;
+    left: 14px;
+}
+
+.burgerMenuHeader{
+    height: 44px;
+    background-color: #AAC4FF;
+}
+
+.iconsList{
+    display: flex;
+    align-items: center;
+    gap: 106px;
+    padding: 26px 75px;
+}
+
+.burgerMenuListItem{
+    display: flex;
+    justify-content: space-between;
+    padding: 24px 12px;
+    border-top: 1px solid #AAC4FF;
+}
+
+.menuInfoList{
+    background-color: #AAC4FF;
+}
+
+.menuInfoListItem{
+    padding: 24px 12px;
+}
+
+.logOutBlock{
+display: flex;
+align-items: center;
+gap: 8px;
+padding: 17px 12px;
+}

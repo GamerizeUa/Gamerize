@@ -7,23 +7,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 24px;
+    padding: 15px 16px;
     margin: 0 auto;
 }
 
-/* @media (min-width: 320px) {
+@media (min-width: 744px) {
     .header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 16px 24px;
-        margin: 0 auto;
-    }
-} */
-
-@media (min-width: 834px) {
-    .header {
-        padding: 36px 64px 30px 64px;
+        padding: 34px 36px;
     }
 }
 
@@ -31,14 +21,14 @@
     .header {
         max-width: 1440px;
         padding: 22px 80px;
+        align-items: flex-end
     }
 }
 
 .logoWrapper{
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     gap: 24px;
-
 }
 
 .headerInfoBlock{
@@ -61,6 +51,7 @@
     gap: 8px;
     align-items: center;
     color: #FEFEFE;
+    font-size: 20px;
 }
 
 .headerButton {
