@@ -10,8 +10,8 @@ export const Breadcrumbs = () => {
         <div className={styles.breadcrumbs}>
             {array.map((breadcrumb, index) => (
                 <div className={styles.breadcrumbs_container} key={index} >
+                    {index !== 0 && <ArrowIcon />}
                     <Link to='/' className={styles.breadcrumbs_crumb}>{breadcrumb}</Link>
-                    {index < array.length - 1 && <ArrowIcon />}
                 </div>
             ))}
         </div>

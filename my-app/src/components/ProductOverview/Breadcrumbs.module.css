@@ -1,19 +1,20 @@
 .breadcrumbs{
     display: inline-flex;
     flex-direction: row;
-    padding-bottom: 56px;
+    padding-bottom: 24px;
     align-items: center;
     justify-content: flex-start;
     flex-wrap: wrap;
-    column-gap: 2.74%;
-    row-gap: 10px;
+    column-gap: 18px;
+    row-gap: 24px;
 }
 
 .breadcrumbs_container{
-    display: inline-flex;
+    display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 16px;
+    flex-wrap: wrap;
+    gap: 18px;
 }
 
 .breadcrumbs_crumb{
@@ -25,4 +26,21 @@
 
 .breadcrumbs_crumb:hover{
     color: #6566AC;
+}
+
+@media screen and (min-width: 744px){
+    .breadcrumbs{
+        padding-bottom: 0;
+        column-gap: 16px;
+    }
+
+    .breadcrumbs_container{
+        gap: 16px;
+    }
+}
+
+@media screen and (min-width: 1280px){
+    .breadcrumbs{
+        padding-bottom: 56px;
+    }
 }
