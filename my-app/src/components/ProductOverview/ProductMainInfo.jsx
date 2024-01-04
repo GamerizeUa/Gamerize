@@ -1,14 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import styles from './ProductMainInfo.module.css';
 import {Breadcrumbs} from "./Breadcrumbs.jsx";
+import {ActionsBar} from "./ActionsBar.jsx";
 import {ProductDeliveryAndPayment} from "./ProductDeliveryAndPayment.jsx";
-import ShareIcon from "./icons/ShareIcon.jsx";
-import HeartIcon from "./icons/HeartIcon.jsx";
 import CartIcon from "./icons/CartIcon.jsx";
 import CoinsHandIcon from "./icons/CoinsHandIcon.jsx";
 
 export const ProductMainInfo = () => {
-    const [isIconFilled, setIsIconFilled] = useState(false);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     useEffect(() => {
@@ -18,10 +16,6 @@ export const ProductMainInfo = () => {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
-
-    const handleClick = () => {
-        setIsIconFilled(!isIconFilled);
-    };
 
     return (
         <div className={styles.productInfo}>
@@ -33,17 +27,7 @@ export const ProductMainInfo = () => {
                             <div className={styles.productInfo_title}>Кодові імена: гра слів</div>
                             <div className={styles.productInfo_sku}>Артикул: 1497490495</div>
                         </div>
-                        <div className={styles.productInfo_actions}>
-                            <div
-                                className={`${styles.productInfo_action} 
-                                ${isIconFilled ? styles.productInfo_actionPhrase : ''}`}
-                                onClick={handleClick}>
-                                <HeartIcon isFilled={isIconFilled}/>
-                            </div>
-                            <div className={styles.productInfo_action}>
-                                <ShareIcon/>
-                            </div>
-                        </div>
+                        {windowWidth >= 1280 && <ActionsBar />}
                     </div>
                     <div className={styles.productInfo_bottomPart}>
                         <div className={styles.productInfo_prices}>

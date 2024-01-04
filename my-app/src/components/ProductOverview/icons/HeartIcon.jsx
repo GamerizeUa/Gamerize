@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "@/components/ProductOverview/ProductMainInfo.module.css";
+import styles from "../ActionsBar.module.css";
 const HeartIcon = (props) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg"
@@ -7,7 +7,7 @@ const HeartIcon = (props) => {
              height="20"
              viewBox="0 0 20 20"
              fill="none"
-             className={`${styles.productInfo_actionIcon} ${props.isFilled ? styles.productInfo_iconFilled : ''}`}
+             className={`${styles.actions_actionIcon} ${props.isFilled ? styles.actions_iconFilled : ''}`}
         >
             <path
                 fillRule="evenodd"

@@ -8,6 +8,7 @@ import feedback from "../../assets/images/feedback.svg";
 import product from "../../assets/images/product.png";
 import box from "../../assets/images/presentBox.png";
 import {Breadcrumbs} from "./Breadcrumbs.jsx";
+import {ActionsBar} from "./ActionsBar.jsx";
 
 export const ProductGallery = () => {
     const photoArray = [mainProductPhoto, imageCompanyGame, feedback, imageCompanyGame, product, box, feedback];
@@ -167,6 +168,9 @@ export const ProductGallery = () => {
     return (
         <div className={styles.productGallery}>
             {windowWidth < 1280 && <Breadcrumbs/>}
+            <div className={styles.productGallery_actionsBar}>
+                {windowWidth < 1280 && <ActionsBar />}
+            </div>
             <div className={styles.productGallery_mainImageContainer}>
                 <div className={styles.productGallery_mainImagesList}
                      ref={mainPhotoContainer}

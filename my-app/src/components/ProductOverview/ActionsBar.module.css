@@ -1,0 +1,83 @@
+@keyframes scaleIn {
+    0% {
+        transform: rotate(0deg);
+    }
+    30% {
+        transform: rotate(-20deg) scale(1.3);
+    }
+    50% {
+        transform: rotate(20deg) scale(1.3);
+    }
+    70% {
+        transform: rotate(-20deg) scale(1.3);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes setOpacity {
+    0% {
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.actions {
+    display: flex;
+    flex-direction: row;
+    justify-self: flex-end;
+    gap: 8px;
+    position: relative;
+}
+
+.actions_action {
+    display: inline-flex;
+    padding: 7px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background: #EEF1FF;
+    cursor: pointer;
+}
+
+.actions_actionIcon {
+    margin: 3px;
+}
+
+.actions_action:hover path {
+    stroke: #AAC4FF;
+}
+
+.actions_iconFilled {
+    fill: #AAC4FF;
+    animation: scaleIn 1s ease-in-out;
+}
+
+.actions_iconFilled path {
+    stroke: #AAC4FF;
+    stroke-width: 1px;
+}
+
+.actions_actionPhrase::before {
+    content: "Додано до списку бажань";
+    position: absolute;
+    top: 100%;
+    right: 0;
+    padding-top: 8px;
+    text-align: center;
+    font-size: 12px;
+    color: #AAC4FF;
+    height: 10px;
+    width: 151px;
+    opacity: 0;
+    animation: setOpacity 3s ease-in-out;
+}
