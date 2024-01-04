@@ -12,6 +12,7 @@
 
 .burgerMenuWrapper{
     width: 320px;
+    height: 100%;
     position: fixed;
     overflow-y: scroll;
     top: 0;
