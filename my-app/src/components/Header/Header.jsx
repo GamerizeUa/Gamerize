@@ -41,7 +41,7 @@ const Header = ({ openCart, openBurgerMenu }) => {
           {windowWidth >= 744 && <Logo />}
         </div>
         {windowWidth < 744 && <Logo />}
-        <div className={styles.headerInfoBlock}>
+        <div className={styles.headerInfoBloc}>
           {windowWidth >= 1280 && <SearchInput />}
           <ul className={styles.headerList}>
             {windowWidth >= 744 && (
