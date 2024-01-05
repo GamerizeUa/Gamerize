@@ -24,4 +24,8 @@
     <ProjectReference Include="..\Gamerize.DAL\Gamerize.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>

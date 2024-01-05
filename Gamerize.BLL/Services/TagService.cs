@@ -110,7 +110,7 @@ namespace Gamerize.BLL.Services
 			if (id is not null)
 				return $"Тег з id: {id} ще/вже не існує!";
 			if (name is not null)
-				return $"Тег назваю {name} вже існує";
+				return $"Тег з назваю {name} вже існує";
 			return "Something has gone wrong";
 		}
 	}
