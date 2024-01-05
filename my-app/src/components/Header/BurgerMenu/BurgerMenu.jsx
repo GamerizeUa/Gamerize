@@ -68,7 +68,7 @@ const BurgerMenu = ({ burgerMenuClose }) => {
             <a>Умови поверненн</a>я
           </li>
         </ul>
-        <div className={styles.logOutBlock}>
+        <div className={styles.logOutBloc}>
           <LogOutIcon />
           <p>Вихід</p>
         </div>
