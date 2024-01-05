@@ -25,7 +25,7 @@ namespace Gamerize.BLL.Services
 			try
 			{
 				bool categoryExists = await _repository.Get()
-				.AnyAsync(cat => cat.Name.ToUpper() == newCategory.Name.ToUpper());
+				.AnyAsync(cat => cat.Name.ToUpper().Trim() == newCategory.Name.ToUpper().Trim());
 
 				if (categoryExists)
 					throw new DuplicateItemException($"Категорія з назваю {newCategory.Name} вже існує");
@@ -103,6 +103,14 @@ namespace Gamerize.BLL.Services
 			{
 				throw new ServerErrorException(ex.Message, ex);
 			}
+		}
+		private string ExceptionMessage(int? id = null, string? name = null)
+		{
+			if (id is not null)
+				return $"Категорії з id: {id} ще/вже не існує!";
+			if (name is not null)
+				return $"Категорія з назваю {name} вже існує";
+			return "Something has gone wrong";
 		}
 	}
 }
