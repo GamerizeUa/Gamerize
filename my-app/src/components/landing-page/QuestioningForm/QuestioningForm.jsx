@@ -93,7 +93,7 @@ export const QuestioningForm = () => {
                     </div>
                 </div>
             </div>
-            {isVisible && <PopUp changeVisibility={changeVisibility}/>}
+            {isVisible && <PopUp changeVisibility={changeVisibility} isVisible={isVisible}/>}
         </section>
     )
 }

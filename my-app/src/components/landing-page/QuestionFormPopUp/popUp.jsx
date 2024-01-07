@@ -1,7 +1,18 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from './popUp.module.css'
 
-export const PopUp = ({changeVisibility}) => {
+export const PopUp = ({changeVisibility, isVisible}) => {
+    useEffect(() => {
+        if (isVisible) {
+            document.body.classList.add('no-scroll');
+        } else {
+            document.body.classList.remove('no-scroll');
+        }
+        return () => {
+            document.body.classList.remove('no-scroll');
+        };
+    }, [isVisible]);
+
     return(
         <div className={styles.popUp_background}>
             <div className={styles.popUp}>
