@@ -34,7 +34,7 @@
 
 .banner_presentBox{
     position: absolute;
-    bottom: 0;
+    bottom: -3px;
     left: 0;
     width: 72.2%;
     min-width: 104px;
@@ -186,7 +186,7 @@
     }
 
     .banner_presentBox{
-        bottom: 0;
+        bottom: -7px;
         left: 0;
         width: 54.10%;
         min-width: 303px;
