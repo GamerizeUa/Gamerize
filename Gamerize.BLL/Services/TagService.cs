@@ -21,25 +21,25 @@ namespace Gamerize.BLL.Services
 			_repository = _unitOfWork.GetRepository<Tag>();
 		}
 
-		public async Task<TagDTO> CreateAsync(TagDTO newTag)
+		public async Task<TagDTO> CreateAsync(TagDTO newEntity)
 		{
 			try
 			{
-				var tagExists = await _repository.Get()
-					.AnyAsync(x => x.Name.ToUpper().Trim() == newTag.Name.ToUpper().Trim());
+				var exists = await _repository.Get()
+					.AnyAsync(x => x.Name.ToUpper().Trim() == newEntity.Name.ToUpper().Trim());
 
-				if (tagExists)
-					throw new DuplicateItemException(ExceptionMessage(name: newTag.Name));
+				if (exists)
+					throw new DuplicateItemException(ExceptionMessage(newEntity.Name));
 
-				var tag = new Tag
+				var entity = new Tag
 				{
 					Id = default,
-					Name = newTag.Name.ToUpper().Trim(),
+					Name = newEntity.Name.ToUpper().Trim(),
 				};
 
-				await _repository.AddAsync(tag);
+				await _repository.AddAsync(entity);
 				await _unitOfWork.SaveChangesAsync();
-				return _mapper.Map<TagDTO>(tag);
+				return _mapper.Map<TagDTO>(entity);
 			}
 			catch (DbUpdateException ex)
 			{
@@ -62,29 +62,29 @@ namespace Gamerize.BLL.Services
 			try
 			{
 				return _mapper.Map<TagDTO>(await _repository.GetByIdAsync(id)) ??
-					throw new InvalidIdException(ExceptionMessage(id: id));
+					throw new InvalidIdException(ExceptionMessage(id));
 			}
 			catch (DbUpdateException ex)
 			{
 				throw new ServerErrorException(ex.Message, ex);
 			}
 		}
-		public async Task<TagDTO> UpdateAsync(TagDTO editTag)
+		public async Task<TagDTO> UpdateAsync(TagDTO editEntity)
 		{
 			try
 			{
-				var tag = await _repository.GetByIdAsync(editTag.Id) ??
-					throw new InvalidIdException(ExceptionMessage(id: editTag.Id));
+				var currentEntity = await _repository.GetByIdAsync(editEntity.Id) ??
+					throw new InvalidIdException(ExceptionMessage(editEntity.Id));
 
 				var tagExists = await _repository.Get()
-					.AnyAsync(x => x.Name.ToUpper().Trim() == editTag.Name.ToUpper().Trim());
+					.AnyAsync(x => x.Name.ToUpper().Trim() == editEntity.Name.ToUpper().Trim());
 
 				if (tagExists)
-					throw new DuplicateItemException(ExceptionMessage(name: editTag.Name));
+					throw new DuplicateItemException(ExceptionMessage(editEntity.Name));
 
-				_mapper.Map(editTag, tag);
+				_mapper.Map(editEntity, currentEntity);
 				await _unitOfWork.SaveChangesAsync();
-				return editTag;
+				return editEntity;
 			}
 			catch (DbUpdateException ex)
 			{
@@ -95,9 +95,9 @@ namespace Gamerize.BLL.Services
 		{
 			try
 			{
-				var tag = await _repository.GetByIdAsync(id) ??
-					throw new InvalidIdException(ExceptionMessage(id: id));
-				await _repository.DeleteAsync(tag);
+				var currentEntity = await _repository.GetByIdAsync(id) ??
+					throw new InvalidIdException(ExceptionMessage(id));
+				await _repository.DeleteAsync(currentEntity);
 				await _unitOfWork.SaveChangesAsync();
 			}
 			catch (DbUpdateException ex)
@@ -105,13 +105,12 @@ namespace Gamerize.BLL.Services
 				throw new ServerErrorException(ex.Message, ex);
 			}
 		}
-		private string ExceptionMessage(int? id = null, string? name = null)
-		{
-			if (id is not null)
-				return $"Тег з id: {id} ще/вже не існує!";
-			if (name is not null)
-				return $"Тег з назваю {name} вже існує";
-			return "Something has gone wrong";
-		}
+		private string ExceptionMessage(object? value = null) =>
+			value switch
+			{
+				int idt when value is int => $"Тега з id: {idt} ще/вже не існує!",
+				string namet when value is string => $"Тег з назваю {namet} вже існує",
+				_ => "Something has gone wrong"
+			};
 	}
 }

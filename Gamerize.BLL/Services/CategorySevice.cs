@@ -20,38 +20,25 @@ namespace Gamerize.BLL.Services
 			_repository = _unitOfWork.GetRepository<Category>();
 		}
 
-		public async Task<CategoryDTO> CreateAsync(CategoryDTO newCategory)
+		public async Task<CategoryDTO> CreateAsync(CategoryDTO newEntity)
 		{
 			try
 			{
-				bool categoryExists = await _repository.Get()
-				.AnyAsync(cat => cat.Name.ToUpper().Trim() == newCategory.Name.ToUpper().Trim());
+				var exists = await _repository.Get()
+					.AnyAsync(x => x.Name.ToUpper().Trim() == newEntity.Name.ToUpper().Trim());
 
-				if (categoryExists)
-					throw new DuplicateItemException($"Категорія з назваю {newCategory.Name} вже існує");
+				if (exists)
+					throw new DuplicateItemException(ExceptionMessage(newEntity.Name));
 
-				var category = new Category
+				var entity = new Category
 				{
 					Id = default,
-					Name = newCategory.Name.Trim(),
-					Description = newCategory.Description.Trim(),
+					Name = newEntity.Name.ToUpper().Trim(),
 				};
 
-				await _repository.AddAsync(category);
+				await _repository.AddAsync(entity);
 				await _unitOfWork.SaveChangesAsync();
-				return _mapper.Map<CategoryDTO>(category);
-			}
-			catch (DbUpdateException ex)
-			{
-				throw new ServerErrorException(ex.Message, ex);
-			}
-		}
-		public async Task<CategoryDTO> GetByIdAsync(int id)
-		{
-			try
-			{
-				return _mapper.Map<CategoryDTO>(await _repository.GetByIdAsync(id) ?? 
-					throw new InvalidIdException($"Категорії з id: {id} ще/вже не існує!"));
+				return _mapper.Map<CategoryDTO>(entity);
 			}
 			catch (DbUpdateException ex)
 			{
@@ -69,21 +56,34 @@ namespace Gamerize.BLL.Services
 				throw new ServerErrorException(ex.Message, ex);
 			}
 		}
-		public async Task<CategoryDTO> UpdateAsync(CategoryDTO editCategory)
+		public async Task<CategoryDTO> GetByIdAsync(int id)
 		{
 			try
 			{
-				var category = await _repository.GetByIdAsync(editCategory.Id)
-					?? throw new InvalidIdException($"Категорії з id: {editCategory.Id} ще/вже не існує!");
-				bool categoryExists = await _repository.Get()
-				.AnyAsync(cat => cat.Name.ToUpper() == editCategory.Name.ToUpper());
+				return _mapper.Map<CategoryDTO>(await _repository.GetByIdAsync(id)) ??
+					throw new InvalidIdException(ExceptionMessage(id));
+			}
+			catch (DbUpdateException ex)
+			{
+				throw new ServerErrorException(ex.Message, ex);
+			}
+		}
+		public async Task<CategoryDTO> UpdateAsync(CategoryDTO editEntity)
+		{
+			try
+			{
+				var currentEntity = await _repository.GetByIdAsync(editEntity.Id) ??
+					throw new InvalidIdException(ExceptionMessage(editEntity.Id));
 
-				if (categoryExists)
-					throw new DuplicateItemException($"Категорія з назваю {editCategory.Name} вже існує");
+				var tagExists = await _repository.Get()
+					.AnyAsync(x => x.Name.ToUpper().Trim() == editEntity.Name.ToUpper().Trim());
 
-				_mapper.Map(editCategory, category);
+				if (tagExists)
+					throw new DuplicateItemException(ExceptionMessage(editEntity.Name));
+
+				_mapper.Map(editEntity, currentEntity);
 				await _unitOfWork.SaveChangesAsync();
-				return editCategory;
+				return editEntity;
 			}
 			catch (DbUpdateException ex)
 			{
@@ -94,9 +94,9 @@ namespace Gamerize.BLL.Services
 		{
 			try
 			{
-				var category = await _repository.GetByIdAsync(id)
-						?? throw new InvalidIdException($"Категорії з id: {id} ще/вже не існує!");
-				await _repository.DeleteAsync(category);
+				var currentEntity = await _repository.GetByIdAsync(id) ??
+					throw new InvalidIdException(ExceptionMessage(id));
+				await _repository.DeleteAsync(currentEntity);
 				await _unitOfWork.SaveChangesAsync();
 			}
 			catch (DbUpdateException ex)
@@ -104,13 +104,12 @@ namespace Gamerize.BLL.Services
 				throw new ServerErrorException(ex.Message, ex);
 			}
 		}
-		private string ExceptionMessage(int? id = null, string? name = null)
-		{
-			if (id is not null)
-				return $"Категорії з id: {id} ще/вже не існує!";
-			if (name is not null)
-				return $"Категорія з назваю {name} вже існує";
-			return "Something has gone wrong";
-		}
+		private string ExceptionMessage(object? value = null) =>
+			value switch
+			{
+				int idt when value is int => $"Категорії з id: {idt} ще/вже не існує!",
+				string namet when value is string => $"Категорія з назваю {namet} вже існує",
+				_ => "Something has gone wrong"
+			};
 	}
 }

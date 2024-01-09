@@ -21,24 +21,24 @@ namespace Gamerize.BLL.Services
 			_mapper = mapper;
 		}
 
-		public async Task<DiscountDTO> CreateAsync(DiscountDTO newDiscount)
+		public async Task<DiscountDTO> CreateAsync(DiscountDTO newEntity)
 		{
 			try
 			{
-				if (newDiscount.EndDiscount < DateTime.Now.AddHours(1))
-					throw new InvalidOperationException(ExceptionMessage(name: newDiscount.EndDiscount.ToString()));
+				if (newEntity.EndDiscount < DateTime.Now.AddHours(1))
+					throw new InvalidOperationException(ExceptionMessage(newEntity.EndDiscount.ToString()));
 
-				var discount = new Discount
+				var entity = new Discount
 				{
 					Id = default,
-					ProductId = newDiscount.ProductId,
-					CurrentDiscount = newDiscount.CurrentDiscount,
-					EndDiscount = newDiscount.EndDiscount
+					ProductId = newEntity.ProductId,
+					CurrentDiscount = newEntity.CurrentDiscount,
+					EndDiscount = newEntity.EndDiscount
 				};
 
-				await _repository.AddAsync(discount);
+				await _repository.AddAsync(entity);
 				await _unitOfWork.SaveChangesAsync();
-				return _mapper.Map<DiscountDTO>(discount);
+				return _mapper.Map<DiscountDTO>(entity);
 			}
 			catch (DbUpdateException ex)
 			{
@@ -61,23 +61,26 @@ namespace Gamerize.BLL.Services
 			try
 			{
 				return _mapper.Map<DiscountDTO>(await _repository.GetByIdAsync(id)) ??
-					throw new InvalidIdException(ExceptionMessage(id: id));
+					throw new InvalidIdException(ExceptionMessage(id));
 			}
 			catch (DbUpdateException ex)
 			{
 				throw new ServerErrorException(ex.Message, ex);
 			}
 		}
-		public async Task<DiscountDTO> UpdateAsync(DiscountDTO editDiscount)
+		public async Task<DiscountDTO> UpdateAsync(DiscountDTO editEntity)
 		{
 			try
 			{
-				var discount = await _repository.GetByIdAsync(editDiscount.Id) ??
-					throw new InvalidIdException(ExceptionMessage(id: editDiscount.Id));
+				var currentEntity = await _repository.GetByIdAsync(editEntity.Id) ??
+					throw new InvalidIdException(ExceptionMessage(editEntity.Id));
 
-				_mapper.Map(editDiscount, discount);
+				if (editEntity.EndDiscount < DateTime.Now.AddHours(1))
+					throw new InvalidOperationException(ExceptionMessage(editEntity.EndDiscount.ToString()));
+
+				_mapper.Map(editEntity, currentEntity);
 				await _unitOfWork.SaveChangesAsync();
-				return editDiscount;
+				return editEntity;
 			}
 			catch (DbUpdateException ex)
 			{
@@ -89,7 +92,7 @@ namespace Gamerize.BLL.Services
 			try
 			{
 				var discount = await _repository.GetByIdAsync(id) ??
-					throw new InvalidIdException(ExceptionMessage(id: id));
+					throw new InvalidIdException(ExceptionMessage(id));
 				await _repository.DeleteAsync(discount);
 				await _unitOfWork.SaveChangesAsync();
 			}
@@ -98,13 +101,12 @@ namespace Gamerize.BLL.Services
 				throw new ServerErrorException(ex.Message, ex);
 			}
 		}
-		private string ExceptionMessage(int? id = null, string? name = null)
-		{
-			if (id is not null)
-				return $"Тег з id: {id} ще/вже не існує!";
-			if (name is not null)
-				return $"{name} - або акція вже у минулому, або занадто мало часу для неї!!!";
-			return "Something has gone wrong";
-		}
+		private string ExceptionMessage(object? value = null) =>
+			value switch
+			{
+				int idt when value is int => $"Знижки з id: {idt} ще/вже не існує!",
+				string namet when value is string => $"Дата та/або час {namet} є некоректні!/nНе може бути менше ніж на 1 годину від поточного часу!",
+				_ => "Something has gone wrong"
+			};
 	}
 }

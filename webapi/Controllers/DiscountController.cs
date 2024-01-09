@@ -12,6 +12,7 @@ namespace webapi.Controllers
 	{
 		public DiscountController(IService<Discount, DiscountDTO> service) : base(service) { }
 
+		//TODO In create and update method added InvalidOperationException
 		[HttpGet("GetAllByProduct/{id:int}")]
 		public async Task<ActionResult<ICollection<DiscountDTO>>> GetByProduct(int id)
 		{
