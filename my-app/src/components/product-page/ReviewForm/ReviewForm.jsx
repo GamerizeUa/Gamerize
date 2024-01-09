@@ -28,7 +28,6 @@ const ReviewForm = () => {
   });
 
   const onSubmit = (data) => console.log(data);
-  const symbolsAmount = watch("review.length");
 
   return (
     <div className={styles.reviewFormSection + " container"}>
@@ -67,20 +66,19 @@ const ReviewForm = () => {
               );
             })}
           </div>
-          <div className={styles.textareaContainer}>
+          <div>
             <p className={styles.reviewFormText}>Відгук</p>
-            <textarea
-              placeholder="Текст відгуку"
-              //   onFocus={() =>
-              //     handleFocus(
-              //       setFocusedReview,
-              //     )
-              //   }
-              {...register("review")}
-              aria-invalid={errors.review ? true : false}
-              className={styles.textarea}
-            />
-            <div className={styles.symbolsAmount}>{symbolsAmount}/1500</div>
+            <div className={styles.textareaContainer}>
+              <textarea
+                placeholder="Текст відгуку"
+                {...register("review")}
+                aria-invalid={errors.review ? true : false}
+                className={styles.textarea}
+              />
+              <div className={styles.symbolsAmount}>
+                {`${watch("review") ? watch("review").length : 0}`}/1500
+              </div>
+            </div>
             <p className={styles.textareaError}>{errors.review?.message}</p>
           </div>
           <button className={styles.reviewFormBtn}>Відправити</button>
