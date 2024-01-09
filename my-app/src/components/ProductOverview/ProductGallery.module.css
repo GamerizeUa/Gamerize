@@ -121,17 +121,11 @@
 
     .productGallery_arrow{
         display: block;
-        color: black;
-        font-size: 24px;
-        padding: 4px 7px;
-        width: 24px;
-        height: 24px;
-        font-weight: 400;
-        cursor: pointer
+        cursor: pointer;
     }
 
-    .productGallery_arrow:hover{
-        color: #747bff;
+    .productGallery_arrow:hover path{
+        stroke: #747bff;
     }
 
     .productGallery_thumbnail{

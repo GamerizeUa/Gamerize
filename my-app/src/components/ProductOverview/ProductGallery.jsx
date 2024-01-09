@@ -1,7 +1,5 @@
 import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import styles from './ProductGallery.module.css';
-import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import mainProductPhoto from '../../assets/images/mainProductPhoto.png'
 import imageCompanyGame from "../../assets/images/selection_company.jpg";
 import feedback from "../../assets/images/feedback.svg";
@@ -9,6 +7,7 @@ import product from "../../assets/images/product.png";
 import box from "../../assets/images/presentBox.png";
 import {Breadcrumbs} from "./Breadcrumbs.jsx";
 import {ActionsBar} from "./ActionsBar.jsx";
+import ArrowGalleryIcon from "./icons/ArrowGalleryIcon.jsx";
 
 export const ProductGallery = () => {
     const photoArray = [mainProductPhoto, imageCompanyGame, feedback, imageCompanyGame, product, box, feedback];
@@ -190,8 +189,8 @@ export const ProductGallery = () => {
                 </div>
             </div>
             <div className={styles.productGallery_gallery}>
-                <FontAwesomeIcon icon={faChevronLeft} className={styles.productGallery_arrow}
-                                 onClick={() => moveLeftGallery(1)}/>
+                <ArrowGalleryIcon classArrow={styles.productGallery_arrow}
+                                  funcOnClick={() => moveLeftGallery(1)}/>
                 <div className={styles.productGallery_thumbnailsContainer}>
                     <div className={styles.productGallery_thumbnailsList}
                          ref={thumbnailsContainer}
@@ -216,8 +215,10 @@ export const ProductGallery = () => {
                         ))}
                     </div>
                 </div>
-                <FontAwesomeIcon icon={faChevronRight} className={styles.productGallery_arrow}
-                                 onClick={() => moveRightGallery(1)}/>
+                <ArrowGalleryIcon classArrow={styles.productGallery_arrow}
+                                 funcOnClick={() => moveRightGallery(1)}
+                                 style={{transform: 'rotate(180deg)'}}
+                />
             </div>
         </div>
     )

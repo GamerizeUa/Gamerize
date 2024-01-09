@@ -152,8 +152,8 @@ const ProductPage = () => {
   return (
     <>
       <ProductOverview />
-      {/* <ProductRating feedbacks={feedbackList} rate={rate} />
-      <ReviewsList feedbacks={feedbackList} /> */}
+      <ProductRating feedbacks={feedbackList} rate={rate} />
+      <ReviewsList feedbacks={feedbackList} />
       <ReviewForm />
     </>
   );
