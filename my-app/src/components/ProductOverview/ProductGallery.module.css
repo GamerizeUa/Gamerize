@@ -1,0 +1,230 @@
+.productGallery{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.productGallery_actionsBar{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.productGallery_mainImageContainer{
+    width: 67.18vw;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    min-width: 215px;
+    min-height: 250px;
+    max-width: 443px;
+    max-height: 585px;
+    padding-top: 24px;
+    padding-bottom: 40px;
+    overflow: hidden;
+    background-size: contain;
+}
+
+.productGallery_mainImagesList{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-end;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.productGallery_mainImage{
+    width: 67.18vw;
+    height: 78.12vw;
+    min-width: 215px;
+    min-height: 250px;
+    max-width: 443px;
+    max-height: 521px;
+    object-fit: contain;
+    border: 2px solid transparent;
+    cursor: pointer;
+}
+
+.productGallery_gallery{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.productGallery_thumbnailsContainer{
+    width: 100%;
+    overflow: hidden;
+}
+
+.productGallery_thumbnailsList{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 5.73%;
+    transition: all 0.3s ease;
+}
+
+.productGallery_arrow{
+    display: none;
+}
+
+.productGallery_thumbnail{
+    cursor: pointer;
+    height: 20.62vw;
+    min-width: 60px;
+    min-height: 66px;
+    object-fit: contain;
+}
+
+@media screen and (min-width: 744px){
+    .productGallery{
+        gap: 44px;
+    }
+
+    .productGallery_mainImageContainer{
+        width: 59.54vw;
+        min-width: 443px;
+        min-height: 523px;
+        max-width: 455px;
+        max-height: 540px;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .productGallery_mainImage{
+        width: 59.54vw;
+        height: 70.02vw;
+        min-width: 443px;
+        min-height: 521px;
+        max-width: 455px;
+        max-height: 540px;
+    }
+
+    .productGallery_gallery{
+        gap: 24px;
+    }
+
+    .productGallery_thumbnailsContainer{
+        width: 74.7%;
+        max-width: 662px;
+    }
+
+    .productGallery_thumbnailsList{
+        gap: 3.14%;
+    }
+
+    .productGallery_arrow{
+        display: block;
+        cursor: pointer;
+    }
+
+    .productGallery_arrow:hover path{
+        stroke: #747bff;
+    }
+
+    .productGallery_thumbnail{
+        height: 15.45vw;
+        min-width: 115px;
+        min-height: 115px;
+        max-width: 150px;
+        max-height: 150px;
+    }
+}
+
+@media screen and (min-width: 1280px){
+    .productGallery{
+        width: 48.03%;
+        align-items: flex-start;
+        gap: 32px;
+    }
+
+    .productGallery_mainImageContainer{
+        width: 35.54vw;
+        min-width: 455px;
+        min-height: 540px;
+        max-width: 587px;
+        max-height: 690px;
+        padding-top: 0;
+        justify-content: flex-start;
+    }
+
+    .productGallery_mainImage{
+        width: 35.54vw;
+        height: 42.18vw;
+        min-width: 455px;
+        min-height: 540px;
+        max-width: 587px;
+        max-height: 690px;
+    }
+
+    .productGallery_gallery{
+        gap: 10px;
+        justify-content: flex-start;
+    }
+
+    .productGallery_thumbnailsContainer{
+        width: 74.34%;
+        max-width: 508px;
+    }
+
+    .productGallery_thumbnailsList{
+        gap: 4%;
+    }
+
+    .productGallery_arrow{
+        padding: 0;
+    }
+
+    .productGallery_thumbnail{
+        height: 7.1vw;
+        min-width: 88px;
+        min-height: 91px;
+        max-width: 115px;
+        max-height: 115px;
+    }
+}
+
+@media screen and (min-width: 1440px){
+    .productGallery{
+        width: 54.53%;
+    }
+
+    .productGallery_mainImageContainer{
+        width: 40.76vw;
+        min-width: 587px;
+        min-height: 690px;
+        max-width: 587px;
+        max-height: 690px;
+    }
+
+    .productGallery_mainImage{
+        width: 40.76vw;
+        height: 47.98vw;
+        min-width: 587px;
+        min-height: 690px;
+        max-width: 587px;
+        max-height: 690px;
+    }
+
+    .productGallery_thumbnailsContainer{
+        width: 72.77%;
+    }
+
+    .productGallery_thumbnailsList{
+        gap: 3.14%;
+    }
+
+    .productGallery_thumbnail{
+        height: 7.98vw;
+        min-width: 115px;
+        min-height: 115px;
+        max-width: 115px;
+        max-height: 115px;
+    }
+}

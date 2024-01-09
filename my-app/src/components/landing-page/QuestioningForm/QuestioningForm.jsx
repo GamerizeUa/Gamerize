@@ -8,11 +8,13 @@ import styles from './QuestioningForm.module.css';
 import {Button} from "../Button/Button.jsx";
 import feedbackImage from "../../../assets/images/feedback.svg"
 import Axios from "axios";
+import {PopUp} from "../QuestionFormPopUp/popUp.jsx";
 
 export const QuestioningForm = () => {
     const [isFocusedName, setFocusedName] = useState(false);
     const [isFocusedEmail, setFocusedEmail] = useState(false);
     const [isFocusedDescription, setFocusedDescription] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
     const formRef = useRef();
 
     const schema = yup.object().shape({
@@ -31,6 +33,10 @@ export const QuestioningForm = () => {
         setUnfocusedInput2(false);
     };
 
+    const changeVisibility = () => {
+        setIsVisible(!isVisible);
+    }
+
     const onSubmit = (data) => {
         // TODO post request
         //Axios.post('', data).then().catch()
@@ -39,6 +45,7 @@ export const QuestioningForm = () => {
         setFocusedName(false);
         setFocusedEmail(false);
         setFocusedDescription(false);
+        changeVisibility()
     }
 
     return (
@@ -86,6 +93,7 @@ export const QuestioningForm = () => {
                     </div>
                 </div>
             </div>
+            {isVisible && <PopUp changeVisibility={changeVisibility} isVisible={isVisible}/>}
         </section>
     )
 }
