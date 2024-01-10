@@ -7,6 +7,8 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import FavoritePage from "./pages/Favorites";
 import NotFound from "./pages/NotFound";
+import OrderHistoryPage from "./pages/OrderHistoryPage.jsx";
+import SettingsPage from "./pages/SettingsPage.jsx";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
           <Route path="reviews" element={<Reviews />} /> */}
         </Route>
         <Route path="/favorites" element={<FavoritePage />} />
+        <Route path="/order/history" element={<OrderHistoryPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
         <Route path="*" element={<NotFound />} />
       </Route>
       {/* <Route path="admin/*" element={<AdminPage />}>
