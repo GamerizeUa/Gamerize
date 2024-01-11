@@ -1,7 +1,7 @@
 import styles from './ProductDelivery.module.css'
 import React from "react";
-import DeliveryIcon from "./icons/DeliveryIcon.jsx";
-import ReturnIcon from "./icons/ReturnIcon.jsx";
+import DeliveryIcon from "../icons/DeliveryIcon.jsx";
+import ReturnIcon from "../icons/ReturnIcon.jsx";
 
 export const ProductDelivery = () => {
     return (

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import ShareIcon from "./icons/ShareIcon.jsx";
-import HeartIcon from "./icons/HeartIcon.jsx";
+import ShareIcon from "../icons/ShareIcon.jsx";
+import HeartIcon from "../icons/HeartIcon.jsx";
 import styles from "./ActionsBar.module.css";
 
 export const ActionsBar = () => {

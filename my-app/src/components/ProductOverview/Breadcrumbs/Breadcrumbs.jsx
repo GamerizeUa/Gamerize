@@ -1,7 +1,7 @@
 import React from "react";
 import styles from './Breadcrumbs.module.css'
 import {Link} from "react-router-dom";
-import ArrowIcon from './icons/ArrowIcon.jsx';
+import ArrowIcon from '../icons/ArrowIcon.jsx';
 
 export const Breadcrumbs = () => {
     const array = ['Головна сторінка', 'Жанри', 'Карткові', 'Кодові імена: гра слів'];
