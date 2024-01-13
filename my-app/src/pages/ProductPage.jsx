@@ -2,6 +2,7 @@ import ReviewForm from "../components/product-page/ReviewForm/ReviewForm";
 import ProductRating from "../components/product-page/ProductRating/ProductRating";
 import ReviewsList from "../components/product-page/ReviewsList/ReviewsList";
 import { ProductOverview } from "@/components/ProductOverview/ProductOverview.jsx";
+import ProductDetails from "../components/product-page/ProductDetails/ProductDetails";
 
 const ProductPage = () => {
   // feedbackList and some product rate just for tests
@@ -152,6 +153,7 @@ const ProductPage = () => {
   return (
     <>
       <ProductOverview />
+      <ProductDetails />
       <ProductRating feedbacks={feedbackList} rate={rate} />
       <ReviewsList feedbacks={feedbackList} />
       <ReviewForm />
