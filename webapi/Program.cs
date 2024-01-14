@@ -24,7 +24,7 @@ builder.Services.AddCors(options =>
 		})
 	);
 
-// Add Dependency Injections to the container
+// Add some extensions
 builder.Services.AddDependencyInjections();
 
 var app = builder.Build();
@@ -35,22 +35,22 @@ app.UseStaticFiles();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-	//app.UseSwagger();
-	//app.UseSwaggerUI();
+	app.UseSwagger();
+	app.UseSwaggerUI();
 }
 else
 {
+	app.UseSwagger();
+	app.UseSwaggerUI();
 	app.UseHsts();
 }
 
-app.UseSwagger();
-app.UseSwaggerUI();
+
 
 app.UseCors("AllowAnyOrigin");
 app.UseHttpsRedirection();
 
 
 app.MapControllers();
-app.MapFallbackToFile("/index.html");
-//app.MapCateroryEndpoints();
+app.MapFallbackToFile("index.html");
 app.Run();

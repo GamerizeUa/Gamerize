@@ -14,10 +14,10 @@ namespace Gamerize.BLL.Services
 		private readonly IRepository<Discount> _repository;
 		private readonly IMapper _mapper;
 
-		public DiscountSevice(IUnitOfWork unitOfWork, IRepository<Discount> repository, IMapper mapper)
+		public DiscountSevice(IUnitOfWork unitOfWork, IMapper mapper)
 		{
 			_unitOfWork = unitOfWork;
-			_repository = repository;
+			_repository = _unitOfWork.GetRepository<Discount>();
 			_mapper = mapper;
 		}
 

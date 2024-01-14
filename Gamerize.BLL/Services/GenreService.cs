@@ -14,10 +14,10 @@ namespace Gamerize.BLL.Services
 		private readonly IRepository<Genre> _repository;
 		private readonly IMapper _mapper;
 
-		public GenreService(IUnitOfWork unitOfWork, IRepository<Genre> repository, IMapper mapper)
+		public GenreService(IUnitOfWork unitOfWork, IMapper mapper)
 		{
 			_unitOfWork = unitOfWork;
-			_repository = repository;
+			_repository = _unitOfWork.GetRepository<Genre>();
 			_mapper = mapper;
 		}
 		public async Task<GenreDTO> CreateAsync(GenreDTO newEntity)

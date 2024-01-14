@@ -14,10 +14,10 @@ namespace Gamerize.BLL.Services
 		private readonly IRepository<Language> _repository;
 		private readonly IMapper _mapper;
 
-		public LanguageService(IUnitOfWork unitOfWork, IRepository<Language> repository, IMapper mapper)
+		public LanguageService(IUnitOfWork unitOfWork, IMapper mapper)
 		{
 			_unitOfWork = unitOfWork;
-			_repository = repository;
+			_repository = _unitOfWork.GetRepository<Language>();
 			_mapper = mapper;
 		}
 		public async Task<LanguageDTO> CreateAsync(LanguageDTO newEntity)

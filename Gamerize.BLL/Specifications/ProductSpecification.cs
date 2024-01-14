@@ -19,6 +19,7 @@ namespace Gamerize.BLL.Specifications
 			Include(x => x.Feedbacks);
 			Include(x => x.Tags);
 			Include(x => x.Images);
+			Include(x => x.Questions);
 			return this;
 		}
 		public ProductSpecification IncludeShort()

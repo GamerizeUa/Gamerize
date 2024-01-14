@@ -37,5 +37,6 @@ namespace Gamerize.DAL.Entities.Shop
 		public virtual ICollection<Tag> Tags { get; set; }
 		public virtual ICollection<Image> Images { get; set; }
 		public virtual ICollection<Discount> Discounts { get; set; }
+		public virtual ICollection<Question> Questions { get; set; }
 	}
 }
