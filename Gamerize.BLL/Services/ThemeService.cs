@@ -20,34 +20,31 @@ namespace Gamerize.BLL.Services
 			_unitOfWork = unitOfWork;
 			_repository = _unitOfWork.GetRepository<Theme>();
 		}
-
-		public async Task<ThemeDTO> CreateAsync(ThemeDTO newTheme)
+		public async Task<ThemeDTO> CreateAsync(ThemeDTO newEntity)
 		{
 			try
 			{
-				var tagExists = await _repository.Get()
-				.AnyAsync(x => x.Name.ToUpper().Trim() == newTheme.Name.ToUpper().Trim());
+				var exists = await _repository.Get()
+					.AnyAsync(x => x.Name.ToUpper().Trim() == newEntity.Name.ToUpper().Trim());
 
-				if (tagExists)
-					throw new DuplicateItemException($"Тематика з назваю {newTheme.Name} вже існує");
+				if (exists)
+					throw new DuplicateItemException(ExceptionMessage(newEntity.Name));
 
-				var theme = new Theme
+				var entity = new Theme
 				{
 					Id = default,
-					Name = newTheme.Name.Trim(),
-					Description = newTheme.Description,
+					Name = newEntity.Name.ToUpper().Trim(),
 				};
 
-				await _repository.AddAsync(theme);
+				await _repository.AddAsync(entity);
 				await _unitOfWork.SaveChangesAsync();
-				return _mapper.Map<ThemeDTO>(theme);
+				return _mapper.Map<ThemeDTO>(entity);
 			}
 			catch (DbUpdateException ex)
 			{
 				throw new ServerErrorException(ex.Message, ex);
 			}
 		}
-
 		public async Task<ICollection<ThemeDTO>> GetAllAsync()
 		{
 			try
@@ -64,29 +61,29 @@ namespace Gamerize.BLL.Services
 			try
 			{
 				return _mapper.Map<ThemeDTO>(await _repository.GetByIdAsync(id)) ??
-					throw new InvalidIdException($"Тематика з id: {id} ще/вже не існує!");
+					throw new InvalidIdException(ExceptionMessage(id));
 			}
 			catch (DbUpdateException ex)
 			{
 				throw new ServerErrorException(ex.Message, ex);
 			}
 		}
-		public async Task<ThemeDTO> UpdateAsync(ThemeDTO editTheme)
+		public async Task<ThemeDTO> UpdateAsync(ThemeDTO editEntity)
 		{
 			try
 			{
-				var theme = await _repository.GetByIdAsync(editTheme.Id) ??
-					throw new InvalidIdException($"Тематика з id: {editTheme.Id} ще/вже не існує!");
+				var currentEntity = await _repository.GetByIdAsync(editEntity.Id) ??
+					throw new InvalidIdException(ExceptionMessage(editEntity.Id));
 
-				var themeExists = await _repository.Get()
-					.AnyAsync(x => x.Name.ToUpper().Trim() == editTheme.Name.ToUpper().Trim());
+				var tagExists = await _repository.Get()
+					.AnyAsync(x => x.Name.ToUpper().Trim() == editEntity.Name.ToUpper().Trim());
 
-				if (themeExists)
-					throw new DuplicateItemException($"Тематика з назваю {editTheme.Name} вже існує");
+				if (tagExists)
+					throw new DuplicateItemException(ExceptionMessage(editEntity.Name));
 
-				_mapper.Map(editTheme, theme);
+				_mapper.Map(editEntity, currentEntity);
 				await _unitOfWork.SaveChangesAsync();
-				return editTheme;
+				return editEntity;
 			}
 			catch (DbUpdateException ex)
 			{
@@ -97,9 +94,9 @@ namespace Gamerize.BLL.Services
 		{
 			try
 			{
-				var tag = await _repository.GetByIdAsync(id) ??
-					throw new InvalidIdException($"Тематика з id: {id} ще/вже не існує!");
-				await _repository.DeleteAsync(tag);
+				var currentEntity = await _repository.GetByIdAsync(id) ??
+					throw new InvalidIdException(ExceptionMessage(id));
+				await _repository.DeleteAsync(currentEntity);
 				await _unitOfWork.SaveChangesAsync();
 			}
 			catch (DbUpdateException ex)
@@ -107,5 +104,12 @@ namespace Gamerize.BLL.Services
 				throw new ServerErrorException(ex.Message, ex);
 			}
 		}
+		private string ExceptionMessage(object? value = null) =>
+			value switch
+			{
+				int idt when value is int => $"Тематики з id: {idt} ще/вже не існує!",
+				string namet when value is string => $"Тематика з назваю {namet} вже існує",
+				_ => "Something has gone wrong"
+			};
 	}
 }

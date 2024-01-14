@@ -14,32 +14,31 @@ namespace Gamerize.BLL.Services
 		private readonly IRepository<Language> _repository;
 		private readonly IMapper _mapper;
 
-		public LanguageService(IUnitOfWork unitOfWork, IRepository<Language> repository, IMapper mapper)
+		public LanguageService(IUnitOfWork unitOfWork, IMapper mapper)
 		{
 			_unitOfWork = unitOfWork;
-			_repository = repository;
+			_repository = _unitOfWork.GetRepository<Language>();
 			_mapper = mapper;
 		}
-
-		public async Task<LanguageDTO> CreateAsync(LanguageDTO newLanguege)
+		public async Task<LanguageDTO> CreateAsync(LanguageDTO newEntity)
 		{
 			try
 			{
-				var langExists = await _repository.Get()
-				.AnyAsync(x => x.Value.ToUpper().Trim() == newLanguege.Value.ToUpper().Trim());
+				var exists = await _repository.Get()
+					.AnyAsync(x => x.Value.ToUpper().Trim() == newEntity.Value.ToUpper().Trim());
 
-				if (langExists)
-					throw new DuplicateItemException(ExceptionMessage(name: newLanguege.Value));
+				if (exists)
+					throw new DuplicateItemException(ExceptionMessage(newEntity.Value));
 
-				var language = new Language
+				var entity = new Language
 				{
 					Id = default,
-					Value = newLanguege.Value.Trim(),
+					Value = newEntity.Value.Trim(),
 				};
 
-				await _repository.AddAsync(language);
+				await _repository.AddAsync(entity);
 				await _unitOfWork.SaveChangesAsync();
-				return _mapper.Map<LanguageDTO>(language);
+				return _mapper.Map<LanguageDTO>(entity);
 			}
 			catch (DbUpdateException ex)
 			{
@@ -62,29 +61,29 @@ namespace Gamerize.BLL.Services
 			try
 			{
 				return _mapper.Map<LanguageDTO>(await _repository.GetByIdAsync(id)) ??
-					throw new InvalidIdException(ExceptionMessage(id: id));
+					throw new InvalidIdException(ExceptionMessage(id));
 			}
 			catch (DbUpdateException ex)
 			{
 				throw new ServerErrorException(ex.Message, ex);
 			}
 		}
-		public async Task<LanguageDTO> UpdateAsync(LanguageDTO editLanguage)
+		public async Task<LanguageDTO> UpdateAsync(LanguageDTO editEntity)
 		{
 			try
 			{
-				var language = await _repository.GetByIdAsync(editLanguage.Id) ??
-					throw new InvalidIdException(ExceptionMessage(id: editLanguage.Id));
+				var currentEntity = await _repository.GetByIdAsync(editEntity.Id) ??
+					throw new InvalidIdException(ExceptionMessage(editEntity.Id));
 
-				var languageExists = await _repository.Get()
-					.AnyAsync(x => x.Value.ToUpper().Trim() == editLanguage.Value.ToUpper().Trim());
+				var tagExists = await _repository.Get()
+					.AnyAsync(x => x.Value.ToUpper().Trim() == editEntity.Value.ToUpper().Trim());
 
-				if (languageExists)
-					throw new DuplicateItemException(ExceptionMessage(name: editLanguage.Value));
+				if (tagExists)
+					throw new DuplicateItemException(ExceptionMessage(editEntity.Value));
 
-				_mapper.Map(editLanguage, language);
+				_mapper.Map(editEntity, currentEntity);
 				await _unitOfWork.SaveChangesAsync();
-				return editLanguage;
+				return editEntity;
 			}
 			catch (DbUpdateException ex)
 			{
@@ -95,9 +94,9 @@ namespace Gamerize.BLL.Services
 		{
 			try
 			{
-				var tag = await _repository.GetByIdAsync(id) ??
-					throw new InvalidIdException(ExceptionMessage(id: id));
-				await _repository.DeleteAsync(tag);
+				var currentEntity = await _repository.GetByIdAsync(id) ??
+					throw new InvalidIdException(ExceptionMessage(id));
+				await _repository.DeleteAsync(currentEntity);
 				await _unitOfWork.SaveChangesAsync();
 			}
 			catch (DbUpdateException ex)
@@ -105,13 +104,12 @@ namespace Gamerize.BLL.Services
 				throw new ServerErrorException(ex.Message, ex);
 			}
 		}
-		private string ExceptionMessage(int? id = null, string? name = null)
-		{
-			if (id is not null)
-				return $"Мови з id: {id} ще/вже не існує!";
-			if (name is not null)
-				return $"Мова з назваю {name} вже існує";
-			return "Something has gone wrong";
-		}
+		private string ExceptionMessage(object? value = null) =>
+			value switch
+			{
+				int idt when value is int => $"Мови з id: {idt} ще/вже не існує!",
+				string namet when value is string => $"Мова з назваю {namet} вже існує",
+				_ => "Something has gone wrong"
+			};
 	}
 }

@@ -22,5 +22,6 @@ namespace Gamerize.BLL.Models
 		public ICollection<FeedbackDTO> Feedbacks { get; set; }
 		public ICollection<TagDTO> Tags { get; set; }
 		public ICollection<ImageDTO> Images { get; set; }
+		public ICollection<QuestionDTO> Questions { get; set; }
 	}
 }

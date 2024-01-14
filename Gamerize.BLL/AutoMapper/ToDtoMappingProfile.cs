@@ -23,6 +23,9 @@ namespace Gamerize.BLL.AutoMapper
 			CreateMap<Tag, TagDTO>().ReverseMap();
 			CreateMap<Image, ImageDTO>().ReverseMap();
 			CreateMap<Discount, DiscountDTO>().ReverseMap();
-			CreateMap<DiscountCoupon, DiscountCouponDTO>().ReverseMap();		}
+			CreateMap<DiscountCoupon, DiscountCouponDTO>().ReverseMap();
+			CreateMap<Question, QuestionDTO>().ReverseMap();
+			CreateMap<Answer, AnswerDTO>().ReverseMap();
+		}
 	}
 }

@@ -16,7 +16,7 @@ namespace webapi.Controllers
 		}
 
 		[HttpGet("GetAll")]
-		public async Task<ActionResult<ICollection<CategoryDTO>>> Get()
+		public async Task<ActionResult<ICollection<CategoryDTO>>> GetAllAsync()
 		{
 			try
 			{
@@ -29,7 +29,7 @@ namespace webapi.Controllers
 		}
 
 		[HttpGet("GetById/{id:int}")]
-		public async Task<ActionResult<CategoryDTO>> GetById(int id)
+		public async Task<ActionResult<CategoryDTO>> GetByIdAsync(int id)
 		{
 			try
 			{
@@ -46,7 +46,7 @@ namespace webapi.Controllers
 		}
 
 		[HttpPost("Create")]
-		public async Task<ActionResult<CategoryDTO>> Create([FromBody] CategoryDTO newCategory)
+		public async Task<ActionResult<CategoryDTO>> CreateAsync([FromBody] CategoryDTO newCategory)
 		{
 			try
 			{
@@ -65,7 +65,7 @@ namespace webapi.Controllers
 		}
 
 		[HttpPatch("Update")]
-		public async Task<ActionResult<CategoryDTO>> UpdateCategory([FromBody] CategoryDTO updateCategory)
+		public async Task<ActionResult<CategoryDTO>> UpdateAsync([FromBody] CategoryDTO updateCategory)
 		{
 			try
 			{
@@ -88,7 +88,7 @@ namespace webapi.Controllers
 		}
 
 		[HttpDelete("Delete/{id:int}")]
-		public async Task<IActionResult> DeleteCategory(int id)
+		public async Task<IActionResult> DeleteAsync(int id)
 		{
 			try
 			{
