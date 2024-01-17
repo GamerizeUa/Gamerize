@@ -33,7 +33,7 @@ namespace Gamerize.BLL.Services
 				var entity = new Genre
 				{
 					Id = default,
-					Name = newEntity.Name.ToUpper().Trim(),
+					Name = newEntity.Name.Trim(),
 				};
 
 				await _repository.AddAsync(entity);

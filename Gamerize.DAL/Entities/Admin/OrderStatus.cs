@@ -7,7 +7,7 @@ namespace Gamerize.DAL.Entities.Admin
 	{
 		[Key, Column(TypeName = "tinyint")]
 		public int Id { get; set; }
-		public string Status { get; set; }
+		public required string Status { get; set; }
 
 		public virtual ICollection<Order> Orders { get; set; }
 	}

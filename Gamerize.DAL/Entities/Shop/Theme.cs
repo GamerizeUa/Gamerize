@@ -9,9 +9,9 @@ namespace Gamerize.DAL.Entities.Shop
 		[Key, Column(TypeName = "tinyint")]
 		public int Id { get; set; }
 		[MaxLength(100)]
-		public string Name { get; set; }
+		public required string Name { get; set; }
 		[Column(TypeName = "text")]
-		public string Description { get; set; }
+		public required string Description { get; set; }
 
 		public virtual ICollection<Product> Products { get; set; }
 	}
