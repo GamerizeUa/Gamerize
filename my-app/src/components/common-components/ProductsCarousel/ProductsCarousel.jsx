@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import styles from "./ProductsCarousel.module.css";
 import ProductCard from "../ProductCard/ProductCard";
-import ArrowLeftIcon from "../icons/ArrowLeftIcon";
-import ArrowRightIcon from "../icons/ArrowRightIcon";
+import ArrowLeftIcon from "../../icons/ArrowLeftIcon";
+import ArrowRightIcon from "../../icons/ArrowRightIcon";
 
 // This carousel is considered to work with 10 product cards in total. 4 of them are viewed at once in the desctop website, 3 on the tablet and 2 in mobile version.
 export default function ProductsCarousel({

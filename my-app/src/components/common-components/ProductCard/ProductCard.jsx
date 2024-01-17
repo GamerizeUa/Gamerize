@@ -1,5 +1,5 @@
 import styles from './ProductCard.module.css'
-import HeartBlueIcon from "../icons/HeartBlueIcon";
+import HeartBlueIcon from "../../icons/HeartBlueIcon";
 import { Link } from 'react-router-dom';
 
 export default function ProductCard({configurationObject = {isOldPrice : false, isDiscount : false, isCartView : false}, product : {id,discount, name, minPlayers, maxPlayers, minAge, price, oldPrice, gameTimeMinutes,photo}}) {
