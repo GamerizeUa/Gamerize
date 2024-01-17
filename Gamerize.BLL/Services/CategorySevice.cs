@@ -33,7 +33,8 @@ namespace Gamerize.BLL.Services
 				var entity = new Category
 				{
 					Id = default,
-					Name = newEntity.Name.ToUpper().Trim(),
+					Name = newEntity.Name.Trim(),
+					Description = newEntity.Description.Trim(),
 				};
 
 				await _repository.AddAsync(entity);

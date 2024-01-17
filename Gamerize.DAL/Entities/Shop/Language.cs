@@ -7,7 +7,7 @@ namespace Gamerize.DAL.Entities.Shop
 	{
 		[Key, Column(TypeName = "tinyint")]
 		public int Id { get; set; }
-		public string Value { get; set; }
+		public required string Name { get; set; }
 
 		public virtual ICollection<Product> Products { get; set; }
     }

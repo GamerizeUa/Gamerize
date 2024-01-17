@@ -5,32 +5,32 @@ namespace Gamerize.DAL.Entities.Shop
 	public class Product
 	{
 		public int Id { get; set; }
-		public string Name { get; set; }
+		public required string Name { get; set; }
 		[Column(TypeName = "text")]
-		public string Description { get; set; }
+		public required string Description { get; set; }
 		[Column(TypeName = "decimal(6,2)")]
-		public decimal Price { get; set; }
+		public required decimal Price { get; set; }
 		[Column(TypeName = "tinyint")]
-		public int MinPlayers { get; set; }
+		public required int MinPlayers { get; set; }
 		[Column(TypeName = "tinyint")]
-		public int MaxPlayers { get; set; }
+		public required int MaxPlayers { get; set; }
 		[Column(TypeName = "tinyint")]
-		public int MinAge { get; set; }
+		public required int MinAge { get; set; }
 		[Column(TypeName = "tinyint")]
-		public int MinGameTimeMinutes { get; set; }
+		public required int MinGameTimeMinutes { get; set; }
 		[Column(TypeName = "tinyint")]
-		public int MaxGameTimeMinutes { get; set; }
+		public required int MaxGameTimeMinutes { get; set; }
 		[Column(TypeName = "tinyint")]
-		public int LanguageId { get; set; }
+		public required int LanguageId { get; set; }
 		public virtual Language Language { get; set; }
 		[Column(TypeName = "tinyint")]
-		public int CategoryId { get; set; }
+		public required int CategoryId { get; set; }
 		public virtual Category Category { get; set; }
 		[Column(TypeName = "tinyint")]
-		public int GenreId { get; set; }
+		public required int GenreId { get; set; }
 		public virtual Genre Genre { get; set; }
 		[Column(TypeName = "tinyint")]
-		public int ThemeId { get; set; }
+		public required int ThemeId { get; set; }
 		public virtual Theme Theme { get; set; }
 
 		public virtual ICollection<Feedback> Feedbacks { get; set; }

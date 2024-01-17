@@ -17,7 +17,7 @@ namespace Gamerize.DAL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -157,7 +157,6 @@ namespace Gamerize.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -410,7 +409,7 @@ namespace Gamerize.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<byte>("Id"));
 
-                    b.Property<string>("Value")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -497,11 +496,13 @@ namespace Gamerize.DAL.Migrations
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)");
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -807,7 +808,7 @@ namespace Gamerize.DAL.Migrations
             modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Question", b =>
                 {
                     b.HasOne("Gamerize.DAL.Entities.Shop.Product", "Product")
-                        .WithMany()
+                        .WithMany("Questions")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -913,12 +914,13 @@ namespace Gamerize.DAL.Migrations
                     b.Navigation("Feedbacks");
 
                     b.Navigation("Images");
+
+                    b.Navigation("Questions");
                 });
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Question", b =>
                 {
-                    b.Navigation("Answer")
-                        .IsRequired();
+                    b.Navigation("Answer");
                 });
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Theme", b =>

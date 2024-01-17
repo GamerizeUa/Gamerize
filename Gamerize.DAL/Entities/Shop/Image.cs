@@ -6,9 +6,9 @@ namespace Gamerize.DAL.Entities.Shop
 	{
 		public int Id { get; set; }
 		[Column(TypeName = "tinyint")]
-		public int Number { get; set; }
-		public string Path { get; set; }
-		public int ProductId { get; set; }
+		public required int Number { get; set; }
+		public required string Path { get; set; }
+		public required int ProductId { get; set; }
 		public virtual Product Product { get; set; }
 	}
 }

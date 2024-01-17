@@ -43,7 +43,8 @@ namespace Gamerize.BLL.Services
 					ProductId = productId,
 					DateTime = DateTime.Now,
 					UserName = question.UserName,
-					Text = question.Text
+					Text = question.Text,
+					IsAnswered = false
 				};
 				await _questionRepository.AddAsync(newQuestion);
 				await _unitOfWork.SaveChangesAsync();
@@ -54,7 +55,6 @@ namespace Gamerize.BLL.Services
 				throw new ServerErrorException(ex.Message, ex);
 			}
 		}
-
 		public async Task<QuestionDTO> EditQuestionAsync(int id, QuestionCreateDTO question)
 		{
 			try

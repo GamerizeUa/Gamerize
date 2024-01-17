@@ -69,23 +69,33 @@ namespace Gamerize.BLL.Services
 		}
 		public async Task<ProductFullDTO> GetByIdAsync(int id)
 		{
-			var spec = new ProductSpecification().ById(id).IncludeAll();
+			try
+			{
+				var spec = new ProductSpecification().ById(id).IncludeAll();
 
-			var product = (await _repository.GetAllAsync(spec)).FirstOrDefault();
-			return (product is not null) ? _mapper.Map<ProductFullDTO>(product) :
-			throw new InvalidIdException(ExceptionMessage(id));
+				var product = (await _repository.GetAllAsync(spec)).FirstOrDefault();
+				return (product is not null) ? _mapper.Map<ProductFullDTO>(product) :
+				throw new InvalidIdException(ExceptionMessage(id));
+			}
+			catch (DbUpdateException ex)
+			{
+				throw new ServerErrorException(ex.Message, ex);
+			}
 		}
-		public async Task<bool> Delete(int id)
+		public async Task DeleteAsync(int id)
 		{
 			try
 			{
 				var spec = new ProductSpecification().ById(id).IncludeAll();
 				var product = (await _repository.GetAllAsync(spec)).FirstOrDefault()
 					?? throw new InvalidIdException(ExceptionMessage(id));
+
 				var folderPath = Path.Combine(Config.ProductImagesPath, product.Id.ToString());
 				await _repository.DeleteAsync(product);
 				await _unitOfWork.SaveChangesAsync();
-				return true;
+
+				if (Directory.Exists(folderPath))
+					Directory.Delete(folderPath, true);
 			}
 			catch (DbUpdateException ex)
 			{
