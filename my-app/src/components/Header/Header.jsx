@@ -8,10 +8,14 @@ import AccountInformation from "./AccountInformation";
 import { SearchInput } from "../SearchInput/SearchInput";
 import { Logo } from "../Logo/Logo";
 import BurgerMenuIcon from "../icons/BurgerMenuIcon";
+import {useNavigate} from "react-router-dom";
+import {Login} from "@/components/LoginAndRegistration/Login.jsx";
 
 const Header = ({ openCart, openBurgerMenu }) => {
   const [accountInformation, setAccountInformation] = useState(false);
+  const [isDisplayedLoginPopUp, setIsDisplayedLoginPopUp] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const navigate = useNavigate();
 
   const handleChangedSize = () => {
     setWindowWidth(window.innerWidth);
@@ -23,6 +27,16 @@ const Header = ({ openCart, openBurgerMenu }) => {
       window.removeEventListener("resize", handleChangedSize);
     };
   }, []);
+
+  const handleClickAccount = (e) => {
+    e.preventDefault();
+    const userIdState = localStorage.getItem('userID');
+    if (userIdState) {
+      navigate('/login');
+    } else {
+      setIsDisplayedLoginPopUp(true);
+    }
+  };
 
   return (
     <section className={styles.headerSection}>
@@ -75,7 +89,7 @@ const Header = ({ openCart, openBurgerMenu }) => {
                   setAccountInformation(false);
                 }}
               >
-                <a href="/login" className={styles.headerButton}>
+                <a href="/login" className={styles.headerButton} onClick={handleClickAccount}>
                   <UserIcon />
                 </a>
                 {accountInformation && <AccountInformation />}
@@ -89,6 +103,7 @@ const Header = ({ openCart, openBurgerMenu }) => {
               </li>
             )}
           </ul>
+          {isDisplayedLoginPopUp && <Login setDisplayedLoginPopUp = {setIsDisplayedLoginPopUp} />}
         </div>
       </div>
     </section>
