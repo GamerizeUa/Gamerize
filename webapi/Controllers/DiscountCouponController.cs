@@ -1,15 +1,14 @@
-﻿using Gamerize.BLL.Models;
-using Gamerize.BLL.Services.Interfaces;
-using Gamerize.DAL.Entities.Shop;
-using Microsoft.AspNetCore.Mvc;
-using webapi.Controllers.Common;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace webapi.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class DiscountCouponController : GenericController<DiscountCoupon, DiscountCouponDTO>
+	public class DiscountCouponController : ControllerBase
 	{
-		public DiscountCouponController(IService<DiscountCoupon, DiscountCouponDTO> service) : base(service) { }
+		public DiscountCouponController()
+		{
+
+		}
 	}
 }
