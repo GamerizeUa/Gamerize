@@ -1,0 +1,100 @@
+.items {
+  background-color: var(--light-blue-gray);
+  padding: 20px;
+}
+
+.items > div:not(:last-child) {
+  margin-bottom: 30px;
+}
+
+.equipment {
+  display: flex;
+}
+
+.charItem {
+  display: flex;
+  margin-bottom: 16px;
+}
+
+.charItem:nth-last-child(2) {
+  margin-bottom: 30px;
+}
+
+.charItem:last-child {
+  margin-bottom: 0;
+}
+
+.charName {
+  width: 118px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #8e8e8e;
+  margin-right: 12px;
+}
+
+.charData {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--black);
+}
+
+.descrText {
+  font-size: 12px;
+}
+
+.equipment {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+@media screen and (min-width: 744px) {
+  .charName {
+    width: 133px;
+    font-size: 16px;
+    font-weight: 400;
+    margin-right: 60px;
+  }
+
+  .charData {
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .descrText {
+    font-size: 16px;
+  }
+
+  .charItem:nth-last-child(2) {
+    margin-bottom: 40px;
+  }
+
+  .equipment {
+    flex-direction: row;
+    gap: 0;
+  }
+
+  .items > div:not(:last-child) {
+    margin-bottom: 36px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .items {
+    padding: 32px;
+  }
+
+  .charName {
+    margin-right: 70px;
+  }
+
+  .items > div:not(:last-child) {
+    margin-bottom: 48px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .charName {
+    margin-right: 88px;
+  }
+}

@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import styles from './ProductMainInfo.module.css';
-import {Breadcrumbs} from "./Breadcrumbs.jsx";
-import {ActionsBar} from "./ActionsBar.jsx";
-import {ProductDeliveryAndPayment} from "./ProductDeliveryAndPayment.jsx";
-import CartIcon from "./icons/CartIcon.jsx";
-import CoinsHandIcon from "./icons/CoinsHandIcon.jsx";
+import {Breadcrumbs} from "../Breadcrumbs/Breadcrumbs.jsx";
+import {ActionsBar} from "../ActionsBar/ActionsBar.jsx";
+import {ProductDeliveryAndPayment} from "../ProductDeliveryAndPayment/ProductDeliveryAndPayment.jsx";
+import CartIcon from "../icons/CartIcon.jsx";
+import CoinsHandIcon from "../icons/CoinsHandIcon.jsx";
 
 export const ProductMainInfo = () => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);

@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import styles from './ProductDeliveryAndPayment.module.css'
-import {ProductDelivery} from "./ProductDelivery.jsx";
-import {ProductPayment} from "./ProductPayment.jsx";
+import {ProductDelivery} from "../ProductDelivery/ProductDelivery.jsx";
+import {ProductPayment} from "../ProductPayment/ProductPayment.jsx";
 
 export const ProductDeliveryAndPayment = () => {
     const [translation, setTranslation] = useState(0);

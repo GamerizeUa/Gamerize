@@ -19,10 +19,11 @@
 
 .disabled{
     cursor: default !important;
+    color:  #2B2B2B !important;
 }
 
 .deliveryAndPayment_navBar li{
-    color:  #2B2B2B;
+    color:  #8E8E8E;
     font-size: 14px;
     font-weight: 700;
     padding: 0 35px 10px 35px;

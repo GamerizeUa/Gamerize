@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "@/components/ProductOverview/ProductMainInfo.module.css";
+import styles from "@/components/ProductOverview/ProductMainInfo/ProductMainInfo.module.css";
 const ArrowIcon = () => {
     return (
         <svg
