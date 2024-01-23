@@ -82,10 +82,18 @@
 }
 
 .share_icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 72px;
     height: 72px;
     border-radius: 40px;
     background: #EEF1FF;
+}
+
+.share_icon:hover{
+    transform: scale(1.07);
+    box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px;
 }
 
 .share_name{
