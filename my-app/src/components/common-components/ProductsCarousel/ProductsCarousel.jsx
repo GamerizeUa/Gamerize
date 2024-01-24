@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import styles from "./ProductsCarousel.module.css";
 import ProductCard from "../ProductCard/ProductCard";
-import ArrowLeftIcon from "../icons/ArrowLeftIcon";
-import ArrowRightIcon from "../icons/ArrowRightIcon";
+import ArrowLeftIcon from "../../icons/ArrowLeftIcon";
+import ArrowRightIcon from "../../icons/ArrowRightIcon";
 
 // This carousel is considered to work with 10 product cards in total. 4 of them are viewed at once in the desctop website, 3 on the tablet and 2 in mobile version.
 export default function ProductsCarousel({
@@ -40,13 +40,13 @@ export default function ProductsCarousel({
   // There are carousel motion functions,when arrow buttons are clicked, below
   function positionLimitBreakingBehavior(boundaryPosition) {
     // behavior when border is reached, but button is anyway clicked
-    carousel.current.style.left = `${
+    carousel.current.style.transform = `translateX(${
       -oneCardTotalWidth * (boundaryPosition + (boundaryPosition ? 0.3 : -0.3))
-    }px`; // take a position a bit further than border
+    }px)`; // take a position a bit further than border
     setTimeout(() => {
-      carousel.current.style.left = `${
+      carousel.current.style.transform = `translateX(${
         -oneCardTotalWidth * boundaryPosition
-      }px`; // take default position in some time
+      }px)`; // take default position in some time
     }, 200);
   }
   function arrowRightOnclick() {
@@ -94,14 +94,14 @@ export default function ProductsCarousel({
           boundaryRightCarouselPosition
       ) {
         // if borders were overcome, take a position a bit further than border
-        carousel.current.style.left = `${
+        carousel.current.style.transform = `translateX(${
           -oneCardTotalWidth *
           (xDraggedDistance > 0 ? -0.3 : boundaryRightCarouselPosition + 0.3)
-        }px`;
+        }px)`;
       } else
-        carousel.current.style.left = `${
-          parseFloat(carousel.current.style.left) + (currentTouchX - lastTouchX)
-        }px`; // else move carousel as much as it was swiped
+        carousel.current.style.transform = `translateX(${
+          parseFloat(carousel.current.style.transform) + (currentTouchX - lastTouchX)
+        }px)`; // else move carousel as much as it was swiped
 
       lastTouchX = currentTouchX; // record current touch as last
     }
@@ -122,15 +122,15 @@ export default function ProductsCarousel({
         setCarouselLoadedPosition(newCarouselPosition); //carouselLoadedPosition can only be increased when it`s value is synchronized with carouselPosition
 
       if (newCarouselPosition === carouselPosition)
-        carousel.current.style.left = `${
+        carousel.current.style.transform = `translateX(${
           -oneCardTotalWidth * carouselPosition
-        }px`;
+        }px)`;
       // for the first and the last product card to take default position after taking a position a bit further than border when borders were overcome
       else setCarouselPosition(newCarouselPosition);
     } else
-      carousel.current.style.left = `${
+      carousel.current.style.transform = `translateX(${
         -oneCardTotalWidth * carouselPosition
-      }px`; //if carousel isn`t swiped on 1 or more cards, carousel should fix its visual position
+      }px)`; //if carousel isn`t swiped on 1 or more cards, carousel should fix its visual position
   }
 
   return (
@@ -168,7 +168,7 @@ export default function ProductsCarousel({
             ref={carousel}
             style={{
               columnGap: `${columnGap}px`,
-              left: `${-oneCardTotalWidth * carouselPosition}px`,
+              transform: `translateX(${-oneCardTotalWidth * carouselPosition}px)`
             }}
             className={styles.body}
           >
