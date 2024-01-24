@@ -8,9 +8,9 @@ export default function GamePicker (){
     let [playersAmount, setPlayersAmount] = useState(null) 
     let [age, setAge] = useState(null)
     // for test
-    const categories = ["Творчі ігри", "Стратегія", "Детектив", "Гумор", "Гемор", "Квест", "Пригоди"] 
-    const playersAmounts = ["1", "2", "2-4", "2-5", "3-5", "6-10", "5+", "10+", "0-", "45.000.000"] 
-    const ages = ["3+", "12+", "18+", "90+"] 
+    const categories = ["Творчі ігри", "Стратегія", "Детектив", "Гумор", "Квест", "Пригоди"] 
+    const playersAmounts = ["1", "2", "3", "4", "5", "6", "більше 6"] 
+    const ages = ["3-6", "6-9", "9-12", "12-18", "18+"] 
     // for test
     useEffect(() => {
         setWindowWidth(document.documentElement.clientWidth)
