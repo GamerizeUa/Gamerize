@@ -25,15 +25,15 @@ namespace Gamerize.BLL.Services
 			try
 			{
 				var exists = await _repository.Get()
-					.AnyAsync(x => x.Name.ToUpper().Trim() == newEntity.Value.ToUpper().Trim());
+					.AnyAsync(x => x.Name.ToUpper().Trim() == newEntity.Name.ToUpper().Trim());
 
 				if (exists)
-					throw new DuplicateItemException(ExceptionMessage(newEntity.Value));
+					throw new DuplicateItemException(ExceptionMessage(newEntity.Name));
 
 				var entity = new Language
 				{
 					Id = default,
-					Name = newEntity.Value.Trim(),
+					Name = newEntity.Name.Trim(),
 				};
 
 				await _repository.AddAsync(entity);
@@ -76,10 +76,10 @@ namespace Gamerize.BLL.Services
 					throw new InvalidIdException(ExceptionMessage(editEntity.Id));
 
 				var tagExists = await _repository.Get()
-					.AnyAsync(x => x.Name.ToUpper().Trim() == editEntity.Value.ToUpper().Trim());
+					.AnyAsync(x => x.Name.ToUpper().Trim() == editEntity.Name.ToUpper().Trim());
 
 				if (tagExists)
-					throw new DuplicateItemException(ExceptionMessage(editEntity.Value));
+					throw new DuplicateItemException(ExceptionMessage(editEntity.Name));
 
 				_mapper.Map(editEntity, currentEntity);
 				await _unitOfWork.SaveChangesAsync();

@@ -1,32 +1,34 @@
 ﻿using Gamerize.DAL.Entities.Shop;
+using Microsoft.EntityFrameworkCore;
 
 namespace Gamerize.BLL.Specifications
 {
-	public class ProductSpecification : Specification<Product>
-	{
-		public ProductSpecification ById(int id)
-		{
-			Where(x => x.Id == id);
-			return this;
-		}
+    public class ProductSpecification : Specification<Product>
+    {
+        public ProductSpecification ById(int id)
+        {
+            Where(x => x.Id == id);
+            return this;
+        }
 
-		public ProductSpecification IncludeAll()
-		{
-			Include(x => x.Category);
-			Include(x => x.Genre);
-			Include(x => x.Language);
-			Include(x => x.Theme);
-			Include(x => x.Feedbacks);
-			Include(x => x.Tags);
-			Include(x => x.Images);
-			Include(x => x.Questions);
-			return this;
-		}
-		public ProductSpecification IncludeShort()
-		{
-			Include(x=>x.Images);
-			Include(x => x.Feedbacks);
-			return this;
-		}
-	}
+        public ProductSpecification IncludeAll()
+        {
+            Include(x => x.Category);
+            Include(x => x.Genre);
+            Include(x => x.Language);
+            Include(x => x.Theme);
+            Include(x => x.Feedbacks);
+            Include(x => x.Tags);
+            Include(x => x.Images);
+            Include(x => x.Questions);
+            Include(x => x.Questions.Select(x => x.Answer));
+            return this;
+        }
+        public ProductSpecification IncludeShort()
+        {
+            Include(x => x.Images);
+            Include(x => x.Feedbacks);
+            return this;
+        }
+    }
 }
