@@ -20,6 +20,9 @@ namespace webapi.Extensions.DI
 			services.AddTransient<ThemeService>();
 			services.AddTransient<LanguageService>();
 			services.AddTransient<GenreService>();
+			services.AddTransient<ProductService>();
+			services.AddTransient<QuestionService>();
+			services.AddTransient<DiscountSevice>();
 		}
 	}
 }
