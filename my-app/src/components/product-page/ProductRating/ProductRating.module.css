@@ -1,89 +1,151 @@
-.wrap {
-    height: 239px; 
-    margin-top: 64px;
-    margin-bottom: 83px;   
-}
-.container {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.wrap { 
+    margin-top: 35px;
+    margin-bottom: 10px;   
 }
 .title {
-    color: var(--black);
-    
-    /* Body Large Bold 20px */
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 700;  
+    display: none;
 }
 .body {
+    width: 100%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    height: 173px;
-    max-width: 774px;
+    justify-content: center;
 }
 .overallRate {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    height: 98px;
+    height: 72px;
 }
 .overallDigit {
     color: var(--black);
 
     /* Body item mark */
-    font-size: 64px;
+    font-size: 48px;
     font-style: normal;
     font-weight: 700;
 }
 .overallStarsContainer {
-    width: 110px;
-    height: 14px;
+    width: 96px;
+    height: 12px;
 }
 .detailedRate {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    width: 530px;
+    display: none;
 }
-.detailedRateString {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.detailedRateStringLeft {
-    width: 437px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.percentString {
-    width: 345px;
-    height: 5px;
-    border-radius: 4px;
-    background: rgba(217, 217, 217, 0.70); 
-}
-.currentPercent {
-    height: 5px;
-    border-radius: 4px;
-    background: var(--dark-blue); 
-}
-.detailedStarsContainer {
-    height: 10px;
-    width: 78px;
-}
-.percentDigit, .reviewAmount {
-    color: var(--black);
 
-    /* Body Medium Regular 16px */
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400; 
+@media screen and (min-width: 744px) {
+    .wrap {
+        height: 230px;
+        margin-top: 49px;
+        margin-bottom: 44px;   
+    }
+    .container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .body {
+        max-width: 774px;
+        height: 173px;
+        justify-content: space-between;
+    }
+    .title {
+        display: block;
+        color: var(--black);
+        
+        /* Body Large Bold 20px */
+        font-size: 20px; 
+        font-style: normal;
+        font-weight: 700;  
+    }
+    .overallRate {
+        align-items: flex-start;
+        height: 86px;
+    }
+    .detailedRate {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        width: 470px;
+        margin-right: 10px;
+    }
+    .detailedRateString {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .detailedRateStringLeft {
+        width: 390px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .percentString {
+        width: 303px;
+        height: 4px;
+        border-radius: 4px;
+        background: rgba(217, 217, 217, 0.70); 
+    }
+    .currentPercent {
+        height: 4px;
+        border-radius: 4px;
+        background: var(--dark-blue); 
+    }
+    .detailedStarsContainer {
+        width: 69px;
+        height: 9px;
+    }
+    .percentDigit, .reviewAmount {
+        color: var(--black);
+    
+        /* Body Medium Regular 16px */
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400; 
+    }
+    .percentDigit {
+        margin-left: 7px;
+    }  
 }
-.percentDigit {
-    margin-left: 7px;
+
+@media screen and (min-width: 1280px){
+    .wrap {
+        height: 239px;
+        margin-top: 64px;
+        margin-bottom: 83px;   
+    }
+    .title {
+        font-size: 24px;  
+    }
+    .overallRate {
+        height: 98px;
+        align-items: center;
+    }
+    .overallDigit {
+        font-size: 64px;
+    }
+    .overallStarsContainer {
+        width: 110px;
+        height: 14px;
+    }
+    .detailedRate {
+        width: 530px;
+    }
+    .detailedRateStringLeft {
+        width: 437px;
+    }
+    .percentString {
+        width: 345px;
+        height: 5px;
+    }
+    .currentPercent {
+        height: 5px;
+    }
+    .detailedStarsContainer {
+        height: 10px;
+        width: 78px;
+    }
 }
