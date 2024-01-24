@@ -1,7 +1,7 @@
 import CrossIcon from "../../icons/CrossIcon";
 import styles from "./BurgerMenu.module.css";
 import UserBlueIcon from "../../icons/UserBlueIcon";
-import HeartBlueIcon from "../../icons/HeartBlueIcon";
+import HeartIcon from "../../icons/HeartIcon";
 import ArrowRightSmallIcon from "../../icons/ArrowRightSmallIcon";
 import LogOutIcon from "../../icons/LogOutIcon";
 
@@ -28,7 +28,7 @@ const BurgerMenu = ({ burgerMenuClose }) => {
           </li>
           <li>
             <a href="/favorites" className={styles.burgerMenuLink}>
-              <HeartBlueIcon />
+              <HeartIcon strokeColor='#AAC4FF' />
             </a>
           </li>
         </ul>

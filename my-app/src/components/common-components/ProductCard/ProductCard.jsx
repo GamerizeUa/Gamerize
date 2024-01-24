@@ -1,10 +1,16 @@
 import styles from './ProductCard.module.css'
-import HeartBlueIcon from "../../icons/HeartBlueIcon";
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import HeartIcon from '../../icons/HeartIcon';
 
 export default function ProductCard({configurationObject = {isOldPrice : false, isDiscount : false, isCartView : false}, product : {id,discount, name, minPlayers, maxPlayers, minAge, price, oldPrice, gameTimeMinutes,photo}}) {
+    const [isFavourite, setIsFavourite] = useState(false)
+    const wishIconHandleOnClick = () => {
+        setIsFavourite(!isFavourite)
+    }
     return (
-        <Link className={styles.allContent} to={"catalog/:product"}>
+        <div className={styles.allContent}>
+            <Link className={styles.allCardLink} to={"catalog/:product"}></Link>
             <div className={styles.cardTop}>
                     <div className={styles.iconsBar}>
                         {
@@ -17,7 +23,11 @@ export default function ProductCard({configurationObject = {isOldPrice : false, 
                             </div>
                             : <div className={styles.hitIcon}><p>Хіт</p></div>
                         }
-                        <div className={styles.wishListIcon}><HeartBlueIcon/></div> 
+                        <div onClick={wishIconHandleOnClick} className={styles.wishListIcon}>
+                            {
+                                isFavourite? <HeartIcon fill="#AAC4FF" strokeColor='#AAC4FF'/> : <HeartIcon strokeColor='#AAC4FF'/>
+                            }     
+                        </div> 
                     </div>
                     <div className={styles.imageContainer}><img src={photo} alt={`product ${name} # ${id}`}/></div>
                     <div className={styles.featuresBar}>
@@ -34,6 +44,6 @@ export default function ProductCard({configurationObject = {isOldPrice : false, 
                 </div>
                 <div className={styles.buyBtn}><p>Купити</p></div>
             </div>
-        </Link>
+        </div>
     );
 }
