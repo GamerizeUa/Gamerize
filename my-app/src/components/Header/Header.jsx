@@ -8,14 +8,15 @@ import AccountInformation from "./AccountInformation";
 import { SearchInput } from "../SearchInput/SearchInput";
 import { Logo } from "../Logo/Logo";
 import BurgerMenuIcon from "../icons/BurgerMenuIcon";
-import {useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {Login} from "@/components/LoginAndRegistration/Login.jsx";
+import useClickAccount from "../hooks/useClickAccount.js";
 
 const Header = ({ openCart, openBurgerMenu }) => {
   const [accountInformation, setAccountInformation] = useState(false);
   const [isDisplayedLoginPopUp, setIsDisplayedLoginPopUp] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const navigate = useNavigate();
+  const handleClickAccount = useClickAccount(setIsDisplayedLoginPopUp);
 
   const handleChangedSize = () => {
     setWindowWidth(window.innerWidth);
@@ -27,16 +28,6 @@ const Header = ({ openCart, openBurgerMenu }) => {
       window.removeEventListener("resize", handleChangedSize);
     };
   }, []);
-
-  const handleClickAccount = (e) => {
-    e.preventDefault();
-    const userIdState = localStorage.getItem('userID');
-    if (userIdState) {
-      navigate('/login');
-    } else {
-      setIsDisplayedLoginPopUp(true);
-    }
-  };
 
   return (
     <section className={styles.headerSection}>
@@ -89,17 +80,17 @@ const Header = ({ openCart, openBurgerMenu }) => {
                   setAccountInformation(false);
                 }}
               >
-                <a href="/login" className={styles.headerButton} onClick={handleClickAccount}>
+                <Link to="/login" className={styles.headerButton} onClick={handleClickAccount}>
                   <UserIcon />
-                </a>
+                </Link>
                 {accountInformation && <AccountInformation />}
               </li>
             )}
             {windowWidth >= 744 && (
               <li>
-                <a href="/favorites" className={styles.headerButton}>
+                <Link to="/favorites" className={styles.headerButton}>
                   <HeartIcon />
-                </a>
+                </Link>
               </li>
             )}
           </ul>

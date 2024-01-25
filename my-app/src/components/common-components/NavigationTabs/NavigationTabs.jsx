@@ -2,10 +2,13 @@ import React, {useEffect, useRef, useState} from 'react';
 import {Link, useLocation} from 'react-router-dom';
 import {useSelector, useDispatch} from "react-redux";
 import {changeTranslation} from "@/redux/translationTab.js";
-
 import styles from "./NavigationTabs.module.css";
+import useClickAccount from "../../hooks/useClickAccount.js";
+import {Login} from "../../LoginAndRegistration/Login.jsx";
 
 export const NavigationTabs = () => {
+    const [isDisplayedLoginPopUp, setIsDisplayedLoginPopUp] = useState(false);
+    const handleClickAccount = useClickAccount(setIsDisplayedLoginPopUp);
     const translationTab = useSelector((state) => state.translationTab.value);
     const dispatch = useDispatch()
     const navLineRef = useRef();
@@ -13,7 +16,6 @@ export const NavigationTabs = () => {
     const favoritesRef = useRef();
     const loginRef = useRef();
     const orderHistoryRef = useRef();
-    const settingsRef = useRef();
     const location = useLocation();
 
     const calculateOffsetLeft = (element) => {
@@ -32,9 +34,6 @@ export const NavigationTabs = () => {
             case '/favorites':
                 activeTabRef = favoritesRef;
                 break;
-            case '/settings':
-                activeTabRef = settingsRef;
-                break;
             default:
                 return;
         }
@@ -46,14 +45,14 @@ export const NavigationTabs = () => {
         }
     }, [])
 
+
     return(
         <div className={styles.navigationTabs}>
             <nav className={styles.navigationTabs_tabs} ref={navContainerRef}>
                 <ul>
-                    <Link to="/login" ref={loginRef}><li>Акаунт</li></Link>
+                    <Link to="/login" ref={loginRef} onClick={handleClickAccount}><li>Акаунт</li></Link>
                     <Link to="/order/history" ref={orderHistoryRef}><li>Історія замовлень</li></Link>
                     <Link to="/favorites" ref={favoritesRef}><li>Список бажань</li></Link>
-                    <Link to="/settings" ref={settingsRef}><li>Налаштування</li></Link>
                 </ul>
                 <div className={styles.navigationTabs_navLine}>
                     <div ref={navLineRef} style={{transform: `translateX(${translationTab.translation}px)`,
@@ -61,6 +60,7 @@ export const NavigationTabs = () => {
                     </div>
                 </div>
             </nav>
+            {isDisplayedLoginPopUp && <Login setDisplayedLoginPopUp = {setIsDisplayedLoginPopUp} />}
         </div>
     )
 }
