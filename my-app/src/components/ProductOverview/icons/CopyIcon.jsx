@@ -1,7 +1,7 @@
-const CopyIcon = () => {
+const CopyIcon = ({setIsCopied}) => {
     const copyToClipboard = () => {
         navigator.clipboard.writeText(window.location.href).then(() => {
-            console.log('URL copied to clipboard!');
+            setIsCopied(true);
         }).catch(err => {
             console.error('Failed to copy: ', err);
         });

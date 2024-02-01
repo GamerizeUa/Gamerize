@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import CopyIcon from "../icons/CopyIcon.jsx";
 import styles from './Share.module.css';
 import FacebookIcon from "../icons/SocialMedia/FacebookIcon.jsx";
@@ -11,6 +11,7 @@ import {FacebookShareButton, TelegramShareButton, TwitterShareButton, WhatsappSh
     EmailShareButton, ViberShareButton} from "react-share";
 
 export const Share = ({changeVisibility, isVisible}) => {
+    const [isCopied, setIsCopied] = useState(false);
     const socialMedias = ['Facebook', 'Telegram', 'Twitter', 'Whatsapp', 'E-mail', 'Viber'];
     const socialMediaIcons = [FacebookIcon, TelegramIcon, TwitterIcon, WhatsupIcon, EmailIcon, ViberIcon]
     const buttons = [FacebookShareButton, TelegramShareButton, TwitterShareButton,
@@ -52,9 +53,9 @@ export const Share = ({changeVisibility, isVisible}) => {
                         })}
                     </div>
                     <p className={styles.share_text}>Або скопіювати посилання</p>
-                    <div className={styles.share_linkContainer}>
+                    <div className={`${styles.share_linkContainer} ${isCopied ? styles.share_linkCopied : ''}`}>
                         <p className={styles.share_link}>{window.location.href}</p>
-                        <CopyIcon />
+                        <CopyIcon setIsCopied={setIsCopied} />
                     </div>
                 </div>
             </div>

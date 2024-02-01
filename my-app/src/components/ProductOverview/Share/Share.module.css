@@ -1,3 +1,18 @@
+@keyframes setOpacity {
+    0% {
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
 .share_background{
     position: fixed;
     left: 0;
@@ -114,6 +129,7 @@
 }
 
 .share_linkContainer{
+    position: relative;
     border-radius: 10px;
     background: #EEF1FF;
     height: 53px;
@@ -130,4 +146,17 @@
     font-size: 14px;
     font-weight: 400;
     width: 440px;
+}
+
+.share_linkCopied::before{
+    content: "Скопійовано!";
+    position: absolute;
+    color: #6566AC;
+    font-family: Noto Sans;
+    font-size: 10px;
+    font-weight: 400;
+    right: 12px;
+    top: 2px;
+    opacity: 0;
+    animation: setOpacity 2s ease-in-out;
 }
