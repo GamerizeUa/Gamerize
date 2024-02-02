@@ -6,7 +6,8 @@ import ProductPage from "./pages/ProductPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import FavoritePage from "./pages/Favorites";
-import NotFound from "./pages/NotFound";
+import NotFound from "./pages/NotFound/NotFound";
+import AboutUs from "./pages/AboutUs/AboutUs";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="reviews" element={<Reviews />} /> */}
         </Route>
         <Route path="/favorites" element={<FavoritePage />} />
+        <Route path="/about" element={<AboutUs />} />
         <Route path="*" element={<NotFound />} />
       </Route>
       {/* <Route path="admin/*" element={<AdminPage />}>

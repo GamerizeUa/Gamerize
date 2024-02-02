@@ -1,0 +1,66 @@
+.pageWrapper{
+    padding: 62px 80px 120px 80px;
+}
+
+.title {
+    width: 1280px;
+    padding: 53px 108px;
+    font-family: 'Oswald';
+    font-size: 44px;
+    font-weight: 500;
+    background-color: #EEF1FF;
+}
+
+.decription {
+    font-family: 'Noto Sans';
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+}
+
+.advantagesTitle{
+    font-family: 'Oswald';
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.advantagesList{
+    width: 630px;
+    display: flex;
+    gap: 54px;
+    justify-content: center;
+    padding-top: 23px;
+    padding-bottom: 38px;
+    background-color: #EEF1FF;
+}
+
+.advantagesItem{
+display: flex;
+gap: 16px;
+flex-direction: column;
+align-items: center;
+}
+
+.advantagesText{
+    font-family: 'Noto Sans';
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+}
+
+.featureList{
+    display: flex;
+}
+
+.featureItem{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.feature{
+    /* font-family: 'Oswald'; */
+    font-size: 36px;
+    font-weight: 600;
+    color: #6566AC;
+}

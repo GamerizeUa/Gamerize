@@ -18,6 +18,9 @@ const Footer = () => {
             <li>
               <a className={styles.footerListLink}>Умови повернення</a>
             </li>
+            <li>
+              <a className={styles.footerListLink}>Про нас</a>
+            </li>
           </ul>
           <ul className={styles.navList}>
             <p className={styles.footerListHeader}>Навігація</p>
@@ -26,6 +29,9 @@ const Footer = () => {
             </li>
             <li>
               <a className={styles.footerListLink}>Жанри</a>
+            </li>
+            <li>
+              <a className={styles.footerListLink}>Тематика</a>
             </li>
             <li>
               <a className={styles.footerListLink}>Пазли</a>
@@ -56,7 +62,7 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-        <p className={styles.rights}>© 2023 Gamerise. All Rights Reserved.</p>
+        <p className={styles.rights}>© 2024 Gamerise. All Rights Reserved.</p>
       </div>
     </div>
   );
