@@ -8,5 +8,8 @@ namespace Gamerize.BLL.Models
 		public string Code { get; set; }
 		public DateTime ActiveFrom { get; set; }
 		public DateTime? ActiveTo { get; set; }
+		public double Discount { get; set; }
+		
 	}
+	
 }

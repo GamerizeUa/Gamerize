@@ -33,7 +33,8 @@ namespace Gamerize.BLL.Services
                     Id = default,
                     Code = newEntity.Code,
                     ActiveFrom = newEntity.ActiveFrom,
-                    ActiveTo = newEntity.ActiveTo
+                    ActiveTo = newEntity.ActiveTo,
+                    Discount = newEntity.Discount
                 };
 
                 await _repository.AddAsync(entity);
