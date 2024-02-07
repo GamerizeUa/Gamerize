@@ -2,6 +2,7 @@ import CrossIcon from "../../icons/CrossIcon";
 import styles from "./BurgerMenu.module.css";
 import UserBlueIcon from "../../icons/UserBlueIcon";
 import HeartBlueIcon from "../../icons/HeartBlueIcon";
+import PackageSearchIcon from "../../icons/PackageSearchIcon";
 import ArrowRightSmallIcon from "../../icons/ArrowRightSmallIcon";
 import LogOutIcon from "../../icons/LogOutIcon";
 
@@ -24,6 +25,11 @@ const BurgerMenu = ({ burgerMenuClose }) => {
           <li>
             <a href="/login" className={styles.burgerMenuLink}>
               <UserBlueIcon />
+            </a>
+          </li>
+          <li>
+            <a href="" className={styles.burgerMenuLink}>
+              <PackageSearchIcon />
             </a>
           </li>
           <li>
