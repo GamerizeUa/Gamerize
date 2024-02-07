@@ -17,10 +17,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/catalog" element={<Catalog />} />
-        <Route path="catalog/:Id" element={<ProductPage />}>
-          {/* <Route path="feature" element={<Feature />} />
-          <Route path="reviews" element={<Reviews />} /> */}
-        </Route>
+        <Route path="catalog/:Id" element={<ProductPage />}></Route>
         <Route path="/favorites" element={<FavoritePage />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="*" element={<NotFound />} />

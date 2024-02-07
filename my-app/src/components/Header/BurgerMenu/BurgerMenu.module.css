@@ -59,6 +59,10 @@
     padding: 22px 12px;
 }
 
+.menuInfoListLink{
+    color: #000;
+}
+
 .logOutBloc{
 display: flex;
 align-items: center;

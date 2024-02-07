@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Logo } from "../Logo/Logo";
 import FacebookIcon from "../icons/FacebookIcon";
 import InstagramIcon from "../icons/InstagramIcon";
@@ -13,13 +14,15 @@ const Footer = () => {
           <ul className={styles.toUsersList}>
             <p className={styles.footerListHeader}>Користувачам</p>
             <li>
-              <a className={styles.footerListLink}>Оплата і доставка</a>
+              <Link className={styles.footerListLink}>Оплата і доставка</Link>
             </li>
             <li>
-              <a className={styles.footerListLink}>Умови повернення</a>
+              <Link className={styles.footerListLink}>Умови повернення</Link>
             </li>
             <li>
-              <a className={styles.footerListLink}>Про нас</a>
+              <Link to="about" className={styles.footerListLink}>
+                Про нас
+              </Link>
             </li>
           </ul>
           <ul className={styles.navList}>

@@ -5,6 +5,7 @@ import HeartBlueIcon from "../../icons/HeartBlueIcon";
 import PackageSearchIcon from "../../icons/PackageSearchIcon";
 import ArrowRightSmallIcon from "../../icons/ArrowRightSmallIcon";
 import LogOutIcon from "../../icons/LogOutIcon";
+import { Link } from "react-router-dom";
 
 const BurgerMenu = ({ burgerMenuClose }) => {
   const handleOverlayClick = (event) => {
@@ -62,16 +63,20 @@ const BurgerMenu = ({ burgerMenuClose }) => {
         </ul>
         <ul className={styles.menuInfoList}>
           <li className={styles.menuInfoListItem}>
-            <a>Контактна інформація</a>
+            <Link className={styles.menuInfoListLink}>
+              Контактна інформація
+            </Link>
           </li>
           <li className={styles.menuInfoListItem}>
-            <a>Про нас</a>
+            <Link className={styles.menuInfoListLink} to="about">
+              Про нас
+            </Link>
           </li>
           <li className={styles.menuInfoListItem}>
-            <a>Оплата та доставка</a>
+            <Link className={styles.menuInfoListLink}>Оплата та доставка</Link>
           </li>
           <li className={styles.menuInfoListItem}>
-            <a>Умови поверненн</a>я
+            <Link className={styles.menuInfoListLink}>Умови поверненн</Link>я
           </li>
         </ul>
         <div className={styles.logOutBloc}>
