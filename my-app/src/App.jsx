@@ -6,8 +6,8 @@ import ProductPage from "./pages/ProductPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import FavoritePage from "./pages/Favorites";
-import NotFound from "./pages/NotFound/NotFound";
 import AboutUs from "./pages/AboutUs/AboutUs";
+import NotFound from "./pages/NotFound";
 import OrderHistoryPage from "./pages/OrderHistoryPage.jsx";
 
 function App() {
