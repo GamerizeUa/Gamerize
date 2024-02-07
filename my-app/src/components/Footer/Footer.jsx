@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Logo } from "../Logo/Logo";
 import FacebookIcon from "../icons/FacebookIcon";
 import InstagramIcon from "../icons/InstagramIcon";
@@ -13,10 +14,15 @@ const Footer = () => {
           <ul className={styles.toUsersList}>
             <p className={styles.footerListHeader}>Користувачам</p>
             <li>
-              <a className={styles.footerListLink}>Оплата і доставка</a>
+              <Link className={styles.footerListLink}>Оплата і доставка</Link>
             </li>
             <li>
-              <a className={styles.footerListLink}>Умови повернення</a>
+              <Link className={styles.footerListLink}>Умови повернення</Link>
+            </li>
+            <li>
+              <Link to="about" className={styles.footerListLink}>
+                Про нас
+              </Link>
             </li>
           </ul>
           <ul className={styles.navList}>
@@ -26,6 +32,9 @@ const Footer = () => {
             </li>
             <li>
               <a className={styles.footerListLink}>Жанри</a>
+            </li>
+            <li>
+              <a className={styles.footerListLink}>Тематика</a>
             </li>
             <li>
               <a className={styles.footerListLink}>Пазли</a>
@@ -56,7 +65,7 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-        <p className={styles.rights}>© 2023 Gamerise. All Rights Reserved.</p>
+        <p className={styles.rights}>© 2024 Gamerise. All Rights Reserved.</p>
       </div>
     </div>
   );

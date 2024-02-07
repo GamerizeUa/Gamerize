@@ -2,16 +2,20 @@ import CrossIcon from "../../icons/CrossIcon";
 import styles from "./BurgerMenu.module.css";
 import UserBlueIcon from "../../icons/UserBlueIcon";
 import HeartIcon from "../../icons/HeartIcon";
+import PackageSearchIcon from "../../icons/PackageSearchIcon";
 import ArrowRightSmallIcon from "../../icons/ArrowRightSmallIcon";
 import LogOutIcon from "../../icons/LogOutIcon";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import useClickAccount from "../../hooks/useClickAccount.js";
-import {useState} from "react";
-import {Login} from "../../LoginAndRegistration/Login.jsx";
+import { useState } from "react";
+import { Login } from "../../LoginAndRegistration/Login.jsx";
 
 const BurgerMenu = ({ burgerMenuClose }) => {
   const [isDisplayedLoginPopUp, setIsDisplayedLoginPopUp] = useState(false);
-  const handleClickAccount = useClickAccount(setIsDisplayedLoginPopUp, burgerMenuClose);
+  const handleClickAccount = useClickAccount(
+    setIsDisplayedLoginPopUp,
+    burgerMenuClose
+  );
 
   const handleOverlayClick = (event) => {
     if (event.currentTarget === event.target) {
@@ -29,13 +33,31 @@ const BurgerMenu = ({ burgerMenuClose }) => {
         </div>
         <ul className={styles.iconsList}>
           <li>
-            <Link to="/login" className={styles.burgerMenuLink} onClick={handleClickAccount}>
-              <UserBlueIcon/>
+            <Link
+              to="/login"
+              className={styles.burgerMenuLink}
+              onClick={handleClickAccount}
+            >
+              <UserBlueIcon />
             </Link>
           </li>
           <li>
-            <Link to="/favorites" className={styles.burgerMenuLink} onClick={burgerMenuClose}>
-              <HeartIcon strokeColor='#AAC4FF'/>
+            <a href="" className={styles.burgerMenuLink}>
+              <PackageSearchIcon />
+            </a>
+          </li>
+          <li>
+            <a href="" className={styles.burgerMenuLink}>
+              <PackageSearchIcon />
+            </a>
+          </li>
+          <li>
+            <Link
+              to="/favorites"
+              className={styles.burgerMenuLink}
+              onClick={burgerMenuClose}
+            >
+              <HeartIcon strokeColor="#AAC4FF" />
             </Link>
           </li>
         </ul>
@@ -63,23 +85,29 @@ const BurgerMenu = ({ burgerMenuClose }) => {
         </ul>
         <ul className={styles.menuInfoList}>
           <li className={styles.menuInfoListItem}>
-            <a>Контактна інформація</a>
+            <Link className={styles.menuInfoListLink}>
+              Контактна інформація
+            </Link>
           </li>
           <li className={styles.menuInfoListItem}>
-            <a>Про нас</a>
+            <Link className={styles.menuInfoListLink} to="about">
+              Про нас
+            </Link>
           </li>
           <li className={styles.menuInfoListItem}>
-            <a>Оплата та доставка</a>
+            <Link className={styles.menuInfoListLink}>Оплата та доставка</Link>
           </li>
           <li className={styles.menuInfoListItem}>
-            <a>Умови поверненн</a>я
+            <Link className={styles.menuInfoListLink}>Умови поверненн</Link>я
           </li>
         </ul>
         <div className={styles.logOutBloc}>
           <LogOutIcon />
           <p>Вихід</p>
         </div>
-        {isDisplayedLoginPopUp && <Login setDisplayedLoginPopUp = {setIsDisplayedLoginPopUp} />}
+        {isDisplayedLoginPopUp && (
+          <Login setDisplayedLoginPopUp={setIsDisplayedLoginPopUp} />
+        )}
       </div>
     </div>
   );

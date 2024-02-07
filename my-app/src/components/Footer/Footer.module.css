@@ -101,6 +101,7 @@
 .footerListLink{
     font-size: 12px;
     cursor: pointer;
+    color:#fefefe;
 }
 @media (min-width: 744px) {
     .footerListLink {

@@ -6,7 +6,8 @@ import ProductPage from "./pages/ProductPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import FavoritePage from "./pages/Favorites";
-import NotFound from "./pages/NotFound";
+import NotFound from "./pages/NotFound/NotFound";
+import AboutUs from "./pages/AboutUs/AboutUs";
 import OrderHistoryPage from "./pages/OrderHistoryPage.jsx";
 
 function App() {
@@ -17,11 +18,9 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/catalog" element={<Catalog />} />
-        <Route path="catalog/:Id" element={<ProductPage />}>
-          {/* <Route path="feature" element={<Feature />} />
-          <Route path="reviews" element={<Reviews />} /> */}
-        </Route>
+        <Route path="catalog/:Id" element={<ProductPage />}></Route>
         <Route path="/favorites" element={<FavoritePage />} />
+        <Route path="/about" element={<AboutUs />} />
         <Route path="/order/history" element={<OrderHistoryPage />} />
         <Route path="*" element={<NotFound />} />
       </Route>

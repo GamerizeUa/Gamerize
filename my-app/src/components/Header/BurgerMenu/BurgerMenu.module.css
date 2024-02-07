@@ -12,7 +12,7 @@
 
 .burgerMenuWrapper{
     width: 320px;
-    height: 100vh;
+    height: 710px;
     position: fixed;
     overflow-y: auto;
     top: 0;
@@ -26,7 +26,7 @@
 .closeIcon{
     position: absolute;
     top: 10px;
-    left: 14px;
+    right: 24px;
 }
 
 .burgerMenuHeader{
@@ -37,8 +37,8 @@
 .iconsList{
     display: flex;
     align-items: center;
-    gap: 106px;
-    padding: 25px 75px;
+    gap: 38px;
+    padding: 26px 75px;
 }
 
 .burgerMenuListItem{
@@ -46,14 +46,22 @@
     justify-content: space-between;
     padding: 20px 12px;
     border-top: 1px solid #AAC4FF;
+    font-family: "Noto Sans";
+    font-weight: 500;
+    font-size: 14px;
 }
 
 .menuInfoList{
     background-color: #EEF1FF;
+    font-weight: 500;
 }
 
 .menuInfoListItem{
-    padding: 24px 12px;
+    padding: 22px 12px;
+}
+
+.menuInfoListLink{
+    color: #000;
 }
 
 .logOutBloc{

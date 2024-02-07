@@ -35,10 +35,14 @@ const CategoryHeader = () => {
             <li
               className={styles.categoryListItem}
               onMouseEnter={() => {
-                setIsCategory(true);
+                setTimeout(() => {
+                  setIsCategory(true);
+                }, 300);
               }}
               onMouseLeave={() => {
-                setIsCategory(false);
+                setTimeout(() => {
+                  setIsCategory(false);
+                }, 300);
               }}
             >
               Настільні ігри
@@ -47,10 +51,14 @@ const CategoryHeader = () => {
             <li
               className={styles.categoryListItem}
               onMouseEnter={() => {
-                setIsGenre(true);
+                setTimeout(() => {
+                  setIsGenre(true);
+                }, 300);
               }}
               onMouseLeave={() => {
-                setIsGenre(false);
+                setTimeout(() => {
+                  setIsGenre(false);
+                }, 300);
               }}
             >
               Жанри
@@ -59,10 +67,14 @@ const CategoryHeader = () => {
             <li
               className={styles.categoryListItem}
               onMouseEnter={() => {
-                setIsTheme(true);
+                setTimeout(() => {
+                  setIsTheme(true);
+                }, 300);
               }}
               onMouseLeave={() => {
-                setIsTheme(false);
+                setTimeout(() => {
+                  setIsTheme(false);
+                }, 300);
               }}
             >
               Тематика
@@ -71,10 +83,14 @@ const CategoryHeader = () => {
             <li
               className={styles.categoryListItem}
               onMouseEnter={() => {
-                setIsPuzzle(true);
+                setTimeout(() => {
+                  setIsPuzzle(true);
+                }, 300);
               }}
               onMouseLeave={() => {
-                setIsPuzzle(false);
+                setTimeout(() => {
+                  setIsPuzzle(false);
+                }, 300);
               }}
             >
               Пазли
@@ -83,10 +99,14 @@ const CategoryHeader = () => {
             <li
               className={styles.categoryListItem}
               onMouseEnter={() => {
-                setIsBrainTeaser(true);
+                setTimeout(() => {
+                  setIsBrainTeaser(true);
+                }, 300);
               }}
               onMouseLeave={() => {
-                setIsBrainTeaser(false);
+                setTimeout(() => {
+                  setIsBrainTeaser(false);
+                }, 300);
               }}
             >
               Головоломки

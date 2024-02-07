@@ -74,10 +74,14 @@ const Header = ({ openCart, openBurgerMenu }) => {
               <li
                 className={styles.headerListItem}
                 onMouseEnter={() => {
-                  setAccountInformation(true);
+                  setTimeout(() => {
+                    setAccountInformation(true);
+                  }, 300);
                 }}
                 onMouseLeave={() => {
-                  setAccountInformation(false);
+                  setTimeout(() => {
+                    setAccountInformation(false);
+                  }, 300);
                 }}
               >
                 <Link to="/login" className={styles.headerButton} onClick={handleClickAccount}>
