@@ -5,7 +5,7 @@ import Catalog from "./pages/Catalog";
 import ProductPage from "./pages/ProductPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
-import FavoritePage from "./pages/Favorites";
+import FavoritePage from "./pages/FavoritesPage";
 import NotFound from "./pages/NotFound";
 import OrderHistoryPage from "./pages/OrderHistoryPage.jsx";
 

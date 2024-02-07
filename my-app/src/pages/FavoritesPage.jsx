@@ -1,10 +1,11 @@
+import Favourites from "../components/Favourites/Favourites.jsx";
 import {NavigationTabs} from "../components/common-components/NavigationTabs/NavigationTabs.jsx";
 
 export default function FavoritePage() {
   return (
     <div>
       <NavigationTabs />
-      <h1>Favorite Page</h1>
+      <Favourites/>
     </div>
   );
 }
