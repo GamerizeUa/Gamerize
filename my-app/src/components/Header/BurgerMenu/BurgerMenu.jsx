@@ -1,13 +1,22 @@
 import CrossIcon from "../../icons/CrossIcon";
 import styles from "./BurgerMenu.module.css";
 import UserBlueIcon from "../../icons/UserBlueIcon";
-import HeartBlueIcon from "../../icons/HeartBlueIcon";
+import HeartIcon from "../../icons/HeartIcon";
 import PackageSearchIcon from "../../icons/PackageSearchIcon";
 import ArrowRightSmallIcon from "../../icons/ArrowRightSmallIcon";
 import LogOutIcon from "../../icons/LogOutIcon";
 import { Link } from "react-router-dom";
+import useClickAccount from "../../hooks/useClickAccount.js";
+import { useState } from "react";
+import { Login } from "../../LoginAndRegistration/Login.jsx";
 
 const BurgerMenu = ({ burgerMenuClose }) => {
+  const [isDisplayedLoginPopUp, setIsDisplayedLoginPopUp] = useState(false);
+  const handleClickAccount = useClickAccount(
+    setIsDisplayedLoginPopUp,
+    burgerMenuClose
+  );
+
   const handleOverlayClick = (event) => {
     if (event.currentTarget === event.target) {
       burgerMenuClose();
@@ -24,8 +33,17 @@ const BurgerMenu = ({ burgerMenuClose }) => {
         </div>
         <ul className={styles.iconsList}>
           <li>
-            <a href="/login" className={styles.burgerMenuLink}>
+            <Link
+              to="/login"
+              className={styles.burgerMenuLink}
+              onClick={handleClickAccount}
+            >
               <UserBlueIcon />
+            </Link>
+          </li>
+          <li>
+            <a href="" className={styles.burgerMenuLink}>
+              <PackageSearchIcon />
             </a>
           </li>
           <li>
@@ -34,9 +52,13 @@ const BurgerMenu = ({ burgerMenuClose }) => {
             </a>
           </li>
           <li>
-            <a href="/favorites" className={styles.burgerMenuLink}>
-              <HeartBlueIcon />
-            </a>
+            <Link
+              to="/favorites"
+              className={styles.burgerMenuLink}
+              onClick={burgerMenuClose}
+            >
+              <HeartIcon strokeColor="#AAC4FF" />
+            </Link>
           </li>
         </ul>
         <ul className={styles.burgerMenuList}>
@@ -83,6 +105,9 @@ const BurgerMenu = ({ burgerMenuClose }) => {
           <LogOutIcon />
           <p>Вихід</p>
         </div>
+        {isDisplayedLoginPopUp && (
+          <Login setDisplayedLoginPopUp={setIsDisplayedLoginPopUp} />
+        )}
       </div>
     </div>
   );

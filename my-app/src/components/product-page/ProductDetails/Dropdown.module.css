@@ -1,0 +1,38 @@
+.item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
+  background-color: transparent;
+  height: 24px;
+}
+
+.dataTitle {
+  color: var(--black);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.children {
+  max-height: 0;
+  overflow: hidden;
+  transition: 0.5s;
+  margin-top: 0;
+
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+.children-visible {
+  max-height: 500px;
+  margin-top: 30px;
+}
+
+@media screen and (min-width: 744px) {
+  .dataTitle {
+    font-size: 20px;
+  }
+}

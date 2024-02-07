@@ -8,10 +8,15 @@ import AccountInformation from "./AccountInformation";
 import { SearchInput } from "../SearchInput/SearchInput";
 import { Logo } from "../Logo/Logo";
 import BurgerMenuIcon from "../icons/BurgerMenuIcon";
+import {Link} from "react-router-dom";
+import {Login} from "@/components/LoginAndRegistration/Login.jsx";
+import useClickAccount from "../hooks/useClickAccount.js";
 
 const Header = ({ openCart, openBurgerMenu }) => {
   const [accountInformation, setAccountInformation] = useState(false);
+  const [isDisplayedLoginPopUp, setIsDisplayedLoginPopUp] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const handleClickAccount = useClickAccount(setIsDisplayedLoginPopUp);
 
   const handleChangedSize = () => {
     setWindowWidth(window.innerWidth);
@@ -79,20 +84,21 @@ const Header = ({ openCart, openBurgerMenu }) => {
                   }, 300);
                 }}
               >
-                <a href="/login" className={styles.headerButton}>
+                <Link to="/login" className={styles.headerButton} onClick={handleClickAccount}>
                   <UserIcon />
-                </a>
+                </Link>
                 {accountInformation && <AccountInformation />}
               </li>
             )}
             {windowWidth >= 744 && (
               <li>
-                <a href="/favorites" className={styles.headerButton}>
+                <Link to="/favorites" className={styles.headerButton}>
                   <HeartIcon />
-                </a>
+                </Link>
               </li>
             )}
           </ul>
+          {isDisplayedLoginPopUp && <Login setDisplayedLoginPopUp = {setIsDisplayedLoginPopUp} />}
         </div>
       </div>
     </section>

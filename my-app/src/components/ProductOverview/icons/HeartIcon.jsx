@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "../ActionsBar.module.css";
+import styles from "../ActionsBar/ActionsBar.module.css";
 const HeartIcon = (props) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg"

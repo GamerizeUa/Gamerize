@@ -1,7 +1,11 @@
+import {NavigationTabs} from "../components/common-components/NavigationTabs/NavigationTabs.jsx";
+import {PersonalAccount} from "../components/PersonalAccount/PersonalAccount.jsx";
+
 export default function LoginPage() {
   return (
     <div>
-      <h1>Login</h1>
+        <NavigationTabs />
+        <PersonalAccount />
     </div>
   );
 }

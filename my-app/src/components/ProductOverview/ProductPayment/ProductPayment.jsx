@@ -1,7 +1,7 @@
 import styles from "./ProductPayment.module.css";
 import React from "react";
-import NonCashPaymentIcon from "./icons/NonCashPaymentIcon.jsx";
-import PostPaymentIcon from "./icons/PostPaymentIcon.jsx";
+import NonCashPaymentIcon from "../icons/NonCashPaymentIcon.jsx";
+import PostPaymentIcon from "../icons/PostPaymentIcon.jsx";
 
 export const ProductPayment = () => {
     return (

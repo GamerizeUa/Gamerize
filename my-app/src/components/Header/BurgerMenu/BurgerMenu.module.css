@@ -14,11 +14,12 @@
     width: 320px;
     height: 710px;
     position: fixed;
-    overflow-y: scroll;
+    overflow-y: auto;
     top: 0;
     left: 0;
     z-index: 50;
     font-size: 14px;
+    font-weight: 500;
     background-color: #FFFFFF;
 }
 

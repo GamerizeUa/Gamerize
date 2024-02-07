@@ -1,5 +1,5 @@
-import GamePicker from "../components/product-page/GamePicker/GamePicker";
-import ProductsCarousel from "../components/ProductsCarousel/ProductsCarousel";
+import GamePicker from "../components/landing-page/GamePicker/GamePicker";
+import ProductsCarousel from "../components/common-components/ProductsCarousel/ProductsCarousel";
 import {QuestioningForm} from "@/components/landing-page/QuestioningForm/QuestioningForm.jsx";
 import {SelectionOfGames} from "@/components/landing-page/SelectionOfGames/SelectionOfGames.jsx";
 import {Banner} from "@/components/landing-page/Banner/Banner.jsx";
