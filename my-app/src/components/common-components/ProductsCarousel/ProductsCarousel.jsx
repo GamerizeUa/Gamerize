@@ -12,7 +12,7 @@ export default function ProductsCarousel({
 }) {
   let [windowWidth, setWindowWidth] = useState(null); // !! in future it can become a global redux state to check screen width in any component when needed in js
   let [carouselPosition, setCarouselPosition] = useState(0);
-  let [carouselLoadedPosition, setCarouselLoadedPosition] = useState(0); // carouselPosition that is never decreased to save already loaded products in DOM
+  //!let [carouselLoadedPosition, setCarouselLoadedPosition] = useState(0); // carouselPosition that is never decreased to save already loaded products in DOM
   const carousel = useRef(null); // carousel html element
 
   const limitedWindowWidth = windowWidth < 1440 ? windowWidth : 1440; // width limited by website max-width 1440px
@@ -53,8 +53,8 @@ export default function ProductsCarousel({
     // proceed to go right
     if (carouselPosition < boundaryRightCarouselPosition) {
       // if right border is not already reached, go right
-      if (carouselPosition === carouselLoadedPosition)
-        setCarouselLoadedPosition(++carouselLoadedPosition); //carouselLoadedPosition can only be increased when it`s value is synchronized with carouselPosition
+      //!if (carouselPosition === carouselLoadedPosition)
+      //!  setCarouselLoadedPosition(++carouselLoadedPosition); //carouselLoadedPosition can only be increased when it`s value is synchronized with carouselPosition
       setCarouselPosition(++carouselPosition);
     } // else show animation that border is already reached
     else positionLimitBreakingBehavior(boundaryRightCarouselPosition);
@@ -118,8 +118,8 @@ export default function ProductsCarousel({
       else if (newCarouselPosition >= boundaryRightCarouselPosition)
         newCarouselPosition = boundaryRightCarouselPosition; //taking into account potential border overcome
 
-      if (draggedCardAmount < 0 && carouselPosition === carouselLoadedPosition)
-        setCarouselLoadedPosition(newCarouselPosition); //carouselLoadedPosition can only be increased when it`s value is synchronized with carouselPosition
+      //!if (draggedCardAmount < 0 && carouselPosition === carouselLoadedPosition)
+      //!  setCarouselLoadedPosition(newCarouselPosition); //carouselLoadedPosition can only be increased when it`s value is synchronized with carouselPosition
 
       if (newCarouselPosition === carouselPosition)
         carousel.current.style.transform = `translateX(${
@@ -173,7 +173,7 @@ export default function ProductsCarousel({
             className={styles.body}
           >
             {productsList.map((product, i) => {
-              if (i < productCardsAmount + 1 + carouselLoadedPosition) {
+              if (i < productCardsAmount + 1 + carouselPosition) {
                 // return only products in amount shown on the screen + one unviewed behind the screen + all already loaded and saved in DOM behind the screen
                 return (
                   <div

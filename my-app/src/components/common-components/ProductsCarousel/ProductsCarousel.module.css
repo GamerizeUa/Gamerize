@@ -24,9 +24,9 @@
     font-weight: 400;
 }
 .bodyContainer {
-    overflow: hidden;
+    /* overflow: hidden; */
     width: 100%;  
-    /* border: 1px solid red */
+    border: 1px solid red
 }
 .body {
     height: 294px;
