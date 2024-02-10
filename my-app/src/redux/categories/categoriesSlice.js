@@ -9,7 +9,6 @@ export const fetchAllCategories = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await axios.get("api/Category/GetAll");
-      console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error.message);
@@ -83,7 +82,6 @@ const categoriesSlice = createSlice({
       })
       .addCase(fetchAllCategories.fulfilled, (state, action) => {
         state.items = action.payload;
-        console.log(state.items);
         state.isLoading = false;
         state.error = null;
       })
