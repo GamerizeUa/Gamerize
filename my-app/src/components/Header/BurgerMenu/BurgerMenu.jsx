@@ -47,7 +47,7 @@ const BurgerMenu = ({ burgerMenuClose }) => {
             </a>
           </li>
           <li>
-            <a href="" className={styles.burgerMenuLink}>
+            <a href="/order/history" className={styles.burgerMenuLink}>
               <PackageSearchIcon />
             </a>
           </li>

@@ -1,18 +1,6 @@
 import styles from "./Genres.module.css";
-import { fetchAllGenres } from "../../../redux/categories/genreSlice";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { selectGenres } from "../../../redux/selectors";
 
-const Genres = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchAllGenres());
-  }, [dispatch]);
-
-  const genres = useSelector(selectGenres);
-
+const Genres = ({ genres }) => {
   return (
     <div>
       <ul className={styles.genresList}>

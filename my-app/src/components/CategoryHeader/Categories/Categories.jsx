@@ -1,18 +1,6 @@
 import styles from "./Categories.module.css";
-import { fetchAllCategories } from "../../../redux/categories/categoriesSlice";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { selectCategories } from "../../../redux/selectors";
 
-const Categories = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchAllCategories());
-  }, [dispatch]);
-
-  const categories = useSelector(selectCategories);
-
+const Categories = ({ categories }) => {
   return (
     <div>
       <ul className={styles.categoryList}>

@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import styles from "./AccountInformation.module.css";
-import LogOutIcon from "../icons/LogOutIcon";
+import LogOutIcon from "../../icons/LogOutIcon";
 
 const AccountInformation = () => {
   return (
     <div className={styles.accountLinksWrapper}>
       <ul className={styles.accountList}>
         <li className={styles.accountListItem}>
-          <Link to="" className={styles.accountLink}>
+          <Link to="/login" className={styles.accountLink}>
             <div>
               <svg
                 width="24"
@@ -36,7 +36,7 @@ const AccountInformation = () => {
           </Link>
         </li>
         <li className={styles.accountListItem}>
-          <Link to="" className={styles.accountLink}>
+          <Link to="/order/history" className={styles.accountLink}>
             <div>
               <svg
                 width="24"
@@ -58,7 +58,7 @@ const AccountInformation = () => {
           </Link>
         </li>
         <li className={styles.accountListItem}>
-          <Link to="" className={styles.accountLink}>
+          <Link to="/favorites" className={styles.accountLink}>
             <div>
               <svg
                 width="24"
