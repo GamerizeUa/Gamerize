@@ -1,18 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
 import styles from "./Themes.module.css";
-import { useEffect } from "react";
-import { selectThemes } from "../../../redux/selectors";
-import { fetchAllThemes } from "../../../redux/categories/themesSlice";
 
-const Themes = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchAllThemes());
-  }, [dispatch]);
-
-  const themes = useSelector(selectThemes);
-
+const Themes = ({ themes }) => {
   return (
     <div>
       <ul className={styles.themesList}>

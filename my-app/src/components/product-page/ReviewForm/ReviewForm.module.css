@@ -67,7 +67,7 @@ border-radius: 10px;
     padding-right: 8px;
 }
 
-input[type=radio]{
+.ratingItem{
     display: none;
 }
 

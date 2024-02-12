@@ -4,12 +4,12 @@ import HeartIcon from "../icons/HeartIcon";
 import PhoneIcon from "../icons/PhoneIcon";
 import UserIcon from "../icons/UserIcon";
 import styles from "./Header.module.css";
-import AccountInformation from "./AccountInformation";
+import AccountInformation from "./AccountInformation/AccountInformation.jsx";
 import { SearchInput } from "../SearchInput/SearchInput";
 import { Logo } from "../Logo/Logo";
 import BurgerMenuIcon from "../icons/BurgerMenuIcon";
-import {Link} from "react-router-dom";
-import {Login} from "@/components/LoginAndRegistration/Login.jsx";
+import { Link } from "react-router-dom";
+import { Login } from "@/components/LoginAndRegistration/Login.jsx";
 import useClickAccount from "../hooks/useClickAccount.js";
 
 const Header = ({ openCart, openBurgerMenu }) => {
@@ -84,7 +84,11 @@ const Header = ({ openCart, openBurgerMenu }) => {
                   }, 300);
                 }}
               >
-                <Link to="/login" className={styles.headerButton} onClick={handleClickAccount}>
+                <Link
+                  to="/login"
+                  className={styles.headerButton}
+                  onClick={handleClickAccount}
+                >
                   <UserIcon />
                 </Link>
                 {accountInformation && <AccountInformation />}
@@ -98,7 +102,9 @@ const Header = ({ openCart, openBurgerMenu }) => {
               </li>
             )}
           </ul>
-          {isDisplayedLoginPopUp && <Login setDisplayedLoginPopUp = {setIsDisplayedLoginPopUp} />}
+          {isDisplayedLoginPopUp && (
+            <Login setDisplayedLoginPopUp={setIsDisplayedLoginPopUp} />
+          )}
         </div>
       </div>
     </section>

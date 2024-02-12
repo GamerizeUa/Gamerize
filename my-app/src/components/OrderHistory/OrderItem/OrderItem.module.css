@@ -1,0 +1,106 @@
+.orderItem{
+    position: relative;
+    /* width: 1276px;
+    height: 296px; */
+    background-color: #EEF1FF;
+    padding: 24px 32px;
+}
+
+.statusMark{
+    width: 4px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.orderStatus{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.statusDot{
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+}
+
+.receivedStatus{
+    background-color: #D2DAFF;
+}
+
+.cancelledStatus{
+    background-color: #b53232a8;
+}
+
+.defaultStatus{
+    background-color: #B1B2FF;
+}
+
+.statusText{
+    font-size: 16px;
+}
+
+.orderContent{
+    display: flex;
+    justify-content: space-between;
+    padding: 24px 25px;
+}
+
+.productList{
+    width: 772px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding: 27px 58px;
+    background-color: #FEFEFE;
+    border-radius: 10px;
+}
+
+.productListItem{
+    display: flex;
+    gap: 24px;
+}
+
+.productDescription{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.productName{
+    font-size: 16px;
+}
+
+.productPrice{
+    font-size: 14px;
+}
+
+.productArticle{
+    font-size: 12px;
+    color: #8E8E8E;
+}
+
+.orderDetailsWrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.orderSum{
+    display: flex;
+    justify-content: space-between;
+    font-size: 24px;
+}
+
+.orderDetailsBtn{
+    width: 345px;
+    height: 53px;
+    padding: 16px 72px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 10px;
+    background: #AAC4FF;
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+}

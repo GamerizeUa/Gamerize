@@ -1,4 +1,6 @@
 import { useEffect, useState, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllGenres } from "../../redux/categories/genreSlice";
 import Categories from "./Categories/Categories";
 import styles from "./CategoryHeader.module.css";
 import Genres from "./Genres/Genres";
@@ -6,6 +8,13 @@ import Themes from "./Themes/Themes";
 import { SearchInput } from "../SearchInput/SearchInput";
 import Puzzles from "./Puzzles/Puzzles";
 import BrainTeasers from "./BrainTeasers/BrainTeasers";
+import {
+  selectCategories,
+  selectGenres,
+  selectThemes,
+} from "../../redux/selectors";
+import { fetchAllCategories } from "../../redux/categories/categoriesSlice";
+import { fetchAllThemes } from "../../redux/categories/themesSlice";
 
 const CategoryHeader = () => {
   const [isCategory, setIsCategory] = useState(false);
@@ -15,6 +24,7 @@ const CategoryHeader = () => {
   const [isBrainTeaser, setIsBrainTeaser] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const timeoutRef = useRef(null);
+  const dispatch = useDispatch();
 
   const handleChangedSize = () => {
     setWindowWidth(window.innerWidth);
@@ -38,6 +48,16 @@ const CategoryHeader = () => {
     };
   }, []);
 
+  useEffect(() => {
+    dispatch(fetchAllGenres());
+    dispatch(fetchAllCategories());
+    dispatch(fetchAllThemes());
+  }, [dispatch]);
+
+  const categories = useSelector(selectCategories);
+  const genres = useSelector(selectGenres);
+  const themes = useSelector(selectThemes);
+
   return (
     <section className={styles.categoryHeaderWrap}>
       <div className={styles.categoryHeader}>
@@ -50,7 +70,7 @@ const CategoryHeader = () => {
               onMouseLeave={() => handleMouseLeave(setIsCategory)}
             >
               Настільні ігри
-              {isCategory && <Categories />}
+              {isCategory && <Categories categories={categories} />}
             </li>
             <li
               className={styles.categoryListItem}
@@ -58,7 +78,7 @@ const CategoryHeader = () => {
               onMouseLeave={() => handleMouseLeave(setIsGenre)}
             >
               Жанри
-              {isGenre && <Genres />}
+              {isGenre && <Genres genres={genres} />}
             </li>
             <li
               className={styles.categoryListItem}
@@ -66,7 +86,7 @@ const CategoryHeader = () => {
               onMouseLeave={() => handleMouseLeave(setIsTheme)}
             >
               Тематика
-              {isTheme && <Themes />}
+              {isTheme && <Themes themes={themes} />}
             </li>
             <li
               className={styles.categoryListItem}
