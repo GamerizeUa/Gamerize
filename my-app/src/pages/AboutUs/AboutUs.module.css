@@ -147,8 +147,10 @@ align-items: center;
     position: relative;
 }
 
-.iconWrapper {
+.icon {
+    width: 306px;
+    height: 284px;
     position: absolute;
-    right: -40px;
-    bottom: 135px;
+    left: 250px;
+    bottom: 215px;
 }

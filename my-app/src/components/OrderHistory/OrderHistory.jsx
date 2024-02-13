@@ -1,9 +1,8 @@
 import { useState } from "react";
 import styles from "./OrderHistory.module.css";
-import ArrowDownIcon from "../icons/ArrowDownIcon";
-import ArrowUpIcon from "../icons/ArrowUpIcon";
 import OrderItem from "./OrderItem/OrderItem";
 import mainProductPhoto from "../../assets/images/mainProductPhoto.png";
+import sprite from "../../assets/icons/sprite.svg";
 
 const orders = [
   {
@@ -181,7 +180,23 @@ const OrderHistory = () => {
       <div className={styles.orderWrapper}>
         <button className={styles.selectingBtn} onClick={toggleSelector}>
           <p className={styles.selectingBtnText}>{filter}</p>
-          {isSelectorOpen ? <ArrowUpIcon /> : <ArrowDownIcon />}
+          {isSelectorOpen ? (
+            <svg width="24" height="24">
+              <use
+                href={sprite + "#icon-chevron-up"}
+                fill="#EEF1FF"
+                stroke="currentColor"
+              ></use>
+            </svg>
+          ) : (
+            <svg width="24" height="24">
+              <use
+                href={sprite + "#icon-chevron-down"}
+                fill="#EEF1FF"
+                stroke="currentColor"
+              ></use>
+            </svg>
+          )}
         </button>
         <p className={styles.ordersAmount}>
           {orders.length}{" "}

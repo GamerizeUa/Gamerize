@@ -37,6 +37,11 @@
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.accountListItem svg{
+width: 24px;
+height: 24px;
+}
+
 .accountListItem:hover,
 .accountListItem:focus {
     background-color: #EEF1FF;
