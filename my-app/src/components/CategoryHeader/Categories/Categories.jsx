@@ -2,7 +2,6 @@ import styles from "./Categories.module.css";
 import sprite from "../../../assets/icons/sprite.svg";
 
 const Categories = ({ categories }) => {
-  console.log(categories);
   return (
     <div>
       <ul className={styles.categoryList}>
