@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 import { Logo } from "../Logo/Logo";
-import FacebookIcon from "../icons/FacebookIcon";
-import InstagramIcon from "../icons/InstagramIcon";
-import PhoneIcon from "../icons/PhoneIcon";
+import sprite from "../../assets/icons/sprite.svg";
 import styles from "./Footer.module.css";
 
 const Footer = () => {
@@ -51,16 +49,22 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className={styles.telLink + " " + styles.footerListLink}
               >
-                <PhoneIcon />
+                <svg width={24} height={24}>
+                  <use href={sprite + "#icon-phone"} />
+                </svg>
                 <p>+380 98 7067 447</p>
               </a>
             </li>
             <li>
               <a className={styles.footerListLink}>
-                <InstagramIcon />
+                <svg width={35} height={35}>
+                  <use href={sprite + "#icon-Instagram"}></use>
+                </svg>
               </a>
               <a className={styles.fbIcon + " " + styles.footerListLink}>
-                <FacebookIcon />
+                <svg width={35} height={35}>
+                  <use href={sprite + "#icon-Facebook"}></use>
+                </svg>
               </a>
             </li>
           </ul>

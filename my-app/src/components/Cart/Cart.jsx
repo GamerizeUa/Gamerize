@@ -1,4 +1,5 @@
 import CrossIcon from "../icons/CrossIcon";
+import sprite from "../../assets/icons/sprite.svg";
 import styles from "./Cart.module.css";
 
 const Cart = ({ cartClose }) => {
@@ -34,44 +35,13 @@ const Cart = ({ cartClose }) => {
                 <p className={styles.cartProductArticle}>Артикул: 123456</p>
                 <div className={styles.cartCounterWrapper}>
                   <div className={styles.cartProductCounter}>
-                    {/* <button className={styles.cartProductCounterBtn}> */}
-                    <svg
-                      width="10"
-                      height="1"
-                      viewBox="0 0 10 1"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <rect width="10" height="1" rx="0.5" fill="#2B2B2B" />
+                    <svg width="9" height="9">
+                      <use href={sprite + "#icon-minus"}></use>
                     </svg>
-                    {/* </button> */}
                     <p>1</p>
-                    {/* <button className={styles.cartProductCounterBtn}> */}
-                    <svg
-                      width="9"
-                      height="9"
-                      viewBox="0 0 9 9"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <rect
-                        y="4"
-                        width="9"
-                        height="0.9"
-                        rx="0.45"
-                        fill="#2B2B2B"
-                      />
-                      <rect
-                        x="4"
-                        y="9"
-                        width="9"
-                        height="1"
-                        rx="0.5"
-                        transform="rotate(-90 4 9)"
-                        fill="#2B2B2B"
-                      />
+                    <svg width="9" height="9">
+                      <use href={sprite + "#icon-plus"}></use>
                     </svg>
-                    {/* </button> */}
                   </div>
                   <div className={styles.cartProductPriceWrapper}>
                     <p className={styles.cartProductPrice}>1200</p>
@@ -95,44 +65,13 @@ const Cart = ({ cartClose }) => {
                 <p className={styles.cartProductArticle}>Артикул: 123456</p>
                 <div className={styles.cartCounterWrapper}>
                   <div className={styles.cartProductCounter}>
-                    {/* <button className={styles.cartProductCounterBtn}> */}
-                    <svg
-                      width="10"
-                      height="1"
-                      viewBox="0 0 10 1"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <rect width="10" height="1" rx="0.5" fill="#2B2B2B" />
+                    <svg width="9" height="9">
+                      <use href={sprite + "#icon-minus"}></use>
                     </svg>
-                    {/* </button> */}
                     <p>1</p>
-                    {/* <button className={styles.cartProductCounterBtn}> */}
-                    <svg
-                      width="9"
-                      height="9"
-                      viewBox="0 0 9 9"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <rect
-                        y="4"
-                        width="9"
-                        height="0.9"
-                        rx="0.45"
-                        fill="#2B2B2B"
-                      />
-                      <rect
-                        x="4"
-                        y="9"
-                        width="9"
-                        height="1"
-                        rx="0.5"
-                        transform="rotate(-90 4 9)"
-                        fill="#2B2B2B"
-                      />
+                    <svg width="9" height="9">
+                      <use href={sprite + "#icon-plus"}></use>
                     </svg>
-                    {/* </button> */}
                   </div>
                   <div className={styles.cartProductPriceWrapper}>
                     <p className={styles.cartProductPrice}>1200</p>

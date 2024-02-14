@@ -1,14 +1,12 @@
 import CrossIcon from "../../icons/CrossIcon";
 import styles from "./BurgerMenu.module.css";
-import UserBlueIcon from "../../icons/UserBlueIcon";
 import HeartIcon from "../../icons/HeartIcon";
-import PackageSearchIcon from "../../icons/PackageSearchIcon";
-import ArrowRightSmallIcon from "../../icons/ArrowRightSmallIcon";
-import LogOutIcon from "../../icons/LogOutIcon";
 import { Link } from "react-router-dom";
 import useClickAccount from "../../hooks/useClickAccount.js";
 import { useState } from "react";
 import { Login } from "../../LoginAndRegistration/Login.jsx";
+import sprite from "../../../assets/icons/sprite.svg";
+import ArrowRightIcon from "../../icons/ArrowRightIcon.jsx";
 
 const BurgerMenu = ({ burgerMenuClose }) => {
   const [isDisplayedLoginPopUp, setIsDisplayedLoginPopUp] = useState(false);
@@ -21,6 +19,11 @@ const BurgerMenu = ({ burgerMenuClose }) => {
     if (event.currentTarget === event.target) {
       burgerMenuClose();
     }
+  };
+
+  const handleCloseBurgerMenu = () => {
+    setIsDisplayedLoginPopUp(false);
+    burgerMenuClose();
   };
 
   return (
@@ -38,24 +41,34 @@ const BurgerMenu = ({ burgerMenuClose }) => {
               className={styles.burgerMenuLink}
               onClick={handleClickAccount}
             >
-              <UserBlueIcon />
+              <svg width={32} height={32}>
+                <use
+                  href={sprite + "#icon-user"}
+                  fill="#FFFFFF"
+                  stroke="#AAC4FF"
+                />
+              </svg>
             </Link>
           </li>
           <li>
-            <a href="" className={styles.burgerMenuLink}>
-              <PackageSearchIcon />
-            </a>
-          </li>
-          <li>
-            <a href="/order/history" className={styles.burgerMenuLink}>
-              <PackageSearchIcon />
-            </a>
+            <Link
+              to="/order/history"
+              className={styles.burgerMenuLink}
+              onClick={() => handleCloseBurgerMenu()}
+            >
+              <svg width="34" height="34">
+                <use
+                  href={sprite + "#icon-package_search"}
+                  fill="#EEF1FF"
+                ></use>
+              </svg>
+            </Link>
           </li>
           <li>
             <Link
               to="/favorites"
               className={styles.burgerMenuLink}
-              onClick={burgerMenuClose}
+              onClick={() => handleCloseBurgerMenu()}
             >
               <HeartIcon strokeColor="#AAC4FF" />
             </Link>
@@ -64,23 +77,23 @@ const BurgerMenu = ({ burgerMenuClose }) => {
         <ul className={styles.burgerMenuList}>
           <li className={styles.burgerMenuListItem}>
             <p>Настільні ігри</p>
-            <ArrowRightSmallIcon />
+            <ArrowRightIcon color="#AAC4FF" strokeWidth="5" />
           </li>
           <li className={styles.burgerMenuListItem}>
             <p>Жанри</p>
-            <ArrowRightSmallIcon />
+            <ArrowRightIcon color="#AAC4FF" strokeWidth="5" />
           </li>
           <li className={styles.burgerMenuListItem}>
             <p>Тематика</p>
-            <ArrowRightSmallIcon />
+            <ArrowRightIcon color="#AAC4FF" strokeWidth="5" />
           </li>
           <li className={styles.burgerMenuListItem}>
             <p>Пазли</p>
-            <ArrowRightSmallIcon />
+            <ArrowRightIcon color="#AAC4FF" strokeWidth="5" />
           </li>
           <li className={styles.burgerMenuListItem}>
             <p>Головоломки</p>
-            <ArrowRightSmallIcon />
+            <ArrowRightIcon color="#AAC4FF" strokeWidth="5" />
           </li>
         </ul>
         <ul className={styles.menuInfoList}>
@@ -102,7 +115,9 @@ const BurgerMenu = ({ burgerMenuClose }) => {
           </li>
         </ul>
         <div className={styles.logOutBloc}>
-          <LogOutIcon />
+          <svg width="24" height="24">
+            <use href={sprite + "#icon-log-out"}></use>
+          </svg>
           <p>Вихід</p>
         </div>
         {isDisplayedLoginPopUp && (

@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
-import ShoppingCartIcon from "../icons/CartIcon";
 import HeartIcon from "../icons/HeartIcon";
-import PhoneIcon from "../icons/PhoneIcon";
-import UserIcon from "../icons/UserIcon";
 import styles from "./Header.module.css";
 import AccountInformation from "./AccountInformation/AccountInformation.jsx";
 import { SearchInput } from "../SearchInput/SearchInput";
 import { Logo } from "../Logo/Logo";
-import BurgerMenuIcon from "../icons/BurgerMenuIcon";
 import { Link } from "react-router-dom";
 import { Login } from "@/components/LoginAndRegistration/Login.jsx";
 import useClickAccount from "../hooks/useClickAccount.js";
+import sprite from "../../assets/icons/sprite.svg";
 
 const Header = ({ openCart, openBurgerMenu }) => {
   const [accountInformation, setAccountInformation] = useState(false);
@@ -40,7 +37,9 @@ const Header = ({ openCart, openBurgerMenu }) => {
                 openBurgerMenu();
               }}
             >
-              <BurgerMenuIcon />
+              <svg width={24} height={24}>
+                <use href={sprite + "#icon-burger_menu"} />
+              </svg>
             </div>
           )}
           {windowWidth >= 744 && <Logo />}
@@ -56,7 +55,9 @@ const Header = ({ openCart, openBurgerMenu }) => {
                   rel="noopener noreferrer"
                   className={styles.telLink}
                 >
-                  <PhoneIcon />
+                  <svg width={32} height={32}>
+                    <use href={sprite + "#icon-phone"} />
+                  </svg>
                   <p>+380 98 7067 447</p>
                 </a>
               </li>
@@ -67,7 +68,9 @@ const Header = ({ openCart, openBurgerMenu }) => {
               }}
             >
               <button className={styles.headerButton}>
-                <ShoppingCartIcon />
+                <svg className={styles.cartIcon}>
+                  <use href={sprite + "#icon-cart"} />
+                </svg>
               </button>
             </li>
             {windowWidth >= 744 && (
@@ -89,7 +92,13 @@ const Header = ({ openCart, openBurgerMenu }) => {
                   className={styles.headerButton}
                   onClick={handleClickAccount}
                 >
-                  <UserIcon />
+                  <svg width={32} height={32}>
+                    <use
+                      href={sprite + "#icon-user"}
+                      fill="#AAC4FF"
+                      stroke="#EEF1FF"
+                    />
+                  </svg>
                 </Link>
                 {accountInformation && <AccountInformation />}
               </li>
