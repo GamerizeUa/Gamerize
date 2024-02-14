@@ -30,7 +30,7 @@
 }
 .body {
     height: 294px;
-    transition: 0.5s;
+    transition: 1s;
     position: relative;
     width: fit-content;
     display: flex;
