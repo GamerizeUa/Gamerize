@@ -2,7 +2,7 @@
 {
 	public static class Config
 	{
-		public static string ProductImagesPath { get; } = "images";
-		public static string NoImage { get; } = "noimage.png";
+		public static string ProductImagesPath { get; } = @".\wwwroot\images";
+		public static string NoImage { get; } = @"noimage.png";
 	}
 }
