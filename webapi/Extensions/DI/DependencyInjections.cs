@@ -4,6 +4,7 @@ using Gamerize.BLL.Services.Interfaces;
 using Gamerize.BLL.Services;
 using Gamerize.DAL.UnitOfWork.Interfaces;
 using Gamerize.DAL.UnitOfWork;
+using DiscountCouponService = Gamerize.BLL.Services.DiscountCouponService;
 
 namespace webapi.Extensions.DI
 {
@@ -23,6 +24,7 @@ namespace webapi.Extensions.DI
 			services.AddTransient<ProductService>();
 			services.AddTransient<QuestionService>();
 			services.AddTransient<DiscountSevice>();
+			services.AddTransient<DiscountCouponService>();
 		}
 	}
 }
