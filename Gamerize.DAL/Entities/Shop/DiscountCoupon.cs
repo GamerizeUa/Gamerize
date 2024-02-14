@@ -8,5 +8,6 @@ namespace Gamerize.DAL.Entities.Shop
 		public required string Code { get; set; }
 		public required DateTime ActiveFrom { get; set; }
 		public DateTime? ActiveTo { get; set; }
+		public double Discount { get; set; }
 	}
 }
