@@ -201,11 +201,17 @@
 
 @media screen and (min-width: 1280px) {
     .cardTop {
-        height: 72.5%;
+        /* height: 72.5%; */
+        height: 315px;
         padding : 18px 18px 19px ;
+        transition: 0.5s;
+    }
+    .allCardLink:hover ~ .cardTop {
+        height: 325px;
     }
     .cardBottom {
-        height: 27.5%;
+        /* height: 27.5%; */
+        height: 120px;
         padding-top: 20px;
     }
     .iconsBar {
@@ -274,8 +280,12 @@
         align-items: center;
     }
     .cardTop {
-        height: 73%;
+        /* height: 73%; */
+        height: 362px;
         padding : 13px 18px 21px 
+    }
+    .allCardLink:hover ~ .cardTop {
+        height: 382px;
     }
     .discountIcon {
         font-size: 16px;
@@ -308,7 +318,8 @@
         font-size: 14px;
     }
     .cardBottom {
-        height: 27%;
+        /* height: 27%; */
+        height: 135px;
         padding-top: 24px;
     }
     .title {
