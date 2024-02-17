@@ -200,15 +200,22 @@
 }
 
 @media screen and (min-width: 1280px) {
+    .allContent {
+        margin-top: 0;
+        transition: 1s;
+    }
+    .allContent:hover {
+        margin-top: 20px;
+    }
     .cardTop {
         /* height: 72.5%; */
         height: 315px;
         padding : 18px 18px 19px ;
         transition: 0.5s;
     }
-    .allCardLink:hover ~ .cardTop {
-        height: 325px;
-    }
+    /* .allCardLink:hover ~ .cardTop { */
+        /* height: 325px; */
+    /* } */
     .cardBottom {
         /* height: 27.5%; */
         height: 120px;
@@ -284,9 +291,9 @@
         height: 362px;
         padding : 13px 18px 21px 
     }
-    .allCardLink:hover ~ .cardTop {
-        height: 382px;
-    }
+    /* .allCardLink:hover ~ .cardTop { */
+        /* height: 382px; */
+    /* } */
     .discountIcon {
         font-size: 16px;
     }
