@@ -5,13 +5,13 @@
 namespace Gamerize.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class DiscountCoupon : Migration
+    public partial class UpdateDiscountCoupon : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<double>(
-                name: "Discount",
+                name: "Coupon",
                 table: "DiscountCoupons",
                 type: "float",
                 nullable: false,
@@ -22,7 +22,7 @@ namespace Gamerize.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Discount",
+                name: "Coupon",
                 table: "DiscountCoupons");
         }
     }

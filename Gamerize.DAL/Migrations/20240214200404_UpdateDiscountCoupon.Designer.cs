@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gamerize.DAL.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20240214202842_RefreshToken")]
-    partial class RefreshToken
+    [Migration("20240214200404_UpdateDiscountCoupon")]
+    partial class UpdateDiscountCoupon
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -324,7 +324,7 @@ namespace Gamerize.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Discount")
+                    b.Property<double>("Coupon")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
