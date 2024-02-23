@@ -5,14 +5,14 @@
     width: 151px;
     height: 42px;
 }
-.hiddenChevron {
+.hidden_chevron {
     visibility: hidden;
 }
 .chevron svg{
     width: 20px;
     height: 20px;
 }
-.checkedBtn {
+.checked_btn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,7 +24,7 @@
     font-weight: 500;
     background-color: var(--light-blue-gray);
 }
-.notCheckedBtn{
+.not_checked_btn{
     font-size: 13px;
     font-style: normal;
     font-weight: 500;
@@ -38,12 +38,12 @@
         width: 24px;
         height: 24px;
     }
-    .checkedBtn {
+    .checked_btn {
         width: 50px;
         height: 50px;
         font-size: 24px;
     }
-    .notCheckedBtn{
+    .not_checked_btn{
         font-size: 16px;
     }
 }
