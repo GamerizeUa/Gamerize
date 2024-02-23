@@ -3,7 +3,13 @@ import styles from "./PaginationButtons.module.css";
 import ArrowLeftIcon from "../../icons/ArrowLeftIcon";
 import ArrowRightIcon from "../../icons/ArrowRightIcon";
 
-export default function PaginationButtons({ pagesAmount, pageChangeFunc }) {
+export default function PaginationButtons({
+    pagesAmount = 0,
+    pageChangeFunc = (newPage) => {
+        // change content
+        console.log(newPage);
+    },
+}) {
     let [currentPage, setCurrentPage] = useState(1);
     function rightArrowClickFunc() {
         pageChangeFunc(currentPage + 1);
