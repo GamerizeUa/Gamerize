@@ -1,8 +1,8 @@
 import GamePicker from "../components/landing-page/GamePicker/GamePicker";
 import ProductsCarousel from "../components/common-components/ProductsCarousel/ProductsCarousel";
-import {QuestioningForm} from "@/components/landing-page/QuestioningForm/QuestioningForm.jsx";
-import {SelectionOfGames} from "@/components/landing-page/SelectionOfGames/SelectionOfGames.jsx";
-import {Banner} from "@/components/landing-page/Banner/Banner.jsx";
+import { QuestioningForm } from "@/components/landing-page/QuestioningForm/QuestioningForm.jsx";
+import { SelectionOfGames } from "@/components/landing-page/SelectionOfGames/SelectionOfGames.jsx";
+import { Banner } from "@/components/landing-page/Banner/Banner.jsx";
 
 const HomePage = () => {
   // productsList just for tests
@@ -143,17 +143,33 @@ const HomePage = () => {
     //{id : 51261, discount : 20, name : "Дюна імперіум", minPlayers : 4, maxPlayers : 6, minAge : 16 , price : 2250, oldPrice: 2812, gameTimeMinutes : 80, photo : "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png"},
   ];
   // productsList just for tests
-  
+
   return (
-  <>
-    <GamePicker/>
-    <ProductsCarousel productsList={productsList} carouselTitle={'Популярні товари'} productConfigurationObject={{isOldPrice : false, isDiscount : false, isCartView : false}}/>
-    <ProductsCarousel productsList={productsList} carouselTitle={'Розпродаж'} productConfigurationObject={{isOldPrice : true, isDiscount : true,isCartView : false}}/>
-    <Banner />
-    <SelectionOfGames />
-    <QuestioningForm />
-  </>
-  )
-}
+    <>
+      <GamePicker />
+      <ProductsCarousel
+        productsList={productsList}
+        carouselTitle={"Популярні товари"}
+        productConfigurationObject={{
+          isOldPrice: false,
+          isDiscount: false,
+          isCartView: false,
+        }}
+      />
+      <ProductsCarousel
+        productsList={productsList}
+        carouselTitle={"Розпродаж"}
+        productConfigurationObject={{
+          isOldPrice: true,
+          isDiscount: true,
+          isCartView: false,
+        }}
+      />
+      <Banner />
+      <SelectionOfGames />
+      <QuestioningForm />
+    </>
+  );
+};
 
 export default HomePage;
