@@ -156,15 +156,17 @@ const HomePage = () => {
           isCartView: false,
         }}
       />
-      <ProductsCarousel
-        productsList={productsList}
-        carouselTitle={"Розпродаж"}
-        productConfigurationObject={{
-          isOldPrice: true,
-          isDiscount: true,
-          isCartView: false,
-        }}
-      />
+      {
+        //<ProductsCarousel
+        //{/* // productsList={productsList} */}
+        //{/* // carouselTitle={"Розпродаж"} */}
+        //{/* // productConfigurationObject={{ */}
+        //  isOldPrice: true,
+        //  isDiscount: true,
+        //  isCartView: false,
+        //}}
+      // />
+      }
       <Banner />
       <SelectionOfGames />
       <QuestioningForm />
