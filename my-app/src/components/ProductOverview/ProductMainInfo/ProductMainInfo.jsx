@@ -6,7 +6,7 @@ import {ProductDeliveryAndPayment} from "../ProductDeliveryAndPayment/ProductDel
 import CartIcon from "../icons/CartIcon.jsx";
 import CoinsHandIcon from "../icons/CoinsHandIcon.jsx";
 
-export const ProductMainInfo = () => {
+export const ProductMainInfo = ({breadcrumbsDetails}) => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     useEffect(() => {
@@ -20,7 +20,7 @@ export const ProductMainInfo = () => {
     return (
         <div className={styles.productInfo}>
             <div className={styles.productInfo_container}>
-                {windowWidth >= 1280 && <Breadcrumbs/>}
+                {windowWidth >= 1280 && <Breadcrumbs page={breadcrumbsDetails}/>}
                 <div className={styles.productInfo_mainPart}>
                     <div className={styles.productInfo_topPart}>
                         <div className={styles.productInfo_titleSku}>

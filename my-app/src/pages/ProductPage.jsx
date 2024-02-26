@@ -1,7 +1,7 @@
 import ReviewForm from "../components/product-page/ReviewForm/ReviewForm";
 import ProductRating from "../components/product-page/ProductRating/ProductRating";
 import ReviewsList from "../components/product-page/ReviewsList/ReviewsList";
-import { ProductOverview } from "@/components/ProductOverview/ProductOverview.jsx";
+import { ProductOverview } from "../components/ProductOverview/ProductOverview.jsx";
 import ProductDetails from "../components/product-page/ProductDetails/ProductDetails";
 
 const ProductPage = () => {

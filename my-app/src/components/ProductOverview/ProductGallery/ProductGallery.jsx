@@ -9,7 +9,7 @@ import {Breadcrumbs} from "../Breadcrumbs/Breadcrumbs.jsx";
 import {ActionsBar} from "../ActionsBar/ActionsBar.jsx";
 import ArrowGalleryIcon from "../icons/ArrowGalleryIcon.jsx";
 
-export const ProductGallery = () => {
+export const ProductGallery = ({breadcrumbsDetails}) => {
     const photoArray = [mainProductPhoto, imageCompanyGame, feedback, imageCompanyGame, product, box, feedback];
     const thumbnailsContainer = useRef(null);
     const mainPhotoContainer = useRef(null);
@@ -166,7 +166,7 @@ export const ProductGallery = () => {
 
     return (
         <div className={styles.productGallery}>
-            {windowWidth < 1280 && <Breadcrumbs/>}
+            {windowWidth < 1280 && <Breadcrumbs  page={breadcrumbsDetails}/>}
             <div className={styles.productGallery_actionsBar}>
                 {windowWidth < 1280 && <ActionsBar />}
             </div>
