@@ -3,12 +3,16 @@ import { categoriesReducer } from "./categories/categoriesSlice";
 import { genresReducer } from "./categories/genreSlice";
 import translationTabReducer from "./translationTab.js";
 import { themesReducer } from "./categories/themesSlice.js";
+import productsCatalogReducer from './productsCatalog.js';
+import sortingMethodReducer from "./sortingMethod.js";
 
 const rootReducer = combineReducers({
   categories: categoriesReducer,
   genres: genresReducer,
   themes: themesReducer,
   translationTab: translationTabReducer,
+  productsCatalog: productsCatalogReducer,
+  sortingMethod: sortingMethodReducer,
 });
 
 export const store = configureStore({

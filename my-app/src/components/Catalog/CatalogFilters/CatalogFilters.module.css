@@ -1,0 +1,147 @@
+.filters{
+    width: 219px;
+    display: flex;
+    flex-direction: column;
+    gap: 37px;
+}
+
+.filters_title{
+    color: #2B2B2B;
+    font-family: Oswald;
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: -5px;
+}
+
+.filters_categories{
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.filters_subtitle{
+    color: #2B2B2B;
+    font-family: "Noto Sans";
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.category_options{
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.category_option{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    color: #8E8E8E;
+    font-family: "Noto Sans";
+    font-size: 16px;
+    font-weight: 500;
+    position: relative;
+    cursor: pointer;
+    padding-left: 36px;
+    height: 24px;
+}
+
+.option_checkbox{
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.option_checkmark{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    border: 1px solid #D2DAFF;
+    background-color: #FEFEFE;
+}
+
+.category_option .option_checkbox:checked ~ .option_checkmark {
+    background-color: #AAC4FF;
+}
+
+.filters_price{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.price_edges{
+    display: flex;
+    justify-content: space-between;
+}
+
+.price_edge{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.price_text{
+    color: #2B2B2B;
+    font-family: "Noto Sans";
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.price_amount{
+    color: #2B2B2B;
+    font-family: "Noto Sans";
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 13px;
+    border: 1px solid #AAC4FF;
+    padding: 5px 15px;
+    display: flex;
+}
+
+.price_amount input{
+    color: #2B2B2B;
+    font-family: "Noto Sans";
+    font-size: 14px;
+    font-weight: 400;
+    width: 35px;
+    height: 12px;
+}
+
+.filters_buttons{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.button_apply, .button_reset{
+    height: 44px;
+    border-radius: 10px;
+    background: #D2DAFF;
+    box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.30);
+    color: #2B2B2B;
+    font-family: "Noto Sans";
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.button_apply{
+    width: 100%;
+}
+
+.button_reset{
+    width: 166px;
+}
+
+.button_apply:hover, .button_reset:hover{
+    background-color: #AAC4FF;
+    transition: all 0.3s ease-in-out;
+}
+
+.category_checkedLabel{
+    color: #2B2B2B !important;
+}

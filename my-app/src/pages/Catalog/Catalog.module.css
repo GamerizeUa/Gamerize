@@ -1,0 +1,52 @@
+.catalog{
+    padding-bottom: 120px;
+}
+
+.catalog_breadcrumbs{
+    margin: 26px 0;
+}
+
+.catalog_header{
+    background-color: #EEF1FF;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    padding-left: 108px;
+    margin-top: -56px;
+}
+
+.catalog_pageTitle{
+    color: #000;
+    font-family: Oswald;
+    font-size: 36px;
+    font-weight: 400;
+}
+
+.catalog_mainContainer{
+    display: flex;
+    flex-direction: row;
+    padding-top: 43px;
+    gap: 105px;
+}
+
+.catalog_displaying{
+    display: flex;
+    flex-direction: column;
+    width: 74.68%;
+    gap: 33px;
+}
+
+.catalog_empty{
+    color: #000;
+    font-family: "Noto Sans";
+    font-size: 24px;
+    font-weight: 400;
+    text-align: center;
+    padding-top: 50px;
+}
+
+.catalog_pagination{
+    display: flex;
+    justify-content: center;
+    padding-top: 82px;
+}

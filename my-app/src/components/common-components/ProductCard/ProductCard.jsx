@@ -10,7 +10,7 @@ export default function ProductCard({configurationObject = {isOldPrice : false, 
     }
     return (
         <div className={styles.allContent}>
-            <Link className={styles.allCardLink} to={"catalog/:product"}></Link>
+            <Link className={styles.allCardLink} to={"/catalog/:product"}></Link>
             <div className={styles.cardTop}>
                     <div className={styles.iconsBar}>
                         {
