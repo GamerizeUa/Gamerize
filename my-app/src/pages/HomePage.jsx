@@ -8,7 +8,7 @@ const HomePage = () => {
   // productsList just for tests
   const productsList = [
     {
-      id: 12111,
+      id: 1,
       discount: 20,
       name: "Дюна імперіум1",
       minPlayers: 4,
@@ -21,7 +21,7 @@ const HomePage = () => {
         "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
     },
     {
-      id: 12122,
+      id: 2,
       discount: 20,
       name: "Дюна імперіум2",
       minPlayers: 4,
@@ -34,7 +34,7 @@ const HomePage = () => {
         "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
     },
     {
-      id: 12133,
+      id: 3,
       discount: 20,
       name: "Дюна імперіум3",
       minPlayers: 4,
@@ -47,7 +47,7 @@ const HomePage = () => {
         "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
     },
     {
-      id: 12144,
+      id: 4,
       discount: 20,
       name: "Дюна імперіум4",
       minPlayers: 4,
@@ -60,7 +60,7 @@ const HomePage = () => {
         "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
     },
     {
-      id: 12155,
+      id: 5,
       discount: 20,
       name: "Дюна імперіум5",
       minPlayers: 4,
@@ -73,7 +73,7 @@ const HomePage = () => {
         "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
     },
     {
-      id: 12166,
+      id: 6,
       discount: 20,
       name: "Дюна імперіум6",
       minPlayers: 4,
@@ -86,7 +86,7 @@ const HomePage = () => {
         "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
     },
     {
-      id: 12177,
+      id: 7,
       discount: 20,
       name: "Дюна імперіум7",
       minPlayers: 4,
@@ -99,7 +99,7 @@ const HomePage = () => {
         "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
     },
     {
-      id: 12188,
+      id: 8,
       discount: 20,
       name: "Дюна імперіум8",
       minPlayers: 4,
@@ -112,7 +112,7 @@ const HomePage = () => {
         "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
     },
     {
-      id: 12199,
+      id: 9,
       discount: 20,
       name: "Дюна імперіум9",
       minPlayers: 4,
@@ -125,7 +125,7 @@ const HomePage = () => {
         "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
     },
     {
-      id: 11221,
+      id: 10,
       discount: 20,
       name: "Дюна імперіум10",
       minPlayers: 4,
