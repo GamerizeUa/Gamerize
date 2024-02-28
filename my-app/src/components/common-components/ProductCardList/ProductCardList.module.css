@@ -18,11 +18,19 @@
 @media (min-width: 1280px){
     .product_wrap {
         height: 435px;
+        transition: 0.5s;
         margin-bottom: 48px;
+    }
+    .product_wrap:hover {
+        height: 455px;
+        margin-bottom: 28px;
     }
 }
 @media (min-width: 1440px){
     .product_wrap {
         height: 497px;
+    }
+    .product_wrap:hover {
+        height: 517px;
     }
 }
