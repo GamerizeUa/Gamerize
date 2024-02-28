@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import PaginationButtons from "../common-components/PaginationButtons/PaginationButtons";
 import ProductCardList from "../common-components/ProductCardList/ProductCardList";
 import styles from "./Favourites.module.css";
@@ -125,12 +126,42 @@ function Favourites() {
             gameTimeMinutes: 80,
             photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
-        //{id : 21231, discount : 20, name : "Дюна імперіум", minPlayers : 4, maxPlayers : 6, minAge : 16 , price : 2250, oldPrice: 2812, gameTimeMinutes : 80, photo : "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png"},
-        //{id : 31241, discount : 20, name : "Дюна імперіум", minPlayers : 4, maxPlayers : 6, minAge : 16 , price : 2250, oldPrice: 2812, gameTimeMinutes : 80, photo : "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png"},
+        {
+            id: 21231,
+            discount: 20,
+            name: "Дюна імперіум11",
+            minPlayers: 4,
+            maxPlayers: 6,
+            minAge: 16,
+            price: 2250,
+            oldPrice: 2812,
+            gameTimeMinutes: 80,
+            photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
+        },
         //{id : 41251, discount : 20, name : "Дюна імперіум", minPlayers : 4, maxPlayers : 6, minAge : 16 , price : 2250, oldPrice: 2812, gameTimeMinutes : 80, photo : "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png"},
         //{id : 51261, discount : 20, name : "Дюна імперіум", minPlayers : 4, maxPlayers : 6, minAge : 16 , price : 2250, oldPrice: 2812, gameTimeMinutes : 80, photo : "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png"},
     ];
     // productsList just for tests
+    const pageLimit = 8;
+    const pagesAmount = Math.ceil(productsList.length / pageLimit); //todo : it should be taken from server
+    const [products, setProducts] = useState(productsList);
+    const [productsOffset, setProductsOffset] = useState(0); // amount of skipped products to get needed
+    console.log(productsOffset);
+    console.log(pageLimit);
+    console.log(products.slice(productsOffset, pageLimit));
+    const productsPortion = products.slice(
+        productsOffset,
+        productsOffset + pageLimit
+    );
+    console.log(productsPortion);
+
+    useEffect(() => {
+        // get new portion of products and setProducts with products + new portion
+    }, [productsOffset]);
+
+    function changePage(newPage) {
+        setProductsOffset((newPage - 1) * pageLimit);
+    }
     return (
         <div className={styles.container + " container"}>
             <div className={styles.header_container}>
@@ -139,9 +170,12 @@ function Favourites() {
             <div className={styles.clear_btn_container}>
                 <button className={styles.clear_btn}>Очистити</button>
             </div>
-            <ProductCardList productCardList={productsList} />
+            <ProductCardList productCardList={productsPortion} />
             <div className={styles.pagination_btns_container}>
-                <PaginationButtons />
+                <PaginationButtons
+                    pagesAmount={pagesAmount}
+                    pageChangeFunc={changePage}
+                />
             </div>
         </div>
     );
