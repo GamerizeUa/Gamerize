@@ -1,7 +1,7 @@
 export const arrayProducts = () => {
     return     [
         {
-            id: 12111,
+            id: 1,
             discount: 20,
             name: "Дюна імперіум1",
             minPlayers: 4,
@@ -15,7 +15,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 12122,
+            id: 2,
             discount: 20,
             name: "Дюна імперіум2",
             minPlayers: 6,
@@ -29,7 +29,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 12133,
+            id: 3,
             discount: 20,
             name: "Дюна імперіум3",
             minPlayers: 2,
@@ -43,7 +43,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 12144,
+            id: 4,
             discount: 20,
             name: "Дюна імперіум4",
             minPlayers: 3,
@@ -56,7 +56,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 12155,
+            id: 5,
             discount: 20,
             name: "Дюна імперіум5",
             minPlayers: 2,
@@ -69,7 +69,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 12166,
+            id: 6,
             discount: 20,
             name: "Дюна імперіум6",
             minPlayers: 5,
@@ -82,7 +82,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 12177,
+            id: 7,
             discount: 20,
             name: "Дюна імперіум7",
             minPlayers: 8,
@@ -95,7 +95,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 12188,
+            id: 8,
             discount: 20,
             name: "Дюна імперіум8",
             minPlayers: 20,
@@ -108,7 +108,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 12199,
+            id: 9,
             discount: 20,
             name: "Дюна імперіум9",
             minPlayers: 5,
@@ -121,7 +121,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 11221,
+            id: 10,
             discount: 20,
             name: "Дюна імперіум10",
             minPlayers: 4,
@@ -134,7 +134,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 12339,
+            id: 11,
             discount: 20,
             name: "Дюна імперіум11",
             minPlayers: 5,
@@ -147,7 +147,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 11441,
+            id: 12,
             discount: 20,
             name: "Дюна імперіум12",
             minPlayers: 4,
@@ -160,7 +160,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 12559,
+            id: 13,
             discount: 20,
             name: "Дюна імперіум13",
             minPlayers: 5,
@@ -173,7 +173,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 11661,
+            id: 14,
             discount: 20,
             name: "Дюна імперіум14",
             minPlayers: 4,
@@ -186,7 +186,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 12773,
+            id: 15,
             discount: 20,
             name: "Дюна імперіум15",
             minPlayers: 2,
@@ -200,7 +200,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 12884,
+            id: 16,
             discount: 20,
             name: "Дюна імперіум16",
             minPlayers: 3,
@@ -213,7 +213,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 12995,
+            id: 17,
             discount: 20,
             name: "Дюна імперіум17",
             minPlayers: 2,
@@ -226,7 +226,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 11166,
+            id: 18,
             discount: 20,
             name: "Дюна імперіум18",
             minPlayers: 5,
@@ -239,7 +239,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 12277,
+            id: 19,
             discount: 20,
             name: "Дюна імперіум19",
             minPlayers: 8,
@@ -252,7 +252,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 13333,
+            id: 20,
             discount: 20,
             name: "Дюна імперіум20",
             minPlayers: 2,
@@ -266,7 +266,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 14444,
+            id: 21,
             discount: 20,
             name: "Дюна імперіум21",
             minPlayers: 3,
@@ -279,7 +279,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 15555,
+            id: 22,
             discount: 20,
             name: "Дюна імперіум22",
             minPlayers: 2,
@@ -292,7 +292,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 16666,
+            id: 23,
             discount: 20,
             name: "Дюна імперіум23",
             minPlayers: 5,
@@ -305,7 +305,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 17777,
+            id: 24,
             discount: 20,
             name: "Дюна імперіум24",
             minPlayers: 8,
@@ -318,7 +318,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 18833,
+            id: 25,
             discount: 20,
             name: "Дюна імперіум25",
             minPlayers: 2,
@@ -332,7 +332,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 19944,
+            id: 26,
             discount: 20,
             name: "Дюна імперіум26",
             minPlayers: 3,
@@ -345,7 +345,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 10155,
+            id: 27,
             discount: 20,
             name: "Дюна імперіум27",
             minPlayers: 2,
@@ -358,7 +358,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 22166,
+            id: 28,
             discount: 20,
             name: "Дюна імперіум28",
             minPlayers: 5,
@@ -371,7 +371,7 @@ export const arrayProducts = () => {
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
         {
-            id: 33177,
+            id: 29,
             discount: 20,
             name: "Дюна імперіум29",
             minPlayers: 8,
