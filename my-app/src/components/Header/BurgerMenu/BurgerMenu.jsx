@@ -66,7 +66,7 @@ const BurgerMenu = ({ burgerMenuClose }) => {
           </li>
           <li>
             <Link
-              to="/favorites"
+              to="/wish-list"
               className={styles.burgerMenuLink}
               onClick={() => handleCloseBurgerMenu()}
             >

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import PaginationButtons from "../common-components/PaginationButtons/PaginationButtons";
 import ProductCardList from "../common-components/ProductCardList/ProductCardList";
-import styles from "./Favourites.module.css";
+import styles from "./WishList.module.css";
 import { selectWishListProductsList } from "../../redux/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { removeAllFromWishList } from "../../redux/wishListSlice";
 
-function Favourites() {
+function WishList() {
     const products = useSelector(selectWishListProductsList);
     const dispatch = useDispatch();
     const pageLimit = 8;
@@ -51,4 +51,4 @@ function Favourites() {
     );
 }
 
-export default Favourites;
+export default WishList;

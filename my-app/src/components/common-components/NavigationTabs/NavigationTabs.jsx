@@ -31,7 +31,7 @@ export const NavigationTabs = () => {
             case '/order/history':
                 activeTabRef = orderHistoryRef;
                 break;
-            case '/favorites':
+            case '/wish-list':
                 activeTabRef = favoritesRef;
                 break;
             default:
@@ -52,7 +52,7 @@ export const NavigationTabs = () => {
                 <ul>
                     <Link to="/login" ref={loginRef} onClick={handleClickAccount}><li>Акаунт</li></Link>
                     <Link to="/order/history" ref={orderHistoryRef}><li>Історія замовлень</li></Link>
-                    <Link to="/favorites" ref={favoritesRef}><li>Список бажань</li></Link>
+                    <Link to="/wish-list" ref={favoritesRef}><li>Список бажань</li></Link>
                 </ul>
                 <div className={styles.navigationTabs_navLine}>
                     <div ref={navLineRef} style={{transform: `translateX(${translationTab.translation}px)`,

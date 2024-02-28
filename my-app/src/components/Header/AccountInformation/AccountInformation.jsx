@@ -28,7 +28,7 @@ const AccountInformation = () => {
           </Link>
         </li>
         <li className={styles.accountListItem}>
-          <Link to="/favorites" className={styles.accountLink}>
+          <Link to="/wish-list" className={styles.accountLink}>
             <div>
               <HeartIcon strokeColor="#AAC4FF" />
             </div>

@@ -5,7 +5,7 @@ import Catalog from "./pages/Catalog/Catalog.jsx";
 import ProductPage from "./pages/ProductPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
-import FavoritePage from "./pages/FavoritesPage";
+import WishListPage from "./pages/WishListPage.jsx";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import NotFound from "./pages/NotFound/NotFound";
 import OrderHistoryPage from "./pages/OrderHistoryPage.jsx";
@@ -19,7 +19,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/catalog" element={<Catalog />} />
         <Route path="catalog/:Id" element={<ProductPage />}></Route>
-        <Route path="/favorites" element={<FavoritePage />} />
+        <Route path="/wish-list" element={<WishListPage />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/order/history" element={<OrderHistoryPage />} />
         <Route path="*" element={<NotFound />} />

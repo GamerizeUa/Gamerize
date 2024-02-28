@@ -8,9 +8,9 @@ import { addToWishList, removeOneFromWishList } from '../../../redux/wishListSli
 export default function ProductCard({configurationObject = {isOldPrice : false, isDiscount : false, isCartView : false}, product : {id,discount, name, minPlayers, maxPlayers, minAge, price, oldPrice, gameTimeMinutes,photo}}) {
     const dispath = useDispatch()
     const wishListProductsIdList = useSelector(selectWishListProductsIdList)
-    const isFavourite = wishListProductsIdList.includes(id)
+    const isWished = wishListProductsIdList.includes(id)
     const wishIconHandleOnClick = () => {
-        isFavourite? dispath(removeOneFromWishList(id)) : dispath(addToWishList(id))
+        isWished? dispath(removeOneFromWishList(id)) : dispath(addToWishList(id))
     }
     return (
         <div className={styles.allContent}>
@@ -29,7 +29,7 @@ export default function ProductCard({configurationObject = {isOldPrice : false, 
                         }
                         <div onClick={wishIconHandleOnClick} className={styles.wishListIcon}>
                             {
-                                isFavourite? <HeartIcon fill="#AAC4FF" strokeColor='#AAC4FF'/> : <HeartIcon strokeColor='#AAC4FF'/>
+                                isWished? <HeartIcon fill="#AAC4FF" strokeColor='#AAC4FF'/> : <HeartIcon strokeColor='#AAC4FF'/>
                             }     
                         </div> 
                     </div>

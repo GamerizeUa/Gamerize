@@ -1,11 +1,11 @@
-import Favourites from "../components/Favourites/Favourites.jsx";
+import WishList from "../components/WishList/WishList.jsx";
 import {NavigationTabs} from "../components/common-components/NavigationTabs/NavigationTabs.jsx";
 
-export default function FavoritePage() {
+export default function WishListPage() {
   return (
     <div>
       <NavigationTabs />
-      <Favourites/>
+      <WishList/>
     </div>
   );
 }

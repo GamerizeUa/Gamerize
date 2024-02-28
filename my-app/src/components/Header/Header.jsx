@@ -105,7 +105,7 @@ const Header = ({ openCart, openBurgerMenu }) => {
             )}
             {windowWidth >= 744 && (
               <li>
-                <Link to="/favorites" className={styles.headerButton}>
+                <Link to="/wish-list" className={styles.headerButton}>
                   <HeartIcon />
                 </Link>
               </li>
