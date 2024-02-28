@@ -1,12 +1,16 @@
 import styles from './ProductCard.module.css'
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
 import HeartIcon from '../../icons/HeartIcon';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectWishListProductsIdList } from '../../../redux/selectors';
+import { addToWishList, removeOneFromWishList } from '../../../redux/wishListSlice';
 
 export default function ProductCard({configurationObject = {isOldPrice : false, isDiscount : false, isCartView : false}, product : {id,discount, name, minPlayers, maxPlayers, minAge, price, oldPrice, gameTimeMinutes,photo}}) {
-    const [isFavourite, setIsFavourite] = useState(false)
+    const dispath = useDispatch()
+    const wishListProductsIdList = useSelector(selectWishListProductsIdList)
+    const isFavourite = wishListProductsIdList.includes(id)
     const wishIconHandleOnClick = () => {
-        setIsFavourite(!isFavourite)
+        isFavourite? dispath(removeOneFromWishList(id)) : dispath(addToWishList(id))
     }
     return (
         <div className={styles.allContent}>
