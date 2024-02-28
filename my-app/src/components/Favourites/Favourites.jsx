@@ -16,6 +16,8 @@ function Favourites() {
         productsOffset,
         productsOffset + pageLimit
     );
+    if (!productsPortion[0] && productsOffset !== 0)
+        setProductsOffset(productsOffset - pageLimit);
 
     useEffect(() => {
         // get new portion of products and dispatch products with products + new portion
