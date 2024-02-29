@@ -4,14 +4,16 @@ import HeartIcon from '../../icons/HeartIcon';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectWishListProductsIdList } from '../../../redux/selectors';
 import { addToWishList, removeOneFromWishList } from '../../../redux/wishListSlice';
+import sprite from "../../../assets/icons/sprite.svg";
 
-export default function ProductCard({configurationObject = {isOldPrice : false, isDiscount : false, isCartView : false}, product : {id,discount, name, minPlayers, maxPlayers, minAge, price, oldPrice, gameTimeMinutes,photo}}) {
+export default function ProductCard({configurationObject = {isOldPrice : false, isDiscount : false, isWishList : false}, product : {id,discount, name, minPlayers, maxPlayers, minAge, price, oldPrice, gameTimeMinutes,photo}}) {
     const dispath = useDispatch()
     const wishListProductsIdList = useSelector(selectWishListProductsIdList)
     const isWished = wishListProductsIdList.includes(id)
     const wishIconHandleOnClick = () => {
         isWished? dispath(removeOneFromWishList(id)) : dispath(addToWishList(id))
     }
+    console.log(configurationObject.isWishList)
     return (
         <div className={styles.allContent}>
             <Link className={styles.allCardLink} to={"/catalog/:product"}></Link>
@@ -29,7 +31,13 @@ export default function ProductCard({configurationObject = {isOldPrice : false, 
                         }
                         <div onClick={wishIconHandleOnClick} className={styles.wishListIcon}>
                             {
-                                isWished? <HeartIcon fill="#AAC4FF" strokeColor='#AAC4FF'/> : <HeartIcon strokeColor='#AAC4FF'/>
+                                isWished? 
+                                    configurationObject.isWishList?
+                                        <svg>
+                                            <use href={sprite + "#icon-cross"} />
+                                        </svg>:
+                                    <HeartIcon fill="#AAC4FF" strokeColor='#AAC4FF'/> : 
+                                <HeartIcon strokeColor='#AAC4FF'/>
                             }     
                         </div> 
                     </div>

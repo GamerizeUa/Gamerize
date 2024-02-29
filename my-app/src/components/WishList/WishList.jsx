@@ -40,7 +40,10 @@ function WishList() {
             >
                 <button className={styles.clear_btn}>Очистити</button>
             </div>
-            <ProductCardList productCardList={productsPortion} />
+            <ProductCardList
+                productCardList={productsPortion}
+                isWishList={true}
+            />
             <div className={styles.pagination_btns_container}>
                 <PaginationButtons
                     pagesAmount={pagesAmount}

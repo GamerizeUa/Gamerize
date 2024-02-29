@@ -19,6 +19,7 @@ function ProductCardList({
         columnGapMobilePercent: 5.5,
     },
     productCardList = [],
+    isWishList = false,
 }) {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const oneLineCardsAmount =
@@ -60,7 +61,10 @@ function ProductCardList({
                     key={product.id}
                     style={{ width: `${cardPercentWidth}%` }}
                 >
-                    <ProductCard product={product} />
+                    <ProductCard
+                        product={product}
+                        configurationObject={{ isWishList }}
+                    />
                 </div>
             ))}
         </div>
