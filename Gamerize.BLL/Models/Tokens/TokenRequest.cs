@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Gamerize.BLL.Models.Tokens
 {
-    public class TokenResponse
+    public class TokenRequest
     {
-        public string Token { get; set; } = default!;
-        public string RefreshToken { get; set; } = default!;
+        public string Email { get; set; } = default!;
+        public string Password { get; set; } = default!;
     }
+
 }
