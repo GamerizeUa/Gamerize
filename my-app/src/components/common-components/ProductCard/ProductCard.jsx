@@ -13,7 +13,6 @@ export default function ProductCard({configurationObject = {isOldPrice : false, 
     const wishIconHandleOnClick = () => {
         isWished? dispath(removeOneFromWishList(id)) : dispath(addToWishList(id))
     }
-    console.log(configurationObject.isWishList)
     return (
         <div className={styles.allContent}>
             <Link className={styles.allCardLink} to={"/catalog/:product"}></Link>
