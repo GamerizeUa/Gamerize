@@ -26,17 +26,17 @@ export default function GamePicker (){
             <div className={styles.container + " container"}>
                 <div className={styles.content}>
                     <div className={styles.left}>
-                        <div className={styles.titleContainer}>
-                            <div className={styles.title}><h1>Оберіть гру для себе!</h1></div>
+                        <div className={styles.title_container}>
+                            <h1 className={styles.title}>Оберіть гру для себе!</h1>
                         </div>
-                        <div className={styles.form}>
+                        <form className={styles.form}>
                             <GameFeaturePicker zIndex={3} featureKey={"categories"} featureTitle={"Категорія"} checkedFeature={category} setCheckedFeature={setCategory} featureItems={categories}/>
                             <GameFeaturePicker zIndex={2} featureKey={"playersAmounts"} featureTitle={"Кількість гравців"} checkedFeature={playersAmount} setCheckedFeature={setPlayersAmount} featureItems={playersAmounts}/>
                             <GameFeaturePicker zIndex={1} featureKey={"ages"} featureTitle={"Вік"} checkedFeature={age} setCheckedFeature={setAge} featureItems={ages}/>
-                            <div className={styles.button}>
-                                <div className={styles.buttonTitle}><p>Підібрати гру</p></div>
-                            </div>
-                        </div>
+                            <button className={styles.button}>
+                                <span className={styles.button_text}>Підібрати гру</span>
+                            </button>
+                        </form>
                     </div>
                     {
                         windowWidth < 744 || <div className={styles.right}>

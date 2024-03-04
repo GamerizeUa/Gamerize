@@ -23,11 +23,11 @@ export default function GameFeaturePicker ({zIndex,featureKey, featureTitle, fea
         <div className={styles.wrap}>
             <div style={{zIndex: zIndex}} className={styles.container + " " + menuUniqueCSSClass}>
                 <div onClick={toggleMenuOnClick} className={styles.header}>
-                    <div className={styles.title}><p>{featureTitle + (checkedFeature? (": " + checkedFeature) : "")}</p></div>
+                    <p className={styles.title}>{featureTitle + (checkedFeature? (": " + checkedFeature) : "")}</p>
                     <div className={styles.icon}>{isMenuActive? <ArrowUpIcon/> :<ArrowDownIcon/>}</div>
                 </div>
                 {
-                    isMenuActive && <div className={styles.itemsContainer}>
+                    isMenuActive && <div className={styles.items_container}>
                         {
                             featureItems.map((item) =>
                                 <div key={`${menuUniqueCSSClass}_${item}`} onClick={() => chooseItem(item)} className={styles.item}>

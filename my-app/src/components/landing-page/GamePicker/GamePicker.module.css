@@ -23,7 +23,7 @@
     padding-bottom: 46px;
     height: 100%;
 }
-.titleContainer {
+.title_container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -60,7 +60,7 @@
     border: 1px solid var(--White, #FEFEFE);
     box-shadow: 0px 0px 120px 0px rgba(177, 178, 255, 0.35);
 }
-.buttonTitle {
+.button_text {
     text-align: center;
     color: var(--black);
 
@@ -89,7 +89,7 @@
         align-items: flex-start;
         padding-bottom: 43px;
     }
-    .titleContainer {
+    .title_container {
         justify-content: flex-start;
         height: 87px;
         width: 132%;
@@ -110,7 +110,7 @@
         height: 48px;
         width: 100%;
     }
-    .buttonTitle {
+    .button_text {
         font-size: 16px;
     }
     .image {
@@ -139,7 +139,7 @@
         width : 41%;
         padding-top: 136px;
     }
-    .titleContainer {
+    .title_container {
         padding-left: 14%;
         height: 173px;
         width: 107%;
@@ -172,7 +172,7 @@
     .right {
         width : 37.5%;
     }
-    .titleContainer {
+    .title_container {
         width: 108%;
         padding-left: 14.5%;
     }
