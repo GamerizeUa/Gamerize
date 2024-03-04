@@ -9,6 +9,7 @@ import WishListPage from "./pages/WishListPage.jsx";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import NotFound from "./pages/NotFound/NotFound";
 import OrderHistoryPage from "./pages/OrderHistoryPage.jsx";
+import { Checkout } from "./components/Checkout/Checkout.jsx";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/wish-list" element={<WishListPage />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/order/history" element={<OrderHistoryPage />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="*" element={<NotFound />} />
       </Route>
       {/* <Route path="admin/*" element={<AdminPage />}>
