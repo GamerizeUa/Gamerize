@@ -71,3 +71,31 @@
 .catalogSorting_iconRotation{
     transform: rotate(180deg);
 }
+
+.catalogSorting_displaying{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.catalogSorting_icons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.catalogSorting_icon{
+    cursor: pointer;
+}
+
+.catalogSorting_icons svg:hover, .catalogSorting_icons svg:hover path{
+    fill: #6566AC;
+    stroke: #6566AC;
+    cursor: pointer;
+}
+
+.active, .active path{
+    fill: #6566AC;
+    stroke: #6566AC;
+}

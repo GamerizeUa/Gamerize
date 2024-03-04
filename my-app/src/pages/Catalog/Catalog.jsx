@@ -12,22 +12,43 @@ import ProductCardList from "../../components/common-components/ProductCardList/
 const Catalog = () => {
   let [productsOffset, setProductsOffset] = useState(0);
   const productList = useSelector((state) => state.productsCatalog.value);
-  const dispatch = useDispatch()
-  const productsLimitOnPage = 12;
+  const dispatch = useDispatch();
+  const [productsLimitOnPage, setProductsLimitOnPage] = useState(12);
+  const [chosenDisplaying, setChosenDisplaying] = useState({displayingThree: true, displayingFour: false});
   const pagesAmount = Math.ceil(productList.length / productsLimitOnPage);
-  const configurationObj = {
+  const displayingThreeProductsInRow = {
+    oneLineDesktopCardsAmount: 3,
+    oneLineTabletCardsAmount: 3,
+    oneLineMobileCardsAmount: 2,
+    columnGapDesktopPercent: 1.8,
+    columnGapTabletPercent: 3.7,
+    columnGapMobilePercent: 5.5
+  }
+  const displayingFourProductsInRow = {
     oneLineDesktopCardsAmount: 4,
     oneLineTabletCardsAmount: 3,
     oneLineMobileCardsAmount: 2,
     columnGapDesktopPercent: 1.8,
     columnGapTabletPercent: 3.7,
     columnGapMobilePercent: 5.5
-  };
+  }
+  const [configurationObj, setConfigurationObj] = useState(displayingThreeProductsInRow)
+
 
   useEffect(() => {
     const products = arrayProducts();
     dispatch(setProductsCatalog(products));
   }, []);
+
+  useEffect(() => {
+    if(chosenDisplaying.displayingThree){
+      setConfigurationObj((prevConfig) => ({ ...prevConfig, ...displayingThreeProductsInRow }));
+      setProductsLimitOnPage(12);
+    }else{
+      setConfigurationObj((prevConfig) => ({ ...prevConfig, ...displayingFourProductsInRow }));
+      setProductsLimitOnPage(20);
+    }
+  }, [chosenDisplaying]);
 
   const changePage =  (newPage) => {
     setProductsOffset ((newPage - 1) * productsLimitOnPage)
@@ -50,10 +71,10 @@ const Catalog = () => {
                 <CatalogFilters/>
               </div>
               <div className={styles.catalog_displaying}>
-                <CatalogSorting />
+                <CatalogSorting setChosenDisplaying={setChosenDisplaying} />
                 <div className={styles.catalog_products}>
                   <ProductCardList productCardList={slicedProductList}
-                                   confingarationObj={{...configurationObj, oneLineDesktopCardsAmount: 3}}  />
+                                   confingarationObj={configurationObj}  />
                 </div>
                 {productList.length === 0 ? <p className={styles.catalog_empty}>Товарів не знайдено</p> : ''}
               </div>
