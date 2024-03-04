@@ -1,6 +1,7 @@
 import GameFeaturePicker from "../GameFeaturePicker/GameFeaturePicker";
 import styles from "./GamePicker.module.css"
 import { useEffect, useState } from "react";
+import image from "../../../assets/images/game_picker_game_photo.png"
 
 export default function GamePicker (){
     let [windowWidth, setWindowWidth] = useState(null) // !! in future it can become a global redux state to check screen width in any component when needed in js
@@ -39,7 +40,7 @@ export default function GamePicker (){
                     </div>
                     {
                         windowWidth < 744 || <div className={styles.right}>
-                            <div className={styles.image}></div>
+                            <img src={image} alt={"game picker game"} className={styles.image}/>
                         </div>
                     }
                 </div>
