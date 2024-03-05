@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ArrowDownIcon from "../../icons/ArrowDownIcon";
 import ArrowUpIcon from "../../icons/ArrowUpIcon";
 import styles from "./GameFeaturePicker.module.css"
@@ -18,7 +18,10 @@ export default function GameFeaturePicker ({zIndex,featureKey, featureTitle, fea
         setCheckedFeature(item)
         setIsMenuActive(false)
     }
-    window.addEventListener("click", closeMenuOnclick)
+    useEffect(()=>{
+        window.addEventListener("click", closeMenuOnclick, {capture: true})
+        return () => window.removeEventListener("click", closeMenuOnclick, {capture: true})
+    })
     return ( 
         <div className={styles.wrap}>
             <div style={{zIndex: zIndex}} className={styles.container + " " + menuUniqueCSSClass}>
@@ -30,9 +33,15 @@ export default function GameFeaturePicker ({zIndex,featureKey, featureTitle, fea
                     isMenuActive && <div className={styles.items_container}>
                         {
                             featureItems.map((item) =>
-                                <div key={`${menuUniqueCSSClass}_${item}`} onClick={() => chooseItem(item)} className={styles.item}>
+                                {
+                                function chooseItemOnclick (e){
+                                    chooseItem(item)
+                                    e.stopPropagation();
+                                }
+                                return <div key={`${menuUniqueCSSClass}_${item}`} onClick={chooseItemOnclick} className={styles.item}>
                                     <p>{item}</p>
                                 </div>
+                                }
                             )
                         }
                     </div>
