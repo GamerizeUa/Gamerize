@@ -1,9 +1,38 @@
+import { useState } from "react";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
 import sprite from "../../../assets/icons/sprite.svg";
 import visa from "../../../assets/images/Visa.png";
 import mastercard from "../../../assets/images/Mastercard.png";
 import styles from "./OrderForm.module.css";
 
 export const OrderForm = () => {
+  const [userName, setUserName] = useState("");
+  const [userPhone, setUserPhone] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [deliveryType, setDeliveryType] = useState("");
+  const [paymentType, setPaymentType] = useState("");
+
+  const schema = yup.object().shape({
+    userName: yup.string().required("Введіть ім'я"),
+    userPhone: yup.string().required("Введіть номер телефону"),
+    userEmail: yup.string().email().required("Введіть електронну пошту"),
+  });
+
+  // const {
+  //   handleSubmit,
+  //   watch,
+  //   control,
+  //   formState: { errors, isDirty, isValid },
+  // } = useForm
+  // {
+  //   resolver: yupResolver(schema),
+  //   mode: "onChange",
+  //   defaultValues: defaultValues
+  // };
+
+  // const currentValues = watch();
+
   return (
     <div className={styles.orderContainer}>
       <form>
