@@ -88,6 +88,7 @@ border-bottom: 1px solid #dee0e3;
 }
 
 .discountItem {
+  max-width: 180px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -140,5 +141,7 @@ border-bottom: 1px solid #dee0e3;
 .safeMark{
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
+    margin-top: 24px;
 }

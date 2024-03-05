@@ -1,6 +1,6 @@
+import { useEffect, useState } from "react";
 import styles from "./OrderCart.module.css";
 import sprite from "../../../assets/icons/sprite.svg";
-import { useEffect, useState } from "react";
 
 export const OrderCart = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -184,7 +184,7 @@ export const OrderCart = () => {
         </div>
       </div>
       <div className={styles.safeMark}>
-        <svg width={16} hanging={16}>
+        <svg width={16} height={16}>
           <use href={sprite + "#icon-safe_lock"} />
         </svg>
         <p>Безпечна оплата</p>

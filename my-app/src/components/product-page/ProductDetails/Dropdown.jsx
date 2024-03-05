@@ -3,6 +3,7 @@ import ArrowDownIcon from "../../icons/ArrowDownIcon";
 import { useState } from "react";
 
 const Dropdown = ({ children, title }) => {
+  console.log(children);
   const [isVisible, setIsVisible] = useState(false);
 
   const toggleVisibility = () => {

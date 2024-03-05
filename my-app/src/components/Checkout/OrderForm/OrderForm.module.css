@@ -1,0 +1,163 @@
+.orderContainer{
+    width: 709px;
+    padding: 24px;
+    margin-top: 40px;
+    background-color: #FEFEFE;
+    box-shadow: 0px 0px 20px 0px rgba(177, 178, 255, 0.15);
+}
+
+.headerWrapper{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #EEEEF0;
+}
+
+.header{
+    font-family: "Noto Sans";
+    font-size: 24px;
+    line-height: 130%;
+}
+
+.orderElement{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.orderText{
+    font-family: "Noto Sans";
+    font-size: 14px;
+}
+
+.inputBox{
+    position: relative;
+    margin-bottom: 16px;
+}
+.inputBox::after {
+    content: "";
+    position: absolute;
+    top: 12px;
+    left: 50px;
+    width: 1px;
+    height: 20px;
+    background-color: #8E8E8E;
+}
+
+.orderInput{
+    width: 430px;
+    padding: 10px 16px 10px 60px;
+    border-radius: 10px;
+    border: 1px solid #AAC4FF;
+    font-family: "Noto Sans";
+    font-size: 14px;
+}
+
+.inputIcon{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 16px;
+    width: 24px;
+    height: 24px;
+}
+
+.orderBtn{
+    width: 350px;
+    height: 53px;
+    padding: 16px 72px;
+    border-radius: 10px;
+    border: 1px solid #FEFEFE;
+    background-color: #D2DAFF;
+    font-family: "Noto Sans";
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 16%;
+}
+
+.selectElement{
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    margin: 16px 0;
+    border: 1px solid #DEE0E3;
+}
+
+.radioInputBox{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.inputWrapper {
+    position: relative;
+}
+
+.fakeInput {
+    position: absolute;
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #DEE0E3;
+    background-color: #fff;
+    pointer-events: none;
+}
+
+.selectorInput {
+    width: 20px;
+    height: 20px;
+}
+
+.selectorInput:checked::before {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #AAC4FF;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
+.details{
+    margin-top: 12px;
+    font-family: "Noto Sans";
+    font-size: 12px;
+    line-height: 150%;
+}
+
+.paymentImg{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+
+
+
+.textareaContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+}
+
+.textareaLabel{
+    margin-top: 24px;
+    font-family: "Noto Sans";
+    font-size: 20px;
+    line-height: 130%;
+}
+
+.textarea{
+    width: 434px;
+    max-width: 660px;
+    min-height: 86px;
+    margin-bottom: 16px;
+    padding: 10px;
+    border: 1px solid #8E8E8E;
+    font-family: "Noto Sans";
+    font-size: 14px;
+    line-height: 150%;
+}
