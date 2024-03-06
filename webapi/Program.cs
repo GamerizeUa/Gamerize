@@ -1,4 +1,5 @@
 using Gamerize.BLL.AutoMapper;
+using Gamerize.BLL.Services;
 using Gamerize.DAL.Contexts;
 using Microsoft.EntityFrameworkCore;
 using webapi.Extensions.DI;
@@ -12,7 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApiDbContext>(options => options.UseSqlServer(
 	builder.Configuration.GetConnectionString("SqlConnection")));
 builder.Services.AddAutoMapper(typeof(ToDtoMappingProfile));
-
+builder.Services.AddScoped<TokenService>();
 builder.Services.AddControllers();
 
 builder.Services.AddCors(options =>
