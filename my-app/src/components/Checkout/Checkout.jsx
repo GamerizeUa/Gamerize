@@ -8,7 +8,7 @@ export const Checkout = () => {
     <div className={styles.checkoutContainer + " container"}>
       <OrderForm />
       <OrderCart />
-      <OrderModal />
+      {/* <OrderModal /> */}
     </div>
   );
 };
