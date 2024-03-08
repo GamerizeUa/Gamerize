@@ -20,6 +20,13 @@
 }
 
 .filters_subtitle{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.filters_subtitle p{
     color: #2B2B2B;
     font-family: "Noto Sans";
     font-size: 20px;
@@ -46,6 +53,10 @@
     height: 24px;
 }
 
+.category_checkedLabel{
+    color: #2B2B2B !important;
+}
+
 .option_checkbox{
     position: absolute;
     opacity: 0;
@@ -64,7 +75,7 @@
     background-color: #FEFEFE;
 }
 
-.category_option .option_checkbox:checked ~ .option_checkmark {
+.category_option .option_checkedOption ~ .option_checkmark {
     background-color: #AAC4FF;
 }
 
@@ -140,8 +151,4 @@
 .button_apply:hover, .button_reset:hover{
     background-color: #AAC4FF;
     transition: all 0.3s ease-in-out;
-}
-
-.category_checkedLabel{
-    color: #2B2B2B !important;
 }

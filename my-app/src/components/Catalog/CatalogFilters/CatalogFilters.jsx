@@ -1,10 +1,11 @@
 import styles from "./CatalogFilters.module.css";
 import CheckIcon from "../../icons/CheckIcon.jsx";
 import {filterProducts} from './filters.js';
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {arrayProducts} from '../../../pages/Catalog/test.js';
 import {setProductsCatalog} from "../../../redux/productsCatalog.js";
 import {useDispatch, useSelector} from "react-redux";
+import {DropdownFilters} from "./DropdownFilters.jsx";
 
 export  const CatalogFilters = () => {
     const categories = ["Творчі ігри", "Стратегія", "Детектив", "Гумор", "Квест", "Пригоди"];
@@ -107,23 +108,15 @@ export  const CatalogFilters = () => {
     return(
         <div className={styles.filters}>
             <p className={styles.filters_title}>Фільтри</p>
-            <div className={styles.filters_categories}>
-                <p className={styles.filters_subtitle}>Категорія</p>
-                <div className={styles.category_options}>
-                    {categories.map((name, index) => (
-                        <label className={`${styles.category_option} ${selectedCategories.includes(name) 
-                            ? styles.category_checkedLabel : ''}`} key={index}>{name}
-                            <input type="checkbox"
-                                   className={styles.option_checkbox}
-                                   onChange={() => handleCategoryChange(name)}
-                            />
-                            <span className={styles.option_checkmark}><CheckIcon/></span>
-                        </label>
-                    ))}
-                </div>
-            </div>
+            <DropdownFilters title={"Категорія"}
+                             categories={categories}
+                             selectedCategories={selectedCategories}
+                             handleFunc={handleCategoryChange}>
+            </DropdownFilters>
             <div className={styles.filters_price}>
-                <p className={styles.filters_subtitle}>Ціна</p>
+                <div className={styles.filters_subtitle}>
+                    <p className={styles.filters_subtitle}>Ціна</p>
+                </div>
                 <div className={styles.price_edges}>
                     <div className={styles.price_edge}>
                         <p className={styles.price_text}>від</p>
@@ -147,7 +140,9 @@ export  const CatalogFilters = () => {
                 </div>
             </div>
             <div className={styles.filters_categories}>
+                <div className={styles.filters_subtitle}>
                 <p className={styles.filters_subtitle}>Вік:</p>
+                </div>
                 <div className={styles.category_options}>
                     {age.map((name, index) => (
                         <label className={`${styles.category_option} ${selectedAges.includes(name) 
@@ -162,10 +157,12 @@ export  const CatalogFilters = () => {
                 </div>
             </div>
             <div className={styles.filters_categories}>
-                <p className={styles.filters_subtitle}>Час гри:</p>
+                <div className={styles.filters_subtitle}>
+                    <p className={styles.filters_subtitle}>Час гри:</p>
+                </div>
                 <div className={styles.category_options}>
                     {timeGame.map((name, index) => (
-                        <label className={`${styles.category_option} ${selectedGameTimes.includes(name) 
+                        <label className={`${styles.category_option} ${selectedGameTimes.includes(name)
                             ? styles.category_checkedLabel : ''}`} key={index}>{name}
                             <input type="checkbox"
                                    className={styles.option_checkbox}
@@ -178,10 +175,12 @@ export  const CatalogFilters = () => {
                 </div>
             </div>
             <div className={styles.filters_categories}>
-                <p className={styles.filters_subtitle}>Мова:</p>
+                <div className={styles.filters_subtitle}>
+                    <p className={styles.filters_subtitle}>Мова:</p>
+                </div>
                 <div className={styles.category_options}>
                     {languages.map((name, index) => (
-                        <label className={`${styles.category_option} ${selectedLanguages.includes(name) 
+                        <label className={`${styles.category_option} ${selectedLanguages.includes(name)
                             ? styles.category_checkedLabel : ''}`} key={index}>{name}
                             <input type="checkbox"
                                    className={styles.option_checkbox}
