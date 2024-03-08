@@ -173,12 +173,12 @@ export default function ProductsCarousel({
             className={styles.body}
           >
             {productsList.map((product, i) => {
-              if (i < carouselPosition) return <div
+              if (i < carouselPosition - 1) return <div
                     style={{ width: `${productWidth}px` }}
                     className={styles.productWrap}
                     key={product.id}
                   ></div>
-              else if (i < productCardsAmount + carouselPosition) {
+              else if (i < productCardsAmount + carouselPosition + 1) {
                 // return only products in amount shown on the screen + one unviewed behind the screen + all already loaded and saved in DOM behind the screen
                 return (
                   <div
