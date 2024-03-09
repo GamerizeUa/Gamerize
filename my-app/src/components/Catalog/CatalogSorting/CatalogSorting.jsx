@@ -1,15 +1,22 @@
 import styles from "./CatalogSorting.module.css"
 import ArrowIconGallery from "../../ProductOverview/icons/ArrowGalleryIcon.jsx";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {setMethod} from "../../../redux/sortingMethod.js";
 import {useDispatch, useSelector} from "react-redux";
 import {setProductsCatalog} from "../../../redux/productsCatalog.js";
+import {DisplayThreeIcon} from "../icons/DisplayThreeIcon.jsx";
+import {DisplayFourIcon} from "../icons/DisplayFourIcon.jsx";
 
-export const CatalogSorting = () => {
+export const CatalogSorting = ({setChosenDisplaying}) => {
     const[isSortingVisible, setIsSortingVisible] = useState(false);
     const [chosenOption, setChosenOption] = useState('За ціною');
+    const [isActive, setIsActive] = useState({displayingThree: true, displayingFour: false});
     const dispatch = useDispatch()
     const productList = useSelector((state) => state.productsCatalog.value);
+
+    useEffect(() => {
+        setChosenDisplaying((prevConfig) => ({ ...prevConfig, ...isActive }));
+    }, [isActive])
 
     const handleClickSorting = () => {
         setIsSortingVisible(!isSortingVisible);
@@ -47,8 +54,12 @@ export const CatalogSorting = () => {
                     </div>
                 }
             </div>
-            <div>
+            <div className={styles.catalogSorting_displaying}>
                 <span>Відображення:</span>
+                <div className={styles.catalogSorting_icons}>
+                    <DisplayThreeIcon isActive={isActive.displayingThree} setIsActive={setIsActive}/>
+                    <DisplayFourIcon isActive={isActive.displayingFour} setIsActive={setIsActive}/>
+                </div>
             </div>
         </div>
     )
