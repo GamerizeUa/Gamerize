@@ -48,7 +48,7 @@
     color: var(--black);
     font-size: 28px;
     font-style: normal;
-    font-weight: 400; 
+    font-weight: 400;
 }
 .form {
     width: 89%;
@@ -67,7 +67,7 @@
     align-items: center;
     border-radius: 10px;
     background: var(--light-blue);
-    border: 1px solid var(--White, #FEFEFE);
+    border: 1px solid var(--White, #fefefe);
     box-shadow: 0px 0px 120px 0px rgba(177, 178, 255, 0.35);
 }
 .button_text {
@@ -90,7 +90,7 @@
         padding-bottom: 0;
     }
     .right {
-        width : 38.4%;
+        width: 38.4%;
         height: 100%;
         padding-top: 116px;
         background-color: var(--light-blue-gray);
@@ -148,7 +148,7 @@
         padding-bottom: 153px;
     }
     .right {
-        width : 41%;
+        width: 41%;
         padding-top: 136px;
         clip-path: polygon(0% 0%, 231% 0%, 74% 100%, 0 100%);
     }
@@ -159,7 +159,7 @@
         clip-path: polygon(0% 0%, 100% 0%, 78% 100%, 0 100%);
     }
     .title {
-        font-size: 56px; 
+        font-size: 56px;
     }
     .form {
         height: 292px;
@@ -172,7 +172,7 @@
         height: 53px;
     }
     .button:hover {
-        background: var(--blue)
+        background: var(--blue);
     }
 }
 @media screen and (min-width: 1440px) {
@@ -190,7 +190,7 @@
         padding-left: 14.5%;
     }
     .title {
-        font-size: 64px; 
+        font-size: 64px;
     }
     .form {
         margin-left: 14.5%;
