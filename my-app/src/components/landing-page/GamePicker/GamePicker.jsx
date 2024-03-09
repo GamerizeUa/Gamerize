@@ -2,6 +2,7 @@ import GameFeaturePicker from "../GameFeaturePicker/GameFeaturePicker";
 import styles from "./GamePicker.module.css"
 import { useEffect, useState } from "react";
 import image from "../../../assets/images/game_picker_game_photo.png"
+import { Link } from 'react-router-dom';
 
 export default function GamePicker (){
     let [windowWidth, setWindowWidth] = useState(null) // !! in future it can become a global redux state to check screen width in any component when needed in js
@@ -33,9 +34,9 @@ export default function GamePicker (){
                             <GameFeaturePicker zIndex={3} featureKey={"categories"} featureTitle={"Категорія"} checkedFeature={category} setCheckedFeature={setCategory} featureItems={categories}/>
                             <GameFeaturePicker zIndex={2} featureKey={"playersAmounts"} featureTitle={"Кількість гравців"} checkedFeature={playersAmount} setCheckedFeature={setPlayersAmount} featureItems={playersAmounts}/>
                             <GameFeaturePicker zIndex={1} featureKey={"ages"} featureTitle={"Вік"} checkedFeature={age} setCheckedFeature={setAge} featureItems={ages}/>
-                            <button className={styles.button}>
+                            <Link to={"./catalog/some"} className={styles.button}>
                                 <span className={styles.button_text}>Підібрати гру</span>
-                            </button>
+                            </Link>
                         </form>
                     </div>
                     {
