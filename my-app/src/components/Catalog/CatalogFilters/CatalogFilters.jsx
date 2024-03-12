@@ -6,13 +6,15 @@ import {arrayProducts} from '../../../pages/Catalog/test.js';
 import {setProductsCatalog} from "../../../redux/productsCatalog.js";
 import {useDispatch, useSelector} from "react-redux";
 import {DropdownFilters} from "./DropdownFilters.jsx";
+import {selectCategories, selectGenres, selectThemes} from "../../../redux/selectors.js";
 
 export  const CatalogFilters = () => {
-    const categories = ["Творчі ігри", "Стратегія", "Детектив", "Гумор", "Квест", "Пригоди"];
     const age = ["3 - 6", "6 - 9", "9 - 12", "12 - 18", "18+"];
     const timeGame = ["15 - 30", "40 - 60", "70 - 90", "115 - 180", "240"];
     const languages = ["Українська", "Англійська", "Іспанська"];
     const [selectedCategories, setSelectedCategories] = useState([]);
+    const [selectedGenres, setSelectedGenres] = useState([]);
+    const [selectedThemes, setSelectedThemes] = useState([]);
     const [priceRange, setPriceRange] = useState({ min: '', max: '' });
     const [selectedAges, setSelectedAges] = useState([]);
     const [selectedGameTimes, setSelectedGameTimes] = useState([]);
@@ -20,6 +22,9 @@ export  const CatalogFilters = () => {
     const [isReadyForResetting, setIsReadyForResetting] = useState(false);
     const methodSorting = useSelector((state) => state.sortingMethod.value);
     const dispatch = useDispatch();
+    const categories = useSelector(selectCategories);
+    const genres = useSelector(selectGenres);
+    const themes = useSelector(selectThemes);
 
     const handlePriceInputChange = (event, type) => {
         event.target.value = event.target.value.replace(/[^0-9]/g, '');
@@ -46,6 +51,8 @@ export  const CatalogFilters = () => {
     const getSelectedFilters = () => {
         const filters = {
             categories: selectedCategories,
+            genres: selectedGenres,
+            themes: selectedThemes,
             price: priceRange,
             ages: selectedAges,
             gameTimes: selectedGameTimes,
@@ -57,39 +64,18 @@ export  const CatalogFilters = () => {
         dispatch(setProductsCatalog(sortedProducts));
     };
 
-    const handleCategoryChange = (category) => {
-        setSelectedCategories((prevCategories) =>
-            prevCategories.includes(category)
-                ? prevCategories.filter((c) => c !== category)
-                : [...prevCategories, category]
-        );
-    };
-
-    const handleAgeChange = (age) => {
-        setSelectedAges((prevAges) =>
-            prevAges.includes(age) ? prevAges.filter((a) => a !== age) : [...prevAges, age]
-        );
-    };
-
-    const handleGameTimeChange = (gameTime) => {
-        setSelectedGameTimes((prevGameTimes) =>
-            prevGameTimes.includes(gameTime)
-                ? prevGameTimes.filter((t) => t !== gameTime)
-                : [...prevGameTimes, gameTime]
-        );
-
-    };
-
-    const handleLanguageChange = (language) => {
-        setSelectedLanguages((prevLanguages) =>
-            prevLanguages.includes(language)
-                ? prevLanguages.filter((l) => l !== language)
-                : [...prevLanguages, language]
-        );
-    };
+    const handleCheckBoxChange = (item, arrayFunc) => {
+        arrayFunc((prevItems) =>
+            prevItems.includes(item)
+            ? prevItems.filter((i) => i !== item)
+                : [...prevItems, item]
+        )
+    }
 
     const handleResetFilters = () => {
         setSelectedCategories([]);
+        setSelectedGenres([]);
+        setSelectedThemes([]);
         setPriceRange({min: '', max: ''})
         setSelectedAges([]);
         setSelectedGameTimes([]);
@@ -111,7 +97,20 @@ export  const CatalogFilters = () => {
             <DropdownFilters title={"Категорія"}
                              categories={categories}
                              selectedCategories={selectedCategories}
-                             handleFunc={handleCategoryChange}>
+                             setSelectedCategories={setSelectedCategories}
+                             handleFunc={handleCheckBoxChange}>
+            </DropdownFilters>
+            <DropdownFilters title={"Жанри"}
+                             categories={genres}
+                             selectedCategories={selectedGenres}
+                             setSelectedCategories={setSelectedGenres}
+                             handleFunc={handleCheckBoxChange}>
+            </DropdownFilters>
+            <DropdownFilters title={"Тематика"}
+                             categories={themes}
+                             selectedCategories={selectedThemes}
+                             setSelectedCategories={setSelectedThemes}
+                             handleFunc={handleCheckBoxChange}>
             </DropdownFilters>
             <div className={styles.filters_price}>
                 <div className={styles.filters_subtitle}>
@@ -149,7 +148,7 @@ export  const CatalogFilters = () => {
                             ? styles.category_checkedLabel : ''}`} key={index}>{name}
                             <input type="checkbox"
                                    className={styles.option_checkbox}
-                                   onChange={() => handleAgeChange(name)}
+                                   onChange={() => handleCheckBoxChange(name, setSelectedAges)}
                             />
                             <span className={styles.option_checkmark}><CheckIcon/></span>
                         </label>
@@ -166,7 +165,7 @@ export  const CatalogFilters = () => {
                             ? styles.category_checkedLabel : ''}`} key={index}>{name}
                             <input type="checkbox"
                                    className={styles.option_checkbox}
-                                   onChange={() => handleGameTimeChange(name)}
+                                   onChange={() => handleCheckBoxChange(name, setSelectedGameTimes)}
                             />
                             <span className={styles.option_checkmark}><CheckIcon/></span>
                             <span>хв</span>
@@ -184,7 +183,7 @@ export  const CatalogFilters = () => {
                             ? styles.category_checkedLabel : ''}`} key={index}>{name}
                             <input type="checkbox"
                                    className={styles.option_checkbox}
-                                   onChange={() => handleLanguageChange(name)}
+                                   onChange={() => handleCheckBoxChange(name, setSelectedLanguages)}
                             />
                             <span className={styles.option_checkmark}><CheckIcon/></span>
                         </label>
