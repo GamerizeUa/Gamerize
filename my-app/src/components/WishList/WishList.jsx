@@ -30,7 +30,7 @@ function WishList() {
         dispatch(removeAllFromWishList());
     }
     return (
-        <div className={styles.container + " container"}>
+        <div className={"container"}>
             <div className={styles.header_container}>
                 <h2 className={styles.header}>Список бажань</h2>
             </div>
