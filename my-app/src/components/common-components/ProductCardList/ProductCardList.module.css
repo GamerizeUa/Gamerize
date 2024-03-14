@@ -9,13 +9,13 @@
     height: 294px;
     margin-bottom: 20px;
 }
-@media (min-width: 744px){
+@media (min-width: 744px) {
     .product_wrap {
         height: 355px;
         margin-bottom: 24px;
     }
 }
-@media (min-width: 1280px){
+@media (min-width: 1280px) {
     .product_wrap {
         height: 435px;
         transition: 0.5s;
@@ -26,7 +26,7 @@
         margin-bottom: 28px;
     }
 }
-@media (min-width: 1440px){
+@media (min-width: 1440px) {
     .product_wrap {
         height: 497px;
     }
