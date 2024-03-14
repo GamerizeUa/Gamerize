@@ -17,25 +17,26 @@ export default function ReviewsList({ feedbacks }) {
     return (
         <section className={styles.wrap}>
             <div className={"container"}>
-                {[...new Array(pageLimit)].map(
-                    (_, index) =>
-                        feedbacks[reviewOffset + index] && (
+                {[...new Array(pageLimit)].map((_, index) => {
+                    const arrayIndex = reviewOffset + index;
+                    return (
+                        feedbacks[arrayIndex] && (
                             <div
-                                key={feedbacks[reviewOffset + index].id}
+                                key={feedbacks[arrayIndex].id}
                                 className={
                                     styles.review_wrap +
                                     " " +
-                                    (index !== pageLimit - 1
+                                    (index !== pageLimit - 1 &&
+                                    arrayIndex !== feedbacks.length - 1
                                         ? styles.review_wrap_border
                                         : "")
                                 }
                             >
-                                <Review
-                                    feedback={feedbacks[reviewOffset + index]}
-                                />
+                                <Review feedback={feedbacks[arrayIndex]} />
                             </div>
                         )
-                )}
+                    );
+                })}
                 <div className={styles.pagination_btns_wrap}>
                     <PaginationButtons
                         pagesAmount={pagesAmount}
