@@ -12,7 +12,6 @@ export default function ProductsCarousel({
 }) {
   let [windowWidth, setWindowWidth] = useState(null); // !! in future it can become a global redux state to check screen width in any component when needed in js
   let [carouselPosition, setCarouselPosition] = useState(0);
-  let [carouselLoadedPosition, setCarouselLoadedPosition] = useState(0); // carouselPosition that is never decreased to save already loaded products in DOM
   const carousel = useRef(null); // carousel html element
 
   const limitedWindowWidth = windowWidth < 1440 ? windowWidth : 1440; // width limited by website max-width 1440px
@@ -53,8 +52,6 @@ export default function ProductsCarousel({
     // proceed to go right
     if (carouselPosition < boundaryRightCarouselPosition) {
       // if right border is not already reached, go right
-      if (carouselPosition === carouselLoadedPosition)
-        setCarouselLoadedPosition(++carouselLoadedPosition); //carouselLoadedPosition can only be increased when it`s value is synchronized with carouselPosition
       setCarouselPosition(++carouselPosition);
     } // else show animation that border is already reached
     else positionLimitBreakingBehavior(boundaryRightCarouselPosition);
@@ -117,10 +114,6 @@ export default function ProductsCarousel({
         newCarouselPosition = 0; // taking into account potential border overcome
       else if (newCarouselPosition >= boundaryRightCarouselPosition)
         newCarouselPosition = boundaryRightCarouselPosition; //taking into account potential border overcome
-
-      if (draggedCardAmount < 0 && carouselPosition === carouselLoadedPosition)
-        setCarouselLoadedPosition(newCarouselPosition); //carouselLoadedPosition can only be increased when it`s value is synchronized with carouselPosition
-
       if (newCarouselPosition === carouselPosition)
         carousel.current.style.transform = `translateX(${
           -oneCardTotalWidth * carouselPosition
@@ -173,20 +166,25 @@ export default function ProductsCarousel({
             className={styles.body}
           >
             {productsList.map((product, i) => {
-              if (i < productCardsAmount + 1 + carouselLoadedPosition) {
-                // return only products in amount shown on the screen + one unviewed behind the screen + all already loaded and saved in DOM behind the screen
-                return (
-                  <div
-                    style={{ width: `${productWidth}px` }}
-                    className={styles.productWrap}
-                    key={product.id}
-                  >
-                    <ProductCard
-                      product={product}
-                      configurationObject={productConfigurationObject}
-                    />
-                  </div>
-                );
+              // return only products in amount shown on the screen + one unviewed on the left and one on the right (if exist)
+              if (i < carouselPosition - 1) {
+                return <div
+                  style={{ width: `${productWidth}px` }}
+                  className={styles.productWrap}
+                  key={product.id}
+                ></div>
+              }
+              else if (i < productCardsAmount + carouselPosition + 1) {
+                return <div
+                  style={{ width: `${productWidth}px` }}
+                  className={styles.productWrap}
+                  key={product.id}
+                >
+                  <ProductCard
+                    product={product}
+                    configurationObject={productConfigurationObject}
+                  />
+              </div>
               }
             })}
           </div>
