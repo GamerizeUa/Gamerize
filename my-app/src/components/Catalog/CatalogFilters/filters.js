@@ -1,30 +1,7 @@
 export const filterProducts = (products, filters) => {
     return products.filter(product => {
-        if (filters.ages && filters.ages.length > 0) {
-            const ageRange = product.minAge + ' - ' + (product.maxAge || '');
-            if (!filters.ages.includes(ageRange)) {
-                return false;
-            }
-        }
-
         if (filters.categories && filters.categories.length > 0) {
             if (!filters.categories.includes(product.category)) {
-                return false;
-            }
-        }
-
-        if (filters.gameTimes && filters.gameTimes.length > 0) {
-            const productGameTime = product.gameTimeMinutes;
-            if (!filters.gameTimes.some(timeRange => {
-                const [minTime, maxTime] = timeRange.split(' - ').map(Number);
-                return productGameTime >= minTime && productGameTime <= maxTime;
-            })) {
-                return false;
-            }
-        }
-
-        if (filters.languages && filters.languages.length > 0) {
-            if (!filters.languages.includes(product.language)) {
                 return false;
             }
         }
@@ -35,6 +12,32 @@ export const filterProducts = (products, filters) => {
             const maxPrice = filters.price.max ? parseInt(filters.price.max, 10) : Number.MAX_SAFE_INTEGER;
 
             if (productPrice < minPrice || productPrice > maxPrice) {
+                return false;
+            }
+        }
+
+        if (filters.ages && filters.ages.length > 0) {
+            const agesWithoutSpaces = filters.ages.map(age => age.replace(/\s/g, ''));
+            if (!agesWithoutSpaces.includes(product.minAge)) {
+                return false;
+            }
+        }
+
+        if (filters.gameTimes && filters.gameTimes.length > 0) {
+            const gameTimesWithoutSpaces = filters.gameTimes.map(gameTime => gameTime.replace(/\s/g, ''));
+            if (!gameTimesWithoutSpaces.includes(product.gameTimeMinutes)) {
+                return false;
+            }
+        }
+
+        if (filters.languages && filters.languages.length > 0) {
+            if (!filters.languages.includes(product.language)) {
+                return false;
+            }
+        }
+
+        if (filters.playersAmount && filters.playersAmount.length > 0) {
+            if (!filters.playersAmount.includes(product.playersAmount)) {
                 return false;
             }
         }
