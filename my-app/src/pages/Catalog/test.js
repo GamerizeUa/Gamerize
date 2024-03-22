@@ -10,7 +10,7 @@ export const arrayProducts = () => {
             price: 478,
             oldPrice: 2812,
             gameTimeMinutes: "70-90",
-            category: 'Стратегія',
+            category: 'Для Компанії',
             photo:
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
@@ -24,7 +24,7 @@ export const arrayProducts = () => {
             price: 1500,
             oldPrice: 2812,
             gameTimeMinutes: 80,
-            category: 'Стратегія',
+            category: "Для Сім\'ї",
             photo:
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
@@ -38,7 +38,7 @@ export const arrayProducts = () => {
             price: 5000,
             oldPrice: 2812,
             gameTimeMinutes: 80,
-            category: 'Детектив',
+            category: 'Для Компанії',
             photo:
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
@@ -52,6 +52,7 @@ export const arrayProducts = () => {
             price: 450,
             oldPrice: 2812,
             gameTimeMinutes: 80,
+            category: 'Для Двох',
             photo:
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
@@ -65,6 +66,7 @@ export const arrayProducts = () => {
             price: 300,
             oldPrice: 2812,
             gameTimeMinutes: 80,
+            category: 'Для Компанії',
             photo:
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
@@ -78,6 +80,7 @@ export const arrayProducts = () => {
             price: 300,
             oldPrice: 2812,
             gameTimeMinutes: 80,
+            category: 'В Дорогу',
             photo:
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
@@ -91,6 +94,7 @@ export const arrayProducts = () => {
             price: 10,
             oldPrice: 2812,
             gameTimeMinutes: 80,
+            category: 'Для Дорослих',
             photo:
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
@@ -104,6 +108,7 @@ export const arrayProducts = () => {
             price: 100,
             oldPrice: 2812,
             gameTimeMinutes: 80,
+            category: 'Для Компанії',
             photo:
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
@@ -117,6 +122,7 @@ export const arrayProducts = () => {
             price: 500,
             oldPrice: 2812,
             gameTimeMinutes: 80,
+            category: 'Для Дітей',
             photo:
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
@@ -130,6 +136,7 @@ export const arrayProducts = () => {
             price: 2250,
             oldPrice: 2812,
             gameTimeMinutes: 80,
+            category: 'Для Вечірок',
             photo:
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
@@ -143,6 +150,7 @@ export const arrayProducts = () => {
             price: 500,
             oldPrice: 2812,
             gameTimeMinutes: 80,
+            category: 'Для Двох',
             photo:
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
@@ -156,6 +164,7 @@ export const arrayProducts = () => {
             price: 2250,
             oldPrice: 2812,
             gameTimeMinutes: 80,
+            category: 'Для Пар',
             photo:
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },

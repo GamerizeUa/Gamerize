@@ -1,11 +1,17 @@
 import styles from "./CatalogFilters.module.css";
 import ArrowIconGallery from "../../ProductOverview/icons/ArrowGalleryIcon.jsx";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import CheckIcon from "../../icons/CheckIcon.jsx";
 
 
 export const DropdownFilters = ({title, categories, selectedCategories, setSelectedCategories, handleFunc}) => {
     const[isCategoryVisible, setIsCategoryVisible] = useState(false);
+
+    useEffect(() => {
+        if(selectedCategories.length !== 0 && selectedCategories){
+            setIsCategoryVisible(true)
+        }
+    }, [selectedCategories])
 
     const toggleVisibility = () => {
         setIsCategoryVisible(!isCategoryVisible);
@@ -20,14 +26,16 @@ export const DropdownFilters = ({title, categories, selectedCategories, setSelec
             {isCategoryVisible &&
             <div className={styles.category_options}>
                 {categories.map((category, index) => (
-                    <label className={`${styles.category_option} ${selectedCategories.includes(category.name)
-                        ? styles.category_checkedLabel : ''}`} key={index}>{category.name}
+                    <label
+                        className={`${styles.category_option} ${selectedCategories.includes(category.name || category)
+                            ? styles.category_checkedLabel : ''}`} key={index}>{category.name || category}
                         <input type="checkbox"
-                               className={`${styles.option_checkbox} ${selectedCategories.includes(category.name)
+                               className={`${styles.option_checkbox} ${selectedCategories.includes(category.name || category)
                                    ? styles.option_checkedOption : ''}`}
-                               onChange={() => handleFunc(category.name, setSelectedCategories)}
+                               onChange={() => handleFunc(category.name || category, setSelectedCategories)}
                         />
                         <span className={styles.option_checkmark}><CheckIcon/></span>
+                        {title === "Час гри" && <span>хв</span>}
                     </label>
                 ))}
             </div>}
