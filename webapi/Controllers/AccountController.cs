@@ -5,26 +5,33 @@ namespace webapi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Gamerize.BLL.Models.Tokens;
+using Gamerize.BLL.Services;
 
 [Route("api/[controller]")]
+[Authorize]
 [ApiController]
 public class AccountController : ControllerBase
 {
     private readonly UserManager<User> _userManager;
     private readonly SignInManager<User> _signInManager;
+    private readonly TokenService _tokenService;
 
     public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _tokenService = new TokenService(userManager);
     }
 
     [HttpPost("register")]
+    [AllowAnonymous]
     public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
     {
         if (ModelState.IsValid)
         {
-            var user = new User { UserName = model.Email, Email = model.Email };
+            var user = new User {FirstName = model.FirstName, LastName = model.LastName, UserName = model.Email, Email = model.Email };
 
             var result = await _userManager.CreateAsync(user, model.Password);
 
@@ -63,5 +70,17 @@ public class AccountController : ControllerBase
     {
         await _signInManager.SignOutAsync();
         return Ok(new { Message = "Logout successful" });
+    }
+
+    [HttpPost("refresh-token")]
+    public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
+    {
+        return Ok(await _tokenService.RefreshTokenAsync(request));
+    }
+
+    [HttpPost("token")]
+    public async Task<IActionResult> Login([FromBody] TokenRequest request)
+    {
+        return Ok(await _tokenService.GetTokenAsync(request));
     }
 }

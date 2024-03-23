@@ -1,11 +1,12 @@
 ﻿using Gamerize.DAL.Entities.Admin;
 using Gamerize.DAL.Entities.Shop;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Gamerize.DAL.Contexts
 {
-    public class ApiDbContext : IdentityDbContext<User, Role, int>
+    public class ApiDbContext : IdentityDbContext<User, IdentityRole<int>, int>
 	{
 		#region ShopDatas
 		public virtual DbSet<Category> Categories { get; set; }

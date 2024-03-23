@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>false</InvariantGlobalization>
+	  <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
   </PropertyGroup>
 
   <ItemGroup>
