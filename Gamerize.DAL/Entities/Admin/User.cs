@@ -7,7 +7,6 @@ namespace Gamerize.DAL.Entities.Admin
 	{
 		public required string FirstName { get; set; }
 		public string? LastName { get; set; }
-        public string? UserName { get; set; }
         public string? RefreshToken { get; set; }
 		public DateTime? RefreshTokenExpiredDate { get; set; }
 
