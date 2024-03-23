@@ -24,16 +24,20 @@ namespace Gamerize.DAL.Entities.Shop
 		public required int LanguageId { get; set; }
 		public virtual Language Language { get; set; }
 		[Column(TypeName = "tinyint")]
-		public required int CategoryId { get; set; }
+		public int CategoryId { get; set; }
 		public virtual Category Category { get; set; }
 		[Column(TypeName = "tinyint")]
-		public required int GenreId { get; set; }
+		public int GenreId { get; set; }
 		public virtual Genre Genre { get; set; }
 		[Column(TypeName = "tinyint")]
-		public required int ThemeId { get; set; }
+		public int ThemeId { get; set; }
 		public virtual Theme Theme { get; set; }
+        //[Column(TypeName = "tinyint")]
+        //public int PuzzleId { get; set; }
+        //[Column(TypeName = "tinyint")]
+        //public int MindGameID { get; set; }
 
-		public virtual ICollection<Feedback> Feedbacks { get; set; }
+        public virtual ICollection<Feedback> Feedbacks { get; set; }
 		public virtual ICollection<Tag> Tags { get; set; }
 		public virtual ICollection<Image> Images { get; set; }
 		public virtual ICollection<Discount> Discounts { get; set; }

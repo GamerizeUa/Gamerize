@@ -1,7 +1,11 @@
 using Gamerize.BLL.AutoMapper;
 using Gamerize.BLL.Services;
+using Gamerize.BLL.Services.Interfaces;
 using Gamerize.DAL.Contexts;
+using Gamerize.DAL.Entities.Admin;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using webapi.Extensions.DI;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +16,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApiDbContext>(options => options.UseSqlServer(
 	builder.Configuration.GetConnectionString("SqlConnection")));
+
 builder.Services.AddAutoMapper(typeof(ToDtoMappingProfile));
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddControllers();
@@ -24,6 +29,11 @@ builder.Services.AddCors(options =>
 				.AllowAnyHeader();
 		})
 	);
+
+builder.Services.AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<ApiDbContext>()
+    .AddUserManager<UserManager<User>>()
+    .AddDefaultTokenProviders();
 
 // Add some extensions
 builder.Services.AddDependencyInjections();
@@ -46,11 +56,8 @@ else
 	app.UseHsts();
 }
 
-
-
 app.UseCors("AllowAnyOrigin");
 app.UseHttpsRedirection();
-
 
 app.MapControllers();
 app.MapFallbackToFile("index.html");

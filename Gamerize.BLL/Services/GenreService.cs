@@ -20,6 +20,7 @@ namespace Gamerize.BLL.Services
 			_repository = _unitOfWork.GetRepository<Genre>();
 			_mapper = mapper;
 		}
+
 		public async Task<GenreDTO> CreateAsync(GenreDTO newEntity)
 		{
 			try
@@ -27,13 +28,14 @@ namespace Gamerize.BLL.Services
 				var exists = await _repository.Get()
 					.AnyAsync(x => x.Name.ToUpper().Trim() == newEntity.Name.ToUpper().Trim());
 
-				if (exists)
+                if (exists)
 					throw new DuplicateItemException(ExceptionMessage(newEntity.Name));
 
 				var entity = new Genre
 				{
 					Id = default,
 					Name = newEntity.Name.Trim(),
+					Description = newEntity.Description.Trim()
 				};
 
 				await _repository.AddAsync(entity);
@@ -45,6 +47,7 @@ namespace Gamerize.BLL.Services
 				throw new ServerErrorException(ex.Message, ex);
 			}
 		}
+
 		public async Task<ICollection<GenreDTO>> GetAllAsync()
 		{
 			try
@@ -56,6 +59,7 @@ namespace Gamerize.BLL.Services
 				throw new ServerErrorException(ex.Message, ex);
 			}
 		}
+
 		public async Task<GenreDTO> GetByIdAsync(int id)
 		{
 			try
@@ -68,6 +72,7 @@ namespace Gamerize.BLL.Services
 				throw new ServerErrorException(ex.Message, ex);
 			}
 		}
+
 		public async Task<GenreDTO> UpdateAsync(GenreDTO editEntity)
 		{
 			try
@@ -90,6 +95,7 @@ namespace Gamerize.BLL.Services
 				throw new ServerErrorException(ex.Message, ex);
 			}
 		}
+
 		public async Task DeleteAsync(int id)
 		{
 			try
@@ -104,6 +110,7 @@ namespace Gamerize.BLL.Services
 				throw new ServerErrorException(ex.Message, ex);
 			}
 		}
+
 		private string ExceptionMessage(object? value = null) =>
 			value switch
 			{
