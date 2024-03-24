@@ -20,11 +20,11 @@ namespace Gamerize.BLL.Services
         private readonly TokenSettings _settings;
 
         public TokenService(
-            UserManager<User> userManager,
-            IOptions<TokenSettings> settings)
+            UserManager<User> userManager)
         {
             _userManager = userManager;
-            _settings = settings.Value;
+            _settings = new TokenSettings { RefreshTokenValidityInDays = 5, Secret = "Gamerize", TokenValidityInMinutes = 10, ValidAudience = "http", 
+            ValidIssuer = "http"};
         }
 
         public async Task<TokenResponse> GetTokenAsync(TokenRequest request)
