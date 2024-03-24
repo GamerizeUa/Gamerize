@@ -20,31 +20,32 @@ namespace Gamerize.BLL.Services
 			_repository = _unitOfWork.GetRepository<Genre>();
 			_mapper = mapper;
 		}
-		public async Task<GenreDTO> CreateAsync(GenreDTO newEntity)
-		{
-			try
-			{
-				var exists = await _repository.Get()
-					.AnyAsync(x => x.Name.ToUpper().Trim() == newEntity.Name.ToUpper().Trim());
+        public async Task<GenreDTO> CreateAsync(GenreDTO newEntity)
+        {
+            try
+            {
+                var exists = await _repository.Get()
+                  .AnyAsync(x => x.Name.ToUpper().Trim() == newEntity.Name.ToUpper().Trim());
 
-				if (exists)
-					throw new DuplicateItemException(ExceptionMessage(newEntity.Name));
+                if (exists)
+                    throw new DuplicateItemException(ExceptionMessage(newEntity.Name));
 
-				var entity = new Genre
-				{
-					Id = default,
-					Name = newEntity.Name.Trim(),
-				};
+                var entity = new Genre
+                {
+                    Id = default,
+                    Name = newEntity.Name.Trim(),
+                    Description = newEntity.Description.Trim()
+                };
 
-				await _repository.AddAsync(entity);
-				await _unitOfWork.SaveChangesAsync();
-				return _mapper.Map<GenreDTO>(entity);
-			}
-			catch (DbUpdateException ex)
-			{
-				throw new ServerErrorException(ex.Message, ex);
-			}
-		}
+                await _repository.AddAsync(entity);
+                await _unitOfWork.SaveChangesAsync();
+                return _mapper.Map<GenreDTO>(entity);
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new ServerErrorException(ex.Message, ex);
+            }
+        }
 		public async Task<ICollection<GenreDTO>> GetAllAsync()
 		{
 			try
