@@ -136,6 +136,8 @@
     text-decoration-line: line-through;
 }
 .buy_btn {
+    position: relative;
+    z-index: 2;
     padding: 13px 24px;
     width: fit-content;
     background-color: var(--blue);
@@ -145,6 +147,7 @@
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
+    line-height: 1;
 }
 
 @media screen and (min-width: 744px) {

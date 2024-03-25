@@ -109,7 +109,7 @@ export default function ProductCard({
                         className={styles.price + " " + styles.current_price}
                     >{`${price}₴`}</p>
                 </div>
-                <p className={styles.buy_btn}>Купити</p>
+                <button className={styles.buy_btn}>Купити</button>
             </div>
         </div>
     );
