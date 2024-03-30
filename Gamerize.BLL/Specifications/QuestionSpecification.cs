@@ -8,11 +8,6 @@ namespace Gamerize.BLL.Specifications
 			Where(x => x.Id == id);
 			return this;
 		}
-		public QuestionSpecification ByProductId(int id)
-		{
-			Where(x => x.ProductId == id);
-			return this;
-		}
 		public QuestionSpecification IncludeAll()
 		{
 			Include(x => x.Answer);

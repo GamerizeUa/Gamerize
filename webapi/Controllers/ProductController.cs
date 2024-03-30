@@ -87,16 +87,15 @@ namespace webapi.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        [HttpPost("{productId}/Questions")]
-        public async Task<ActionResult<QuestionDTO>> PostQuestionForProduct(int productId, [FromBody] QuestionCreateDTO questionDTO)
+        [HttpPost("Questions")]
+        public async Task<ActionResult<QuestionDTO>> PostQuestionForProduct([FromBody] QuestionCreateDTO questionDTO)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                await _productService.GetByIdAsync(productId);
-                return Ok(await _questionService.AddQuestionAsync(productId, questionDTO));
+                return Ok(await _questionService.AddQuestionAsync(questionDTO));
             }
             catch (InvalidIdException ex)
             {

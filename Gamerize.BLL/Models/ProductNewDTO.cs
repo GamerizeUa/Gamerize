@@ -32,6 +32,10 @@ namespace Gamerize.BLL.Models
         public int GenreId { get; set; }
         [Required]
         public int ThemeId { get; set; }
+
+        public int PuzzleId { get; set; }
+        public int MindGamesId { get; set; }
+
         public ICollection<IFormFile> NewImages { get; set; } = new List<IFormFile>();
         public int[] NewTags { get; set; } = Array.Empty<int>();
     }

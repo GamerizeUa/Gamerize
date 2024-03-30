@@ -1,5 +1,4 @@
 ﻿using Gamerize.DAL.Entities.Shop;
-using Microsoft.EntityFrameworkCore;
 
 namespace Gamerize.BLL.Specifications
 {
@@ -20,8 +19,6 @@ namespace Gamerize.BLL.Specifications
             Include(x => x.Feedbacks);
             Include(x => x.Tags);
             Include(x => x.Images);
-            Include(x => x.Questions);
-            Include(x => x.Questions.Select(x => x.Answer));
             return this;
         }
         public ProductSpecification IncludeShort()

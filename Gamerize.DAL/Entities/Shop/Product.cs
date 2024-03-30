@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Gamerize.DAL.Entities.Shop
 {
@@ -32,15 +33,19 @@ namespace Gamerize.DAL.Entities.Shop
 		[Column(TypeName = "tinyint")]
 		public int ThemeId { get; set; }
 		public virtual Theme Theme { get; set; }
-        //[Column(TypeName = "tinyint")]
-        //public int PuzzleId { get; set; }
-        //[Column(TypeName = "tinyint")]
-        //public int MindGameID { get; set; }
+
+		[Column(TypeName = "tinyint")]
+		public int PuzzleId { get; set; }
+		public virtual Puzzle Puzzle { get; set; }
+		[Column(TypeName = "tinyint")]
+		public int MindGameID { get; set; }
+		public virtual MindGames MindGames { get; set; }
+        [MaxLength(200), Column(TypeName = "text")]
+        public required string gameComponents { get; set; }
 
         public virtual ICollection<Feedback> Feedbacks { get; set; }
 		public virtual ICollection<Tag> Tags { get; set; }
 		public virtual ICollection<Image> Images { get; set; }
 		public virtual ICollection<Discount> Discounts { get; set; }
-		public virtual ICollection<Question> Questions { get; set; }
 	}
 }

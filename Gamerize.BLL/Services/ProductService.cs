@@ -79,8 +79,9 @@ namespace Gamerize.BLL.Services
                     .Include(x => x.Feedbacks)
                     .Include(x => x.Tags)
                     .Include(x => x.Images)
-                    .Include(x => x.Questions)
-                        .ThenInclude(x => x.Answer)
+                    .Include(x => x.gameComponents)
+                    .Include(x => x.MindGames)
+                    .Include(x => x.Puzzle)
                     .FirstOrDefaultAsync(x => x.Id == id);
 
                 return (product is not null) ?

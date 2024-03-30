@@ -29,20 +29,16 @@ namespace Gamerize.BLL.Services
             _mapper.Map<QuestionDTO>(await _questionRepository.GetByIdAsync(questionId)) ??
                 throw new InvalidIdException($"Питання з Id: {questionId} не знайдено!");
 
-        public async Task<ICollection<QuestionDTO>> GetQuestionsForProductAsync(int productId) =>
-            _mapper.Map<ICollection<QuestionDTO>>(await _questionRepository.GetAllAsync(
-                 new QuestionSpecification().ByProductId(productId).IncludeAll()));
-
-        public async Task<QuestionDTO> AddQuestionAsync(int productId, QuestionCreateDTO question)
+        public async Task<QuestionDTO> AddQuestionAsync(QuestionCreateDTO question)
         {
             try
             {
                 var newQuestion = new Question
                 {
                     Id = default,
-                    ProductId = productId,
                     DateTime = DateTime.Now,
                     UserName = question.UserName,
+                    Email = question.Email,
                     Text = question.Text,
                     IsAnswered = false
                 };

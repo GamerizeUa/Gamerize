@@ -18,10 +18,11 @@ namespace Gamerize.BLL.Models
 		public CategoryDTO Category { get; set; }
 		public GenreDTO Genre { get; set; }
 		public ThemeDTO Theme { get; set; }
+        public PuzzleDTO Puzzle { get; set; }
+        public MindGamesDTO MindGames { get; set; }
 
-		public ICollection<FeedbackDTO> Feedbacks { get; set; }
+        public ICollection<FeedbackDTO> Feedbacks { get; set; }
 		public ICollection<TagDTO> Tags { get; set; }
 		public ICollection<ImageDTO> Images { get; set; }
-		public ICollection<QuestionDTO> Questions { get; set; }
 	}
 }

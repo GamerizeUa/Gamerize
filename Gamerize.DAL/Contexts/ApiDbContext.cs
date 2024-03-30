@@ -22,6 +22,8 @@ namespace Gamerize.DAL.Contexts
 		public virtual DbSet<Discount> Discounts { get; set; }
 		public virtual DbSet<Question> Questions { get; set; }
 		public virtual DbSet<Answer> Answers { get; set; }
+		public virtual DbSet<Puzzle> Puzzles { get; set; }
+		public virtual DbSet<MindGames> MindGames { get; set; }
 		#endregion
 		#region AdminDatas
 		public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
