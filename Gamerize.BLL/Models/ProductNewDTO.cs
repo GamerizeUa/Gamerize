@@ -36,6 +36,7 @@ namespace Gamerize.BLL.Models
         public int PuzzleId { get; set; }
         public int MindGamesId { get; set; }
 
+        public string[] NewGamesComponent { get; set; } = Array.Empty<string>();
         public ICollection<IFormFile> NewImages { get; set; } = new List<IFormFile>();
         public int[] NewTags { get; set; } = Array.Empty<int>();
     }
