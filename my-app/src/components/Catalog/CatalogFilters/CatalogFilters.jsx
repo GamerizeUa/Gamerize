@@ -11,6 +11,7 @@ import {useLocation} from "react-router-dom";
 
 export  const CatalogFilters = () => {
     const age = ["3 - 6", "6 - 9", "9 - 12", "12 - 18", "18+"];
+    const players = ["1 - 3", "4 - 6", "більше 6"];
     const timeGame = ["15 - 30", "40 - 60", "70 - 90", "115 - 180", "240"];
     const languages = ["Українська", "Англійська", "Іспанська"];
     const [selectedCategories, setSelectedCategories] = useState([]);
@@ -18,6 +19,7 @@ export  const CatalogFilters = () => {
     const [selectedThemes, setSelectedThemes] = useState([]);
     const [priceRange, setPriceRange] = useState({ min: '', max: '' });
     const [selectedAges, setSelectedAges] = useState([]);
+    const [selectedPlayersAmount, setSelectedPlayersAmount] = useState([]);
     const [selectedGameTimes, setSelectedGameTimes] = useState([]);
     const [selectedLanguages, setSelectedLanguages] = useState([]);
     const [isReadyForResetting, setIsReadyForResetting] = useState(false);
@@ -67,6 +69,8 @@ export  const CatalogFilters = () => {
                 return setSelectedAges;
             case 'gameTime':
                 return setSelectedGameTimes;
+            case 'playersAmount':
+                return setSelectedPlayersAmount;
             default:
                 return null;
         }
@@ -86,6 +90,7 @@ export  const CatalogFilters = () => {
             themes: selectedThemes,
             price: priceRange,
             ages: selectedAges,
+            playersAmount: selectedPlayersAmount,
             gameTimes: selectedGameTimes,
             languages: selectedLanguages,
         };
@@ -109,6 +114,7 @@ export  const CatalogFilters = () => {
         setSelectedThemes([]);
         setPriceRange({min: '', max: ''})
         setSelectedAges([]);
+        setSelectedPlayersAmount([]);
         setSelectedGameTimes([]);
         setSelectedLanguages([]);
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -173,6 +179,12 @@ export  const CatalogFilters = () => {
                              categories={age}
                              selectedCategories={selectedAges}
                              setSelectedCategories={setSelectedAges}
+                             handleFunc={handleCheckBoxChange}>
+            </DropdownFilters>
+            <DropdownFilters title={"Кількість гравців"}
+                             categories={players}
+                             selectedCategories={selectedPlayersAmount}
+                             setSelectedCategories={setSelectedPlayersAmount}
                              handleFunc={handleCheckBoxChange}>
             </DropdownFilters>
             <DropdownFilters title={"Час гри"}

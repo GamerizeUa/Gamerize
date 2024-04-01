@@ -11,6 +11,7 @@ export const arrayProducts = () => {
             oldPrice: 2812,
             gameTimeMinutes: "70-90",
             category: 'Для Компанії',
+            playersAmount: 3,
             photo:
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
@@ -25,6 +26,7 @@ export const arrayProducts = () => {
             oldPrice: 2812,
             gameTimeMinutes: 80,
             category: "Для Сім\'ї",
+            playersAmount: 'більше 6',
             photo:
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
@@ -39,6 +41,7 @@ export const arrayProducts = () => {
             oldPrice: 2812,
             gameTimeMinutes: 80,
             category: 'Для Компанії',
+            playersAmount: '17',
             photo:
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
@@ -53,6 +56,7 @@ export const arrayProducts = () => {
             oldPrice: 2812,
             gameTimeMinutes: 80,
             category: 'Для Двох',
+            playersAmount: 6,
             photo:
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },
