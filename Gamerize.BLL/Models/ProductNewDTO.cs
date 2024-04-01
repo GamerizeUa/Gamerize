@@ -26,17 +26,15 @@ namespace Gamerize.BLL.Models
         public int MaxGameTimeMinutes { get; set; }
         [Required]
         public int LanguageId { get; set; }
-        [Required]
         public int CategoryId { get; set; }
-        [Required]
         public int GenreId { get; set; }
-        [Required]
         public int ThemeId { get; set; }
 
         public int PuzzleId { get; set; }
         public int MindGamesId { get; set; }
 
-        public string[] NewGamesComponent { get; set; } = Array.Empty<string>();
+        [Required]
+        public string[] GameComponents { get; set; } = Array.Empty<string>();
         public ICollection<IFormFile> NewImages { get; set; } = new List<IFormFile>();
         public int[] NewTags { get; set; } = Array.Empty<int>();
     }
