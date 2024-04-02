@@ -3,8 +3,7 @@ import { categoriesReducer } from "./categories/categoriesSlice";
 import { genresReducer } from "./categories/genreSlice";
 import translationTabReducer from "./translationTab.js";
 import { themesReducer } from "./categories/themesSlice.js";
-import productsCatalogReducer from './productsCatalog.js';
-import sortingMethodReducer from "./sortingMethod.js";
+import productsCatalogReducer from './productsCatalogSlice.js';
 import { wishListReducer } from "./wishListSlice.js";
 
 const rootReducer = combineReducers({
@@ -13,7 +12,6 @@ const rootReducer = combineReducers({
   themes: themesReducer,
   translationTab: translationTabReducer,
   productsCatalog: productsCatalogReducer,
-  sortingMethod: sortingMethodReducer,
   wishList: wishListReducer,
 });
 

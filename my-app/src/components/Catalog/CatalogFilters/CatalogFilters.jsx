@@ -3,7 +3,7 @@ import CheckIcon from "../../icons/CheckIcon.jsx";
 import {filterProducts} from './filters.js';
 import React, {useEffect, useState} from "react";
 import {arrayProducts} from '../../../pages/Catalog/test.js';
-import {setProductsCatalog} from "../../../redux/productsCatalog.js";
+import {setProductsCatalog} from "../../../redux/productsCatalogSlice.js";
 import {useDispatch, useSelector} from "react-redux";
 import {DropdownFilters} from "./DropdownFilters.jsx";
 import {selectCategories, selectGenres, selectThemes} from "../../../redux/selectors.js";
@@ -23,7 +23,6 @@ export  const CatalogFilters = () => {
     const [selectedGameTimes, setSelectedGameTimes] = useState([]);
     const [selectedLanguages, setSelectedLanguages] = useState([]);
     const [isReadyForResetting, setIsReadyForResetting] = useState(false);
-    const methodSorting = useSelector((state) => state.sortingMethod.value);
     const dispatch = useDispatch();
     const categories = useSelector(selectCategories);
     const genres = useSelector(selectGenres);
@@ -76,13 +75,6 @@ export  const CatalogFilters = () => {
         }
     };
 
-    const sortingOperations = {
-        'Ціна: Від нижчої': (a, b) => a.price - b.price,
-        'Назва: Я - А': (a, b) => b.name.localeCompare(a.name),
-        'Ціна: Від вищої': (a, b) => b.price - a.price,
-        'Назва: А - Я': (a, b) => a.name.localeCompare(b.name),
-    };
-
     const getSelectedFilters = () => {
         const filters = {
             categories: selectedCategories,
@@ -96,8 +88,7 @@ export  const CatalogFilters = () => {
         };
         const products = arrayProducts();
         const result = filterProducts(products,filters);
-        const sortedProducts = [...result].sort(sortingOperations[methodSorting]);
-        dispatch(setProductsCatalog(sortedProducts));
+        dispatch(setProductsCatalog(result));
     };
 
     const handleCheckBoxChange = (item, arrayFunc) => {
