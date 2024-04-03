@@ -37,11 +37,19 @@ export const filterProducts = (products, filters) => {
         }
 
         if (filters.playersAmount && filters.playersAmount.length > 0) {
-            if (!filters.playersAmount.includes(product.playersAmount)) {
-                return false;
+            const amountOfPlayers = product.playersAmount === 'більше 6' ?
+                product.playersAmount : Number(product.playersAmount);
+            if (!filters.playersAmount.some(playersRange => {
+                if (playersRange === 'більше 6') {
+                    return amountOfPlayers === 'більше 6' || amountOfPlayers > 6;
+                } else{
+                    const [minPlayers, maxPlayers] = playersRange.split(' - ').map(Number);
+                    return amountOfPlayers >= minPlayers && amountOfPlayers <= maxPlayers;
+                }
+            })){
+                return false
             }
         }
-
         return true;
     });
 };

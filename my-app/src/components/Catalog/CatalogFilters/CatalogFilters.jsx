@@ -7,9 +7,11 @@ import {setProductsCatalog} from "../../../redux/productsCatalog.js";
 import {useDispatch, useSelector} from "react-redux";
 import {DropdownFilters} from "./DropdownFilters.jsx";
 import {selectCategories, selectGenres, selectThemes} from "../../../redux/selectors.js";
+import {useLocation} from "react-router-dom";
 
 export  const CatalogFilters = () => {
     const age = ["3 - 6", "6 - 9", "9 - 12", "12 - 18", "18+"];
+    const players = ["1 - 3", "4 - 6", "більше 6"];
     const timeGame = ["15 - 30", "40 - 60", "70 - 90", "115 - 180", "240"];
     const languages = ["Українська", "Англійська", "Іспанська"];
     const [selectedCategories, setSelectedCategories] = useState([]);
@@ -17,6 +19,7 @@ export  const CatalogFilters = () => {
     const [selectedThemes, setSelectedThemes] = useState([]);
     const [priceRange, setPriceRange] = useState({ min: '', max: '' });
     const [selectedAges, setSelectedAges] = useState([]);
+    const [selectedPlayersAmount, setSelectedPlayersAmount] = useState([]);
     const [selectedGameTimes, setSelectedGameTimes] = useState([]);
     const [selectedLanguages, setSelectedLanguages] = useState([]);
     const [isReadyForResetting, setIsReadyForResetting] = useState(false);
@@ -25,6 +28,8 @@ export  const CatalogFilters = () => {
     const categories = useSelector(selectCategories);
     const genres = useSelector(selectGenres);
     const themes = useSelector(selectThemes);
+    const location = useLocation();
+
 
     const handlePriceInputChange = (event, type) => {
         event.target.value = event.target.value.replace(/[^0-9]/g, '');
@@ -41,6 +46,36 @@ export  const CatalogFilters = () => {
         }
     }, [isReadyForResetting])
 
+    useEffect(() => {
+        if (location.state) {
+            Object.keys(location.state).forEach(key => {
+                const setterFunction = getSetterFunction(key);
+                if (setterFunction) {
+                    setterFunction(prevState => [...prevState, location.state[key]]);
+                }
+            });
+            setIsReadyForResetting(true);
+        }},[location.state])
+
+    const getSetterFunction = (key) => {
+        switch (key) {
+            case 'category':
+                return setSelectedCategories;
+            case 'genre':
+                return setSelectedGenres;
+            case 'theme':
+                return setSelectedThemes;
+            case 'age':
+                return setSelectedAges;
+            case 'gameTime':
+                return setSelectedGameTimes;
+            case 'playersAmount':
+                return setSelectedPlayersAmount;
+            default:
+                return null;
+        }
+    };
+
     const sortingOperations = {
         'Ціна: Від нижчої': (a, b) => a.price - b.price,
         'Назва: Я - А': (a, b) => b.name.localeCompare(a.name),
@@ -55,6 +90,7 @@ export  const CatalogFilters = () => {
             themes: selectedThemes,
             price: priceRange,
             ages: selectedAges,
+            playersAmount: selectedPlayersAmount,
             gameTimes: selectedGameTimes,
             languages: selectedLanguages,
         };
@@ -78,6 +114,7 @@ export  const CatalogFilters = () => {
         setSelectedThemes([]);
         setPriceRange({min: '', max: ''})
         setSelectedAges([]);
+        setSelectedPlayersAmount([]);
         setSelectedGameTimes([]);
         setSelectedLanguages([]);
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -138,58 +175,30 @@ export  const CatalogFilters = () => {
                     </div>
                 </div>
             </div>
-            <div className={styles.filters_categories}>
-                <div className={styles.filters_subtitle}>
-                <p className={styles.filters_subtitle}>Вік:</p>
-                </div>
-                <div className={styles.category_options}>
-                    {age.map((name, index) => (
-                        <label className={`${styles.category_option} ${selectedAges.includes(name) 
-                            ? styles.category_checkedLabel : ''}`} key={index}>{name}
-                            <input type="checkbox"
-                                   className={styles.option_checkbox}
-                                   onChange={() => handleCheckBoxChange(name, setSelectedAges)}
-                            />
-                            <span className={styles.option_checkmark}><CheckIcon/></span>
-                        </label>
-                    ))}
-                </div>
-            </div>
-            <div className={styles.filters_categories}>
-                <div className={styles.filters_subtitle}>
-                    <p className={styles.filters_subtitle}>Час гри:</p>
-                </div>
-                <div className={styles.category_options}>
-                    {timeGame.map((name, index) => (
-                        <label className={`${styles.category_option} ${selectedGameTimes.includes(name)
-                            ? styles.category_checkedLabel : ''}`} key={index}>{name}
-                            <input type="checkbox"
-                                   className={styles.option_checkbox}
-                                   onChange={() => handleCheckBoxChange(name, setSelectedGameTimes)}
-                            />
-                            <span className={styles.option_checkmark}><CheckIcon/></span>
-                            <span>хв</span>
-                        </label>
-                    ))}
-                </div>
-            </div>
-            <div className={styles.filters_categories}>
-                <div className={styles.filters_subtitle}>
-                    <p className={styles.filters_subtitle}>Мова:</p>
-                </div>
-                <div className={styles.category_options}>
-                    {languages.map((name, index) => (
-                        <label className={`${styles.category_option} ${selectedLanguages.includes(name)
-                            ? styles.category_checkedLabel : ''}`} key={index}>{name}
-                            <input type="checkbox"
-                                   className={styles.option_checkbox}
-                                   onChange={() => handleCheckBoxChange(name, setSelectedLanguages)}
-                            />
-                            <span className={styles.option_checkmark}><CheckIcon/></span>
-                        </label>
-                    ))}
-                </div>
-            </div>
+            <DropdownFilters title={"Вік"}
+                             categories={age}
+                             selectedCategories={selectedAges}
+                             setSelectedCategories={setSelectedAges}
+                             handleFunc={handleCheckBoxChange}>
+            </DropdownFilters>
+            <DropdownFilters title={"Кількість гравців"}
+                             categories={players}
+                             selectedCategories={selectedPlayersAmount}
+                             setSelectedCategories={setSelectedPlayersAmount}
+                             handleFunc={handleCheckBoxChange}>
+            </DropdownFilters>
+            <DropdownFilters title={"Час гри"}
+                             categories={timeGame}
+                             selectedCategories={selectedGameTimes}
+                             setSelectedCategories={setSelectedGameTimes}
+                             handleFunc={handleCheckBoxChange}>
+            </DropdownFilters>
+            <DropdownFilters title={"Мова"}
+                             categories={languages}
+                             selectedCategories={selectedLanguages}
+                             setSelectedCategories={setSelectedLanguages}
+                             handleFunc={handleCheckBoxChange}>
+            </DropdownFilters>
             <div className={styles.filters_buttons}>
                 <button className={styles.button_apply} type="submit" onClick={getSelectedFilters}>Застосувати</button>
                 <button className={styles.button_reset} onClick={handleResetFilters}>Скинути фільтри</button>
