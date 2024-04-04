@@ -119,8 +119,8 @@ namespace Gamerize.BLL.Services
         private string ExceptionMessage(object? value = null) =>
             value switch
             {
-                int idt when value is int => $"Жанра з id: {idt} ще/вже не існує!",
-                string namet when value is string => $"Жанр з назваю {namet} вже існує",
+                int idt when value is int => $"MindGames з id: {idt} ще/вже не існує!",
+                string namet when value is string => $"MindGames з назваю {namet} вже існує",
                 _ => "Something has gone wrong"
             };
     }

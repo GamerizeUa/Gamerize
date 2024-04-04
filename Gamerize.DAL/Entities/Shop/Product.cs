@@ -25,23 +25,21 @@ namespace Gamerize.DAL.Entities.Shop
 		public required int LanguageId { get; set; }
 		public virtual Language Language { get; set; }
 		[Column(TypeName = "tinyint")]
-		public int CategoryId { get; set; }
+		public int? CategoryId { get; set; }
 		public virtual Category Category { get; set; }
 		[Column(TypeName = "tinyint")]
-		public int GenreId { get; set; }
+		public int? GenreId { get; set; }
 		public virtual Genre Genre { get; set; }
 		[Column(TypeName = "tinyint")]
-		public int ThemeId { get; set; }
+		public int? ThemeId { get; set; }
 		public virtual Theme Theme { get; set; }
 
 		[Column(TypeName = "tinyint")]
-		public int PuzzleId { get; set; }
+		public int? PuzzleId { get; set; }
 		public virtual Puzzle Puzzle { get; set; }
 		[Column(TypeName = "tinyint")]
-		public int MindGameID { get; set; }
+		public int? MindGamesId { get; set; }
 		public virtual MindGames MindGames { get; set; }
-        [MaxLength(200), Column(TypeName = "text")]
-        public required string gameComponents { get; set; }
 
         public virtual ICollection<Feedback> Feedbacks { get; set; }
 		public virtual ICollection<Tag> Tags { get; set; }

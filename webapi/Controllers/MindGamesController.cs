@@ -7,24 +7,17 @@ namespace webapi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class MindGamesController : ControllerBase
     {
-        private readonly ProductService _productService;
-        private readonly QuestionService _questionService;
-        public ProductController(
-            QuestionService questionService,
-            ProductService productService)
-        {
-            _questionService = questionService;
-            _productService = productService;
-        }
+        private readonly MindGamesService _service;
+        public MindGamesController(MindGamesService service) => _service = service;
 
-        [HttpGet("GetSimpleList")]
-        public async Task<ActionResult<ICollection<ProductShortDTO>>> GetSimpleList()
+        [HttpGet("GetAll")]
+        public async Task<ActionResult<ICollection<MindGamesDTO>>> GetAllAsync()
         {
             try
             {
-                return Ok(await _productService.GetSimpleListAsync());
+                return Ok(await _service.GetAllAsync());
             }
             catch (ServerErrorException ex)
             {
@@ -32,11 +25,11 @@ namespace webapi.Controllers
             }
         }
         [HttpGet("GetById/{id:int}")]
-        public async Task<ActionResult<ProductFullDTO>> GetById(int id)
+        public async Task<ActionResult<MindGamesDTO>> GetByIdAsync(int id)
         {
             try
             {
-                return Ok(await _productService.GetByIdAsync(id));
+                return Ok(await _service.GetByIdAsync(id));
             }
             catch (InvalidIdException ex)
             {
@@ -48,20 +41,37 @@ namespace webapi.Controllers
             }
         }
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromForm] ProductNewDTO newProduct)
+        public async Task<ActionResult<MindGamesDTO>> CreateAsync([FromBody] MindGamesDTO newEntity)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
             try
             {
-                return Ok(await _productService.CreateAsync(newProduct));
+                return (!ModelState.IsValid) ?
+                        BadRequest() :
+                        Ok(await _service.CreateAsync(newEntity));
             }
             catch (DuplicateItemException ex)
             {
-                return StatusCode(409, ex.Message);
+                return StatusCode(400, ex.Message);
+            }
+            catch (ServerErrorException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpPatch("Update")]
+        public async Task<ActionResult<MindGamesDTO>> UpdateAsync([FromBody] MindGamesDTO update)
+        {
+            try
+            {
+                return (!ModelState.IsValid) ?
+                    BadRequest() :
+                    Ok(await _service.UpdateAsync(update));
             }
             catch (InvalidIdException ex)
+            {
+                return StatusCode(400, ex.Message);
+            }
+            catch (DuplicateItemException ex)
             {
                 return StatusCode(400, ex.Message);
             }
@@ -71,11 +81,11 @@ namespace webapi.Controllers
             }
         }
         [HttpDelete("Delete/{id:int}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
             try
             {
-                await _productService.DeleteAsync(id);
+                await _service.DeleteAsync(id);
                 return NoContent();
             }
             catch (InvalidIdException ex)
@@ -87,6 +97,5 @@ namespace webapi.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        
     }
 }
