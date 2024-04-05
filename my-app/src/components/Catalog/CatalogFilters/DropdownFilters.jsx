@@ -17,6 +17,34 @@ export const DropdownFilters = ({title, categories, selectedCategories, setSelec
         setIsCategoryVisible(!isCategoryVisible);
     };
 
+    const checkCategory = (categoryName, isCanDelete) => {
+        return selectedCategories.some(category => {
+            if (categoryName.includes('-') && !category.includes('-')) {
+                categoryName.replace(/\s/g, '')
+                const [minPlayers, maxPlayers] = categoryName.split('-').map(Number);
+                const result = Number(category) >= minPlayers && Number(category) <= maxPlayers;
+                isCanDelete && result
+                    ? setSelectedCategories(prevItems => prevItems.filter((i) => i !== category)) : '';
+                return result;
+            }else if(categoryName.includes('-') && category.includes('-')){
+                const result = categoryName.replace(/\s/g, '') === category.replace(/\s/g, '')
+                isCanDelete && result
+                    ? setSelectedCategories(prevItems => prevItems.filter((i) => i !== category)) : '';
+                return result ;
+            }else{
+                return selectedCategories.includes(categoryName);
+            }
+        })
+    }
+
+    const handleCheckBoxChange = (item, arrayFunc) => {
+        arrayFunc((prevItems) =>
+            checkCategory(item, true)
+                ? prevItems.filter((i) => i !== item)
+                : [...prevItems, item]
+        )
+    }
+
     return (
         <div className={styles.filters_categories}>
             <div className={styles.filters_subtitle} onClick={toggleVisibility}>
@@ -27,12 +55,15 @@ export const DropdownFilters = ({title, categories, selectedCategories, setSelec
             <div className={styles.category_options}>
                 {categories.map((category, index) => (
                     <label
-                        className={`${styles.category_option} ${selectedCategories.includes(category.name || category)
+                        className={`${styles.category_option} ${checkCategory(category.name 
+                            ? category.name : category, false)
                             ? styles.category_checkedLabel : ''}`} key={index}>{category.name || category}
                         <input type="checkbox"
-                               className={`${styles.option_checkbox} ${selectedCategories.includes(category.name || category)
+                               className={`${styles.option_checkbox}
+                               ${checkCategory(category.name ? category.name : category, false) 
                                    ? styles.option_checkedOption : ''}`}
-                               onChange={() => handleFunc(category.name || category, setSelectedCategories)}
+                               onChange={() =>
+                                   handleCheckBoxChange(category.name ? category.name : category, setSelectedCategories)}
                         />
                         <span className={styles.option_checkmark}><CheckIcon/></span>
                         {title === "Час гри" && <span>хв</span>}
@@ -43,3 +74,20 @@ export const DropdownFilters = ({title, categories, selectedCategories, setSelec
 
     )
 }
+
+
+
+// className={`${styles.option_checkbox} ${
+//     (category.name || category).includes('-') ?
+//         (category.name ? category.name : category).split('-').map(Number).some((num, i, arr) => {
+//             if (i === 0) {
+//                 return selectedCategories.some(cat => cat >= num && cat <= arr[i + 1]);
+//             } else if (i === arr.length - 1) {
+//                 return selectedCategories.some(cat => cat >= arr[i - 1] && cat <= num);
+//             }
+//             return false;
+//         }) ? styles.option_checkedOption : '' :
+//         selectedCategories.includes(Number(category.name || category)) ?
+//             styles.option_checkedOption :
+//             ''
+// }`}

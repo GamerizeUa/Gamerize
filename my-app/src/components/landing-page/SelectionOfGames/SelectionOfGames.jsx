@@ -11,7 +11,7 @@ export const SelectionOfGames = () => {
       <div className={styles.gamesSelection_outerContainer + " container"}>
         <p className={styles.gamesSelection_title}>Підбірки ігор</p>
         <div className={styles.gamesSelection_container}>
-          <Link className={styles.gamesSelection_choice} to="/catalog" state={{ category: "Для Компанії"}}>
+          <Link className={styles.gamesSelection_choice} to="/catalog" state={{ categories: 'Для Компанії', playersAmount: ['4 - 6', 2, null]}}>
             <img
               src={imageCompanyGame}
               className={styles.gamesSelection_image}
@@ -21,7 +21,7 @@ export const SelectionOfGames = () => {
               ТОП 10 ігор для компанії
             </p>
           </Link>
-          <Link className={styles.gamesSelection_choice} to="/catalog" state={{ category: "Для Пар"}}>
+          <Link className={styles.gamesSelection_choice} to="/catalog" state={{ categories: "Для Пар"}}>
             <img
               src={imageCoupleGame}
               className={styles.gamesSelection_image}
@@ -31,7 +31,7 @@ export const SelectionOfGames = () => {
               ТОП 10 ігор для пар
             </p>
           </Link>
-          <Link className={styles.gamesSelection_choice} to="/catalog" state={{ category: "Для Дітей"}}>
+          <Link className={styles.gamesSelection_choice} to="/catalog" state={{ categories: "Для Дітей"}}>
             <img
               src={imageKidsGame}
               className={styles.gamesSelection_image}
