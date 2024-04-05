@@ -42,9 +42,14 @@ export const filterProducts = (products, filters) => {
             if (!filters.playersAmount.some(playersRange => {
                 if (playersRange === 'більше 6') {
                     return amountOfPlayers === 'більше 6' || amountOfPlayers > 6;
-                } else{
-                    const [minPlayers, maxPlayers] = playersRange.split(' - ').map(Number);
+
+                } else if (playersRange.includes('-')) {
+                    playersRange.replace(/\s/g, '')
+                    const [minPlayers, maxPlayers] = playersRange.split('-').map(Number);
                     return amountOfPlayers >= minPlayers && amountOfPlayers <= maxPlayers;
+                }else{
+                    const singlePlayerCount = Number(playersRange);
+                    return amountOfPlayers === singlePlayerCount;
                 }
             })){
                 return false

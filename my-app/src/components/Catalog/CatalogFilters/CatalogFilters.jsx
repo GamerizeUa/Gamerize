@@ -49,8 +49,13 @@ export  const CatalogFilters = () => {
         if (location.state) {
             Object.keys(location.state).forEach(key => {
                 const setterFunction = getSetterFunction(key);
-                if (setterFunction) {
-                    setterFunction(prevState => [...prevState, location.state[key]]);
+                if (setterFunction && location.state[key]) {
+                    setterFunction(prevState =>
+                        [...prevState, ...(Array.isArray(location.state[key])
+                        ? location.state[key].map(item => item && String(item)).filter(item => item !== null
+                            && item !== '' && item !== undefined)
+                        : [String(location.state[key])])]);
+                    setterFunction(prevState => [...new Set(prevState)]);
                 }
             });
             setIsReadyForResetting(true);
@@ -58,15 +63,15 @@ export  const CatalogFilters = () => {
 
     const getSetterFunction = (key) => {
         switch (key) {
-            case 'category':
+            case 'categories':
                 return setSelectedCategories;
-            case 'genre':
+            case 'genres':
                 return setSelectedGenres;
-            case 'theme':
+            case 'themes':
                 return setSelectedThemes;
-            case 'age':
+            case 'ages':
                 return setSelectedAges;
-            case 'gameTime':
+            case 'gameTimes':
                 return setSelectedGameTimes;
             case 'playersAmount':
                 return setSelectedPlayersAmount;
@@ -90,14 +95,6 @@ export  const CatalogFilters = () => {
         const result = filterProducts(products,filters);
         dispatch(setProductsCatalog(result));
     };
-
-    const handleCheckBoxChange = (item, arrayFunc) => {
-        arrayFunc((prevItems) =>
-            prevItems.includes(item)
-            ? prevItems.filter((i) => i !== item)
-                : [...prevItems, item]
-        )
-    }
 
     const handleResetFilters = () => {
         setSelectedCategories([]);
@@ -125,20 +122,17 @@ export  const CatalogFilters = () => {
             <DropdownFilters title={"Категорія"}
                              categories={categories}
                              selectedCategories={selectedCategories}
-                             setSelectedCategories={setSelectedCategories}
-                             handleFunc={handleCheckBoxChange}>
+                             setSelectedCategories={setSelectedCategories}>
             </DropdownFilters>
             <DropdownFilters title={"Жанри"}
                              categories={genres}
                              selectedCategories={selectedGenres}
-                             setSelectedCategories={setSelectedGenres}
-                             handleFunc={handleCheckBoxChange}>
+                             setSelectedCategories={setSelectedGenres}>
             </DropdownFilters>
             <DropdownFilters title={"Тематика"}
                              categories={themes}
                              selectedCategories={selectedThemes}
-                             setSelectedCategories={setSelectedThemes}
-                             handleFunc={handleCheckBoxChange}>
+                             setSelectedCategories={setSelectedThemes}>
             </DropdownFilters>
             <div className={styles.filters_price}>
                 <div className={styles.filters_subtitle}>
@@ -169,26 +163,22 @@ export  const CatalogFilters = () => {
             <DropdownFilters title={"Вік"}
                              categories={age}
                              selectedCategories={selectedAges}
-                             setSelectedCategories={setSelectedAges}
-                             handleFunc={handleCheckBoxChange}>
+                             setSelectedCategories={setSelectedAges}>
             </DropdownFilters>
             <DropdownFilters title={"Кількість гравців"}
                              categories={players}
                              selectedCategories={selectedPlayersAmount}
-                             setSelectedCategories={setSelectedPlayersAmount}
-                             handleFunc={handleCheckBoxChange}>
+                             setSelectedCategories={setSelectedPlayersAmount}>
             </DropdownFilters>
             <DropdownFilters title={"Час гри"}
                              categories={timeGame}
                              selectedCategories={selectedGameTimes}
-                             setSelectedCategories={setSelectedGameTimes}
-                             handleFunc={handleCheckBoxChange}>
+                             setSelectedCategories={setSelectedGameTimes}>
             </DropdownFilters>
             <DropdownFilters title={"Мова"}
                              categories={languages}
                              selectedCategories={selectedLanguages}
-                             setSelectedCategories={setSelectedLanguages}
-                             handleFunc={handleCheckBoxChange}>
+                             setSelectedCategories={setSelectedLanguages}>
             </DropdownFilters>
             <div className={styles.filters_buttons}>
                 <button className={styles.button_apply} type="submit" onClick={getSelectedFilters}>Застосувати</button>
