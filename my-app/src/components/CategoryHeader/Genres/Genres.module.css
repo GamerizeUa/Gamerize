@@ -53,6 +53,10 @@
     background-color: #EEF1FF;
 }
 
+.genresListLink{
+    color: #000000;
+}
+
 .genresIcon{
     position: absolute;
     top: 50%;
