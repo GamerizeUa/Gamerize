@@ -6,7 +6,7 @@
     min-height: 77px;
     padding: 24px 0;
 }
-.userAvatar {
+.user_avatar {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,7 +23,7 @@
     flex-direction: column;
     row-gap: 8px;
 }
-.nameDateContainer {
+.name_date_container {
     display: flex;
     align-items: center;
     column-gap: 12px;
@@ -38,7 +38,7 @@
     font-style: normal;
     font-weight: 400;
 }
-.starsContainer {
+.stars_container {
     margin-bottom: 6px;
     width: 74px;
     height: 10px;

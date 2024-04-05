@@ -11,7 +11,7 @@
 .chevron {
     cursor: pointer;
 }
-.chevron svg{
+.chevron svg {
     width: 20px;
     height: 20px;
 }
@@ -30,18 +30,18 @@
 .no_btn {
     display: none;
 }
-.not_checked_btn{
+.not_checked_btn {
     font-size: 13px;
     font-style: normal;
     font-weight: 500;
     cursor: pointer;
 }
-@media screen and (min-width:1280px) {
+@media screen and (min-width: 1280px) {
     .container {
         width: 182px;
         height: 50px;
     }
-    .chevron svg{
+    .chevron svg {
         width: 24px;
         height: 24px;
     }
@@ -50,7 +50,7 @@
         height: 50px;
         font-size: 24px;
     }
-    .not_checked_btn{
+    .not_checked_btn {
         font-size: 16px;
     }
 }
