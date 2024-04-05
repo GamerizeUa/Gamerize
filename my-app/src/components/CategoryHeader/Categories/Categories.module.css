@@ -46,6 +46,10 @@
     background-color: #EEF1FF;
 }
 
+.categoryListLink {
+    color: #000000;
+}
+
 .categoryIcon {
     position: absolute;
     top: 50%;
