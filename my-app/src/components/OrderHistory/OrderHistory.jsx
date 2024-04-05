@@ -199,8 +199,8 @@ const OrderHistory = () => {
           )}
         </button>
         <p className={styles.ordersAmount}>
-          {orders.length}{" "}
-          {orders.length % 10 >= 1 && orders.length % 10 <= 4
+          {visibleOrder.length}{" "}
+          {visibleOrder.length % 10 >= 1 && visibleOrder.length % 10 <= 4
             ? "замовлення"
             : "замовлень"}
         </p>
