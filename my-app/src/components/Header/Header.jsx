@@ -56,7 +56,11 @@ const Header = ({ openCart, openBurgerMenu }) => {
                   className={styles.telLink}
                 >
                   <svg width={32} height={32}>
-                    <use href={sprite + "#icon-phone"} />
+                    <use
+                      href={sprite + "#icon-phone"}
+                      stroke="currentColor"
+                      fill="#AAC4FF"
+                    />
                   </svg>
                   <p>+380 98 7067 447</p>
                 </a>

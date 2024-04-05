@@ -50,7 +50,11 @@ const Footer = () => {
                 className={styles.telLink + " " + styles.footerListLink}
               >
                 <svg width={24} height={24}>
-                  <use href={sprite + "#icon-phone"} />
+                  <use
+                    href={sprite + "#icon-phone"}
+                    stroke="currentColor"
+                    fill="#AAC4FF"
+                  />
                 </svg>
                 <p>+380 98 7067 447</p>
               </a>
