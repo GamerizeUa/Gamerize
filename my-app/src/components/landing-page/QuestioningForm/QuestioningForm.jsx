@@ -38,7 +38,7 @@ export const QuestioningForm = () => {
     }
 
     const onSubmit = (data) => {
-        Axios.post('https://gamerize.ltd.ua/api/Product/Questions', data)
+        Axios.post('https://gamerize.ltd.ua/Questions', data)
             .then(changeVisibility)
             .catch((err) => console.log(err))
 
