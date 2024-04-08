@@ -19,7 +19,8 @@ export const QuestioningForm = () => {
 
     const schema = yup.object().shape({
         userName: yup.string().required("Введіть ім'я"),
-        email: yup.string().email("Введіть коректну е-пошту").required("Введіть е-пошту"),
+        email: yup.string().required("Введіть е-пошту")
+            .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/i, "Введіть коректну е-пошту"),
         text: yup.string().required("Введіть запитання")
     });
 
@@ -72,7 +73,7 @@ export const QuestioningForm = () => {
                                 ? styles.input_errorBorder : ''} ${isFocusedEmail ? styles.focusedInput : ''}`}>
                                 <FontAwesomeIcon icon={faEnvelope} className={styles.input_icon}/>
                                 <input
-                                    type="email"
+                                    type="text"
                                     placeholder="Е-пошта"
                                     className={styles.input_field}
                                     onFocus={() => handleFocus(setFocusedEmail, setFocusedName, setFocusedDescription)}
