@@ -71,7 +71,6 @@
 
 .cartProductTitle{
     font-size: 14px;
-    line-height: 150%;
 }
 @media (min-width: 744px) {
     .cartProductTitle {
@@ -81,13 +80,11 @@
 
 .cartProductDescription{
     font-size: 12px;
-    line-height: 150%;
     color: #8E8E8E;
 }
 
 .cartProductArticle{
     font-size: 12px;
-    line-height: 150%;
     color: #8E8E8E;
 }
 

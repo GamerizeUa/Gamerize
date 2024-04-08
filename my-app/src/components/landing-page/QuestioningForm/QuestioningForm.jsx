@@ -19,7 +19,8 @@ export const QuestioningForm = () => {
 
     const schema = yup.object().shape({
         userName: yup.string().required("Введіть ім'я"),
-        email: yup.string().email("Введіть коректну е-пошту").required("Введіть е-пошту"),
+        email: yup.string().required("Введіть е-пошту")
+            .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/i, "Введіть коректну е-пошту"),
         text: yup.string().required("Введіть запитання")
     });
 
@@ -38,7 +39,7 @@ export const QuestioningForm = () => {
     }
 
     const onSubmit = (data) => {
-        Axios.post('https://gamerize.ltd.ua/api/Product/1/Questions', data)
+        Axios.post('https://gamerize.ltd.ua/Questions', data)
             .then(changeVisibility)
             .catch((err) => console.log(err))
 
@@ -57,7 +58,8 @@ export const QuestioningForm = () => {
                             <p className={styles.feedback_title}>Виникли запитання?</p>
                         </div>
                         <form className={styles.feedback_form} ref={formRef}  onSubmit={handleSubmit(onSubmit)}>
-                            <div className={`${styles.input_container} ${errors.userName?.message ? styles.input_errorBorder : ''} ${isFocusedName ? styles.focusedInput : ''} `}>
+                            <div className={`${styles.input_container} ${errors.userName?.message 
+                                ? styles.input_errorBorder : ''} ${isFocusedName ? styles.focusedInput : ''} `}>
                                 <FontAwesomeIcon icon={faUser} className={styles.input_icon}/>
                                 <input
                                     type="text"
@@ -67,10 +69,11 @@ export const QuestioningForm = () => {
                                     {...register("userName")} />
                                 <p className={styles.input_error}>{errors.userName?.message}</p>
                             </div>
-                            <div className={`${styles.input_container} ${errors.email?.message ? styles.input_errorBorder : ''} ${isFocusedEmail ? styles.focusedInput : ''}`}>
+                            <div className={`${styles.input_container} ${errors.email?.message 
+                                ? styles.input_errorBorder : ''} ${isFocusedEmail ? styles.focusedInput : ''}`}>
                                 <FontAwesomeIcon icon={faEnvelope} className={styles.input_icon}/>
                                 <input
-                                    type="email"
+                                    type="text"
                                     placeholder="Е-пошта"
                                     className={styles.input_field}
                                     onFocus={() => handleFocus(setFocusedEmail, setFocusedName, setFocusedDescription)}
@@ -80,10 +83,13 @@ export const QuestioningForm = () => {
                             <div className={styles.input_textareaContainer}>
                         <textarea
                             placeholder="Напишіть чим ми можемо вам допомогти..."
-                            className={`${styles.input_textarea} ${errors.text?.message ? styles.input_errorBorder : ''}`}
+                            className={`${styles.input_textarea} ${errors.text?.message
+                                ? styles.input_errorBorder : ''}`}
                             onFocus={() => handleFocus(setFocusedDescription, setFocusedName, setFocusedEmail)}
                             {...register("text")} />
-                                <p className={`${styles.input_error} ${styles.inputTextarea_input}`}>{errors.text?.message}</p>
+                                <p className={`${styles.input_error} ${styles.inputTextarea_input}`}>
+                                    {errors.text?.message}
+                                </p>
                             </div>
                             <Button buttonText="Надіслати запитання"/>
                         </form>

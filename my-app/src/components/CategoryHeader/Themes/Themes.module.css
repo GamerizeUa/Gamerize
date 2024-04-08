@@ -46,6 +46,10 @@
     background-color: #EEF1FF;
 }
 
+.themesListLink{
+    color: #000000;
+}
+
 .themesIcon{
     position: absolute;
     top: 50%;

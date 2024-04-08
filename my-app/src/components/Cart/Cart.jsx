@@ -1,6 +1,7 @@
 import CrossIcon from "../icons/CrossIcon";
 import sprite from "../../assets/icons/sprite.svg";
 import styles from "./Cart.module.css";
+import { Link } from "react-router-dom";
 
 const Cart = ({ cartClose }) => {
   const handleOverlayClick = (event) => {
@@ -87,9 +88,9 @@ const Cart = ({ cartClose }) => {
           </div>
         </div>
         <div className={styles.cartBtnWrapper}>
-          <button className={styles.cartBtn} type="submit">
-            Замовити
-          </button>
+          <Link to="/checkout" onClick={() => cartClose()}>
+            <button className={styles.cartBtn}>Замовити</button>
+          </Link>
         </div>
       </div>
     </div>

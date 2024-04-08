@@ -5,13 +5,13 @@ import {arrayProducts} from "./test.js";
 import {CatalogSorting} from "../../components/Catalog/CatalogSorting/CatalogSorting.jsx";
 import PaginationButtons from "../../components/common-components/PaginationButtons/PaginationButtons.jsx";
 import {Breadcrumbs} from "../../components/ProductOverview/Breadcrumbs/Breadcrumbs.jsx";
-import {setProductsCatalog} from "../../redux/productsCatalog.js";
+import {setProductsCatalog} from "../../redux/productsCatalogSlice.js";
 import {useDispatch, useSelector} from "react-redux";
 import ProductCardList from "../../components/common-components/ProductCardList/ProductCardList.jsx";
 
 const Catalog = () => {
   let [productsOffset, setProductsOffset] = useState(0);
-  const productList = useSelector((state) => state.productsCatalog.value);
+  const productList = useSelector((state) => state.productsCatalog.products);
   const dispatch = useDispatch();
   const [productsLimitOnPage, setProductsLimitOnPage] = useState(12);
   const [chosenDisplaying, setChosenDisplaying] = useState({displayingThree: true, displayingFour: false});
