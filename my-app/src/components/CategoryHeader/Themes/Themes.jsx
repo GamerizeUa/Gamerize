@@ -10,7 +10,7 @@ const Themes = ({ themes }) => {
           <li key={theme.id} className={styles.themesListItem}>
             <Link
               to="/catalog"
-              state={{ theme: theme.name }}
+              state={{ themes: theme.name }}
               className={styles.themesListLink}
             >
               <div className={styles.themesIcon}>
