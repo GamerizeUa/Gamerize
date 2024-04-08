@@ -44,6 +44,10 @@
     background-color: #EEF1FF;
 }
 
+.puzzlesListLink {
+    color: #000000;
+}
+
 .puzzlesIcon {
     position: absolute;
     top: 50%;

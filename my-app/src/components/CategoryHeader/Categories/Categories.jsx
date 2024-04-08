@@ -10,7 +10,7 @@ const Categories = ({ categories }) => {
           <li key={category.id} className={styles.categoryListItem}>
             <Link
               to="/catalog"
-              state={{ category: category.name }}
+              state={{ categories: category.name }}
               className={styles.categoryListLink}
             >
               <div className={styles.categoryIcon}>

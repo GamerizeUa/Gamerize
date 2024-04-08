@@ -9,7 +9,7 @@ const Genres = ({ genres }) => {
           <li key={genre.id} className={styles.genresListItem}>
             <Link
               to="/catalog"
-              state={{ genre: genre.name }}
+              state={{ genres: genre.name }}
               className={styles.genresListLink}
             >
               <div className={styles.genresIcon}>
