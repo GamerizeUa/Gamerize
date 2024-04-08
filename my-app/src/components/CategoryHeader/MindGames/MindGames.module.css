@@ -1,4 +1,4 @@
-.brainTeasersList {
+.mindGamesList {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
@@ -15,7 +15,7 @@
     box-shadow: rgba(170, 196, 255, 0.4) 0px 6px 20px;
 }
 
-.brainTeasersList::after {
+.mindGamesList::after {
     display: block;
     content: "";
     position: absolute;
@@ -27,7 +27,7 @@
     border-bottom: 10px solid #fff;
 }
 
-.brainTeasersListItem {
+.mindGamesListItem {
     position: relative;
     padding: 9px 8px 9px 49px;
     border-radius: 10px;
@@ -39,12 +39,16 @@
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.brainTeasersListItem:hover,
-.brainTeasersListItem:focus {
+.mindGamesListItem:hover,
+.mindGamesListItem:focus {
     background-color: #EEF1FF;
 }
 
-.brainTeasersIcon {
+.mindGamesListLink{
+        color: #000000;
+}
+
+.mindGamesIcon {
     position: absolute;
     top: 50%;
     left: 0;
