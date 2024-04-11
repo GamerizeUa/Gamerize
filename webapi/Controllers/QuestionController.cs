@@ -1,5 +1,7 @@
 ﻿using Gamerize.BLL.Models;
+using Gamerize.BLL.Models.Interfaces;
 using Gamerize.BLL.Services;
+using Gamerize.BLL.Services.Interfaces;
 using Gamerize.Common.Extensions.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,15 +16,24 @@ namespace webapi.Controllers
             _questionService = questionService;
         }
 
-        [HttpPost("Questions")]
-        public async Task<ActionResult<QuestionDTO>> PostQuestionForProduct([FromBody] QuestionCreateDTO questionDTO)
+        [HttpGet("/api/Question/GetAll")]
+        public async Task<ActionResult<ICollection<QuestionDTO>>> GetAllAsync()
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
             try
             {
-                return Ok(await _questionService.AddQuestionAsync(questionDTO));
+                return Ok(await _questionService.GetAllAsync());
+            }
+            catch (ServerErrorException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpGet("/api/Question/GetById/{id:int}")]
+        public async Task<ActionResult<QuestionDTO>> GetByIdAsync(int id)
+        {
+            try
+            {
+                return Ok(await _questionService.GetByIdAsync(id));
             }
             catch (InvalidIdException ex)
             {
@@ -33,14 +44,16 @@ namespace webapi.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        [HttpPut("Question/{id:int}")]
-        public async Task<ActionResult<QuestionDTO>> EditQuestionAsync(int id, [FromBody] QuestionCreateDTO questionDTO)
+
+        [HttpPost("Questions")]
+        public async Task<ActionResult<QuestionDTO>> PostQuestionForProduct([FromBody] QuestionCreateDTO questionDTO)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
             try
             {
-                return Ok(await _questionService.EditQuestionAsync(id, questionDTO));
+                return Ok(await _questionService.AddQuestionAsync(questionDTO));
             }
             catch (InvalidIdException ex)
             {

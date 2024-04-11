@@ -81,6 +81,32 @@ namespace Gamerize.BLL.Services
                 throw new ServerErrorException(ex.Message, ex);
             }
         }
+
+        public async Task<ICollection<QuestionDTO>> GetAllAsync()
+        {
+            try
+            {
+                return _mapper.Map<ICollection<QuestionDTO>>(await _questionRepository.GetAllAsync());
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new ServerErrorException(ex.Message, ex);
+            }
+        }
+
+        public async Task<QuestionDTO> GetByIdAsync(int id)
+        {
+            try
+            {
+                return _mapper.Map<QuestionDTO>(await _questionRepository.GetByIdAsync(id)) ??
+                    throw new InvalidIdException(ExceptionMessage(id));
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new ServerErrorException(ex.Message, ex);
+            }
+        }
+
         #endregion
         #region Answer's methods
         public async Task<AnswerDTO> GetAnswerForQuestionAsync(int questionId) =>
@@ -158,5 +184,13 @@ namespace Gamerize.BLL.Services
             }
         }
         #endregion
+
+        private string ExceptionMessage(object? value = null) =>
+            value switch
+            {
+                int idt when value is int => $"Puzzle з id: {idt} ще/вже не існує!",
+                string namet when value is string => $"Puzzle з назваю {namet} вже існує",
+                _ => "Something has gone wrong"
+            };
     }
 }
