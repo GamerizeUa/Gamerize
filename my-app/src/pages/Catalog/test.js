@@ -12,6 +12,7 @@ export const arrayProducts = () => {
             gameTimeMinutes: "70-90",
             category: 'Для Компанії',
             playersAmount: 2,
+            genre: 'string',
             photo:
                 "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
         },

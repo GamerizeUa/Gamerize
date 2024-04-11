@@ -1,12 +1,11 @@
 import styles from "./CatalogFilters.module.css";
-import CheckIcon from "../../icons/CheckIcon.jsx";
 import {filterProducts} from './filters.js';
 import React, {useEffect, useState} from "react";
 import {arrayProducts} from '../../../pages/Catalog/test.js';
 import {setProductsCatalog} from "../../../redux/productsCatalogSlice.js";
 import {useDispatch, useSelector} from "react-redux";
 import {DropdownFilters} from "./DropdownFilters.jsx";
-import {selectCategories, selectGenres, selectThemes} from "../../../redux/selectors.js";
+import {selectCategories, selectGenres, selectThemes, selectPuzzles, selectMindGames} from "../../../redux/selectors.js";
 import {useLocation} from "react-router-dom";
 
 export  const CatalogFilters = () => {
@@ -17,6 +16,8 @@ export  const CatalogFilters = () => {
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [selectedThemes, setSelectedThemes] = useState([]);
+    const [selectedPuzzles, setSelectedPuzzles] = useState([]);
+    const [selectedMindGames, setSelectedMindGames] = useState([]);
     const [priceRange, setPriceRange] = useState({ min: '', max: '' });
     const [selectedAges, setSelectedAges] = useState([]);
     const [selectedPlayersAmount, setSelectedPlayersAmount] = useState([]);
@@ -27,6 +28,8 @@ export  const CatalogFilters = () => {
     const categories = useSelector(selectCategories);
     const genres = useSelector(selectGenres);
     const themes = useSelector(selectThemes);
+    const puzzles = useSelector(selectPuzzles);
+    const mindGames = useSelector(selectMindGames);
     const location = useLocation();
 
 
@@ -69,6 +72,10 @@ export  const CatalogFilters = () => {
                 return setSelectedGenres;
             case 'themes':
                 return setSelectedThemes;
+            case 'puzzles' :
+                return setSelectedPuzzles;
+            case 'mindGames':
+                return setSelectedMindGames;
             case 'ages':
                 return setSelectedAges;
             case 'gameTimes':
@@ -85,6 +92,8 @@ export  const CatalogFilters = () => {
             categories: selectedCategories,
             genres: selectedGenres,
             themes: selectedThemes,
+            puzzles: selectedPuzzles,
+            mindGames: selectedMindGames,
             price: priceRange,
             ages: selectedAges,
             playersAmount: selectedPlayersAmount,
@@ -100,6 +109,8 @@ export  const CatalogFilters = () => {
         setSelectedCategories([]);
         setSelectedGenres([]);
         setSelectedThemes([]);
+        setSelectedPuzzles([]);
+        setSelectedMindGames([]);
         setPriceRange({min: '', max: ''})
         setSelectedAges([]);
         setSelectedPlayersAmount([]);
@@ -133,6 +144,16 @@ export  const CatalogFilters = () => {
                              categories={themes}
                              selectedCategories={selectedThemes}
                              setSelectedCategories={setSelectedThemes}>
+            </DropdownFilters>
+            <DropdownFilters title={"Пазли"}
+                             categories={puzzles}
+                             selectedCategories={selectedPuzzles}
+                             setSelectedCategories={setSelectedPuzzles}>
+            </DropdownFilters>
+            <DropdownFilters title={"Головоломки"}
+                             categories={mindGames}
+                             selectedCategories={selectedMindGames}
+                             setSelectedCategories={setSelectedMindGames}>
             </DropdownFilters>
             <div className={styles.filters_price}>
                 <div className={styles.filters_subtitle}>

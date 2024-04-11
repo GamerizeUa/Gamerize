@@ -6,6 +6,18 @@ export const filterProducts = (products, filters) => {
             }
         }
 
+        if (filters.genres && filters.genres.length > 0) {
+            if (!filters.genres.includes(product.genre)) {
+                return false;
+            }
+        }
+
+        if (filters.themes && filters.themes.length > 0) {
+            if (!filters.themes.includes(product.theme)) {
+                return false;
+            }
+        }
+
         if (filters.price) {
             const productPrice = product.price;
             const minPrice = filters.price.min ? parseInt(filters.price.min, 10) : Number.MIN_SAFE_INTEGER;
