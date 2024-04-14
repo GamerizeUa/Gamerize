@@ -1,4 +1,8 @@
 .categoryList {
+
+}
+@media (min-width: 1280px) {
+  .categoryList {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr 1fr;
@@ -12,48 +16,47 @@
     border-radius: 10px;
     z-index: 10;
     background-color: #fff;
-    box-shadow: rgba(170,
-        196,
-        255, 0.4) 0px 6px 20px;
+    box-shadow: rgba(170, 196, 255, 0.4) 0px 6px 20px;
+  }
 }
 
 .categoryList::after {
-    display: block;
-    content: "";
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    right: 50%;
-    border: 6px solid transparent;
-    top: -15px;
-    border-bottom: 10px solid #fff;
+  display: block;
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  right: 50%;
+  border: 6px solid transparent;
+  top: -15px;
+  border-bottom: 10px solid #fff;
 }
 
-.categoryListItem{
-    position: relative;
-    padding: 9px 8px 9px 45px;
-    border-radius: 10px;
-    font-size: 16px;
-    white-space: nowrap;
+.categoryListItem {
+  position: relative;
+  padding: 9px 8px 9px 45px;
+  border-radius: 10px;
+  font-size: 16px;
+  white-space: nowrap;
 
-    transition-property: background-color;
-    transition-duration: 250ms;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: background-color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .categoryListItem:hover,
 .categoryListItem:focus {
-    background-color: #EEF1FF;
+  background-color: #eef1ff;
 }
 
 .categoryListLink {
-    color: #000000;
+  color: #000000;
 }
 
 .categoryIcon {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    padding-left: 5px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  padding-left: 5px;
 }
