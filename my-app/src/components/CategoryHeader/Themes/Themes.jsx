@@ -16,7 +16,12 @@ const Themes = ({ themes }) => {
               <div className={styles.themesIcon}>
                 <svg width="24" height="24">
                   <use
-                    href={sprite + `#icon-${theme.description}`}
+                    href={
+                      theme.description &&
+                      sprite.includes(`icon-${theme.description}`)
+                        ? sprite + `#icon-${theme.description}`
+                        : sprite + `#icon-historical`
+                    }
                     fill="#EEF1FF"
                   ></use>
                 </svg>

@@ -16,7 +16,12 @@ const Puzzles = ({ puzzles }) => {
               <div className={styles.puzzlesIcon}>
                 <svg width="24" height="24">
                   <use
-                    href={sprite + `#icon-${puzzle.description}`}
+                    href={
+                      puzzle.description &&
+                      sprite.includes(`icon-${puzzle.description}`)
+                        ? sprite + `#icon-${puzzle.description}`
+                        : sprite + `#icon-puzzle`
+                    }
                     fill="#EEF1FF"
                   ></use>
                 </svg>
