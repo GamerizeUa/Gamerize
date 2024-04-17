@@ -1,8 +1,8 @@
 import { useState } from "react";
-import styles from "./OrderHistory.module.css";
 import OrderItem from "./OrderItem/OrderItem";
 import mainProductPhoto from "../../assets/images/mainProductPhoto.png";
 import sprite from "../../assets/icons/sprite.svg";
+import styles from "./OrderHistory.module.css";
 
 const orders = [
   {

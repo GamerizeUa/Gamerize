@@ -35,25 +35,14 @@ const CategoryHeader = () => {
   };
 
   const handleMouseEnter = (setter) => {
-    if (windowWidth >= 1280) {
-      timeoutRef.current = setTimeout(() => {
-        setter(true);
-      }, 300);
-    }
+    timeoutRef.current = setTimeout(() => {
+      setter(true);
+    }, 300);
   };
 
   const handleMouseLeave = (setter) => {
-    if (windowWidth >= 1280) {
-      clearTimeout(timeoutRef.current);
-      setter(false);
-    }
-  };
-
-  const toggleClick = (setter) => {
-    if (windowWidth < 1280) {
-      console.log("click");
-      setter((prevState) => !prevState);
-    }
+    clearTimeout(timeoutRef.current);
+    setter(false);
   };
 
   useEffect(() => {
@@ -87,7 +76,6 @@ const CategoryHeader = () => {
               className={styles.categoryListItem}
               onMouseEnter={() => handleMouseEnter(setIsCategory)}
               onMouseLeave={() => handleMouseLeave(setIsCategory)}
-              onClick={() => toggleClick(setIsCategory)}
             >
               Настільні ігри
               {isCategory && <Categories categories={categories} />}

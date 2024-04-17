@@ -1,117 +1,185 @@
-.pageWrapper{
-    padding: 48px 80px 120px 80px;
+.pageWrapper {
+  padding: 24px 16px 48px 16px;
 }
 
-.title{
+@media (min-width: 744px) {
+  .pageWrapper {
+    padding: 32px 32px 131px 32px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .pageWrapper {
+    padding: 48px 80px 120px 80px;
+  }
+}
+
+.title {
+  min-width: 289px;
+  padding: 34px 16px;
+  margin-bottom: 30px;
+  font-family: "Oswald";
+  font-size: 28px;
+  font-weight: 400;
+  background-color: #eef1ff;
+}
+
+@media (min-width: 744px) {
+  .title {
+    padding: 45px 46px;
+    margin-bottom: 64px;
+    font-size: 36px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .title {
+    padding: 56px 95px;
+    margin-bottom: 59px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .title {
     width: 1280px;
     padding: 56px 108px;
-    margin-bottom: 59px;
-    font-family: 'Oswald';
-    font-size: 36px;
-    font-weight: 400;
-    background-color: #EEF1FF;
+  }
 }
 
-.orderWrapper{
-    position: relative;
+.orderWrapper {
+  position: relative;
 }
 
-.selectingBtn{
-    display: flex;
-    align-items: center;
-    gap: 16px;
+.selectingBtn {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-bottom: 13px;
+  background-color: transparent;
+}
+
+@media (min-width: 744px) {
+  .selectingBtn {
+    gap: 12px;
     margin-bottom: 20px;
-    background-color: transparent;
+  }
 }
 
-.selectingBtnText{
+@media (min-width: 1280px) {
+  .selectingBtn {
+    gap: 16px;
+  }
+}
+
+.selectingBtnText {
+  font-size: 18px;
+  font-weight: 500;
+}
+@media (min-width: 744px) {
+  .selectingBtnText {
     font-size: 24px;
-    font-weight: 500;
+  }
 }
 
-.ordersAmount{
+.ordersAmount {
+  margin-bottom: 40px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #8e8e8e;
+}
+@media (min-width: 744px) {
+  .ordersAmount {
     margin-bottom: 56px;
     font-size: 16px;
-    font-weight: 500;
-    color: #8E8E8E;
+  }
 }
 
-.orderList{
-    display: flex;
-    flex-direction: column;
+.orderList {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+@media (min-width: 744px) {
+  .orderList {
+    font-size: 32px;
+  }
+}
+@media (min-width: 1280px) {
+  .orderList {
     gap: 48px;
+  }
 }
 
-.selectorWrapper{
-    position: absolute;
-    top: 40px;
-    width: 204px;
-    height: 130px;
-    background-color: #FEFEFE;
-    padding: 20px 16px;
-    border-radius: 4px;
+.selectorWrapper {
+  position: absolute;
+  top: 40px;
+  width: 204px;
+  height: 130px;
+  background-color: #fefefe;
+  padding: 20px 16px;
+  border-radius: 4px;
 }
 .selectorWrapper::after {
-    display: block;
-    content: "";
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    right: 50%;
-    border: 6px solid transparent;
-    top: -15px;
-    border-bottom: 10px solid #FEFEFE;
+  display: block;
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  right: 50%;
+  border: 6px solid transparent;
+  top: -15px;
+  border-bottom: 10px solid #fefefe;
 }
 
-.selectorContent{
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+.selectorContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.selectorItem{
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.selectorItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.inputWrapper{
-    position: relative;
+.inputWrapper {
+  position: relative;
 }
 
-.fakeInput{
-    position: absolute;
-    display: block;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 1px solid #DEE0E3;
-    background-color: #fff;
-    pointer-events: none;
+.fakeInput {
+  position: absolute;
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid #dee0e3;
+  background-color: #fff;
+  pointer-events: none;
 }
 
 .selectorInput {
-    width: 20px;
-    height: 20px;
+  width: 20px;
+  height: 20px;
 }
 
 .selectorInput:checked::before {
-    content: "";
-    display: block;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #AAC4FF;
-    position: absolute;
-    top: 5px;
-    left: 5px;
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #aac4ff;
+  position: absolute;
+  top: 5px;
+  left: 5px;
 }
 
-.selectorLabel{
-    display: flex;
-    gap: 8px;   
-    font-family: "Inter";
-    font-size: 16px;
-    font-weight: 500;
-    letter-spacing: -0.368px;
+.selectorLabel {
+  display: flex;
+  gap: 8px;
+  font-family: "Inter";
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.368px;
 }

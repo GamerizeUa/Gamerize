@@ -10,7 +10,7 @@ const Puzzles = ({ puzzles }) => {
           <li key={puzzle.id} className={styles.puzzlesListItem}>
             <Link
               to="/catalog"
-              state={{ categories: puzzle.name }}
+              state={{ puzzles: puzzle.name }}
               className={styles.puzzlesListLink}
             >
               <div className={styles.puzzlesIcon}>
