@@ -1,6 +1,8 @@
+import { useEffect, useState } from "react";
 import styles from "./OrderItem.module.css";
 
 const OrderItem = ({ order: { status, deliveryDate, orderedItems } }) => {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const orderSum = orderedItems?.reduce((total, order) => {
     return total + order.price;
   }, 0);
@@ -23,8 +25,25 @@ const OrderItem = ({ order: { status, deliveryDate, orderedItems } }) => {
     } else return styles.defaultStatus;
   };
 
+  const handleChangedSize = () => {
+    setWindowWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleChangedSize);
+    return () => {
+      window.removeEventListener("resize", handleChangedSize);
+    };
+  }, []);
+
   return (
     <li className={styles.orderItem}>
+      {windowWidth < 744 && (
+        <div className={styles.orderSum}>
+          <p>Сума замовлення:</p>
+          <p>{orderSum} ₴</p>
+        </div>
+      )}
       <div className={`${styles.statusMark} ${getStatusClass()}`} />
       <div className={styles.orderStatus}>
         <div className={`${styles.statusDot} ${getStatusClass()}`} />
@@ -34,7 +53,7 @@ const OrderItem = ({ order: { status, deliveryDate, orderedItems } }) => {
         <ul className={styles.productList}>
           {orderedItems?.map(({ id, photo, name, price, article }) => (
             <li key={id} className={styles.productListItem}>
-              <img src={photo} width={135} height={135} />
+              <img src={photo} className={styles.productListImg} />
               <div className={styles.productDescription}>
                 <p className={styles.productName}>{name}</p>
                 <p className={styles.productPrice}>Ціна: {price} ₴</p>
@@ -44,10 +63,12 @@ const OrderItem = ({ order: { status, deliveryDate, orderedItems } }) => {
           ))}
         </ul>
         <div className={styles.orderDetailsWrapper}>
-          <div className={styles.orderSum}>
-            <p>Сума замовлення:</p>
-            <p>{orderSum} ₴</p>
-          </div>
+          {windowWidth >= 744 && (
+            <div className={styles.orderSum}>
+              <p>Сума замовлення:</p>
+              <p>{orderSum} ₴</p>
+            </div>
+          )}
           <button className={styles.orderDetailsBtn}>Деталі замовлення</button>
         </div>
       </div>
