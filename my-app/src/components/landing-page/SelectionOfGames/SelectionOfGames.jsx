@@ -11,44 +11,44 @@ export const SelectionOfGames = () => {
       <div className={styles.gamesSelection_outerContainer + " container"}>
         <p className={styles.gamesSelection_title}>Підбірки ігор</p>
         <div className={styles.gamesSelection_container}>
-          <Link className={styles.gamesSelection_choice} to="/catalog" state={{ categories: 'Для Компанії', playersAmount: ['4 - 6', 2, null]}}>
+          <Link className={styles.gamesSelection_choice} to="/catalog" state={{ categories: 'Для компанії'}}>
             <img
               src={imageCompanyGame}
               className={styles.gamesSelection_image}
               alt="People"
             />
             <p className={styles.gamesSelection_category}>
-              ТОП 10 ігор для компанії
+              ТОП ігор для компанії
             </p>
           </Link>
-          <Link className={styles.gamesSelection_choice} to="/catalog" state={{ categories: "Для Пар"}}>
+          <Link className={styles.gamesSelection_choice} to="/catalog" state={{ categories: "Для сім’ї"}}>
             <img
               src={imageCoupleGame}
               className={styles.gamesSelection_image}
               alt="People"
             />
             <p className={styles.gamesSelection_category}>
-              ТОП 10 ігор для пар
+              ТОП ігор для сім'ї
             </p>
           </Link>
-          <Link className={styles.gamesSelection_choice} to="/catalog" state={{ categories: "Для Дітей"}}>
+          <Link className={styles.gamesSelection_choice} to="/catalog" state={{ categories: "Для дітей"}}>
             <img
               src={imageKidsGame}
               className={styles.gamesSelection_image}
               alt="People"
             />
             <p className={styles.gamesSelection_category}>
-              ТОП 10 ігор для дітей
+              ТОП ігор для дітей
             </p>
           </Link>
-          <Link className={styles.gamesSelection_choice} to="/catalog" state={{ category: "Для Двох"}}>
+          <Link className={styles.gamesSelection_choice} to="/catalog" state={{ categories: "Для двох"}}>
             <img
               src={imageTwoGame}
               className={styles.gamesSelection_image}
               alt="People"
             />
             <p className={styles.gamesSelection_category}>
-              ТОП 10 ігор для двох
+              ТОП ігор для двох
             </p>
           </Link>
         </div>
