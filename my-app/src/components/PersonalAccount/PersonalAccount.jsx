@@ -13,10 +13,12 @@ export const PersonalAccount = () => {
         name: yup.string().required("Введіть ім'я та прізвище"),
         phoneNumber: yup.string().required("Введіть номер телефону")
             .matches(/^\+380\d{9}$/, 'Номер телефону повинен починатись з +380 та мати 12 чисел у сумі'),
-        email: yup.string().email("Введіть коректну е-пошту").required("Введіть е-пошту"),
+        email: yup.string().required("Введіть е-пошту")
+            .matches(/^[a-zA-Z0-9._-]+@[a-zA-Z]+\.[a-zA-Z]+$/i, "Введіть коректну е-пошту"),
         city: yup.string().required("Введіть місто"),
         address: yup.string().required("Введіть адресу")
-            .matches(/(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]/, 'Адреса повинна мати назву вулиці та номер будинку')
+            .matches(/(?=.*[A-Za-zА-Яа-я])(?=.*\d)[A-Za-zА-Яа-я\d]/,
+                'Адреса повинна мати назву вулиці та номер будинку')
     });
 
     const {register, handleSubmit, formState: {errors}, reset} = useForm({
