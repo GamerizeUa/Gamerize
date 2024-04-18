@@ -20,17 +20,19 @@ namespace webapi.Controllers
         }
 
         [HttpGet("GetSimpleList")]
-        public async Task<ActionResult<ICollection<ProductShortDTO>>> GetSimpleList()
+        public async Task<ActionResult<IEnumerable<ProductShortDTO>>> GetSimpleList(int page = 1, int pageSize = 12)
         {
             try
             {
-                return Ok(await _productService.GetSimpleListAsync());
+                var products = await _productService.GetSimpleListAsync(page, pageSize);
+                return Ok(products);
             }
             catch (ServerErrorException ex)
             {
                 return StatusCode(500, ex.Message);
             }
         }
+
         [HttpGet("GetById/{id:int}")]
         public async Task<ActionResult<ProductFullDTO>> GetById(int id)
         {
@@ -87,6 +89,5 @@ namespace webapi.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        
     }
 }

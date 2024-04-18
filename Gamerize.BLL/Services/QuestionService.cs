@@ -82,11 +82,18 @@ namespace Gamerize.BLL.Services
             }
         }
 
-        public async Task<ICollection<QuestionDTO>> GetAllAsync()
+        public async Task<IEnumerable<QuestionDTO>> GetSimpleListAsync(int page, int pageSize)
         {
             try
             {
-                return _mapper.Map<ICollection<QuestionDTO>>(await _questionRepository.GetAllAsync());
+                var question = (await _questionRepository.Pagination(p => p.Id)).Include(q => q.Answer);
+                var questionPage = await question.Skip((page - 1) * pageSize)
+                                                         .Take(pageSize)
+                                                         .ToListAsync();
+
+                var questionDTO = _mapper.Map<List<QuestionDTO>>(questionPage);
+
+                return questionDTO;
             }
             catch (DbUpdateException ex)
             {
@@ -98,7 +105,8 @@ namespace Gamerize.BLL.Services
         {
             try
             {
-                return _mapper.Map<QuestionDTO>(await _questionRepository.GetByIdAsync(id)) ??
+                var question = await _questionRepository.GetQuestionWithAnswerByIdAsync(id);
+                return _mapper.Map<QuestionDTO>(question) ??
                     throw new InvalidIdException(ExceptionMessage(id));
             }
             catch (DbUpdateException ex)
@@ -106,6 +114,8 @@ namespace Gamerize.BLL.Services
                 throw new ServerErrorException(ex.Message, ex);
             }
         }
+
+
 
         #endregion
         #region Answer's methods

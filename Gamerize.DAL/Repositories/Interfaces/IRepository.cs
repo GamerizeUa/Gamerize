@@ -1,4 +1,5 @@
-﻿using Gamerize.DAL.Specifications;
+﻿using Gamerize.DAL.Entities.Shop;
+using Gamerize.DAL.Specifications;
 using System.Linq.Expressions;
 
 namespace Gamerize.DAL.Repositories.Interfaces
@@ -16,5 +17,8 @@ namespace Gamerize.DAL.Repositories.Interfaces
 		Task DeleteByIdAsync(object id);
 		Task DeleteRangeAsync(ICollection<TEntity> entities);
 		Task<ICollection<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
-	}
+		Task<IQueryable<TEntity>> Pagination(Expression<Func<TEntity, object>> orderBy);
+		Task<Question?> GetQuestionWithAnswerByIdAsync(int id);
+
+    }
 }

@@ -14,7 +14,7 @@ namespace Gamerize.DAL.Entities.Shop
 		[Column(TypeName = "tinyint")]
 		public required int MinPlayers { get; set; }
 		[Column(TypeName = "tinyint")]
-		public required int MaxPlayers { get; set; }
+		public int? MaxPlayers { get; set; }
 		[Column(TypeName = "tinyint")]
 		public required int MinAge { get; set; }
 		[Column(TypeName = "tinyint")]

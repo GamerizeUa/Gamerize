@@ -17,17 +17,19 @@ namespace webapi.Controllers
         }
 
         [HttpGet("/api/Question/GetAll")]
-        public async Task<ActionResult<ICollection<QuestionDTO>>> GetAllAsync()
+        public async Task<ActionResult<IEnumerable<QuestionDTO>>> GetSimpleList(int page = 1, int pageSize = 3)
         {
             try
             {
-                return Ok(await _questionService.GetAllAsync());
+                var question = await _questionService.GetSimpleListAsync(page, pageSize);
+                return Ok(question);
             }
             catch (ServerErrorException ex)
             {
                 return StatusCode(500, ex.Message);
             }
         }
+
         [HttpGet("/api/Question/GetById/{id:int}")]
         public async Task<ActionResult<QuestionDTO>> GetByIdAsync(int id)
         {

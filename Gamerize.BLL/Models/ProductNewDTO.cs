@@ -15,8 +15,8 @@ namespace Gamerize.BLL.Models
         public decimal Price { get; set; }
         [Required, Range(2, 30)]
         public int MinPlayers { get; set; }
-        [Required, Range(2, 30)]
-        public int MaxPlayers { get; set; }
+        [Range(2, 30)]
+        public int? MaxPlayers { get; set; }
         [Required, Range(0, 21)]
         public int MinAge { get; set; }
         [Required, Range(5, 240)]

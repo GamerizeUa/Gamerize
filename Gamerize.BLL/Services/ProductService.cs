@@ -54,25 +54,32 @@ namespace Gamerize.BLL.Services
                 throw new ServerErrorException(ex.Message, ex);
             }
         }
-        public async Task<ICollection<ProductShortDTO>> GetSimpleListAsync()
+
+        public async Task<IEnumerable<ProductShortDTO>> GetSimpleListAsync(int page, int pageSize)
         {
             try
             {
                 var spec = new ProductSpecification().IncludeShort();
-                var products = await _repository.GetAllAsync(spec);
-                var productsDTO = _mapper.Map<ICollection<ProductShortDTO>>(products)
+                var orderedProducts = await _repository.Pagination(p => p.Id);
+                var productsPage = await orderedProducts.Skip((page - 1) * pageSize)
+                                                         .Take(pageSize)
+                                                         .ToListAsync();
+
+                var productsDTO = _mapper.Map<List<ProductShortDTO>>(productsPage)
                     .Select(item =>
                     {
                         item.ImagePath ??= Path.Combine(Config.ProductImagesPath, Config.NoImage);
                         return item;
                     });
-                return _mapper.Map<ICollection<ProductShortDTO>>(productsDTO);
+
+                return productsDTO;
             }
             catch (DbUpdateException ex)
             {
                 throw new ServerErrorException(ex.Message, ex);
             }
         }
+
         public async Task<ProductFullDTO> GetByIdAsync(int id)
         {
             try
