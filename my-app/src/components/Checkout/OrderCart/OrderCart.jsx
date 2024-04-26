@@ -46,10 +46,7 @@ export const OrderCart = () => {
   return (
     <div>
       <div className={styles.orderCart}>
-        <div className={styles.titleWrapper}>
-          <p className={styles.cartTitle}>Ваше замовлення</p>
-          <p className={styles.changeCart}>Змінити кошик</p>
-        </div>
+        <p className={styles.cartTitle}>Ваше замовлення</p>
         <ul className={styles.cartList}>
           <li className={styles.cartListItem}>
             <img
