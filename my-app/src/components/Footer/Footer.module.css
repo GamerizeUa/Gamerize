@@ -114,6 +114,10 @@
     }
 }
 
+.footerListLink:hover, .footerListLink:focus{
+    opacity: 70%;
+}
+
 .telLink {
     display: flex;
     gap: 8px;

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Logo } from "../Logo/Logo";
 import sprite from "../../assets/icons/sprite.svg";
 import styles from "./Footer.module.css";
+import handleLinkClick from "../../helpers/ScrollToTop";
 
 const Footer = () => {
   return (
@@ -11,13 +12,17 @@ const Footer = () => {
           <Logo />
           <ul className={styles.toUsersList}>
             <p className={styles.footerListHeader}>Користувачам</p>
-            <li>
-              <Link className={styles.footerListLink}>Оплата і доставка</Link>
+            <li onClick={handleLinkClick}>
+              <Link to="order-pay" className={styles.footerListLink}>
+                Оплата і доставка
+              </Link>
             </li>
-            <li>
-              <Link className={styles.footerListLink}>Умови повернення</Link>
+            <li onClick={handleLinkClick}>
+              <Link to="return" className={styles.footerListLink}>
+                Умови повернення
+              </Link>
             </li>
-            <li>
+            <li onClick={handleLinkClick}>
               <Link to="about" className={styles.footerListLink}>
                 Про нас
               </Link>
@@ -25,20 +30,30 @@ const Footer = () => {
           </ul>
           <ul className={styles.navList}>
             <p className={styles.footerListHeader}>Навігація</p>
-            <li>
-              <a className={styles.footerListLink}>Настільні ігри</a>
+            <li onClick={handleLinkClick}>
+              <Link to="/catalog" className={styles.footerListLink}>
+                Настільні ігри
+              </Link>
             </li>
-            <li>
-              <a className={styles.footerListLink}>Жанри</a>
+            <li onClick={handleLinkClick}>
+              <Link to="/catalog" className={styles.footerListLink}>
+                Жанри
+              </Link>
             </li>
-            <li>
-              <a className={styles.footerListLink}>Тематика</a>
+            <li onClick={handleLinkClick}>
+              <Link to="/catalog" className={styles.footerListLink}>
+                Тематика
+              </Link>
             </li>
-            <li>
-              <a className={styles.footerListLink}>Пазли</a>
+            <li onClick={handleLinkClick}>
+              <Link to="/catalog" className={styles.footerListLink}>
+                Пазли
+              </Link>
             </li>
-            <li>
-              <a className={styles.footerListLink}>Головоломки</a>
+            <li onClick={handleLinkClick}>
+              <Link to="/catalog" className={styles.footerListLink}>
+                Головоломки
+              </Link>
             </li>
           </ul>
           <ul className={styles.contactsList}>
@@ -60,12 +75,22 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a className={styles.footerListLink}>
+              <a
+                href="https://www.instagram.com/"
+                target="_blank"
+                rel="noreferrer"
+                className={styles.footerListLink}
+              >
                 <svg width={35} height={35}>
                   <use href={sprite + "#icon-Instagram"}></use>
                 </svg>
               </a>
-              <a className={styles.fbIcon + " " + styles.footerListLink}>
+              <a
+                href="https://www.facebook.com/"
+                target="_blank"
+                rel="noreferrer"
+                className={styles.fbIcon + " " + styles.footerListLink}
+              >
                 <svg width={35} height={35}>
                   <use href={sprite + "#icon-Facebook"}></use>
                 </svg>
