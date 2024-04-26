@@ -31,7 +31,7 @@ public class AccountController : ControllerBase
     {
         if (ModelState.IsValid)
         {
-            var user = new User {FirstName = model.FirstName, LastName = model.LastName, UserName = model.Email, Email = model.Email };
+            var user = new User {UserName = model.Email, Email = model.Email };
 
             var result = await _userManager.CreateAsync(user, model.Password);
 
@@ -52,16 +52,31 @@ public class AccountController : ControllerBase
     {
         if (ModelState.IsValid)
         {
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+            var user = await _userManager.FindByEmailAsync(model.Email);
 
-            if (result.Succeeded)
+            if (user != null)
             {
-                return Ok(new { Message = "Login successful" });
-            }
+                var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, model.RememberMe);
 
-            return BadRequest(new { Message = "Invalid login attempt" });
+                if (result.Succeeded)
+                {
+
+                    return Ok(new { Message = "Login successful" });
+                }
+                else
+                {
+                   
+                    return BadRequest(new { Message = "Invalid login attempt" });
+                }
+            }
+            else
+            {
+                
+                return BadRequest(new { Message = "Invalid login attempt" });
+            }
         }
 
+       
         return BadRequest(new { Message = "Invalid model state" });
     }
 
