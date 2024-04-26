@@ -5,9 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Gamerize.BLL.Models
 {
-    public class ProductNewDTO : IEntity
+    public class ProductNewDTO
     {
-        public int Id { get; set; } = default;
         [Required]
         public string Name { get; set; }
         [Required]
@@ -16,8 +15,8 @@ namespace Gamerize.BLL.Models
         public decimal Price { get; set; }
         [Required, Range(2, 30)]
         public int MinPlayers { get; set; }
-        [Required, Range(2, 30)]
-        public int MaxPlayers { get; set; }
+        [Range(2, 30)]
+        public int? MaxPlayers { get; set; }
         [Required, Range(0, 21)]
         public int MinAge { get; set; }
         [Required, Range(5, 240)]
@@ -26,15 +25,13 @@ namespace Gamerize.BLL.Models
         public int MaxGameTimeMinutes { get; set; }
         [Required]
         public int LanguageId { get; set; }
-        public int CategoryId { get; set; }
-        public int GenreId { get; set; }
-        public int ThemeId { get; set; }
+        public int? CategoryId { get; set; }
+        public int? GenreId { get; set; }
+        public int? ThemeId { get; set; }
 
-        public int PuzzleId { get; set; }
-        public int MindGamesId { get; set; }
+        public int? PuzzleId { get; set; }
+        public int? MindGamesId { get; set; }
 
-        [Required]
-        public string[] GameComponents { get; set; } = Array.Empty<string>();
         public ICollection<IFormFile> NewImages { get; set; } = new List<IFormFile>();
         public int[] NewTags { get; set; } = Array.Empty<int>();
     }

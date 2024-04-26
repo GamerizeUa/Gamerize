@@ -1,4 +1,5 @@
 ﻿using Gamerize.DAL.Contexts;
+using Gamerize.DAL.Entities.Shop;
 using Gamerize.DAL.Repositories.Interfaces;
 using Gamerize.DAL.Specifications;
 using Microsoft.EntityFrameworkCore;
@@ -79,6 +80,8 @@ namespace Gamerize.DAL.Repositories
 
 		public async Task<TEntity?> GetByIdAsync(object id) => await _context.Set<TEntity>().FindAsync(id);
 
+
+
 		public void Update(TEntity entity) => _context.Set<TEntity>().Update(entity);
 
 		public async Task UpdateAsync(TEntity entity) => await Task.Run(() => Update(entity));
@@ -103,5 +106,16 @@ namespace Gamerize.DAL.Repositories
 
 			return query;
 		}
-	}
+
+        public async Task<IQueryable<TEntity>> Pagination(Expression<Func<TEntity, object>> orderBy)
+        {
+            return await Task.FromResult(_context.Set<TEntity>().OrderBy(orderBy));
+        }
+
+        public async Task<Question?> GetQuestionWithAnswerByIdAsync(int id)
+        {
+            return await _context.Set<Question>().Include(q => q.Answer).FirstOrDefaultAsync(q => q.Id == id);
+        }
+
+    }
 }

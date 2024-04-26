@@ -30,14 +30,20 @@ namespace Gamerize.BLL.Services
                 if (!await EntityExistsAsync<Language>(newEntity.LanguageId))
                     throw new InvalidIdException($"Мови з ID: {newEntity.LanguageId} ще/вже не існує.");
 
-                if (!await EntityExistsAsync<Category>(newEntity.CategoryId))
+                if (newEntity.CategoryId.HasValue && !await EntityExistsAsync<Category>(newEntity.CategoryId.Value))
                     throw new InvalidIdException($"Категорії з ID: {newEntity.CategoryId} ще/вже не існує.");
 
-                if (!await EntityExistsAsync<Genre>(newEntity.GenreId))
+                if (newEntity.GenreId.HasValue && !await EntityExistsAsync<Genre>(newEntity.GenreId.Value))
                     throw new InvalidIdException($"Жанру з ID: {newEntity.GenreId} ще/вже не існує.");
 
-                if (!await EntityExistsAsync<Theme>(newEntity.ThemeId))
+                if (newEntity.ThemeId.HasValue && !await EntityExistsAsync<Theme>(newEntity.ThemeId.Value))
                     throw new InvalidIdException($"Тематики з ID: {newEntity.ThemeId} ще/вже не існує.");
+
+                if (newEntity.PuzzleId.HasValue && !await EntityExistsAsync<Puzzle>(newEntity.PuzzleId.Value))
+                    throw new InvalidIdException($"Puzzle з ID: {newEntity.PuzzleId} ще/вже не існує.");
+
+                if (newEntity.MindGamesId.HasValue && !await EntityExistsAsync<MindGames>(newEntity.MindGamesId.Value))
+                    throw new InvalidIdException($"MindGames з ID: {newEntity.MindGamesId} ще/вже не існує.");
 
                 var product = await CreateProductAsync(newEntity);
                 await SaveImagesAsync(newEntity.NewImages, product.Id);
@@ -48,25 +54,32 @@ namespace Gamerize.BLL.Services
                 throw new ServerErrorException(ex.Message, ex);
             }
         }
-        public async Task<ICollection<ProductShortDTO>> GetSimpleListAsync()
+
+        public async Task<IEnumerable<ProductShortDTO>> GetSimpleListAsync(int page, int pageSize)
         {
             try
             {
                 var spec = new ProductSpecification().IncludeShort();
-                var products = await _repository.GetAllAsync(spec);
-                var productsDTO = _mapper.Map<ICollection<ProductShortDTO>>(products)
+                var orderedProducts = await _repository.Pagination(p => p.Id);
+                var productsPage = await orderedProducts.Skip((page - 1) * pageSize)
+                                                         .Take(pageSize)
+                                                         .ToListAsync();
+
+                var productsDTO = _mapper.Map<List<ProductShortDTO>>(productsPage)
                     .Select(item =>
                     {
                         item.ImagePath ??= Path.Combine(Config.ProductImagesPath, Config.NoImage);
                         return item;
                     });
-                return _mapper.Map<ICollection<ProductShortDTO>>(productsDTO);
+
+                return productsDTO;
             }
             catch (DbUpdateException ex)
             {
                 throw new ServerErrorException(ex.Message, ex);
             }
         }
+
         public async Task<ProductFullDTO> GetByIdAsync(int id)
         {
             try
@@ -79,9 +92,6 @@ namespace Gamerize.BLL.Services
                     .Include(x => x.Feedbacks)
                     .Include(x => x.Tags)
                     .Include(x => x.Images)
-                    .Include(x => x.gameComponents)
-                    .Include(x => x.MindGames)
-                    .Include(x => x.Puzzle)
                     .FirstOrDefaultAsync(x => x.Id == id);
 
                 return (product is not null) ?

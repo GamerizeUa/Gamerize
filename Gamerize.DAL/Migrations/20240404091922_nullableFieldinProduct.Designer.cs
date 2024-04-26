@@ -4,6 +4,7 @@ using Gamerize.DAL.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gamerize.DAL.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240404091922_nullableFieldinProduct")]
+    partial class nullableFieldinProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -444,7 +447,7 @@ namespace Gamerize.DAL.Migrations
                     b.Property<byte>("MaxGameTimeMinutes")
                         .HasColumnType("tinyint");
 
-                    b.Property<byte?>("MaxPlayers")
+                    b.Property<byte>("MaxPlayers")
                         .HasColumnType("tinyint");
 
                     b.Property<byte>("MinAge")
@@ -455,11 +458,11 @@ namespace Gamerize.DAL.Migrations
 
                     b.Property<byte>("MinPlayers")
                         .HasColumnType("tinyint");
-                    b.Property<byte>("MindGameID")
+
+                    b.Property<byte?>("MindGameID")
                         .HasColumnType("tinyint");
 
-                    b.Property<byte>("MindGamesId");
-                    b.Property<byte?>("MindGamesId")
+                    b.Property<byte>("MindGamesId")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("Name")
@@ -474,6 +477,11 @@ namespace Gamerize.DAL.Migrations
 
                     b.Property<byte?>("ThemeId")
                         .HasColumnType("tinyint");
+
+                    b.Property<string>("gameComponents")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

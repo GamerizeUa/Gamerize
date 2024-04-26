@@ -1,5 +1,4 @@
 using Gamerize.BLL.AutoMapper;
-using Gamerize.BLL.Services.Interfaces;
 using Gamerize.DAL.Contexts;
 using Gamerize.DAL.Entities.Admin;
 using Microsoft.AspNetCore.Identity;
@@ -54,6 +53,12 @@ builder.Services.AddDataProtection();
 builder.Services.AddAutoMapper(typeof(ToDtoMappingProfile));
 builder.Services.AddControllers();
 
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = "Identity.Application";
+    options.DefaultChallengeScheme = "Identity.Application";
+})
+    .AddCookie("Identity.Application");
 
 builder.Services.AddCors(options =>
     options.AddPolicy("AllowAnyOrigin", builder =>

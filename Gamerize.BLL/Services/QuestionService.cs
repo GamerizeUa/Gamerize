@@ -81,6 +81,42 @@ namespace Gamerize.BLL.Services
                 throw new ServerErrorException(ex.Message, ex);
             }
         }
+
+        public async Task<IEnumerable<QuestionDTO>> GetSimpleListAsync(int page, int pageSize)
+        {
+            try
+            {
+                var question = (await _questionRepository.Pagination(p => p.Id)).Include(q => q.Answer);
+                var questionPage = await question.Skip((page - 1) * pageSize)
+                                                         .Take(pageSize)
+                                                         .ToListAsync();
+
+                var questionDTO = _mapper.Map<List<QuestionDTO>>(questionPage);
+
+                return questionDTO;
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new ServerErrorException(ex.Message, ex);
+            }
+        }
+
+        public async Task<QuestionDTO> GetByIdAsync(int id)
+        {
+            try
+            {
+                var question = await _questionRepository.GetQuestionWithAnswerByIdAsync(id);
+                return _mapper.Map<QuestionDTO>(question) ??
+                    throw new InvalidIdException(ExceptionMessage(id));
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new ServerErrorException(ex.Message, ex);
+            }
+        }
+
+
+
         #endregion
         #region Answer's methods
         public async Task<AnswerDTO> GetAnswerForQuestionAsync(int questionId) =>
@@ -158,5 +194,13 @@ namespace Gamerize.BLL.Services
             }
         }
         #endregion
+
+        private string ExceptionMessage(object? value = null) =>
+            value switch
+            {
+                int idt when value is int => $"Puzzle з id: {idt} ще/вже не існує!",
+                string namet when value is string => $"Puzzle з назваю {namet} вже існує",
+                _ => "Something has gone wrong"
+            };
     }
 }
