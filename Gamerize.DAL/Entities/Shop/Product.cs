@@ -37,9 +37,10 @@ namespace Gamerize.DAL.Entities.Shop
 		[Column(TypeName = "tinyint")]
 		public int? PuzzleId { get; set; }
 		public virtual Puzzle Puzzle { get; set; }
-		[Column(TypeName = "tinyint")]
-		public int? MindGamesId { get; set; }
-		public virtual MindGames MindGames { get; set; }
+
+        [Column(TypeName = "tinyint")]
+        public int? MindGamesId { get; set; }
+        public virtual MindGames MindGames { get; set; }
 
         public virtual ICollection<Feedback> Feedbacks { get; set; }
 		public virtual ICollection<Tag> Tags { get; set; }

@@ -27,6 +27,7 @@ namespace webapi.Extensions.DI
 			services.AddTransient<DiscountCouponService>();
 			services.AddTransient<PuzzleService>();
 			services.AddTransient<MindGamesService>();
+			services.AddTransient<ProfileService>();
 		}
 	}
 }

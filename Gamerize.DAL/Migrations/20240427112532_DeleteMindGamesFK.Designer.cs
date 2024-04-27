@@ -4,6 +4,7 @@ using Gamerize.DAL.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gamerize.DAL.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240427112532_DeleteMindGamesFK")]
+    partial class DeleteMindGamesFK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -461,9 +464,6 @@ namespace Gamerize.DAL.Migrations
                     b.Property<byte>("MinPlayers")
                         .HasColumnType("tinyint");
 
-                    b.Property<byte?>("MindGamesId")
-                        .HasColumnType("tinyint");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -484,8 +484,6 @@ namespace Gamerize.DAL.Migrations
                     b.HasIndex("GenreId");
 
                     b.HasIndex("LanguageId");
-
-                    b.HasIndex("MindGamesId");
 
                     b.HasIndex("PuzzleId");
 
@@ -853,10 +851,6 @@ namespace Gamerize.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Gamerize.DAL.Entities.Shop.MindGames", "MindGames")
-                        .WithMany("Products")
-                        .HasForeignKey("MindGamesId");
-
                     b.HasOne("Gamerize.DAL.Entities.Shop.Puzzle", "Puzzle")
                         .WithMany("Products")
                         .HasForeignKey("PuzzleId");
@@ -870,8 +864,6 @@ namespace Gamerize.DAL.Migrations
                     b.Navigation("Genre");
 
                     b.Navigation("Language");
-
-                    b.Navigation("MindGames");
 
                     b.Navigation("Puzzle");
 
@@ -965,11 +957,6 @@ namespace Gamerize.DAL.Migrations
                 });
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Language", b =>
-                {
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("Gamerize.DAL.Entities.Shop.MindGames", b =>
                 {
                     b.Navigation("Products");
                 });

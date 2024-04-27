@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Gamerize.BLL.Models;
+using Gamerize.DAL.Entities.Admin;
 using Gamerize.DAL.Entities.Shop;
 
 namespace Gamerize.BLL.AutoMapper
@@ -28,6 +29,7 @@ namespace Gamerize.BLL.AutoMapper
             CreateMap<Answer, AnswerDTO>().ReverseMap();
 			CreateMap<Puzzle, PuzzleDTO>().ReverseMap();
 			CreateMap<MindGames, MindGamesDTO>().ReverseMap();
+			CreateMap<User, ProfileDTO>().ReverseMap();
 		}
 	}
 }
