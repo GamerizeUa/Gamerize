@@ -102,6 +102,22 @@ public class AccountController : ControllerBase
         return Ok(await _tokenService.GetTokenAsync(request));
     }
 
+    //[HttpPost("upload-profile-picture")]
+    //public async Task<IActionResult> UploadProfilePicture([FromForm] IFormFile file)
+    //{
+    //    if (file == null || file.Length == 0)
+    //        return BadRequest("Invalid file");
+
+    //    var user = await _userManager.GetUserAsync(User);
+
+    //    if (user == null)
+    //        return Unauthorized();
+
+    //    await _profileService.UploadProfilePictureAsync(file, user);
+
+    //    return Ok(new { Message = "Profile picture uploaded successfully" });
+    //}
+
     [HttpPost("upload-profile-picture")]
     public async Task<IActionResult> UploadProfilePicture([FromForm] IFormFile file)
     {
@@ -113,10 +129,20 @@ public class AccountController : ControllerBase
         if (user == null)
             return Unauthorized();
 
-        await _profileService.UploadProfilePictureAsync(file, user);
+        try
+        {
+            await _profileService.UploadProfilePictureAsync(file, user);
 
-        return Ok(new { Message = "Profile picture uploaded successfully" });
+            return Ok(new { Message = "Profile picture uploaded successfully" });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Помилка при завантаженні зображення: {ex.Message}");
+
+            return StatusCode(500, "Помилка при завантаженні зображення. Зверніться до адміністратора.");
+        }
     }
+
 
     [HttpGet("profile")]
     [Authorize]

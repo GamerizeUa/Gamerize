@@ -20,30 +20,39 @@ namespace Gamerize.BLL.Services
 
         public async Task UploadProfilePictureAsync(IFormFile file, User user)
         {
-            var driveService = new DriveService(new BaseClientService.Initializer
+            try
             {
-                HttpClientInitializer = GetCredential(),
-                ApplicationName = "Gamerize",
-            });
+                var driveService = new DriveService(new BaseClientService.Initializer
+                {
+                    HttpClientInitializer = GetCredential(),
+                    ApplicationName = "Gamerize",
+                });
 
-            var fileMetadata = new Google.Apis.Drive.v3.Data.File
-            {
-                Name = Path.GetFileName(file.FileName),
-                Parents = new List<string> { "1VLPt6EOO7CIW964y1_TiWmQEBzXUttLo" }
-            };
+                var fileMetadata = new Google.Apis.Drive.v3.Data.File
+                {
+                    Name = Path.GetFileName(file.FileName),
+                    Parents = new List<string> { "1VLPt6EOO7CIW964y1_TiWmQEBzXUttLo" }
+                };
 
-            FilesResource.CreateMediaUpload request;
+                FilesResource.CreateMediaUpload request;
 
-            using (var stream = file.OpenReadStream())
-            {
-                request = driveService.Files.Create(fileMetadata, stream, "application/octet-stream");
-                request.Fields = "id";
-                await request.UploadAsync();
+                using (var stream = file.OpenReadStream())
+                {
+                    request = driveService.Files.Create(fileMetadata, stream, "application/octet-stream");
+                    request.Fields = "id";
+                    await request.UploadAsync();
+                }
+
+                var fileUploaded = request.ResponseBody;
+
+                user.ProfilePicture = $"https://drive.google.com/uc?export=view&id={fileUploaded.Id}";
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Помилка при завантаженні зображення: {ex.Message}");
 
-            var fileUploaded = request.ResponseBody;
-
-            user.ProfilePicture = $"https://drive.google.com/uc?export=view&id={fileUploaded.Id}";
+                throw;
+            }
         }
 
         private IConfigurableHttpClientInitializer GetCredential()
@@ -64,6 +73,7 @@ namespace Gamerize.BLL.Services
             }
             var userProfileData = new ProfileDTO
             {
+                Id = user.Id,
                 Name = user.Name,
                 Phone = user.PhoneNumber,
                 Email = user.Email,
