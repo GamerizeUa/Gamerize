@@ -1,0 +1,36 @@
+.container {
+    position: relative;
+}
+.btn {
+    display: flex;
+    height: 24px;
+    align-items: center;
+    gap: 12px;
+    position: absolute;
+    top: 33px;
+    right: 16px;
+    background-color: transparent;
+}
+.btn span {
+    color: #6566ac;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+}
+.btn svg {
+    width: 24px;
+    height: 24px;
+}
+@media screen and (min-width: 744px) {
+    .btn {
+        top: 52px;
+        right: 32px;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .btn {
+        top: 39px;
+        right: 80px;
+    }
+}

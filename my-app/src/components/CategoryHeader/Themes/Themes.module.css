@@ -1,0 +1,63 @@
+.themesList {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-column-gap: 30px;
+    grid-row-gap: 20px;
+    padding: 20px 32px;
+    position: absolute;
+    top: 45px;
+    left: 50%;
+    transform: translateX(-50%) scale(1);
+    border-radius: 10px;
+    z-index: 10;
+    background-color: #fff;
+    box-shadow: rgba(170,
+                    196,
+                    255, 0.4) 0px 6px 20px;
+}
+
+.themesList::after {
+    display: block;
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    right: 50%;
+    border: 6px solid transparent;
+    top: -15px;
+    border-bottom: 10px solid #fff;
+}
+
+.themesListItem {
+    position: relative;
+    padding: 9px 8px 9px 40px;
+    border-radius: 10px;
+    font-size: 16px;
+    white-space: nowrap;
+
+    transition-property: background-color;
+    transition-duration: 250ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.themesListItem:hover,
+.themesListItem:focus {
+    background-color: #EEF1FF;
+}
+
+.themesListLink{
+    color: #000000;
+}
+
+.themesIcon{
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    padding-left: 8px;
+}
+
+.themesText{
+    white-space: nowrap;
+}

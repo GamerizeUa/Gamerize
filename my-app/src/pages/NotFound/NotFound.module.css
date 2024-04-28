@@ -1,0 +1,96 @@
+.notFound {
+  padding: 119px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 40px;
+}
+@media (min-width: 744px) {
+  .notFound {
+    padding: 206px 0;
+    gap: 48px;
+  }
+}
+@media (min-width: 1280px) {
+  .notFound {
+    padding: 167px 0;
+  }
+}
+
+.notFoundImgBlock {
+  display: flex;
+  align-items: center;
+}
+@media (min-width: 744px) {
+  .notFoundImgBlock {
+    gap: 8px;
+  }
+}
+
+.notFoundImage {
+  width: 100px;
+  height: 100px;
+}
+@media (min-width: 744px) {
+  .notFoundImage {
+    width: 130px;
+    height: 131px;
+  }
+}
+
+.notFoundNumber {
+  font-family: "Noto Sans";
+  font-size: 78px;
+  font-weight: 700;
+  line-height: 24%;
+  color: #6566ac;
+}
+@media (min-width: 744px) {
+  .notFoundNumber {
+    font-size: 128px;
+  }
+}
+
+.notFoundTitle {
+  font-family: "Noto Sans";
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 20%;
+}
+@media (min-width: 744px) {
+  .notFoundTitle {
+    font-size: 48px;
+  }
+}
+
+.notFoundText {
+  font-family: "Noto Sans";
+  font-size: 16px;
+  line-height: 130%;
+  text-align: center;
+}
+@media (min-width: 744px) {
+  .notFoundText {
+    font-size: 20px;
+  }
+}
+
+.onMainPageBtn {
+  width: 288px;
+  height: 53px;
+  border-radius: 10px;
+  background: #aac4ff;
+  color: black;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16%;
+  cursor: pointer;
+  box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+}
+@media (min-width: 744px) {
+  .onMainPageBtn {
+    width: 304px;
+    font-size: 16px;
+  }
+}
