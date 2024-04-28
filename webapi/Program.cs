@@ -65,7 +65,10 @@ builder.Services.AddCors(options =>
     {
         builder.AllowAnyOrigin()
             .AllowAnyMethod()
-            .AllowAnyHeader();
+            .AllowAnyHeader()
+            .WithExposedHeaders("Content-Disposition") 
+            .WithExposedHeaders("X-Content-Type-Options") 
+            .WithExposedHeaders("Access-Control-Allow-Origin");
     })
     );
 
