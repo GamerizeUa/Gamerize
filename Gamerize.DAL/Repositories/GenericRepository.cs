@@ -116,6 +116,11 @@ namespace Gamerize.DAL.Repositories
         {
             return await _context.Set<Question>().Include(q => q.Answer).FirstOrDefaultAsync(q => q.Id == id);
         }
+		
+		public async Task<List<Question?>> GetAllQuestionWithAnswerByIdAsync()
+        {
+            return await _context.Set<Question>().Include(q => q.Answer).ToListAsync();
+        }
 
     }
 }

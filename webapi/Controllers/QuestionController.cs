@@ -17,11 +17,11 @@ namespace webapi.Controllers
         }
 
         [HttpGet("/api/Question/GetAll")]
-        public async Task<ActionResult<IEnumerable<QuestionDTO>>> GetSimpleList(int page = 1, int pageSize = 3)
+        public async Task<ActionResult<IEnumerable<QuestionDTO>>> GetAllAsync()
         {
             try
             {
-                var question = await _questionService.GetSimpleListAsync(page, pageSize);
+                var question = await _questionService.GetAllAsync();
                 return Ok(question);
             }
             catch (ServerErrorException ex)
@@ -67,6 +67,29 @@ namespace webapi.Controllers
             }
         }
 
+        [HttpPatch("Question/Edit/{id:int}")]
+        public async Task<ActionResult<QuestionDTO>> UpdateQuestionAsync(int id, QuestionCreateDTO question)
+        {
+            try
+            {
+                return (!ModelState.IsValid) ?
+                    BadRequest() :
+                    Ok(await _questionService.EditQuestionAsync(id, question));
+            }
+            catch (InvalidIdException ex)
+            {
+                return StatusCode(400, ex.Message);
+            }
+            catch (DuplicateItemException ex)
+            {
+                return StatusCode(400, ex.Message);
+            }
+            catch (ServerErrorException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpDelete("Question/{id:int}")]
         public async Task<IActionResult> DeleteQuestionAsync(int id)
         {
@@ -100,6 +123,62 @@ namespace webapi.Controllers
             catch (InvalidIdException ex)
             {
                 return StatusCode(404, ex.Message);
+            }
+            catch (ServerErrorException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet("/api/Answer/GetAll")]
+        public async Task<ActionResult<IEnumerable<AnswerDTO>>> GetAllAnswerAsync()
+        {
+            try
+            {
+                var question = await _questionService.GetAllAnswerAsync();
+                return Ok(question);
+            }
+            catch (ServerErrorException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpDelete("Answer/{id:int}")]
+        public async Task<IActionResult> DeleteAnswerAsync(int id)
+        {
+            try
+            {
+                await _questionService.DeleteAnswerAsync(id);
+
+                return StatusCode(204);
+            }
+            catch (InvalidIdException ex)
+            {
+                return StatusCode(404, ex.Message);
+            }
+            catch (ServerErrorException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPatch("Answer/Edit/{id:int}")]
+        public async Task<ActionResult<AnswerDTO>> UpdateAnswerAsync(int id, AnswerCreateDTO answer)
+        {
+            try
+            {
+                return (!ModelState.IsValid) ?
+                    BadRequest() :
+                    Ok(await _questionService.EditAnswerAsync(id, answer));
+            }
+            catch (InvalidIdException ex)
+            {
+                return StatusCode(400, ex.Message);
+            }
+            catch (DuplicateItemException ex)
+            {
+                return StatusCode(400, ex.Message);
             }
             catch (ServerErrorException ex)
             {

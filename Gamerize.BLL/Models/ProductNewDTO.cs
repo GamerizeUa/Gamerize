@@ -13,7 +13,7 @@ namespace Gamerize.BLL.Models
         public string Description { get; set; }
         [Required, Column(TypeName = "decimal(6,2)")]
         public decimal Price { get; set; }
-        [Required, Range(2, 30)]
+        [Required, Range(1, 30)]
         public int MinPlayers { get; set; }
         [Range(2, 30)]
         public int? MaxPlayers { get; set; }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Gamerize.BLL.Models.Tokens;
 using Gamerize.BLL.Services;
+using System.Security.Claims;
 
 [Route("api/[controller]")]
 [Authorize]
@@ -17,12 +18,14 @@ public class AccountController : ControllerBase
     private readonly UserManager<User> _userManager;
     private readonly SignInManager<User> _signInManager;
     private readonly TokenService _tokenService;
+    private readonly ProfileService _profileService;
 
-    public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+    public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ProfileService profileService)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _tokenService = new TokenService(userManager);
+        _profileService = profileService;
     }
 
     [HttpPost("register")]
@@ -97,5 +100,40 @@ public class AccountController : ControllerBase
     public async Task<IActionResult> Login([FromBody] TokenRequest request)
     {
         return Ok(await _tokenService.GetTokenAsync(request));
+    }
+
+    [HttpPost("upload-profile-picture")]
+    public async Task<IActionResult> UploadProfilePicture([FromForm] IFormFile file)
+    {
+        if (file == null || file.Length == 0)
+            return BadRequest("Invalid file");
+
+        var user = await _userManager.GetUserAsync(User);
+
+        if (user == null)
+            return Unauthorized();
+
+        await _profileService.UploadProfilePictureAsync(file, user);
+
+        return Ok(new { Message = "Profile picture uploaded successfully" });
+    }
+
+    [HttpGet("profile")]
+    [Authorize]
+    public async Task<IActionResult> GetUserProfile()
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
+
+        var userProfileData = await _profileService.GetUserProfileData(userId);
+        if (userProfileData == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(userProfileData);
     }
 }

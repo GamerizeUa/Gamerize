@@ -51,6 +51,7 @@ namespace Gamerize.BLL.Services
                 throw new ServerErrorException(ex.Message, ex);
             }
         }
+
         public async Task<QuestionDTO> EditQuestionAsync(int id, QuestionCreateDTO question)
         {
             try
@@ -67,12 +68,19 @@ namespace Gamerize.BLL.Services
                 throw new ServerErrorException(ex.Message, ex);
             }
         }
+
         public async Task DeleteQuestionAsync(int id)
         {
             try
             {
                 var currentQuestion = await _questionRepository.GetByIdAsync(id) ??
                     throw new InvalidIdException($"Питання з Id: {id} не знайдено!");
+
+                if (currentQuestion.Answer != null)
+                {
+                    await _answerRepository.DeleteAsync(currentQuestion.Answer);
+                }
+
                 await _questionRepository.DeleteAsync(currentQuestion);
                 await _unitOfWork.SaveChangesAsync();
             }
@@ -82,18 +90,11 @@ namespace Gamerize.BLL.Services
             }
         }
 
-        public async Task<IEnumerable<QuestionDTO>> GetSimpleListAsync(int page, int pageSize)
+        public async Task<ICollection<QuestionDTO>> GetAllAsync()
         {
             try
             {
-                var question = (await _questionRepository.Pagination(p => p.Id)).Include(q => q.Answer);
-                var questionPage = await question.Skip((page - 1) * pageSize)
-                                                         .Take(pageSize)
-                                                         .ToListAsync();
-
-                var questionDTO = _mapper.Map<List<QuestionDTO>>(questionPage);
-
-                return questionDTO;
+                return _mapper.Map<ICollection<QuestionDTO>>(await _questionRepository.GetAllQuestionWithAnswerByIdAsync());
             }
             catch (DbUpdateException ex)
             {
@@ -114,8 +115,6 @@ namespace Gamerize.BLL.Services
                 throw new ServerErrorException(ex.Message, ex);
             }
         }
-
-
 
         #endregion
         #region Answer's methods
@@ -187,6 +186,18 @@ namespace Gamerize.BLL.Services
 
                 await _answerRepository.DeleteAsync(answer);
                 await _unitOfWork.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new ServerErrorException(ex.Message, ex);
+            }
+        }
+
+        public async Task<ICollection<AnswerDTO>> GetAllAnswerAsync()
+        {
+            try
+            {
+                return _mapper.Map<ICollection<AnswerDTO>>(await _answerRepository.GetAllAsync());
             }
             catch (DbUpdateException ex)
             {
