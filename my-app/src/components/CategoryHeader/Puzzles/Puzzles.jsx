@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom";
 import styles from "./Puzzles.module.css";
 import sprite from "../../../assets/icons/sprite.svg";
+import { useEffect } from "react";
 
-const Puzzles = ({ puzzles }) => {
+const Puzzles = ({ puzzles, checkIconExistence, iconExists, toLowerText }) => {
+  useEffect(() => {
+    checkIconExistence(puzzles);
+  }, [checkIconExistence, puzzles]);
+
   return (
     <div>
       <ul className={styles.puzzlesList}>
@@ -17,9 +22,8 @@ const Puzzles = ({ puzzles }) => {
                 <svg width="24" height="24">
                   <use
                     href={
-                      puzzle.description &&
-                      sprite.includes(`icon-${puzzle.description}`)
-                        ? sprite + `#icon-${puzzle.description}`
+                      iconExists[puzzle.id]
+                        ? sprite + `#icon-${toLowerText(puzzle.description)}`
                         : sprite + `#icon-puzzle`
                     }
                     fill="#EEF1FF"

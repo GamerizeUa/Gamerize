@@ -3,7 +3,12 @@ import sprite from "../../../assets/icons/sprite.svg";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-const Categories = ({ categories }) => {
+const Categories = ({
+  categories,
+  checkIconExistence,
+  iconExists,
+  toLowerText,
+}) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const handleChangedSize = () => {
@@ -16,6 +21,10 @@ const Categories = ({ categories }) => {
       window.removeEventListener("resize", handleChangedSize);
     };
   }, []);
+
+  useEffect(() => {
+    checkIconExistence(categories);
+  }, [checkIconExistence, categories]);
 
   return (
     <div>
@@ -40,9 +49,8 @@ const Categories = ({ categories }) => {
                 <svg width="24" height="24">
                   <use
                     href={
-                      category.description &&
-                      sprite.includes(`icon-${category.description}`)
-                        ? sprite + `#icon-${category.description}`
+                      iconExists[category.id]
+                        ? sprite + `#icon-${toLowerText(category.description)}`
                         : sprite + `#icon-cards`
                     }
                     fill="#EEF1FF"

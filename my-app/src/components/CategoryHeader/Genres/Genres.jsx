@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom";
 import sprite from "../../../assets/icons/sprite.svg";
 import styles from "./Genres.module.css";
+import { useEffect } from "react";
 
-const Genres = ({ genres }) => {
+const Genres = ({ genres, checkIconExistence, iconExists, toLowerText }) => {
+  useEffect(() => {
+    checkIconExistence(genres);
+  }, [checkIconExistence, genres]);
+
   return (
     <div>
       <ul className={styles.genresList}>
@@ -17,9 +22,8 @@ const Genres = ({ genres }) => {
                 <svg width="24" height="24">
                   <use
                     href={
-                      genre.description &&
-                      sprite.includes(`icon-${genre.description}`)
-                        ? sprite + `#icon-${genre.description}`
+                      iconExists[genre.id]
+                        ? sprite + `#icon-${toLowerText(genre.description)}`
                         : sprite + `#icon-strategies`
                     }
                     fill="#EEF1FF"
