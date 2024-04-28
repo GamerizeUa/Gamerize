@@ -119,7 +119,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpGet("profile")]
-    [Authorize] // Якщо вам потрібно авторизувати користувача для доступу до профілю
+    [Authorize]
     public async Task<IActionResult> GetUserProfile()
     {
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;

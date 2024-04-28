@@ -36,7 +36,7 @@ namespace Gamerize.BLL.Services
 
             using (var stream = file.OpenReadStream())
             {
-                request = driveService.Files.Create(fileMetadata, stream, "image/jpeg");
+                request = driveService.Files.Create(fileMetadata, stream, "application/octet-stream");
                 request.Fields = "id";
                 await request.UploadAsync();
             }
