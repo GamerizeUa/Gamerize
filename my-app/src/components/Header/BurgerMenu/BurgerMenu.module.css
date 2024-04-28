@@ -86,10 +86,6 @@ padding: 17px 12px;
     background: #EEF1FF;
 }
 
-.categoryList:last-child + .categoryListItem:last-child{
-    border-bottom: 1px solid #AAC4FF;
-}
-
 .categoryListLink{
 color: #2B2B2B;
 }

@@ -28,6 +28,7 @@ const CategoryHeader = () => {
   const [isMindGames, setIsMindGames] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const timeoutRef = useRef(null);
+  const [iconExists, setIconExists] = useState({});
   const dispatch = useDispatch();
 
   const handleChangedSize = () => {
@@ -66,6 +67,32 @@ const CategoryHeader = () => {
   const puzzles = useSelector(selectPuzzles);
   const mindGames = useSelector(selectMindGames);
 
+  const toLowerText = (text) => {
+    // return text.toLowerCase();
+    return text
+      .toLowerCase()
+      .replace(/[^\w\s]/gi, "")
+      .replace(/\s+/g, "");
+  };
+
+  const checkIconExistence = async (category) => {
+    const spriteResponse = await fetch("/src/assets/icons/sprite.svg");
+    const spriteText = await spriteResponse.text();
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(spriteText, "image/svg+xml");
+
+    const iconChecks = {};
+
+    category.forEach((game) => {
+      const description = toLowerText(game.description);
+      const iconId = `icon-${description}`;
+      const iconExists = xmlDoc.querySelector(`symbol#${iconId}`) !== null;
+      iconChecks[game.id] = iconExists;
+    });
+
+    setIconExists(iconChecks);
+  };
+
   return (
     <section className={styles.categoryHeaderWrap}>
       <div className={styles.categoryHeader}>
@@ -78,7 +105,14 @@ const CategoryHeader = () => {
               onMouseLeave={() => handleMouseLeave(setIsCategory)}
             >
               Настільні ігри
-              {isCategory && <Categories categories={categories} />}
+              {isCategory && (
+                <Categories
+                  categories={categories}
+                  checkIconExistence={checkIconExistence}
+                  iconExists={iconExists}
+                  toLowerText={toLowerText}
+                />
+              )}
             </li>
             <li
               className={styles.categoryListItem}
@@ -86,7 +120,14 @@ const CategoryHeader = () => {
               onMouseLeave={() => handleMouseLeave(setIsGenre)}
             >
               Жанри
-              {isGenre && <Genres genres={genres} />}
+              {isGenre && (
+                <Genres
+                  genres={genres}
+                  checkIconExistence={checkIconExistence}
+                  iconExists={iconExists}
+                  toLowerText={toLowerText}
+                />
+              )}
             </li>
             <li
               className={styles.categoryListItem}
@@ -94,7 +135,14 @@ const CategoryHeader = () => {
               onMouseLeave={() => handleMouseLeave(setIsTheme)}
             >
               Тематика
-              {isTheme && <Themes themes={themes} />}
+              {isTheme && (
+                <Themes
+                  themes={themes}
+                  checkIconExistence={checkIconExistence}
+                  iconExists={iconExists}
+                  toLowerText={toLowerText}
+                />
+              )}
             </li>
             <li
               className={styles.categoryListItem}
@@ -102,7 +150,14 @@ const CategoryHeader = () => {
               onMouseLeave={() => handleMouseLeave(setIsPuzzle)}
             >
               Пазли
-              {isPuzzle && <Puzzles puzzles={puzzles} />}
+              {isPuzzle && (
+                <Puzzles
+                  puzzles={puzzles}
+                  checkIconExistence={checkIconExistence}
+                  iconExists={iconExists}
+                  toLowerText={toLowerText}
+                />
+              )}
             </li>
             <li
               className={styles.categoryListItem}
@@ -110,7 +165,14 @@ const CategoryHeader = () => {
               onMouseLeave={() => handleMouseLeave(setIsMindGames)}
             >
               Головоломки
-              {isMindGames && <MindGames mindGames={mindGames} />}
+              {isMindGames && (
+                <MindGames
+                  mindGames={mindGames}
+                  checkIconExistence={checkIconExistence}
+                  iconExists={iconExists}
+                  toLowerText={toLowerText}
+                />
+              )}
             </li>
           </ul>
         )}
