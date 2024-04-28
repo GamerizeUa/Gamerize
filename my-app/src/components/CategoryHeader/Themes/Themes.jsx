@@ -1,8 +1,13 @@
 import styles from "./Themes.module.css";
 import sprite from "../../../assets/icons/sprite.svg";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
-const Themes = ({ themes }) => {
+const Themes = ({ themes, checkIconExistence, iconExists, toLowerText }) => {
+  useEffect(() => {
+    checkIconExistence(themes);
+  }, [checkIconExistence, themes]);
+
   return (
     <div>
       <ul className={styles.themesList}>
@@ -17,9 +22,8 @@ const Themes = ({ themes }) => {
                 <svg width="24" height="24">
                   <use
                     href={
-                      theme.description &&
-                      sprite.includes(`icon-${theme.description}`)
-                        ? sprite + `#icon-${theme.description}`
+                      iconExists[theme.id]
+                        ? sprite + `#icon-${toLowerText(theme.description)}`
                         : sprite + `#icon-historical`
                     }
                     fill="#EEF1FF"

@@ -1,8 +1,18 @@
 import { Link } from "react-router-dom";
 import sprite from "../../../assets/icons/sprite.svg";
 import styles from "./MindGames.module.css";
+import { useEffect } from "react";
 
-const MindGames = ({ mindGames }) => {
+const MindGames = ({
+  mindGames,
+  checkIconExistence,
+  iconExists,
+  toLowerText,
+}) => {
+  useEffect(() => {
+    checkIconExistence(mindGames);
+  }, [checkIconExistence, mindGames]);
+
   return (
     <div>
       <ul className={styles.mindGamesList}>
@@ -17,10 +27,9 @@ const MindGames = ({ mindGames }) => {
                 <svg width="24" height="24">
                   <use
                     href={
-                      game.description &&
-                      sprite.includes(`icon-${game.description}`)
-                        ? sprite + `#icon-${game.description}`
-                        : sprite + `#icon-quests`
+                      iconExists[game.id]
+                        ? sprite + `#icon-${toLowerText(game.description)}`
+                        : sprite + `#icon-historical`
                     }
                     fill="#EEF1FF"
                   ></use>
