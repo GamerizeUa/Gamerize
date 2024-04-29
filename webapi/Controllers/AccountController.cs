@@ -51,6 +51,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("login")]
+    [AllowAnonymous]
     public async Task<IActionResult> Login([FromBody] LoginViewModel model)
     {
         if (ModelState.IsValid)
@@ -78,8 +79,7 @@ public class AccountController : ControllerBase
                 return BadRequest(new { Message = "Invalid login attempt" });
             }
         }
-
-       
+        
         return BadRequest(new { Message = "Invalid model state" });
     }
 

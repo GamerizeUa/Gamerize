@@ -1,4 +1,5 @@
 using Gamerize.BLL.AutoMapper;
+using Gamerize.BLL.Services.Interfaces;
 using Gamerize.DAL.Contexts;
 using Gamerize.DAL.Entities.Admin;
 using Microsoft.AspNetCore.Identity;
@@ -65,10 +66,7 @@ builder.Services.AddCors(options =>
     {
         builder.AllowAnyOrigin()
             .AllowAnyMethod()
-            .AllowAnyHeader()
-            .WithExposedHeaders("Content-Disposition") 
-            .WithExposedHeaders("X-Content-Type-Options") 
-            .WithExposedHeaders("Access-Control-Allow-Origin");
+            .AllowAnyHeader();
     })
     );
 
@@ -93,11 +91,8 @@ else
     app.UseHsts();
 }
 
-
-
 app.UseCors("AllowAnyOrigin");
 app.UseHttpsRedirection();
-
 
 app.MapControllers();
 app.MapFallbackToFile("index.html");
