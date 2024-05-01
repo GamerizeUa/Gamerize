@@ -9,6 +9,7 @@ export const PersonalAccount = () => {
     const [avatar, setAvatar] = useState(null);
     const hiddenFileInput = useRef(null);
     const [photoFile, setPhotoFile] = useState(null);
+    const [token, setToken] = useState(null);
 
     const transformEmptyStringToNull = (value) => {
         return value.trim() === '' ? null : value;
@@ -38,9 +39,10 @@ export const PersonalAccount = () => {
 
     useEffect(() => {
         // TODO get request
-        Axios.get('https://gamerize.ltd.ua/api/profile')
-            .then((res) => console.log(res.data))
+        Axios.get('https://gamerize.ltd.ua/api/Account/profile')
+            .then((res) => console.log(res))
             .catch((err) => console.log(err))
+        setToken(localStorage.getItem('token'))
     }, [])
 
     const onSubmit = (data) => {
@@ -48,7 +50,10 @@ export const PersonalAccount = () => {
         //Axios.post('', data).then().catch()
         console.log(photoFile)
         Axios.post('https://gamerize.ltd.ua/api/Account/upload-profile-picture', photoFile, {
-            headers: {'Content-Type': 'multipart/form-data'}
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${token}`
+            }
         })
             .then((res) => console.log(res))
             .catch((err) => console.log(err))
@@ -126,7 +131,8 @@ export const PersonalAccount = () => {
                             <div className={styles.account_inputContainer}>
                                 <p className={styles.account_title}>Місто</p>
                                 <input type='text'
-                                       className={`${styles.account_input } ${errors.city?.message ? styles.account_errorBorder: ''}`}
+                                       className={`${styles.account_input } 
+                                       ${errors.city?.message ? styles.account_errorBorder: ''}`}
                                        placeholder="Місто"
                                        {...register("city")}
                                 />
@@ -135,7 +141,8 @@ export const PersonalAccount = () => {
                             <div className={styles.account_inputContainer}>
                                 <p className={styles.account_title}>Адреса доставки</p>
                                 <input type='text'
-                                       className={`${styles.account_input } ${errors.address?.message ? styles.account_errorBorder: ''}`}
+                                       className={`${styles.account_input } 
+                                       ${errors.address?.message ? styles.account_errorBorder: ''}`}
                                        placeholder="Адреса доставки"
                                        {...register("address")}
                                 />
