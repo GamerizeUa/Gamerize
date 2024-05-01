@@ -46,7 +46,10 @@ export const PersonalAccount = () => {
     const onSubmit = (data) => {
         // TODO post request
         //Axios.post('', data).then().catch()
-        Axios.post('https://gamerize.ltd.ua/api/Account/upload-profile-picture', photoFile)
+        console.log(photoFile)
+        Axios.post('https://gamerize.ltd.ua/api/Account/upload-profile-picture', photoFile, {
+            headers: {'Content-Type': 'multipart/form-data'}
+        })
             .then((res) => console.log(res))
             .catch((err) => console.log(err))
     }
