@@ -38,7 +38,13 @@ export const Login = ({ setDisplayedLoginPopUp }) => {
   const onSubmit = (data) =>{
     console.log(data)
     Axios.post('https://gamerize.ltd.ua/api/Account/login', data)
-        .then(changeVisibility)
+        .then((res) => {
+          changeVisibility();
+          localStorage.setItem("userID", res.data.userId);
+          Axios.post('https://gamerize.ltd.ua/api/Account/token', data)
+              .then((res) => localStorage.setItem("token", res.data.token))
+              .catch((err) => console.log(err))
+        })
         .catch((err) => {
           setIsErrorVisible(true)
           console.log(err)

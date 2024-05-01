@@ -13,7 +13,6 @@ const useClickAccount = (setIsDisplayedLoginPopUp, optionalCloseFunction) => {
                 optionalCloseFunction();
             }
         } else {
-            console.log('AAA')
             setIsDisplayedLoginPopUp(true);
         }
     };
