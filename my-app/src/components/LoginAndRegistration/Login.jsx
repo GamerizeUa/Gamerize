@@ -41,9 +41,7 @@ export const Login = ({ setDisplayedLoginPopUp }) => {
         .then((res) => {
           changeVisibility();
           localStorage.setItem("userID", res.data.userId);
-          Axios.post('https://gamerize.ltd.ua/api/Account/token', data)
-              .then((res) => localStorage.setItem("token", res.data.token))
-              .catch((err) => console.log(err))
+          localStorage.setItem("token", res.data.token.token);
         })
         .catch((err) => {
           setIsErrorVisible(true)
