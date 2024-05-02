@@ -10,6 +10,8 @@ export const PersonalAccount = () => {
     const hiddenFileInput = useRef(null);
     const [photoFile, setPhotoFile] = useState(null);
     const [token, setToken] = useState(null);
+    const [userId, setUserId] = useState(null);
+    const formData = new FormData();
 
     const transformEmptyStringToNull = (value) => {
         return value.trim() === '' ? null : value;
@@ -39,17 +41,16 @@ export const PersonalAccount = () => {
 
     useEffect(() => {
         // TODO get request
-        Axios.get('https://gamerize.ltd.ua/api/Account/profile')
+        Axios.get('https://gamerize.ltd.ua/api/Account/profile', { params: { userId: 27 } })
             .then((res) => console.log(res))
             .catch((err) => console.log(err))
         setToken(localStorage.getItem('token'))
+        setUserId(localStorage.getItem('userID'))
     }, [])
 
     const onSubmit = (data) => {
         // TODO post request
-        //Axios.post('', data).then().catch()
-        console.log(photoFile)
-        Axios.post('https://gamerize.ltd.ua/api/Account/upload-profile-picture', photoFile, {
+        Axios.post('https://gamerize.ltd.ua/api/Account/upload-profile-picture', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${token}`
@@ -71,6 +72,10 @@ export const PersonalAccount = () => {
         if (file && file.type.startsWith('image/')) {
             setPhotoFile(file);
             setAvatar(URL.createObjectURL(file));
+            if(photoFile){
+                formData.append('file', photoFile);
+                formData.append('userId', userId)
+            }
         } else {
             setAvatar(null);
         }
