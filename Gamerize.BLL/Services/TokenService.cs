@@ -23,7 +23,7 @@ namespace Gamerize.BLL.Services
             UserManager<User> userManager)
         {
             _userManager = userManager;
-            _settings = new TokenSettings { RefreshTokenValidityInDays = 5, Secret = "Gamerize", TokenValidityInMinutes = 10, ValidAudience = "http", 
+            _settings = new TokenSettings { RefreshTokenValidityInDays = 5, Secret = "GamerizeGamerizeGamerizeGamerize", TokenValidityInMinutes = 10, ValidAudience = "http", 
             ValidIssuer = "http"};
         }
 
