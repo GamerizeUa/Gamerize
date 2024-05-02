@@ -41,7 +41,11 @@ export const PersonalAccount = () => {
 
     useEffect(() => {
         // TODO get request
-        Axios.get('https://gamerize.ltd.ua/api/Account/profile', { params: { userId: 27 } })
+        Axios.get('https://gamerize.ltd.ua/api/Account/profile', { params: {userId},
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
             .then((res) => console.log(res))
             .catch((err) => console.log(err))
         setToken(localStorage.getItem('token'))
