@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import useClickAccount from "../../hooks/useClickAccount.js";
-import { Login } from "../../LoginAndRegistration/Login.jsx";
 import { fetchAllGenres } from "../../../redux/categories/genresSlice.js";
 import { fetchAllCategories } from "../../../redux/categories/categoriesSlice.js";
 import { fetchAllThemes } from "../../../redux/categories/themesSlice.js";
@@ -19,8 +18,7 @@ import sprite from "../../../assets/icons/sprite.svg";
 import HeartIcon from "../../icons/HeartIcon";
 import styles from "./BurgerMenu.module.css";
 
-const BurgerMenu = ({ burgerMenuClose }) => {
-  const [isDisplayedLoginPopUp, setIsDisplayedLoginPopUp] = useState(false);
+const BurgerMenu = ({ burgerMenuClose, setIsDisplayedLoginPopUp }) => {
   const [isCategory, setIsCategory] = useState(false);
   const [isGenre, setIsGenre] = useState(false);
   const [isTheme, setIsTheme] = useState(false);
@@ -28,16 +26,16 @@ const BurgerMenu = ({ burgerMenuClose }) => {
   const [isMindGames, setIsMindGames] = useState(false);
   const dispatch = useDispatch();
 
-  const handleClickAccount = useClickAccount(
-    setIsDisplayedLoginPopUp,
-    burgerMenuClose
-  );
-
   const handleOverlayClick = (event) => {
     if (event.currentTarget === event.target) {
       burgerMenuClose();
     }
   };
+
+  const handleClickAccount = useClickAccount(
+      setIsDisplayedLoginPopUp,
+      burgerMenuClose
+  );
 
   const handleCloseBurgerMenu = () => {
     setIsDisplayedLoginPopUp(false);
@@ -321,9 +319,6 @@ const BurgerMenu = ({ burgerMenuClose }) => {
           </svg>
           <p>Вихід</p>
         </div>
-        {isDisplayedLoginPopUp && (
-          <Login setDisplayedLoginPopUp={setIsDisplayedLoginPopUp} />
-        )}
       </div>
     </div>
   );

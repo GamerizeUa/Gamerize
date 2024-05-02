@@ -5,13 +5,11 @@ import AccountInformation from "./AccountInformation/AccountInformation.jsx";
 import { SearchInput } from "../SearchInput/SearchInput";
 import { Logo } from "../Logo/Logo";
 import { Link } from "react-router-dom";
-import { Login } from "@/components/LoginAndRegistration/Login.jsx";
 import useClickAccount from "../hooks/useClickAccount.js";
 import sprite from "../../assets/icons/sprite.svg";
 
-const Header = ({ openCart, openBurgerMenu }) => {
+const Header = ({ openCart, openBurgerMenu, setIsDisplayedLoginPopUp }) => {
   const [accountInformation, setAccountInformation] = useState(false);
-  const [isDisplayedLoginPopUp, setIsDisplayedLoginPopUp] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const handleClickAccount = useClickAccount(setIsDisplayedLoginPopUp);
 
@@ -115,9 +113,6 @@ const Header = ({ openCart, openBurgerMenu }) => {
               </li>
             )}
           </ul>
-          {isDisplayedLoginPopUp && (
-            <Login setDisplayedLoginPopUp={setIsDisplayedLoginPopUp} />
-          )}
         </div>
       </div>
     </section>
