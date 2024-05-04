@@ -1,8 +1,11 @@
 using Gamerize.BLL.AutoMapper;
 using Gamerize.DAL.Contexts;
 using Gamerize.DAL.Entities.Admin;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using webapi.Extensions.DI;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +36,23 @@ var builder = WebApplication.CreateBuilder(args);
                 }
             });
     });
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+            // Настройка JWT
+            IConfigurationSection jwtConfig = builder.Configuration.GetSection("Jwt");
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = jwtConfig["Issuer"],
+                ValidAudience = jwtConfig["Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig["SecretKey"]))
+            };
+        });
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
