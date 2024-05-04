@@ -37,7 +37,7 @@ export const Login = ({ setDisplayedLoginPopUp }) => {
 
   const onSubmit = (data) =>{
     console.log(data)
-    Axios.post('https://gamerize.ltd.ua/api/Account/login', data)
+    Axios.post('https://gamerize.ltd.ua/api/Login/login', data)
         .then((res) => {
           changeVisibility();
           localStorage.setItem("userID", res.data.userId);

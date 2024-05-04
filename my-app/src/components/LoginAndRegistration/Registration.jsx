@@ -30,7 +30,7 @@ export const Registration = ({ setIsDisplayedRegistrationPopUp }) => {
 
   const onSubmit = (data) =>{
     console.log(errors)
-    Axios.post('https://gamerize.ltd.ua/api/Account/register', data)
+    Axios.post('https://gamerize.ltd.ua/api/Register/register', data)
         .then(closePopUp)
         .catch((err) => setIsErrorVisible(true))
   }
