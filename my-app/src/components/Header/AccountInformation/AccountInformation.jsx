@@ -2,8 +2,9 @@ import { Link } from "react-router-dom";
 import styles from "./AccountInformation.module.css";
 import sprite from "../../../assets/icons/sprite.svg";
 import HeartIcon from "../../icons/HeartIcon";
+import {Logout} from "../../Logout/Logout.jsx";
 
-const AccountInformation = () => {
+const AccountInformation = ({setIsDisplayedLoginPopUp}) => {
   return (
     <div className={styles.accountLinksWrapper}>
       <ul className={styles.accountList}>
@@ -38,10 +39,7 @@ const AccountInformation = () => {
       </ul>
       <div className={styles.accountlogOut}>
         <Link className={styles.logOutLink}>
-          <svg width="24" height="24">
-            <use href={sprite + "#icon-log-out"}></use>
-          </svg>
-          <p className={styles.accountLinkText}>Вихід</p>
+          <Logout setIsDisplayedLoginPopUp={setIsDisplayedLoginPopUp}/>
         </Link>
       </div>
     </div>

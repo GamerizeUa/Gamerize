@@ -17,6 +17,7 @@ import {
 import sprite from "../../../assets/icons/sprite.svg";
 import HeartIcon from "../../icons/HeartIcon";
 import styles from "./BurgerMenu.module.css";
+import {Logout} from "../../Logout/Logout.jsx";
 
 const BurgerMenu = ({ burgerMenuClose, setIsDisplayedLoginPopUp }) => {
   const [isCategory, setIsCategory] = useState(false);
@@ -314,10 +315,7 @@ const BurgerMenu = ({ burgerMenuClose, setIsDisplayedLoginPopUp }) => {
           </li>
         </ul>
         <div className={styles.logOutBloc}>
-          <svg width="24" height="24">
-            <use href={sprite + "#icon-log-out"}></use>
-          </svg>
-          <p>Вихід</p>
+          <Logout setIsDisplayedLoginPopUp={setIsDisplayedLoginPopUp}/>
         </div>
       </div>
     </div>

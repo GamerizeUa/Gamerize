@@ -102,7 +102,7 @@ const Header = ({ openCart, openBurgerMenu, setIsDisplayedLoginPopUp }) => {
                     />
                   </svg>
                 </Link>
-                {accountInformation && <AccountInformation />}
+                {accountInformation && <AccountInformation setIsDisplayedLoginPopUp={setIsDisplayedLoginPopUp}/>}
               </li>
             )}
             {windowWidth >= 744 && (
