@@ -3,20 +3,17 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import sprite from "../../../assets/icons/sprite.svg";
 import styles from "./CustomerInfo.module.css";
-import { useState } from "react";
 
-export const CustomerInfo = ({ onChange }) => {
-  const [userName, setUserName] = useState("");
-  const [userPhone, setUserPhone] = useState("");
-  const [userEmail, setUserEmail] = useState("");
-
+export const CustomerInfo = ({ onChange, onSubmit }) => {
   const schema = yup.object().shape({
     name: yup.string().required("Введіть ім'я"),
     phone: yup.string().required("Введіть номер телефону"),
     email: yup.string().email().required("Введіть електронну пошту"),
   });
+
   const {
     register,
+    handleSubmit,
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(schema),
@@ -30,13 +27,17 @@ export const CustomerInfo = ({ onChange }) => {
   //   setUserEmail(data.email);
   // };
 
+  const onSubmitStep = (data) => {
+    onChange(data); // зворотній зв'язок для передачі даних
+    onSubmit(data); // onSubmit з батьківської форми
+  };
+
   const handleNameChange = (event) => {
     onChange(event.target.value);
   };
 
   return (
     <div>
-      {/* <form onSubmit={handleSubmit(onSubmit)} autoComplete="on"> */}
       <p className={styles.header}>1. Дані клієнта</p>
       <div className={styles.orderElement}>
         <label htmlFor="name" className={styles.orderText}>
@@ -98,11 +99,11 @@ export const CustomerInfo = ({ onChange }) => {
           type="submit"
           className={styles.orderBtn}
           // disabled={!isValid}
+          onClick={handleSubmit(onSubmitStep)}
         >
           Продовжити
         </button>
       </div>
-      {/* </form> */}
     </div>
   );
 };

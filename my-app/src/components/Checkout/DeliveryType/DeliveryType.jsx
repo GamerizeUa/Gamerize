@@ -1,6 +1,17 @@
+import { useState } from "react";
 import styles from "./DeliveryType.module.css";
 
-export const DeliveryType = () => {
+export const DeliveryType = ({ onSubmit }) => {
+  const [deliveryMethod, setDeliveryMethod] = useState("");
+
+  const handleContinue = () => {
+    if (deliveryMethod) {
+      onSubmit({ deliveryMethod }); // Передача обраного способу доставки в основну форму
+    } else {
+      alert("Будь ласка, оберіть спосіб доставки");
+    }
+  };
+
   return (
     <div>
       <p className={styles.header}>2. Спосіб доставки</p>
@@ -15,6 +26,7 @@ export const DeliveryType = () => {
                 value="pickup"
                 name="deliveryMethod"
                 className={styles.selectorInput}
+                onChange={() => setDeliveryMethod("pickup")}
               />
             </div>
             <label htmlFor="pickup" className={styles.orderText}>
@@ -38,6 +50,7 @@ export const DeliveryType = () => {
               value="delivery"
               name="deliveryMethod"
               className={styles.selectorInput}
+              onChange={() => setDeliveryMethod("delivery")}
             />
           </div>
           <label htmlFor="delivery" className={styles.orderText}>
@@ -46,7 +59,9 @@ export const DeliveryType = () => {
         </div>
         <p className={styles.orderText}>Безкоштовно</p>
       </div>
-      <button className={styles.orderBtn}>Продовжити</button>
+      <button className={styles.orderBtn} onClick={handleContinue}>
+        Продовжити
+      </button>
     </div>
   );
 };

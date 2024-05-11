@@ -2,8 +2,19 @@ import visa from "../../../assets/images/Visa.png";
 import mastercard from "../../../assets/images/Mastercard.png";
 import sprite from "../../../assets/icons/sprite.svg";
 import styles from "./PaymentType.module.css";
+import { useState } from "react";
 
-export const PaymentType = () => {
+export const PaymentType = ({ onSubmit }) => {
+  const [paymentMethod, setPaymentMethod] = useState("");
+
+  const handleContinue = () => {
+    if (paymentMethod) {
+      onSubmit({ paymentMethod }); // Передача обраного способу оплати в основну форму
+    } else {
+      alert("Будь ласка, оберіть спосіб оплати");
+    }
+  };
+
   return (
     <div>
       <p className={styles.header}>3. Оплата</p>
@@ -17,6 +28,7 @@ export const PaymentType = () => {
                 id="cod"
                 value="cod"
                 name="payment"
+                onChange={() => setPaymentMethod("cod")}
                 className={styles.selectorInput}
               />
             </div>
@@ -42,6 +54,7 @@ export const PaymentType = () => {
               id="electronic"
               value="electronic"
               name="payment"
+              onChange={() => setPaymentMethod("electronic")}
               className={styles.selectorInput}
             />
           </div>
@@ -54,7 +67,9 @@ export const PaymentType = () => {
           <img src={visa} />
         </div>
       </div>
-      <button className={styles.orderBtn}>Продовжити</button>
+      <button onClick={handleContinue} className={styles.orderBtn}>
+        Продовжити
+      </button>
     </div>
   );
 };
