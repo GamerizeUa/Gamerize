@@ -7,20 +7,22 @@ import productsCatalogReducer from "./productsCatalogSlice.js";
 import { wishListReducer } from "./wishListSlice.js";
 import { puzzlesReducer } from "./categories/puzzlesSlice.js";
 import { mindGamesReducer } from "./categories/mindGamesSlice.js";
+import { reviewsReducer } from "./reviewsSlice.js";
 
 const rootReducer = combineReducers({
-  categories: categoriesReducer,
-  genres: genresReducer,
-  themes: themesReducer,
-  puzzles: puzzlesReducer,
-  mindGames: mindGamesReducer,
-  translationTab: translationTabReducer,
-  productsCatalog: productsCatalogReducer,
-  wishList: wishListReducer,
+    categories: categoriesReducer,
+    genres: genresReducer,
+    themes: themesReducer,
+    puzzles: puzzlesReducer,
+    mindGames: mindGamesReducer,
+    translationTab: translationTabReducer,
+    productsCatalog: productsCatalogReducer,
+    wishList: wishListReducer,
+    reviews: reviewsReducer,
 });
 
 export const store = configureStore({
-  reducer: rootReducer,
+    reducer: rootReducer,
 });
 
 //  export const persistor = persistStore(store);
