@@ -96,6 +96,9 @@
         background-color: var(--light-blue-gray);
         clip-path: polygon(0% 0%, 215% 0%, 67% 100%, 0 100%);
     }
+    .right img {
+        filter: drop-shadow(30px 0px 20px var(--light-blue));
+    }
     .left {
         width: 61.6%;
         align-items: flex-start;
@@ -151,6 +154,9 @@
         width: 41%;
         padding-top: 136px;
         clip-path: polygon(0% 0%, 231% 0%, 74% 100%, 0 100%);
+    }
+    .right img {
+        filter: drop-shadow(40px 10px 20px var(--light-blue));
     }
     .title_container {
         padding-left: 14%;
