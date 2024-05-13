@@ -11,9 +11,9 @@ const useClickAccount = (setIsDisplayedLoginPopUp, optionalCloseFunction) => {
 
     const handleClickAccount = (e) => {
         e.preventDefault();
-        const userIdState = localStorage.getItem('userID');
+        const token = localStorage.getItem('token');
 
-        if (userIdState) {
+        if (token) {
             navigate('/login');
             setIsDisplayedLoginPopUp(false);
             closeBurger();

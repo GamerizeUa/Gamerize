@@ -10,7 +10,6 @@ export const PersonalAccount = () => {
     const hiddenFileInput = useRef(null);
     const [photoFile, setPhotoFile] = useState(null);
     const [token, setToken] = useState(null);
-    const [userId, setUserId] = useState(null);
     const formData = new FormData();
 
     const transformEmptyStringToNull = (value) => {
@@ -42,9 +41,7 @@ export const PersonalAccount = () => {
     useEffect(() => {
         // TODO get request
         setToken(localStorage.getItem('token'))
-        setUserId(localStorage.getItem('userID'))
         if(token){
-            console.log(token)
             Axios.get('https://gamerize.ltd.ua/api/Account/profile', {
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -57,14 +54,16 @@ export const PersonalAccount = () => {
 
     const onSubmit = (data) => {
         // TODO post request
-        Axios.post('https://gamerize.ltd.ua/api/Account/upload-profile-picture', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${token}`
-            }
-        })
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err))
+        if(token){
+            Axios.post('https://gamerize.ltd.ua/api/Account/upload-profile-picture', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then((res) => console.log(res))
+                .catch((err) => console.log(err))
+        }
     }
 
     const changeAvatar = () => {
@@ -81,7 +80,6 @@ export const PersonalAccount = () => {
             setAvatar(URL.createObjectURL(file));
             if(photoFile){
                 formData.append('file', photoFile);
-                formData.append('userId', userId)
             }
         } else {
             setAvatar(null);
