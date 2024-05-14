@@ -55,12 +55,13 @@ namespace Gamerize.BLL.Services
             }
         }
 
-        public async Task<IEnumerable<ProductShortDTO>> GetSimpleListAsync(int page, int pageSize)
+        public async Task<(IEnumerable<ProductShortDTO>, int)> GetSimpleListAsync(int page, int pageSize)
         {
             try
             {
                 var spec = new ProductSpecification().IncludeShort();
                 var orderedProducts = await _repository.Pagination(p => p.Id);
+                var totalProductsCount = await orderedProducts.CountAsync();
                 var productsPage = await orderedProducts.Skip((page - 1) * pageSize)
                                                          .Take(pageSize)
                                                          .ToListAsync();
@@ -72,7 +73,7 @@ namespace Gamerize.BLL.Services
                         return item;
                     });
 
-                return productsDTO;
+                return (productsDTO, (totalProductsCount + pageSize - 1) / pageSize);
             }
             catch (DbUpdateException ex)
             {
@@ -117,6 +118,43 @@ namespace Gamerize.BLL.Services
 
                 if (Directory.Exists(folderPath))
                     Directory.Delete(folderPath, true);
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new ServerErrorException(ex.Message, ex);
+            }
+        }
+
+        public async Task<ProductFullDTO> UpdateAsync(int id, ProductNewDTO updatedEntity)
+        {
+            try
+            {
+                var product = await _repository.Get().FirstOrDefaultAsync(x => x.Id == id)
+                    ?? throw new InvalidIdException($"Продукту з ID: {id} ще/вже не існує.");
+
+                if (!await EntityExistsAsync<Language>(updatedEntity.LanguageId))
+                    throw new InvalidIdException($"Мови з ID: {updatedEntity.LanguageId} ще/вже не існує.");
+
+                if (updatedEntity.CategoryId.HasValue && !await EntityExistsAsync<Category>(updatedEntity.CategoryId.Value))
+                    throw new InvalidIdException($"Категорії з ID: {updatedEntity.CategoryId} ще/вже не існує.");
+
+                if (updatedEntity.GenreId.HasValue && !await EntityExistsAsync<Genre>(updatedEntity.GenreId.Value))
+                    throw new InvalidIdException($"Жанру з ID: {updatedEntity.GenreId} ще/вже не існує.");
+
+                if (updatedEntity.ThemeId.HasValue && !await EntityExistsAsync<Theme>(updatedEntity.ThemeId.Value))
+                    throw new InvalidIdException($"Тематики з ID: {updatedEntity.ThemeId} ще/вже не існує.");
+
+                if (updatedEntity.PuzzleId.HasValue && !await EntityExistsAsync<Puzzle>(updatedEntity.PuzzleId.Value))
+                    throw new InvalidIdException($"Puzzle з ID: {updatedEntity.PuzzleId} ще/вже не існує.");
+
+                if (updatedEntity.MindGamesId.HasValue && !await EntityExistsAsync<MindGames>(updatedEntity.MindGamesId.Value))
+                    throw new InvalidIdException($"MindGames з ID: {updatedEntity.MindGamesId} ще/вже не існує.");
+
+                product = _mapper.Map(updatedEntity, product);
+                _repository.UpdateAsync(product);
+                await _unitOfWork.SaveChangesAsync();
+
+                return _mapper.Map<ProductFullDTO>(product);
             }
             catch (DbUpdateException ex)
             {

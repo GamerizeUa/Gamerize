@@ -23,7 +23,9 @@ namespace webapi.Controllers
                 var feedbacksPage = feedbacks.Skip((page - 1) * pageSize)
                                              .Take(pageSize)
                                              .ToList();
-                return Ok(feedbacksPage);
+                var totalFeedbacksCount = feedbacks.Count();
+
+                return Ok(new { feedbacks = feedbacksPage, totalPages = (totalFeedbacksCount + pageSize - 1) / pageSize });
             }
             catch (ServerErrorException ex)
             {

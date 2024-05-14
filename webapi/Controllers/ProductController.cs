@@ -20,12 +20,12 @@ namespace webapi.Controllers
         }
 
         [HttpGet("GetSimpleList")]
-        public async Task<ActionResult<IEnumerable<ProductShortDTO>>> GetSimpleList(int page = 1, int pageSize = 12)
+        public async Task<ActionResult<(IEnumerable<ProductShortDTO>, int)>> GetSimpleList(int page = 1, int pageSize = 12)
         {
             try
             {
-                var products = await _productService.GetSimpleListAsync(page, pageSize);
-                return Ok(products);
+                var (products, totalPages) = await _productService.GetSimpleListAsync(page, pageSize);
+                return Ok(new { products, totalPages });
             }
             catch (ServerErrorException ex)
             {
@@ -79,6 +79,26 @@ namespace webapi.Controllers
             {
                 await _productService.DeleteAsync(id);
                 return NoContent();
+            }
+            catch (InvalidIdException ex)
+            {
+                return StatusCode(400, ex.Message);
+            }
+            catch (ServerErrorException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpPut("Update/{id:int}")]
+        public async Task<IActionResult> Update(int id, [FromForm] ProductNewDTO updatedProduct)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var updatedEntity = await _productService.UpdateAsync(id, updatedProduct);
+                return Ok(updatedEntity);
             }
             catch (InvalidIdException ex)
             {
