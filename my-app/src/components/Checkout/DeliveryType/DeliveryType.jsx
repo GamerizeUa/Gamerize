@@ -1,12 +1,13 @@
 import { useState } from "react";
 import styles from "./DeliveryType.module.css";
 
-export const DeliveryType = ({ onSubmit }) => {
+export const DeliveryType = ({ onSubmit, currentStep, setCurrentStep }) => {
   const [deliveryMethod, setDeliveryMethod] = useState("");
 
   const handleContinue = () => {
     if (deliveryMethod) {
-      onSubmit({ deliveryMethod }); // Передача обраного способу доставки в основну форму
+      onSubmit({ deliveryMethod });
+      setCurrentStep(currentStep + 1);
     } else {
       alert("Будь ласка, оберіть спосіб доставки");
     }
@@ -59,7 +60,11 @@ export const DeliveryType = ({ onSubmit }) => {
         </div>
         <p className={styles.orderText}>Безкоштовно</p>
       </div>
-      <button className={styles.orderBtn} onClick={handleContinue}>
+      <button
+        className={styles.orderBtn}
+        onClick={handleContinue}
+        disabled={currentStep != 2}
+      >
         Продовжити
       </button>
     </div>

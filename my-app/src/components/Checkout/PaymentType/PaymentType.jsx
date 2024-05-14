@@ -1,15 +1,16 @@
+import { useState } from "react";
 import visa from "../../../assets/images/Visa.png";
 import mastercard from "../../../assets/images/Mastercard.png";
 import sprite from "../../../assets/icons/sprite.svg";
 import styles from "./PaymentType.module.css";
-import { useState } from "react";
 
-export const PaymentType = ({ onSubmit }) => {
+export const PaymentType = ({ onSubmit, currentStep, setCurrentStep }) => {
   const [paymentMethod, setPaymentMethod] = useState("");
 
   const handleContinue = () => {
     if (paymentMethod) {
-      onSubmit({ paymentMethod }); // Передача обраного способу оплати в основну форму
+      onSubmit({ paymentMethod });
+      setCurrentStep(currentStep + 1);
     } else {
       alert("Будь ласка, оберіть спосіб оплати");
     }
@@ -67,7 +68,11 @@ export const PaymentType = ({ onSubmit }) => {
           <img src={visa} />
         </div>
       </div>
-      <button onClick={handleContinue} className={styles.orderBtn}>
+      <button
+        onClick={handleContinue}
+        className={styles.orderBtn}
+        disabled={currentStep != 3}
+      >
         Продовжити
       </button>
     </div>

@@ -4,11 +4,23 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import sprite from "../../../assets/icons/sprite.svg";
 import styles from "./CustomerInfo.module.css";
 
-export const CustomerInfo = ({ onChange, onSubmit }) => {
+export const CustomerInfo = ({ onSubmit, currentStep, setCurrentStep }) => {
   const schema = yup.object().shape({
-    name: yup.string().required("Введіть ім'я"),
-    phone: yup.string().required("Введіть номер телефону"),
-    email: yup.string().email().required("Введіть електронну пошту"),
+    name: yup
+      .string()
+      .matches(/^[A-Za-zА-Яа-я\s]+$/, "Введіть коректне ім'я")
+      .required("Введіть ім'я"),
+    phone: yup
+      .string()
+      .matches(
+        /^\+380\d{9}$/,
+        "Введіть коректний номер телефону (+380XXXXXXXXX)"
+      )
+      .required("Введіть номер телефону"),
+    email: yup
+      .string()
+      .email("Введіть коректну електронну пошту")
+      .required("Введіть електронну пошту"),
   });
 
   const {
@@ -20,20 +32,9 @@ export const CustomerInfo = ({ onChange, onSubmit }) => {
     mode: "onChange",
   });
 
-  // const onSubmit = (data) => {
-  //   console.log(JSON.stringify(data));
-  //   setUserName(data.name);
-  //   setUserPhone(data.phone);
-  //   setUserEmail(data.email);
-  // };
-
-  const onSubmitStep = (data) => {
-    onChange(data); // зворотній зв'язок для передачі даних
-    onSubmit(data); // onSubmit з батьківської форми
-  };
-
-  const handleNameChange = (event) => {
-    onChange(event.target.value);
+  const handleContinue = (data) => {
+    onSubmit(data);
+    setCurrentStep(currentStep + 1);
   };
 
   return (
@@ -51,59 +52,78 @@ export const CustomerInfo = ({ onChange, onSubmit }) => {
             type="text"
             placeholder="Ім’я"
             id="name"
-            className={styles.orderInput}
+            className={`${styles.orderInput} ${
+              errors.name && styles.errorInput
+            }`}
             {...register("name")}
-            onChange={handleNameChange}
           />
-          <div>{errors?.name && <p>{errors?.userName.message}</p>}</div>
-          {/* <div>{errors?.name && <p>Введіть ім'я</p>}</div> */}
         </div>
-        <div className={styles.orderElement}>
-          <label htmlFor="tel" className={styles.orderText}>
-            Контактний номер телефону
-          </label>
-          <div className={styles.inputBox}>
-            <svg className={styles.inputIcon}>
-              <use
-                href={sprite + "#icon-phone"}
-                stroke="#AAC4FF"
-                fill="#FEFEFE"
-              />
-            </svg>
-            <input
-              type="tel"
-              placeholder="+380"
-              id="phone"
-              className={styles.orderInput}
-              {...register("phone")}
-            />
-          </div>
+        <div>
+          {errors?.name && (
+            <p className={styles.errorMessage}>{errors?.name.message}</p>
+          )}
         </div>
-        <div className={styles.orderElement}>
-          <label htmlFor="email" className={styles.orderText}>
-            Електронна пошта
-          </label>
-          <div className={styles.inputBox}>
-            <svg className={styles.inputIcon}>
-              <use href={sprite + "#icon-email"} />
-            </svg>
-            <input
-              type="email"
-              id="email"
-              className={styles.orderInput}
-              {...register("email")}
-            />
-          </div>
-        </div>
-        <button
-          type="submit"
-          className={styles.orderBtn}
-          // disabled={!isValid}
-          onClick={handleSubmit(onSubmitStep)}
-        >
-          Продовжити
-        </button>
       </div>
+      <div className={styles.orderElement}>
+        <label htmlFor="tel" className={styles.orderText}>
+          Контактний номер телефону
+        </label>
+        <div className={styles.inputBox}>
+          <svg className={styles.inputIcon}>
+            <use
+              href={sprite + "#icon-phone"}
+              stroke="#AAC4FF"
+              fill="#FEFEFE"
+            />
+          </svg>
+          <input
+            type="tel"
+            placeholder="+380"
+            id="phone"
+            defaultValue="+380"
+            className={`${styles.orderInput} ${
+              errors.phone && styles.errorInput
+            }`}
+            {...register("phone")}
+          />
+        </div>
+        <div>
+          {errors?.phone && (
+            <p className={styles.errorMessage}>{errors?.phone.message}</p>
+          )}
+        </div>
+      </div>
+      <div className={styles.orderElement}>
+        <label htmlFor="email" className={styles.orderText}>
+          Електронна пошта
+        </label>
+        <div className={styles.inputBox}>
+          <svg className={styles.inputIcon}>
+            <use href={sprite + "#icon-email"} />
+          </svg>
+          <input
+            type="email"
+            id="email"
+            className={`${styles.orderInput} ${
+              errors.email && styles.errorInput
+            }`}
+            {...register("email")}
+          />
+        </div>
+        <div>
+          {errors?.email && (
+            <p className={styles.errorMessage}>{errors?.email.message}</p>
+          )}
+        </div>
+      </div>
+      <button
+        type="button"
+        className={styles.orderBtn}
+        disabled={!isValid || currentStep != 1}
+        onClick={handleSubmit(handleContinue)}
+      >
+        Продовжити
+      </button>
     </div>
   );
 };

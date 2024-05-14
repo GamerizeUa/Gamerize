@@ -8,14 +8,10 @@ import { DeliveryType } from "../DeliveryType/DeliveryType";
 import { PaymentType } from "../PaymentType/PaymentType";
 
 export const OrderForm = () => {
-  // const [userName, setUserName] = useState("");
-  // const [userPhone, setUserPhone] = useState("");
-  // const [userEmail, setUserEmail] = useState("");
-  // const [deliveryType, setDeliveryType] = useState("");
-  // const [paymentType, setPaymentType] = useState("");
-
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({});
+  const [comment, setComment] = useState("");
+  const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
 
   const {
     register,
@@ -29,33 +25,17 @@ export const OrderForm = () => {
     mode: "onBlur",
   });
 
-  // const onSubmit = (data) => {
-  //   alert(JSON.stringify(data));
-  //   reset();
-  // };
-
-  const onSubmit = (data) => {
-    if (currentStep === 4) {
-      const updatedFormData = { ...formData, ...data };
-      setFormData(updatedFormData);
-      console.log(updatedFormData);
-      // відправити дані на бекенд
-    } else {
-      const updatedFormData = { ...formData, ...data };
-      setFormData(updatedFormData);
-      setCurrentStep(currentStep + 1);
-    }
+  const handleCommentChange = (event) => {
+    setComment(event.target.value);
   };
 
-  // const handleChange = (name) => {
-  //   setUserName(name);
-  // };
-
-  const handleCustomerInfoChange = (data) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      ...data,
-    }));
+  const onSubmit = (data) => {
+    const updatedFormData = { ...formData, ...data, comment };
+    setFormData(updatedFormData);
+    if (isReadyToSubmit) {
+      //Відправка даних на бек
+      console.log(updatedFormData);
+    }
   };
 
   return (
@@ -63,13 +43,26 @@ export const OrderForm = () => {
       <form onSubmit={handleSubmit(onSubmit)} className={styles.orderForm}>
         {currentStep >= 1 && (
           <CustomerInfo
-            onChange={handleCustomerInfoChange}
             onSubmit={onSubmit}
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
           />
         )}
-        {currentStep >= 2 && <DeliveryType onSubmit={onSubmit} />}
-        {currentStep >= 3 && <PaymentType onSubmit={onSubmit} />}
-        {currentStep >= 4 && (
+        {currentStep >= 2 && (
+          <DeliveryType
+            onSubmit={onSubmit}
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+          />
+        )}
+        {currentStep >= 3 && (
+          <PaymentType
+            onSubmit={onSubmit}
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+          />
+        )}
+        {currentStep === 4 && (
           <div>
             <p className={styles.header}>
               Перегляньте та підтвердіть замовлення
@@ -86,9 +79,15 @@ export const OrderForm = () => {
                 id="comment"
                 placeholder="Коментар"
                 className={styles.textarea}
+                value={comment}
+                onChange={handleCommentChange}
               />
             </div>
-            <button className={styles.orderBtn} type="submit">
+            <button
+              className={styles.orderBtn}
+              type="submit"
+              onClick={() => setIsReadyToSubmit(true)}
+            >
               Оформити замовлення
             </button>
           </div>
