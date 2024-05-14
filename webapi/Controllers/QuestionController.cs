@@ -3,10 +3,14 @@ using Gamerize.BLL.Models.Interfaces;
 using Gamerize.BLL.Services;
 using Gamerize.BLL.Services.Interfaces;
 using Gamerize.Common.Extensions.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace webapi.Controllers
 {
+    [Route("api/[controller]")]
+    [Authorize]
+    [ApiController]
     public class QuestionController : ControllerBase
     {
         private readonly QuestionService _questionService;

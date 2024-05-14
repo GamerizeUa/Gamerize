@@ -23,14 +23,12 @@ namespace Gamerize.BLL.Services
             UserManager<User> userManager)
         {
             _userManager = userManager;
-            _settings = new TokenSettings { RefreshTokenValidityInDays = 5, Secret = "GamerizeGamerizeGamerizeGamerize", TokenValidityInMinutes = 10, ValidAudience = "http", 
+            _settings = new TokenSettings { RefreshTokenValidityInDays = 5, Secret = "GamerizeGamerizeGamerizeGamerize", TokenValidityInMinutes = 600, ValidAudience = "http", 
             ValidIssuer = "http"};
         }
 
         public async Task<TokenResponse> GetTokenAsync(TokenRequest request)
         {
-
-
             var user = await _userManager.FindByEmailAsync(request.Email);
             if (user != null && await _userManager.CheckPasswordAsync(user, request.Password))
             {
@@ -72,7 +70,6 @@ namespace Gamerize.BLL.Services
                 throw new Exception("Invalid refresh token");
             }
 
-
             if (user.RefreshToken == null)
             {
                 throw new Exception("Invalid refresh token");
@@ -100,7 +97,6 @@ namespace Gamerize.BLL.Services
             new(ClaimTypes.MobilePhone, user.PhoneNumber ?? string.Empty),
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
-
 
         private string CreateToken(IEnumerable<Claim> authClaims)
         {
