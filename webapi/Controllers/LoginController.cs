@@ -5,6 +5,7 @@ using Gamerize.DAL.Entities.Admin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace webapi.Controllers
 {
@@ -15,13 +16,13 @@ namespace webapi.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly TokenService _tokenService;
+        private readonly IConfiguration _configuration;
 
-        public LoginController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public LoginController(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _tokenService = new TokenService(userManager);
+            _configuration = configuration;
         }
 
         [HttpPost("login")]
@@ -45,27 +46,16 @@ namespace webapi.Controllers
                 return BadRequest(new { Message = "Invalid login attempt" });
             }
 
-            var tokenRequest = new TokenRequest { Email = model.Email, Password = model.Password };
-            var tokenResponse = await _tokenService.GetTokenAsync(tokenRequest);
+            var authHelper = new AuthHelper(_configuration);
+            var token = authHelper.GenerateJWTToken(user);
 
-            if (tokenResponse == null)
+            if (string.IsNullOrEmpty(token))
             {
                 return BadRequest(new { Message = "Failed to generate token" });
             }
 
-            return Ok(new { Token = tokenResponse.Token });
+            return Ok(new { Token = token });
         }
 
-        //[HttpPost("token")]
-        //public async Task<IActionResult> Login([FromBody] TokenRequest request)
-        //{
-        //    return Ok(await _tokenService.GetTokenAsync(request));
-        //}
-
-        //[HttpPost("refresh-token")]
-        //public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
-        //{
-        //    return Ok(await _tokenService.RefreshTokenAsync(request));
-        //}
     }
 }
