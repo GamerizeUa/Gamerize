@@ -8,5 +8,6 @@
         public string? Phone {  get; set; }
         public string? City { get; set; }
         public string? DeliveryAddress { get; set; }
+        public string? ProfilePicture { get; set; }
     }
 }

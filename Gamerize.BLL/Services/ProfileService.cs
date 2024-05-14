@@ -2,7 +2,6 @@
 using Gamerize.DAL.Entities.Admin;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
-using Google.Apis.Http;
 using Google.Apis.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -17,52 +16,7 @@ namespace Gamerize.BLL.Services
         {
             _userManager = userManager;
         }
-        #region FAILED PHOTO
-        //public async Task UploadProfilePictureAsync(IFormFile file, User user)
-        //{
-        //    try
-        //    {
-        //        var driveService = new DriveService(new BaseClientService.Initializer
-        //        {
-        //            HttpClientInitializer = GetCredential(),
-        //            ApplicationName = "Gamerize",
-        //        });
 
-        //        var fileMetadata = new Google.Apis.Drive.v3.Data.File
-        //        {
-        //            Name = Path.GetFileName(file.FileName),
-        //            Parents = new List<string> { "1VLPt6EOO7CIW964y1_TiWmQEBzXUttLo" }
-        //        };
-
-        //        FilesResource.CreateMediaUpload request;
-
-        //        using (var stream = file.OpenReadStream())
-        //        {
-        //            request = driveService.Files.Create(fileMetadata, stream, "application/octet-stream");
-        //            request.Fields = "id";
-        //            await request.UploadAsync();
-        //        }
-
-        //        var fileUploaded = request.ResponseBody;
-
-        //        user.ProfilePicture = $"https://drive.google.com/uc?export=view&id={fileUploaded.Id}";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine($"Помилка при завантаженні зображення: {ex.Message}");
-
-        //        throw;
-        //    }
-        //}
-
-        //private IConfigurableHttpClientInitializer GetCredential()
-        //{
-        //    string credPath = "C:\\Users\\sasha\\source\\repos\\Gamerize\\webapi\\Controllers\\client_secret_214402206807-j2ub7qopgmab6h5o7t9bc4fago2n39a0.apps.googleusercontent.com.json";
-
-        //    return GoogleCredential.FromFile(credPath)
-        //        .CreateScoped(DriveService.Scope.Drive);
-        //}
-        #endregion
         public async Task<ProfileDTO> GetUserProfileData(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -79,10 +33,76 @@ namespace Gamerize.BLL.Services
                 Phone = user.PhoneNumber,
                 Email = user.Email,
                 City = user.City,
-                DeliveryAddress = user.DeliveryAddress
+                DeliveryAddress = user.DeliveryAddress,
+                ProfilePicture = user.ProfilePicture
             };
 
             return userProfileData;
+        }
+
+        public static string UploadFileToGoogleDrive(string credentialPath, string folderId, string fileToUpload)
+        {
+            GoogleCredential credential;
+
+            using (var stream = new FileStream(credentialPath, FileMode.Open, FileAccess.Read))
+            {
+                credential = GoogleCredential.FromStream(stream).CreateScoped(new[]
+                { DriveService.ScopeConstants.DriveFile });
+            }
+
+            var service = new DriveService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = "UploadPhoto"
+            });
+
+            var fileMetaData = new Google.Apis.Drive.v3.Data.File()
+            {
+                Name = Path.GetFileName(fileToUpload),
+                Parents = new List<string> { folderId }
+            };
+
+            FilesResource.CreateMediaUpload request;
+
+            using (var stream = new FileStream(fileToUpload, FileMode.Open))
+            {
+                request = service.Files.Create(fileMetaData, stream, "");
+                request.Fields = "id";
+                request.Upload();
+            }
+
+            var uploadPhoto = request.ResponseBody;
+
+            return $"https://drive.google.com/thumbnail?id={uploadPhoto.Id}";
+        }
+
+        public static async Task<string> UploadProfilePhoto(string credentialPath, string folderId, IFormFile photo)
+        {
+            var filePath = Path.GetTempFileName();
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await photo.CopyToAsync(stream);
+            }
+
+            var uploadedUrl = UploadFileToGoogleDrive(credentialPath, folderId, filePath);
+
+            System.IO.File.Delete(filePath);
+
+            return uploadedUrl;
+        }
+
+        public async Task UpdateProfilePicture(string userId, string pictureUrl)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                user.ProfilePicture = pictureUrl;
+                await _userManager.UpdateAsync(user);
+            }
+            else
+            {
+                throw new ArgumentException("User not found", nameof(userId));
+            }
         }
     }
 }

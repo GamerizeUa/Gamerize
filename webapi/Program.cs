@@ -58,7 +58,7 @@ builder.Services.AddAuthentication(cfg => {
         ValidateAudience = false,
         ClockSkew = TimeSpan.Zero
     };
-});
+}).AddCookie(IdentityConstants.ApplicationScheme);
 
 builder.Services.AddDbContext<ApiDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("SqlConnection")));
