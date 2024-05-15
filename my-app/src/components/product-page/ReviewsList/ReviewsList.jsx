@@ -9,14 +9,15 @@ import {
     selectProductId,
     setProductId,
     clearReviews,
+    selectTotalPages,
 } from "../../../redux/reviewsSlice";
 
 export default function ReviewsList({ productId = 38 }) {
     const dispatch = useDispatch();
     const reviews = useSelector(selectReviews);
     const prodId = useSelector(selectProductId);
+    const pagesAmount = useSelector(selectTotalPages);
     const pageSize = 3; // amount of reviews on one page
-    const pagesAmount = 3; //todo: add getting pages amount
     let [page, setPage] = useState(1);
     useEffect(() => {
         if (prodId !== productId) {
