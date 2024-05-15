@@ -7,6 +7,11 @@ import styles from "./PaymentType.module.css";
 export const PaymentType = ({ onSubmit, currentStep, setCurrentStep }) => {
   const [paymentMethod, setPaymentMethod] = useState("");
 
+  const handleRadioClick = (method) => {
+    setPaymentMethod(method);
+    document.getElementById(method).checked = true;
+  };
+
   const handleContinue = () => {
     if (paymentMethod) {
       onSubmit({ paymentMethod });
@@ -18,8 +23,10 @@ export const PaymentType = ({ onSubmit, currentStep, setCurrentStep }) => {
 
   return (
     <div>
-      <p className={styles.header}>3. Оплата</p>
-      <div className={styles.selectElement}>
+      <div
+        className={styles.selectElement}
+        onClick={() => handleRadioClick("cod")}
+      >
         <div>
           <div className={styles.radioInputBox}>
             <div className={styles.inputWrapper}>
@@ -46,7 +53,10 @@ export const PaymentType = ({ onSubmit, currentStep, setCurrentStep }) => {
           <use href={sprite + "#icon-wallet_payment"} />
         </svg>
       </div>
-      <div className={styles.selectElement}>
+      <div
+        className={styles.selectElement}
+        onClick={() => handleRadioClick("electronic")}
+      >
         <div className={styles.radioInputBox}>
           <div className={styles.inputWrapper}>
             <span className={styles.fakeInput} />

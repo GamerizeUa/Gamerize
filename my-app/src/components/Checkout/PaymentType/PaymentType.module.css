@@ -1,14 +1,7 @@
-.header {
-    padding-bottom: 16px;
-    border-bottom: 1px solid #eeeef0;
-    font-family: "Noto Sans";
-    font-size: 24px;
-    line-height: 130%;
-}
-
 .orderText {
     font-family: "Noto Sans";
     font-size: 14px;
+    cursor: pointer;
 }
 
 .selectElement {
@@ -17,6 +10,7 @@
     padding: 16px;
     margin: 16px 0;
     border: 1px solid #dee0e3;
+    cursor: pointer;
 }
 
 .radioInputBox {
@@ -43,6 +37,7 @@
 .selectorInput {
     width: 20px;
     height: 20px;
+    cursor: pointer;
 }
 
 .selectorInput:checked::before {

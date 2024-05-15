@@ -4,6 +4,11 @@ import styles from "./DeliveryType.module.css";
 export const DeliveryType = ({ onSubmit, currentStep, setCurrentStep }) => {
   const [deliveryMethod, setDeliveryMethod] = useState("");
 
+  const handleRadioClick = (method) => {
+    setDeliveryMethod(method);
+    document.getElementById(method).checked = true;
+  };
+
   const handleContinue = () => {
     if (deliveryMethod) {
       onSubmit({ deliveryMethod });
@@ -15,8 +20,10 @@ export const DeliveryType = ({ onSubmit, currentStep, setCurrentStep }) => {
 
   return (
     <div>
-      <p className={styles.header}>2. Спосіб доставки</p>
-      <div className={styles.selectElement}>
+      <div
+        className={styles.selectElement}
+        onClick={() => handleRadioClick("pickup")}
+      >
         <div>
           <div className={styles.radioInputBox}>
             <div className={styles.inputWrapper}>
@@ -41,7 +48,10 @@ export const DeliveryType = ({ onSubmit, currentStep, setCurrentStep }) => {
         </div>
         <p className={styles.orderText}>Безкоштовно</p>
       </div>
-      <div className={styles.selectElement}>
+      <div
+        className={styles.selectElement}
+        onClick={() => handleRadioClick("delivery")}
+      >
         <div className={styles.radioInputBox}>
           <div className={styles.inputWrapper}>
             <span className={styles.fakeInput} />

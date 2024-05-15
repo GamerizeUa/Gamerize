@@ -1,40 +1,42 @@
 import { useState } from "react";
-// import * as yup from "yup";
-// import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import styles from "./OrderForm.module.css";
 import { CustomerInfo } from "../CustomerInfo/CustomerInfo";
 import { DeliveryType } from "../DeliveryType/DeliveryType";
 import { PaymentType } from "../PaymentType/PaymentType";
+import styles from "./OrderForm.module.css";
 
 export const OrderForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({});
-  const [comment, setComment] = useState("");
   const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
+
+  const schema = yup.object().shape({
+    comment: yup
+      .string()
+      .max(200, "Коментар повинен бути не більше 200 символів"),
+  });
 
   const {
     register,
     handleSubmit,
     reset,
-    watch,
-    control,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm({
-    // resolver: yupResolver(schema),
-    mode: "onBlur",
+    resolver: yupResolver(schema),
+    mode: "onChange",
   });
 
-  const handleCommentChange = (event) => {
-    setComment(event.target.value);
-  };
-
   const onSubmit = (data) => {
-    const updatedFormData = { ...formData, ...data, comment };
+    const updatedFormData = { ...formData, ...data };
     setFormData(updatedFormData);
     if (isReadyToSubmit) {
       //Відправка даних на бек
       console.log(updatedFormData);
+      reset();
+      setCurrentStep("1");
+      setIsReadyToSubmit(false);
     }
   };
 
@@ -48,6 +50,7 @@ export const OrderForm = () => {
             setCurrentStep={setCurrentStep}
           />
         )}
+        <p className={styles.header}>2. Спосіб доставки</p>
         {currentStep >= 2 && (
           <DeliveryType
             onSubmit={onSubmit}
@@ -55,6 +58,7 @@ export const OrderForm = () => {
             setCurrentStep={setCurrentStep}
           />
         )}
+        <p className={styles.header}>3. Оплата</p>
         {currentStep >= 3 && (
           <PaymentType
             onSubmit={onSubmit}
@@ -79,9 +83,13 @@ export const OrderForm = () => {
                 id="comment"
                 placeholder="Коментар"
                 className={styles.textarea}
-                value={comment}
-                onChange={handleCommentChange}
+                {...register("comment")}
               />
+            </div>
+            <div>
+              {errors?.comment && (
+                <p className={styles.errorMessage}>{errors?.comment.message}</p>
+              )}
             </div>
             <button
               className={styles.orderBtn}
