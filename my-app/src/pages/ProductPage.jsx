@@ -5,6 +5,7 @@ import { ProductOverview } from "../components/ProductOverview/ProductOverview.j
 import ProductDetails from "../components/product-page/ProductDetails/ProductDetails";
 import { useLocation } from "react-router-dom";
 import GamePickerBtn from "../components/product-page/game-picker-btn/GamePickerBtn.jsx";
+import { useEffect } from "react";
 
 const ProductPage = () => {
     // feedbackList and some product rate just for tests
@@ -152,6 +153,11 @@ const ProductPage = () => {
     ];
     const rate = 3.9;
     // feedbackList just for tests
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+        });
+    }, []);
     const location = useLocation();
     return (
         <div>
