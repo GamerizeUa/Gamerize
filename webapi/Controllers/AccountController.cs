@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Gamerize.BLL.Services;
 using System.Security.Claims;
+using Gamerize.BLL.Models;
 
 namespace webapi.Controllers;
 
@@ -40,6 +41,29 @@ public class AccountController : ControllerBase
         }
 
         return Ok(userProfileData);
+    }
+
+    [HttpPatch("update-profile")]
+    [Authorize]
+    public async Task<IActionResult> UpdateUserProfile([FromBody] ProfileDTO profileUpdate)
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userId == null)
+        {
+            _logger.LogInformation("User not authenticated");
+            return BadRequest("User not authenticated");
+        }
+
+        try
+        {
+            var updatedProfile = await _profileService.UpdateUserProfile(userId, profileUpdate);
+            return Ok(updatedProfile);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to update user profile");
+            return StatusCode(500, "Failed to update user profile");
+        }
     }
 
     [HttpPost("profile/picture")]

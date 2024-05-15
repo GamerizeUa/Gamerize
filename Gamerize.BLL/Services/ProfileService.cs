@@ -1,4 +1,5 @@
-﻿using Gamerize.BLL.Models;
+﻿using AutoMapper;
+using Gamerize.BLL.Models;
 using Gamerize.DAL.Entities.Admin;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
@@ -11,10 +12,12 @@ namespace Gamerize.BLL.Services
     public class ProfileService
     {
         private readonly UserManager<User> _userManager;
+        private readonly IMapper _mapper;
 
-        public ProfileService(UserManager<User> userManager)
+        public ProfileService(UserManager<User> userManager, IMapper mapper)
         {
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         public async Task<ProfileDTO> GetUserProfileData(string userId)
@@ -38,6 +41,27 @@ namespace Gamerize.BLL.Services
             };
 
             return userProfileData;
+        }
+
+        public async Task<ProfileDTO> UpdateUserProfile(string userId, ProfileDTO profileUpdate)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            _mapper.Map(profileUpdate, user);
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
+            {
+                throw new Exception("Failed to update user profile");
+            }
+
+            return _mapper.Map<ProfileDTO>(user);
         }
 
         public static string UploadFileToGoogleDrive(string credentialPath, string folderId, string fileToUpload)
