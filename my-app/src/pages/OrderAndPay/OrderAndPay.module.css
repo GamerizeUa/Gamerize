@@ -1,0 +1,106 @@
+.pageWrapper {
+    padding: 62px 80px 136px 80px;
+}
+
+.mainTitle {
+    width: 1280px;
+    padding: 53px 107px;
+    margin-bottom: 60px;
+    font-family: 'Oswald';
+    font-size: 44px;
+    background-color: #EEF1FF;
+}
+
+.secondaryTitle{
+    margin-bottom: 24px;
+    font-family: 'Oswald';
+    font-size: 28px;
+    /* line-height: 28%; */
+    color: #6566AC;
+}
+
+.mainText{
+    max-width: 630px;
+    font-family: "Noto Sans";
+    font-size: 16px;
+    line-height: 150%;
+    color: #2B2B2B;
+}
+
+.deliveryTitle{
+    margin-top: 54px;
+    margin-bottom: 24px;
+    font-family: "Noto Sans";
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 20%;
+}
+
+.deliveryList {
+    margin: 32px 0 60px 17px;
+}
+
+ul.deliveryList li{
+    list-style: disc;
+    font-weight: 500;
+}
+
+.warningBlock{
+    max-width: 1280px;
+    padding: 42px 36px;
+    margin-bottom: 60px;
+    background: #EEF1FF;
+}
+
+.warningTitle{    
+        margin-bottom: 24px;
+        font-family: 'Oswald';
+        font-size: 28px;
+        line-height: 28%;
+        color: #FF5E00;
+}
+
+.warningText{
+    max-width: 594px;
+        font-family: "Noto Sans";
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 150%;
+        color: #2B2B2B;
+}
+
+.paymentList{
+margin-left: 18px;
+margin-bottom: 60px;
+}
+
+ul.paymentList li{
+    color: #000;
+    list-style: disc;
+}
+
+.returnListText{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 32px;
+}
+
+.returnTitle{
+    margin-bottom: 24px;
+    font-family: "Noto Sans";
+        font-size: 16px;
+            font-weight: 700;
+        line-height: 150%;
+        color: #2B2B2B;
+}
+
+.returnList{
+    margin-bottom: 60px;
+    margin-left: 18px;
+}
+
+ul.returnList li {
+    color: #000;
+    list-style: disc;
+}

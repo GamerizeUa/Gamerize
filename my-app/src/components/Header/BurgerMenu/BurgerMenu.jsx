@@ -308,10 +308,23 @@ const BurgerMenu = ({ burgerMenuClose, setIsDisplayedLoginPopUp }) => {
             </Link>
           </li>
           <li className={styles.menuInfoListItem}>
-            <Link className={styles.menuInfoListLink}>Оплата та доставка</Link>
+            <Link
+              className={styles.menuInfoListLink}
+              to="order-pay"
+              onClick={() => burgerMenuClose()}
+            >
+              Оплата та доставка
+            </Link>
           </li>
           <li className={styles.menuInfoListItem}>
-            <Link className={styles.menuInfoListLink}>Умови поверненн</Link>я
+            <Link
+              className={styles.menuInfoListLink}
+              to="return"
+              onClick={() => burgerMenuClose()}
+            >
+              Умови повернення
+            </Link>
+            я
           </li>
         </ul>
         <div className={styles.logOutBloc}>

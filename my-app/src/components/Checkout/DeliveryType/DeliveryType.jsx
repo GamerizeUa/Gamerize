@@ -1,10 +1,29 @@
+import { useState } from "react";
 import styles from "./DeliveryType.module.css";
 
-export const DeliveryType = () => {
+export const DeliveryType = ({ onSubmit, currentStep, setCurrentStep }) => {
+  const [deliveryMethod, setDeliveryMethod] = useState("");
+
+  const handleRadioClick = (method) => {
+    setDeliveryMethod(method);
+    document.getElementById(method).checked = true;
+  };
+
+  const handleContinue = () => {
+    if (deliveryMethod) {
+      onSubmit({ deliveryMethod });
+      setCurrentStep(currentStep + 1);
+    } else {
+      alert("Будь ласка, оберіть спосіб доставки");
+    }
+  };
+
   return (
     <div>
-      <p className={styles.header}>2. Спосіб доставки</p>
-      <div className={styles.selectElement}>
+      <div
+        className={styles.selectElement}
+        onClick={() => handleRadioClick("pickup")}
+      >
         <div>
           <div className={styles.radioInputBox}>
             <div className={styles.inputWrapper}>
@@ -15,6 +34,7 @@ export const DeliveryType = () => {
                 value="pickup"
                 name="deliveryMethod"
                 className={styles.selectorInput}
+                onChange={() => setDeliveryMethod("pickup")}
               />
             </div>
             <label htmlFor="pickup" className={styles.orderText}>
@@ -28,7 +48,10 @@ export const DeliveryType = () => {
         </div>
         <p className={styles.orderText}>Безкоштовно</p>
       </div>
-      <div className={styles.selectElement}>
+      <div
+        className={styles.selectElement}
+        onClick={() => handleRadioClick("delivery")}
+      >
         <div className={styles.radioInputBox}>
           <div className={styles.inputWrapper}>
             <span className={styles.fakeInput} />
@@ -38,6 +61,7 @@ export const DeliveryType = () => {
               value="delivery"
               name="deliveryMethod"
               className={styles.selectorInput}
+              onChange={() => setDeliveryMethod("delivery")}
             />
           </div>
           <label htmlFor="delivery" className={styles.orderText}>
@@ -46,7 +70,13 @@ export const DeliveryType = () => {
         </div>
         <p className={styles.orderText}>Безкоштовно</p>
       </div>
-      <button className={styles.orderBtn}>Продовжити</button>
+      <button
+        className={styles.orderBtn}
+        onClick={handleContinue}
+        disabled={currentStep != 2}
+      >
+        Продовжити
+      </button>
     </div>
   );
 };
