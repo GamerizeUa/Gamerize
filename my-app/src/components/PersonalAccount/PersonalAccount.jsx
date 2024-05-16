@@ -52,7 +52,6 @@ export const PersonalAccount = () => {
                 .then((res) => {
                     reset(res.data)
                     setUploadedPhoto(res.data?.profilePicture)
-                    console.log(res.data)
                     if (nameRef.current && res.data) {
                         nameRef.current.textContent = res.data.name;
                     }
@@ -67,16 +66,13 @@ export const PersonalAccount = () => {
         }
         if(!uploadedPhoto && data.profilePicture){
             data.profilePicture = null;
-            deletePhoto();
+            deletePhotoOnServer();
         }
         token && Axios.patch("https://gamerize.ltd.ua/api/Account/update-profile", data, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
-        }).then(() => {
-            getPersonalInformation()
-            buttonSubmitRef.current.classList.add(styles.account_buttonUpdatedInfo);
-        }).catch((err) => console.log(err))
+        }).then(() => showMessage()).catch((err) => console.log(err))
     }
 
     const sendPhoto = () => {
@@ -88,8 +84,7 @@ export const PersonalAccount = () => {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`
                 }
-            }).then(() => buttonSubmitRef.current.classList.add(styles.account_buttonUpdatedInfo))
-                .catch((err) => console.log(err))
+            }).then(() => showMessage()).catch((err) => console.log(err))
 
         }
     }
@@ -99,12 +94,27 @@ export const PersonalAccount = () => {
     };
 
     const deletePhoto = () => {
+        setUploadedPhoto(null);
+        setAvatar(null);
         setPhotoFile(null);
+    }
+
+    const deletePhotoOnServer = () => {
         Axios.delete('https://gamerize.ltd.ua/api/Account/delete-photo', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         }).then((res) => console.log(res)).catch((err) => console.log(err))
+    }
+
+    const showMessage = () => {
+        if(buttonSubmitRef){
+            buttonSubmitRef.current.classList.add(styles.account_buttonUpdatedInfo)
+            setTimeout(() => {
+                console.log('AAA')
+                buttonSubmitRef.current.classList.remove(styles.account_buttonUpdatedInfo);
+            }, 3000);
+        }
     }
 
     const handleChange = (e) => {
@@ -140,8 +150,7 @@ export const PersonalAccount = () => {
                                 className={styles.account_inputFile}
                                 ref={hiddenFileInput}
                             />
-                            <span className={styles.account_deletePhoto}
-                                  onClick={() => setUploadedPhoto(null)}>
+                            <span className={styles.account_deletePhoto} onClick={deletePhoto}>
                                 Видалити фото
                             </span>
                             <p className={styles.account_name} ref={nameRef}></p>
@@ -173,6 +182,7 @@ export const PersonalAccount = () => {
                                        className={`${styles.account_input } ${errors.email?.message 
                                            ? styles.account_errorBorder: ''}`}
                                        placeholder="Е-пошта"
+                                       readOnly
                                        {...register("email")}
                                 />
                                 <p className={styles.account_inputError}>{errors.email?.message}</p>
