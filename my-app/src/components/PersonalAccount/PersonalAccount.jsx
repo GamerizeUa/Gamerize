@@ -10,28 +10,27 @@ export const PersonalAccount = () => {
     const hiddenFileInput = useRef(null);
     const [photoFile, setPhotoFile] = useState(null);
     const [token, setToken] = useState(null);
-    const formData = new FormData();
-
-    const transformEmptyStringToNull = (value) => {
-        return value.trim() === '' ? null : value;
-    };
+    const [uploadedPhoto, setUploadedPhoto] = useState(null);
+    const nameRef = useRef(null);
+    const buttonSubmitRef = useRef(null);
 
     const schema = yup.object().shape({
-        name: yup.string(),
-        phoneNumber: yup.string()
-            .matches(/^\+380\d{9}$/, 'Номер телефону повинен починатись з +380 та мати 12 чисел у сумі')
-            .nullable()
-            .transform(transformEmptyStringToNull),
-        email: yup.string()
-            .matches(/^[a-zA-Z0-9._-]+@[a-zA-Z]+\.[a-zA-Z]+$/i, "Введіть коректну е-пошту")
-            .nullable()
-            .transform(transformEmptyStringToNull),
-        city: yup.string(),
-        address: yup.string()
-            .matches(/(?=.*[A-Za-zА-Яа-я])(?=.*\d)[A-Za-zА-Яа-я\d]/,
-                'Адреса повинна мати назву вулиці та номер будинку')
-            .nullable()
-            .transform(transformEmptyStringToNull),
+        name: yup.string().nullable(),
+        phone: yup.string().nullable().matches(/^\+380\d{9}$/, {
+            message: 'Номер телефону повинен починатись з +380 та мати 12 чисел у сумі',
+            excludeEmptyString: true,
+        }),
+        email: yup.string().nullable()
+            .matches(/^[a-zA-Z0-9._-]+@[a-zA-Z]+\.[a-zA-Z]+$/i, {
+                message: '"Введіть коректну е-пошту"',
+                excludeEmptyString: true,
+            }),
+        city: yup.string().nullable(),
+        deliveryAddress: yup.string().nullable()
+            .matches(/(?=.*[A-Za-zА-Яа-я])(?=.*\d)[A-Za-zА-Яа-я\d]/,{
+                message:'Адреса повинна мати назву вулиці та номер будинку',
+                excludeEmptyString: true,
+            })
     });
 
     const {register, handleSubmit, formState: {errors}, reset} = useForm({
@@ -39,36 +38,74 @@ export const PersonalAccount = () => {
     });
 
     useEffect(() => {
-        // TODO get request
         setToken(localStorage.getItem('token'))
+        getPersonalInformation();
+    }, [token]);
+
+    const getPersonalInformation = () => {
         if(token){
             Axios.get('https://gamerize.ltd.ua/api/Account/profile', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             })
-                .then((res) => console.log(res))
+                .then((res) => {
+                    reset(res.data)
+                    setUploadedPhoto(res.data?.profilePicture)
+                    console.log(res.data)
+                    if (nameRef.current && res.data) {
+                        nameRef.current.textContent = res.data.name;
+                    }
+                })
                 .catch((err) => console.log(err))
         }
-    }, [])
+    }
 
     const onSubmit = (data) => {
-        // TODO post request
-        if(token){
-            Axios.post('https://gamerize.ltd.ua/api/Account/upload-profile-picture', formData, {
+        if(photoFile){
+            sendPhoto();
+        }
+        if(!uploadedPhoto && data.profilePicture){
+            data.profilePicture = null;
+            deletePhoto();
+        }
+        token && Axios.patch("https://gamerize.ltd.ua/api/Account/update-profile", data, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(() => {
+            getPersonalInformation()
+            buttonSubmitRef.current.classList.add(styles.account_buttonUpdatedInfo);
+        }).catch((err) => console.log(err))
+    }
+
+    const sendPhoto = () => {
+        const formData = new FormData();
+        formData.append('file', photoFile);
+        if(token && formData.has('file')){
+            Axios.post('https://gamerize.ltd.ua/api/Account/profile/picture', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`
                 }
-            })
-                .then((res) => console.log(res))
+            }).then(() => buttonSubmitRef.current.classList.add(styles.account_buttonUpdatedInfo))
                 .catch((err) => console.log(err))
+
         }
     }
 
     const changeAvatar = () => {
         hiddenFileInput.current.click();
     };
+
+    const deletePhoto = () => {
+        setPhotoFile(null);
+        Axios.delete('https://gamerize.ltd.ua/api/Account/delete-photo', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then((res) => console.log(res)).catch((err) => console.log(err))
+    }
 
     const handleChange = (e) => {
         if (avatar) {
@@ -78,9 +115,6 @@ export const PersonalAccount = () => {
         if (file && file.type.startsWith('image/')) {
             setPhotoFile(file);
             setAvatar(URL.createObjectURL(file));
-            if(photoFile){
-                formData.append('file', photoFile);
-            }
         } else {
             setAvatar(null);
         }
@@ -97,15 +131,20 @@ export const PersonalAccount = () => {
                         <div className={styles.account_imageName}>
                             <div className={styles.account_imageContainer}
                                  onClick={changeAvatar}
-                                 style={avatar
-                                     ? { backgroundImage: `url(${avatar})` , color: 'transparent'}
+                                 style={avatar || uploadedPhoto
+                                     ? { backgroundImage: `url(${avatar || uploadedPhoto})`
+                                         , color: 'transparent'}
                                      : {backgroundImage : 'none'}}
                             >Оберіть фото</div>
                             <input type="file" accept="image/*" onChange={handleChange}
                                 className={styles.account_inputFile}
                                 ref={hiddenFileInput}
                             />
-                            <p className={styles.account_name}>Verna AAAAAa</p>
+                            <span className={styles.account_deletePhoto}
+                                  onClick={() => setUploadedPhoto(null)}>
+                                Видалити фото
+                            </span>
+                            <p className={styles.account_name} ref={nameRef}></p>
                         </div>
                         <form className={styles.account_form} onSubmit={handleSubmit(onSubmit)}>
                             <div className={styles.account_inputContainer}>
@@ -121,12 +160,12 @@ export const PersonalAccount = () => {
                             <div className={styles.account_inputContainer}>
                                 <p className={styles.account_title}>Телефон</p>
                                 <input type='tel'
-                                       className={`${styles.account_input } ${errors.phoneNumber?.message 
+                                       className={`${styles.account_input } ${errors.phone?.message 
                                            ? styles.account_errorBorder: ''}`}
                                        placeholder="Телефон"
-                                       {...register("phoneNumber")}
+                                       {...register("phone")}
                                 />
-                                <p className={styles.account_inputError}>{errors.phoneNumber?.message}</p>
+                                <p className={styles.account_inputError}>{errors.phone?.message}</p>
                             </div>
                             <div className={styles.account_inputContainer}>
                                 <p className={styles.account_title}>Е-пошта</p>
@@ -152,13 +191,15 @@ export const PersonalAccount = () => {
                                 <p className={styles.account_title}>Адреса доставки</p>
                                 <input type='text'
                                        className={`${styles.account_input } 
-                                       ${errors.address?.message ? styles.account_errorBorder: ''}`}
+                                       ${errors.deliveryAddress?.message ? styles.account_errorBorder: ''}`}
                                        placeholder="Адреса доставки"
-                                       {...register("address")}
+                                       {...register("deliveryAddress")}
                                 />
-                                <p className={styles.account_inputError}>{errors.address?.message}</p>
+                                <p className={styles.account_inputError}>{errors.deliveryAddress?.message}</p>
                             </div>
-                            <button type='submit' className={styles.account_button}>Зберегти зміни</button>
+                            <button type='submit' className={styles.account_button} ref={buttonSubmitRef}>
+                                Зберегти зміни
+                            </button>
                         </form>
                     </div>
                 </div>

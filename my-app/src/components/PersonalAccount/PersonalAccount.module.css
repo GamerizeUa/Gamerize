@@ -1,3 +1,18 @@
+@keyframes setOpacity {
+    0% {
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
 .account{
     padding-top: 24px;
     padding-bottom: 41px;
@@ -36,7 +51,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
     width: 85.41%;
     max-width: 341px;
     border-bottom: 2px solid #D9D9D9;
@@ -46,6 +60,7 @@
     width: 120px;
     height: 120px;
     border-radius: 120px;
+    border: 0.5px solid  #D9D9D9;
     color: #FEFEFE;
     font-family: Noto Sans;
     display: flex;
@@ -63,10 +78,22 @@
 
 .account_imageContainer:hover{
     color: #6566AC;
+    cursor: pointer;
 }
 
 .account_inputFile{
     display: none;
+}
+
+.account_deletePhoto{
+    color: #6566AC;
+    cursor: pointer;
+    font-size: 13px;
+    margin-top: 7px;
+}
+
+.account_deletePhoto:hover{
+    filter: brightness(65%);
 }
 
 .account_name{
@@ -76,6 +103,7 @@
     font-weight: 400;
     text-align: center;
     padding-bottom: 28px;
+    margin-top: 16px;
 }
 
 .account_form{
@@ -137,6 +165,7 @@
     font-weight: 700;
     margin-top: 30px;
     cursor: pointer;
+    position: relative;
 }
 
 .account_button:hover{
@@ -147,6 +176,19 @@
 
 .account_button:active{
     background-color: #AAC4FF;
+}
+
+.account_buttonUpdatedInfo::before {
+    content: "Ви успішно зберегли зміни!";
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #6566AC;
+    width: 175px;
+    opacity: 0;
+    animation: setOpacity 3s ease-in-out;
 }
 
 @media screen and (min-width: 744px) {
@@ -175,7 +217,6 @@
     }
 
     .account_imageName{
-        gap: 23px;
         width: inherit;
         max-width: none;
         border-bottom: none;
@@ -187,9 +228,14 @@
         border-radius: 164px;
     }
 
+    .account_deletePhoto{
+        margin-top: 12px;
+    }
+
     .account_name{
         font-size: 28px;
         padding-bottom: 0;
+        margin-top: 23px;
     }
 
     .account_form{
@@ -241,8 +287,11 @@
     }
 
     .account_imageName{
-        gap: 42px;
         padding-left: 8.57%;
+    }
+
+    .account_deletePhoto{
+        margin-top: 15px;
     }
 
     .account_form{
