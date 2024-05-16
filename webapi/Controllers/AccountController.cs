@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Gamerize.BLL.Services;
 using System.Security.Claims;
 using Gamerize.BLL.Models;
+using Microsoft.AspNetCore.Identity;
+using Gamerize.DAL.Entities.Admin;
 
 namespace webapi.Controllers;
 
@@ -15,11 +17,13 @@ public class AccountController : ControllerBase
     private const string folderId = "1VLPt6EOO7CIW964y1_TiWmQEBzXUttLo";
     private readonly ILogger<AccountController> _logger;
     private readonly ProfileService _profileService;
+    private readonly UserManager<User> _userManager;
 
-    public AccountController(ProfileService profileService, ILogger<AccountController> logger)
+    public AccountController(UserManager<User> userManager, ProfileService profileService, ILogger<AccountController> logger)
     {
         _profileService = profileService;
         _logger = logger;
+        _userManager = userManager;
     }
 
     [HttpGet("profile")]
@@ -97,4 +101,30 @@ public class AccountController : ControllerBase
         }
     }
 
+    [HttpDelete("delete-photo")]
+    public async Task<IActionResult> DeletePhotoAsync()
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+        }
+
+        if (!string.IsNullOrEmpty(user.ProfilePicture))
+        {
+            var fileId = user.ProfilePicture.Split("id=")[1];
+            ProfileService.DeleteFileFromGoogleDrive(credentialPath, fileId);
+        }
+
+        user.ProfilePicture = null;
+
+        var result = await _userManager.UpdateAsync(user);
+
+        if (!result.Succeeded)
+        {
+            return BadRequest("Unexpected error when trying to delete photo.");
+        }
+
+        return Ok("Your photo has been deleted");
+    }
 }

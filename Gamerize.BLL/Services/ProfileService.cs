@@ -1,23 +1,33 @@
 ﻿using AutoMapper;
 using Gamerize.BLL.Models;
+using Gamerize.Common.Extensions.Exceptions;
 using Gamerize.DAL.Entities.Admin;
+using Gamerize.DAL.Entities.Shop;
+using Gamerize.DAL.Repositories.Interfaces;
+using Gamerize.DAL.UnitOfWork;
+using Gamerize.DAL.UnitOfWork.Interfaces;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Gamerize.BLL.Services
 {
     public class ProfileService
     {
-        private readonly UserManager<User> _userManager;
+        private readonly UserManager<DAL.Entities.Admin.User> _userManager;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IRepository<DAL.Entities.Admin.User> _repository;
 
-        public ProfileService(UserManager<User> userManager, IMapper mapper)
+        public ProfileService(IUnitOfWork unitOfWork, UserManager<DAL.Entities.Admin.User> userManager, IMapper mapper)
         {
             _userManager = userManager;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
+            _repository = _unitOfWork.GetRepository<DAL.Entities.Admin.User>();
         }
 
         public async Task<ProfileDTO> GetUserProfileData(string userId)
@@ -127,6 +137,25 @@ namespace Gamerize.BLL.Services
             {
                 throw new ArgumentException("User not found", nameof(userId));
             }
+        }
+
+        public static void DeleteFileFromGoogleDrive(string credentialPath, string fileId)
+        {
+            GoogleCredential credential;
+
+            using (var stream = new FileStream(credentialPath, FileMode.Open, FileAccess.Read))
+            {
+                credential = GoogleCredential.FromStream(stream).CreateScoped(new[]
+                { DriveService.ScopeConstants.Drive });
+            }
+
+            var service = new DriveService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = "DeletePhoto"
+            });
+
+            service.Files.Delete(fileId).Execute();
         }
     }
 }
