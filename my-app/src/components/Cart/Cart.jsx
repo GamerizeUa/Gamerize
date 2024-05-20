@@ -1,59 +1,65 @@
-import CrossIcon from '../icons/CrossIcon';
 import styles from './Cart.module.css';
-import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectCart } from '../../redux/selectors';
 import { CartExcerpt } from './CartExcerpt';
+import { CartHeader } from './CartHeader';
+import { CartProductList } from './CartProductList';
+import { CartFooter } from './CartFooter';
+import { CartTotal } from './CartTotal';
 
-const Cart = ({ cartClose }) => {
+const Cart = ({
+    cartClose,
+    headerTitle = 'Кошик',
+    emptyMessage = 'Ваша корзина порожня.',
+    totalLabel = 'Сума:',
+    btnLabel = 'Замовити',
+}) => {
     const { isEmpty, productList, total } = useSelector(selectCart);
 
-    const handleOverlayClick = (event) => {
-        if (event.currentTarget === event.target) {
+    const handleOverlayClick = ({ currentTarget, target }) => {
+        if (currentTarget === target) {
             cartClose();
         }
     };
 
     return (
-        <article className={styles.backdrop} onClick={handleOverlayClick}>
-            <div className={styles.cart}>
-                <header className={styles['cart__title-wrapper']}>
-                    <h1 className={styles['cart__title']}>Кошик</h1>
-                    <button
-                        className={styles['cart__cross-btn']}
-                        onClick={cartClose}
-                    >
-                        <CrossIcon />
-                    </button>
-                </header>
-                <section className={styles['cart__box']}>
-                    {isEmpty ? (
-                        <p>Ви ще не додали жодної гри.</p>
-                    ) : (
-                        <ul className={styles['cart__list']}>
-                            {productList.map((product) => (
-                                <CartExcerpt {...product} key={product.id} />
-                            ))}
-                        </ul>
-                    )}
-
-                    <div className={styles['cart__total-price-wrapper']}>
-                        <p className={styles['cart__total-price-text']}>
-                            Сума:
-                        </p>
-                        <p className={styles['cart__total-price']}>{total} ₴</p>
-                    </div>
+        <div className={styles.backdrop} onClick={handleOverlayClick}>
+            <article className={styles.cart}>
+                <Cart.Header onClose={cartClose} title={headerTitle} />
+                <section
+                    className={
+                        !isEmpty
+                            ? styles['cart__container']
+                            : styles['cart__container'] +
+                              ' ' +
+                              styles['cart__container--empty']
+                    }
+                >
+                    <Cart.List isEmpty={isEmpty} emptyMessage={emptyMessage}>
+                        {productList.map((product) => (
+                            <Cart.ListItem {...product} key={product.id} />
+                        ))}
+                    </Cart.List>
+                    <Cart.Total
+                        isEmpty={isEmpty}
+                        total={total}
+                        totalLabel={totalLabel}
+                    />
                 </section>
-                <div className={styles['cart__btn-wrapper']}>
-                    <Link to="/checkout" onClick={() => cartClose()}>
-                        <button className={styles['cart__btn']}>
-                            Замовити
-                        </button>
-                    </Link>
-                </div>
-            </div>
-        </article>
+                <Cart.Footer
+                    isEmpty={isEmpty}
+                    onClose={cartClose}
+                    buttonLabel={btnLabel}
+                />
+            </article>
+        </div>
     );
 };
+
+Cart.Header = CartHeader;
+Cart.List = CartProductList;
+Cart.Footer = CartFooter;
+Cart.ListItem = CartExcerpt;
+Cart.Total = CartTotal;
 
 export default Cart;
