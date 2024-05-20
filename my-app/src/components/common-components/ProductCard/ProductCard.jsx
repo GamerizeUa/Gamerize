@@ -1,13 +1,17 @@
-import styles from "./ProductCard.module.css";
-import { Link } from "react-router-dom";
-import HeartIcon from "../../icons/HeartIcon";
-import { useDispatch, useSelector } from "react-redux";
-import { selectWishListProductsIdList } from "../../../redux/selectors";
+import styles from './ProductCard.module.css';
+import { Link } from 'react-router-dom';
+import HeartIcon from '../../icons/HeartIcon';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    selectIsInCart,
+    selectWishListProductsIdList,
+} from '../../../redux/selectors';
 import {
     addToWishList,
     removeOneFromWishList,
-} from "../../../redux/wishListSlice";
-import sprite from "../../../assets/icons/sprite.svg";
+} from '../../../redux/wishListSlice';
+import sprite from '../../../assets/icons/sprite.svg';
+import { addToCart, removeFromCart } from '../../../redux/cartSlice';
 
 export default function ProductCard({
     configurationObject = {
@@ -31,16 +35,25 @@ export default function ProductCard({
     const dispath = useDispatch();
     const wishListProductsIdList = useSelector(selectWishListProductsIdList);
     const isWished = wishListProductsIdList.includes(id);
+    const isInCart = useSelector((state) => selectIsInCart(state, id));
+
     const wishIconHandleOnClick = () => {
         isWished
             ? dispath(removeOneFromWishList(id))
             : dispath(addToWishList(id));
     };
+    const handleAddToCart = () => {
+        dispath(addToCart({ id, name, price, photo, count: 1 }));
+    };
+    const handleRemoveFromCart = () => {
+        dispath(removeFromCart(id));
+    };
+
     return (
         <div className={styles.all_content}>
             <Link
                 className={styles.all_card_link}
-                to={"/catalog/:product"}
+                to={'/catalog/:product'}
             ></Link>
             <div className={styles.card_top}>
                 <div className={styles.icons_bar}>
@@ -53,7 +66,7 @@ export default function ProductCard({
                                 viewBox="0 0 57 55"
                                 fill="none"
                             >
-                                <use href={sprite + "#icon-discount"}></use>
+                                <use href={sprite + '#icon-discount'}></use>
                             </svg>
                             <p>{`-${discount}%`}</p>
                         </div>
@@ -67,7 +80,7 @@ export default function ProductCard({
                         {isWished ? (
                             configurationObject.isWishList ? (
                                 <svg>
-                                    <use href={sprite + "#icon-cross"} />
+                                    <use href={sprite + '#icon-cross'} />
                                 </svg>
                             ) : (
                                 <HeartIcon
@@ -102,16 +115,21 @@ export default function ProductCard({
                 <div className={styles.prices}>
                     {configurationObject.isOldPrice && (
                         <p
-                            className={styles.price + " " + styles.old_price}
+                            className={styles.price + ' ' + styles.old_price}
                         >{`${oldPrice}₴`}</p>
                     )}
                     <p
-                        className={styles.price + " " + styles.current_price}
+                        className={styles.price + ' ' + styles.current_price}
                     >{`${price}₴`}</p>
                 </div>
-                <button className={styles.buy_btn}>Купити</button>
+
+                <button
+                    className={styles.buy_btn}
+                    onClick={!isInCart ? handleAddToCart : handleRemoveFromCart}
+                >
+                    {!isInCart ? 'Купити' : 'Прибрати з кошику'}
+                </button>
             </div>
         </div>
     );
 }
-
