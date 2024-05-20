@@ -28,7 +28,7 @@ const Header = ({ openCart, openBurgerMenu, setIsDisplayedLoginPopUp }) => {
     <section className={styles.headerSection}>
       <div className={styles.header}>
         <div className={styles.logoWrapper}>
-          {windowWidth <= 1280 && (
+          {windowWidth < 1280 && (
             <div
               className={styles.burgerMenu}
               onClick={() => {
@@ -102,7 +102,11 @@ const Header = ({ openCart, openBurgerMenu, setIsDisplayedLoginPopUp }) => {
                     />
                   </svg>
                 </Link>
-                {accountInformation && <AccountInformation setIsDisplayedLoginPopUp={setIsDisplayedLoginPopUp}/>}
+                {accountInformation && (
+                  <AccountInformation
+                    setIsDisplayedLoginPopUp={setIsDisplayedLoginPopUp}
+                  />
+                )}
               </li>
             )}
             {windowWidth >= 744 && (
