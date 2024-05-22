@@ -28,10 +28,21 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+   flex-grow: 1;
+}
+
+.titleWrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .cartProductTitle {
   font-size: 20px;
+}
+
+.removeBtn{
+cursor: pointer;
 }
 
 .cartProductDescription {
@@ -130,4 +141,14 @@ border-bottom: 1px solid #dee0e3;
     justify-content: center;
     gap: 8px;
     margin-top: 24px;
+}
+
+.cartCounter{
+  cursor: pointer;
+}
+
+.emptyCartText{
+  margin: 50px 0;
+  font-size: 18px;
+  text-align: center;
 }

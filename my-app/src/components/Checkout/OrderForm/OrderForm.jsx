@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -6,8 +7,16 @@ import { CustomerInfo } from "../CustomerInfo/CustomerInfo";
 import { DeliveryType } from "../DeliveryType/DeliveryType";
 import { PaymentType } from "../PaymentType/PaymentType";
 import styles from "./OrderForm.module.css";
+import {
+  selectCart,
+  selectGiftCard,
+  selectPromoCode,
+} from "../../../redux/selectors";
 
 export const OrderForm = () => {
+  const { productList, total } = useSelector(selectCart);
+  const promoCode = useSelector(selectPromoCode);
+  const giftCard = useSelector(selectGiftCard);
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({});
   const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
@@ -29,7 +38,14 @@ export const OrderForm = () => {
   });
 
   const onSubmit = (data) => {
-    const updatedFormData = { ...formData, ...data };
+    const updatedFormData = {
+      ...formData,
+      ...data,
+      productList,
+      total,
+      promoCode,
+      giftCard,
+    };
     setFormData(updatedFormData);
     if (isReadyToSubmit) {
       //Відправка даних на бек
