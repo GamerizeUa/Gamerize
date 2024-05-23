@@ -5,9 +5,11 @@
 }
 
 .cartTitle {
+  padding-bottom: 10px;
   font-family: "Noto Sans";
   font-size: 24px;
   line-height: 130%;
+  border-bottom: 1px solid #dee0e3;
 }
 
 .cartList {
@@ -28,10 +30,21 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  flex-grow: 1;
+}
+
+.titleWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .cartProductTitle {
   font-size: 20px;
+}
+
+.removeBtn {
+  cursor: pointer;
 }
 
 .cartProductDescription {
@@ -70,7 +83,7 @@
   flex-direction: column;
   gap: 8px;
   padding: 24px 0;
-border-bottom: 1px solid #dee0e3;
+  border-bottom: 1px solid #dee0e3;
 }
 
 .discountItem {
@@ -87,47 +100,57 @@ border-bottom: 1px solid #dee0e3;
 }
 
 .discountInput {
-    width: 250px;
-    height: 30px;
-    padding: 7px;
-    border-radius: 10px;
-        border: 1px solid var(--Blue, #AAC4FF);
+  width: 250px;
+  height: 30px;
+  padding: 7px;
+  border-radius: 10px;
+  border: 1px solid var(--Blue, #aac4ff);
 }
 
-.priceContainer{
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: 24px 0;
-        border-bottom: 1px solid #dee0e3;
+.priceContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 0;
+  border-bottom: 1px solid #dee0e3;
 }
 
-.priceElement{
-    display: flex;
-    justify-content: space-between;
-    font-family: "Noto Sans";
-    font-size: 14px;
-    line-height: 150%;
+.priceElement {
+  display: flex;
+  justify-content: space-between;
+  font-family: "Noto Sans";
+  font-size: 14px;
+  line-height: 150%;
 }
 
-.inner{
-    display: flex;
-    gap: 4px;
-    font-family: "Noto Sans";
-    font-size: 20px;
+.inner {
+  display: flex;
+  gap: 4px;
+  font-family: "Noto Sans";
+  font-size: 20px;
 }
 
-.totalPriceContainer{
-    display: flex;
-    justify-content: space-between;
-    padding-top: 24px;
-    font-family: Inter;
-    font-size: 20px;
+.totalPriceContainer {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 24px;
+  font-family: Inter;
+  font-size: 20px;
 }
-.safeMark{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 24px;
+.safeMark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.cartCounter {
+  cursor: pointer;
+}
+
+.emptyCartText {
+  margin: 50px 0;
+  font-size: 18px;
+  text-align: center;
 }
