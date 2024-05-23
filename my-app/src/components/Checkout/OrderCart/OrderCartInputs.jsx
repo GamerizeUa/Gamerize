@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPromoCode, setGiftCard } from "../../../redux/discountSlice";
+import { selectGiftCard, selectPromoCode } from "../../../redux/selectors";
 import styles from "./OrderCart.module.css";
 import sprite from "../../../assets/icons/sprite.svg";
-import { selectGiftCard, selectPromoCode } from "../../../redux/selectors";
 
 export const OrderCartInputs = () => {
   const dispatch = useDispatch();
@@ -11,6 +11,8 @@ export const OrderCartInputs = () => {
   const giftCard = useSelector(selectGiftCard);
   const [isEditing, setIsEditing] = useState(false);
   const [editingField, setEditingField] = useState(null);
+
+  const MAX_LENGTH = 20;
 
   const handleEditClick = (field, event) => {
     event.stopPropagation();
@@ -20,8 +22,10 @@ export const OrderCartInputs = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    if (name === "promoCode") dispatch(setPromoCode(value));
-    else if (name === "giftCard") dispatch(setGiftCard(value));
+    if (value.length <= MAX_LENGTH) {
+      if (name === "promoCode") dispatch(setPromoCode(value));
+      else if (name === "giftCard") dispatch(setGiftCard(value));
+    }
   };
 
   const handleKeyDown = (event) => {
@@ -53,11 +57,11 @@ export const OrderCartInputs = () => {
         <input
           name="promoCode"
           placeholder="Enter the promo code number"
-          // type="text"
           value={promoCode}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           className={styles.discountInput}
+          maxLength={MAX_LENGTH}
         />
       ) : (
         <div
@@ -78,11 +82,11 @@ export const OrderCartInputs = () => {
         <input
           name="giftCard"
           placeholder="Enter the gift card number"
-          // type="text"
           value={giftCard}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           className={styles.discountInput}
+          maxLength={MAX_LENGTH}
         />
       ) : (
         <div

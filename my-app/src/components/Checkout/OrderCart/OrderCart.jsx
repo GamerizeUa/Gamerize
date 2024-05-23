@@ -2,8 +2,8 @@ import { useSelector } from "react-redux";
 import { selectCart } from "../../../redux/selectors";
 import { OrderCartItem } from "./OrderCartItem";
 import { OrderCartInputs } from "./OrderCartInputs";
-import styles from "./OrderCart.module.css";
 import sprite from "../../../assets/icons/sprite.svg";
+import styles from "./OrderCart.module.css";
 
 export const OrderCart = () => {
   const { isEmpty, productList, total } = useSelector(selectCart);

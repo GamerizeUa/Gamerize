@@ -8,16 +8,21 @@ const initialState = {
 const discountSlice = createSlice({
   name: "discount",
   initialState,
-  reducers: (create) => ({
-    setPromoCode: create.reducer((state, action) => {
+  reducers: {
+    setPromoCode: (state, action) => {
       state.promoCode = action.payload;
-    }),
-    setGiftCard: create.reducer((state, action) => {
+    },
+    setGiftCard: (state, action) => {
       state.giftCard = action.payload;
-    }),
-  }),
+    },
+    clearDiscounts: (state) => {
+      state.promoCode = "";
+      state.giftCard = "";
+    },
+  },
 });
 
-export const { setPromoCode, setGiftCard } = discountSlice.actions;
+export const { setPromoCode, setGiftCard, clearDiscounts } =
+  discountSlice.actions;
 
 export default discountSlice.reducer;
