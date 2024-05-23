@@ -38,13 +38,6 @@ const cartSlice = createSlice({
             if (product) {
                 product.count += modifier;
                 state.total += product.price * modifier;
-
-                if (product.count <= 0) {
-                    state.productList = state.productList.filter(
-                        (product) => product.id !== id
-                    );
-                    state.isEmpty = state.productList.length === 0;
-                }
             }
         },
     },

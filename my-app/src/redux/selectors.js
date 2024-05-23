@@ -20,8 +20,18 @@ export const selectCart = createSelector(
     (state) => state.cart,
     (cart) => ({ ...cart })
 );
+
 export const selectIsInCart = createSelector(
     [selectCart, (state, productId) => productId],
     ({ productList }, productId) =>
         productList.some((product) => product.id === productId)
+);
+
+export const selectCartProductsCount = createSelector(
+    selectCart,
+    ({ productList }) =>
+        productList.reduce(
+            (totalCount, product) => totalCount + product.count - 1,
+            productList.length
+        )
 );

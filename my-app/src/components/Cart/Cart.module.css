@@ -46,11 +46,10 @@
     flex-direction: column;
     gap: 3.125rem;
     padding: 1.5rem 1rem;
-    border-block-end: 1px solid #dee0e3;
-}
 
-.cart__container--empty {
-    text-align: center;
+    &:not(.cart__container--empty) {
+        border-block-end: 1px solid #dee0e3;
+    }
 }
 
 .cart__list {
@@ -147,7 +146,6 @@
 }
 
 .cart__price {
-    font-weight: 700;
     font-size: clamp(0.75rem, 3vw, 1.5rem);
 }
 
@@ -175,4 +173,18 @@
 .cart__btn:hover,
 .cart__btn:focus {
     background: var(--dark-blue);
+}
+
+.cart__icon {
+    width: max(158px, 48.223%);
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    margin: 0 auto 2rem auto;
+}
+
+.cart__message {
+    margin: 0 auto;
+    padding-block: 1.5rem;
+    align-self: center;
+    text-align: center;
 }

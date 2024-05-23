@@ -10,6 +10,8 @@ export const CartExcerpt = ({ id, photo, name, price, count }) => {
     const [countFieldValue, setCountFieldValue] = useState(count);
 
     const handleCountChange = (newCount) => {
+        if (isNaN(newCount) || newCount < 0) return;
+
         setCountFieldValue(newCount);
         dispatch(updateCartProduct({ id, modifier: newCount - count }));
     };
@@ -38,7 +40,7 @@ export const CartExcerpt = ({ id, photo, name, price, count }) => {
                     </button>
                 </div>
                 <p className={styles['cart__item-description']}>Опис</p>
-                <p className={styles['cart__item-vendor']}>Артикул: 123456</p>
+                <p className={styles['cart__item-vendor']}>Артикул: {id}</p>
                 <section className={styles['cart__item-footer']}>
                     <div
                         className={
@@ -54,9 +56,7 @@ export const CartExcerpt = ({ id, photo, name, price, count }) => {
                             </svg>
                         </button>
                         <input
-                            type="number"
-                            step={1}
-                            min={1}
+                            type="text"
                             value={countFieldValue}
                             onChange={({ target: { value } }) =>
                                 handleCountChange(Number(value))
@@ -72,7 +72,9 @@ export const CartExcerpt = ({ id, photo, name, price, count }) => {
                             </svg>
                         </button>
                     </div>
-                    <p className={styles['cart__item-price']}>{price} ₴</p>
+                    <p className={styles['cart__item-price']}>
+                        {price * count} ₴
+                    </p>
                 </section>
             </section>
         </article>

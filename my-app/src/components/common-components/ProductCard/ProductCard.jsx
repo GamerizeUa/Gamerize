@@ -11,7 +11,7 @@ import {
     removeOneFromWishList,
 } from '../../../redux/wishListSlice';
 import sprite from '../../../assets/icons/sprite.svg';
-import { addToCart, removeFromCart } from '../../../redux/cartSlice';
+import { addToCart, updateCartProduct } from '../../../redux/cartSlice';
 
 export default function ProductCard({
     configurationObject = {
@@ -32,21 +32,21 @@ export default function ProductCard({
         photo,
     },
 }) {
-    const dispath = useDispatch();
+    const dispatch = useDispatch();
     const wishListProductsIdList = useSelector(selectWishListProductsIdList);
     const isWished = wishListProductsIdList.includes(id);
     const isInCart = useSelector((state) => selectIsInCart(state, id));
 
     const wishIconHandleOnClick = () => {
         isWished
-            ? dispath(removeOneFromWishList(id))
-            : dispath(addToWishList(id));
+            ? dispatch(removeOneFromWishList(id))
+            : dispatch(addToWishList(id));
     };
     const handleAddToCart = () => {
-        dispath(addToCart({ id, name, price, photo, count: 1 }));
+        dispatch(addToCart({ id, name, price, photo, count: 1 }));
     };
-    const handleRemoveFromCart = () => {
-        dispath(removeFromCart(id));
+    const handleUpdateCount = () => {
+        dispatch(updateCartProduct({ id, modifier: 1 }));
     };
 
     return (
@@ -125,9 +125,9 @@ export default function ProductCard({
 
                 <button
                     className={styles.buy_btn}
-                    onClick={!isInCart ? handleAddToCart : handleRemoveFromCart}
+                    onClick={!isInCart ? handleAddToCart : handleUpdateCount}
                 >
-                    {!isInCart ? 'Купити' : 'Прибрати з кошику'}
+                    Купити
                 </button>
             </div>
         </div>
