@@ -14,16 +14,8 @@ const ConfirmEmailPage = () => {
             axios.get('/api/Register/confirm-email', {
                 params: { userId, code }
             })
-                .then(response => {
-                    if (response.data.success) {
-                        navigate('/', { state: { showPopup: true } });
-                    } else {
-                        navigate('/not-found-account')
-                    }
-                })
-                .catch(error => {
-                    console.error('Error confirming email', error);
-                });
+                .then(() => navigate('/', { state: { showPopup: true } }))
+                .catch(() => navigate('/not-found-account'));
         }
     }, [history]);
 
