@@ -12,6 +12,7 @@ import OrderHistoryPage from "./pages/OrderHistoryPage.jsx";
 import { Checkout } from "./components/Checkout/Checkout.jsx";
 import OrderAndPay from "./pages/OrderAndPay/OrderAndPay.jsx";
 import Return from "./pages/Return/Return.jsx";
+import ConfirmEmailPage from "./components/LoginAndRegistration/ConfirmEmail/ConfirmEmail.jsx";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/order-pay" element={<OrderAndPay />} />
         <Route path="/return" element={<Return />} />
+        <Route path="/confirm-email" element={<ConfirmEmailPage />} />
         <Route path="*" element={<NotFound />} />
       </Route>
       {/* <Route path="admin/*" element={<AdminPage />}>

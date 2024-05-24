@@ -26,13 +26,14 @@ export const Login = ({ setDisplayedLoginPopUp }) => {
   }, [isVisible]);
 
   const schema = yup.object().shape({
-    email: yup.string().email("Введіть коректну е-пошту").required("Введіть е-пошту")
+    email: yup.string().required("Введіть е-пошту")
         .matches(/^[a-zA-Z0-9._-]+@[a-zA-Z]+\.[a-zA-Z]+$/i, "Введіть коректну е-пошту"),
     password: yup.string().required("Введіть пароль"),
   });
 
   const {register, handleSubmit, formState: {errors}, reset} = useForm({
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema),
+    mode: 'onChange'
   });
 
   const onSubmit = (data) =>{
@@ -44,7 +45,6 @@ export const Login = ({ setDisplayedLoginPopUp }) => {
         })
         .catch((err) => {
           setIsErrorVisible(true)
-          console.log(err)
         })
   }
 
@@ -71,7 +71,7 @@ export const Login = ({ setDisplayedLoginPopUp }) => {
                       stroke="currentColor"
                   ></use>
                 </svg>
-                <input type="email"  {...register("email")}/>
+                <input type="text"  {...register("email")}/>
               </div>
               <p className={styles.input_error}>{errors.email?.message}</p>
             </div>
