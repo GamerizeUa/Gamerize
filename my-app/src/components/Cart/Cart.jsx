@@ -10,7 +10,7 @@ import { CartTotal } from './CartTotal';
 const Cart = ({
     cartClose,
     headerTitle = 'Кошик',
-    emptyMessage = 'Ваша корзина порожня.',
+    emptyMessage = 'Ваш кошик порожній.',
     totalLabel = 'Сума:',
     btnLabel = 'Замовити',
 }) => {
@@ -50,6 +50,7 @@ const Cart = ({
                     isEmpty={isEmpty}
                     onClose={cartClose}
                     buttonLabel={btnLabel}
+                    buttonDisabled={total === 0}
                 />
             </article>
         </div>

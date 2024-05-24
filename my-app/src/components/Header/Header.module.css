@@ -1,6 +1,6 @@
-.headerSection{
+.headerSection {
     width: 100%;
-    background-color: #AAC4FF;
+    background-color: #aac4ff;
 }
 
 .header {
@@ -21,36 +21,36 @@
     .header {
         max-width: 1440px;
         padding: 22px 80px;
-        align-items: flex-end
+        align-items: flex-end;
     }
 }
 
-.logoWrapper{
+.logoWrapper {
     display: flex;
     align-items: flex-end;
     gap: 24px;
 }
 
-.headerInfoBloc{
+.headerInfoBloc {
     display: flex;
     gap: 24px;
 }
 
-.headerList{
+.headerList {
     display: flex;
     align-items: center;
     gap: 24px;
 }
 
-.headerListItem{
+.headerListItem {
     position: relative;
 }
 
-.telLink{
+.telLink {
     display: flex;
     gap: 8px;
     align-items: center;
-    color: #FEFEFE;
+    color: #fefefe;
     font-size: 20px;
 }
 
@@ -60,7 +60,7 @@
     cursor: pointer;
 }
 
-.cartIcon{
+.cartIcon {
     width: 24px;
     height: 24px;
 }
@@ -69,4 +69,24 @@
         width: 32px;
         height: 32px;
     }
+}
+
+.cartButton {
+    position: relative;
+}
+
+.cartCounter {
+    position: absolute;
+    inset: 0 0 auto auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(1rem, 0.9643rem + 0.1786vi, 1.125rem);
+    height: clamp(1rem, 0.9643rem + 0.1786vi, 1.125rem);
+    border-radius: 50%;
+    background: #fefefe;
+}
+
+.cartCounterValue {
+    font-size: clamp(0.5rem, 0.4286rem + 0.3571vi, 0.75rem);
 }
