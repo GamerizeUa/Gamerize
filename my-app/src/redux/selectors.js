@@ -35,3 +35,5 @@ export const selectCartProductsCount = createSelector(
             productList.length
         )
 );
+export const selectPromoCode = (state) => state.discount.promoCode;
+export const selectGiftCard = (state) => state.discount.giftCard;

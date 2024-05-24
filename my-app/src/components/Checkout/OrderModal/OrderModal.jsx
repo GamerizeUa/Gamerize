@@ -1,5 +1,5 @@
-import styles from "./OrderModal.module.css";
 import sprite from "../../../assets/icons/sprite.svg";
+import styles from "./OrderModal.module.css";
 
 export const OrderModal = () => {
   return (
