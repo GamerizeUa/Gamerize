@@ -10,19 +10,21 @@ const ConfirmEmailPage = () => {
         const userId = params.get('userId');
         const code = params.get('code');
 
-        console.log(userId, code)
-
-        axios.post('/api/Register/confirm-email', { userId, code })
-            .then(response => {
-                if (response.data.success) {
-                    navigate('/', { state: { showPopup: true } });
-                } else {
-                    navigate('/not-found-account')
-                }
+        if(code && userId){
+            axios.get('/api/Register/confirm-email', {
+                params: { userId, code }
             })
-            .catch(error => {
-                console.error('Error confirming email', error);
-            });
+                .then(response => {
+                    if (response.data.success) {
+                        navigate('/', { state: { showPopup: true } });
+                    } else {
+                        navigate('/not-found-account')
+                    }
+                })
+                .catch(error => {
+                    console.error('Error confirming email', error);
+                });
+        }
     }, [history]);
 
     return <div>Підтвердження паролю...</div>;
