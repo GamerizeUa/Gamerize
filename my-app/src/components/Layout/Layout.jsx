@@ -1,17 +1,20 @@
 import { Suspense, useEffect, useState } from "react";
 import Header from "../Header/Header";
-import { Outlet } from "react-router-dom";
+import {Outlet, useLocation} from "react-router-dom";
 import Footer from "../Footer/Footer";
 import styles from "./Layout.module.css";
 import CategoryHeader from "../CategoryHeader/CategoryHeader";
 import Cart from "../Cart/Cart";
 import BurgerMenu from "../Header/BurgerMenu/BurgerMenu";
 import {Login} from "../LoginAndRegistration/Login.jsx";
+import {ConfirmEmailPopup} from "../LoginAndRegistration/ConfirmEmail/ConfirmEmailPopup.jsx";
 
 const Layout = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const [burgerMenuOpen, setBurgerMenuOpen] = useState(false);
   const [isDisplayedLoginPopUp, setIsDisplayedLoginPopUp] = useState(false);
+  const location = useLocation();
+  const { state } = location;
 
   useEffect(() => {
     if (cartOpen || burgerMenuOpen) {
@@ -53,6 +56,8 @@ const Layout = () => {
       {isDisplayedLoginPopUp && (
           <Login setDisplayedLoginPopUp={setIsDisplayedLoginPopUp} />
       )}
+      {state?.showPopup &&
+          <ConfirmEmailPopup setIsDisplayedLoginPopUp={setIsDisplayedLoginPopUp} />}
       <main className={styles.container}>
         <Suspense fallback={<div>Loading...</div>}>
           <Outlet />

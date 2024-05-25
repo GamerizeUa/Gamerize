@@ -67,6 +67,14 @@
     transform: translate(-50%, -50%) rotate(-45deg);
 }
 
+.popUp_confirmEmail{
+    text-align: center;
+    margin-top: 70px;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 25px;
+}
+
 .popUp_form{
     display: flex;
     flex-direction: column;
