@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./DeliveryType.module.css";
+import { AddressForm } from "./AddressForm";
 
 export const DeliveryType = ({ onSubmit, currentStep, setCurrentStep }) => {
   const [deliveryMethod, setDeliveryMethod] = useState("");
@@ -21,7 +22,7 @@ export const DeliveryType = ({ onSubmit, currentStep, setCurrentStep }) => {
   return (
     <div>
       <div
-        className={styles.selectElement}
+        className={styles.pickupBlock}
         onClick={() => handleRadioClick("pickup")}
       >
         <div>
@@ -48,27 +49,30 @@ export const DeliveryType = ({ onSubmit, currentStep, setCurrentStep }) => {
         </div>
         <p className={styles.orderText}>Безкоштовно</p>
       </div>
-      <div
-        className={styles.selectElement}
-        onClick={() => handleRadioClick("delivery")}
-      >
-        <div className={styles.radioInputBox}>
-          <div className={styles.inputWrapper}>
-            <span className={styles.fakeInput} />
-            <input
-              type="radio"
-              id="delivery"
-              value="delivery"
-              name="deliveryMethod"
-              className={styles.selectorInput}
-              onChange={() => setDeliveryMethod("delivery")}
-            />
+      <div className={styles.deliveryBlock}>
+        <div
+          className={styles.selectElement}
+          onClick={() => handleRadioClick("delivery")}
+        >
+          <div className={styles.radioInputBox}>
+            <div className={styles.inputWrapper}>
+              <span className={styles.fakeInput} />
+              <input
+                type="radio"
+                id="delivery"
+                value="delivery"
+                name="deliveryMethod"
+                className={styles.selectorInput}
+                onChange={() => setDeliveryMethod("delivery")}
+              />
+            </div>
+            <label htmlFor="delivery" className={styles.orderText}>
+              Доставка
+            </label>
           </div>
-          <label htmlFor="delivery" className={styles.orderText}>
-            Доставка
-          </label>
+          <p className={styles.orderText}>Безкоштовно</p>
         </div>
-        <p className={styles.orderText}>Безкоштовно</p>
+        {deliveryMethod === "delivery" && <AddressForm></AddressForm>}
       </div>
       <button
         className={styles.orderBtn}
