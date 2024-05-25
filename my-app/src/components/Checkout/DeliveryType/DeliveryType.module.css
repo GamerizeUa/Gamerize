@@ -7,10 +7,10 @@
 .pickupBlock {
   display: flex;
   justify-content: space-between;
-    padding: 16px;
-    margin: 16px 0;
-    border: 1px solid #dee0e3;
-    cursor: pointer;
+  padding: 16px;
+  margin: 16px 0;
+  border: 1px solid #dee0e3;
+  cursor: pointer;
 }
 
 .radioInputBox {
@@ -30,7 +30,7 @@
   height: 20px;
   border-radius: 50%;
   border: 1px solid #dee0e3;
-  background-color: #fff;
+  background-color: var(--white-white);
   pointer-events: none;
 }
 
@@ -46,7 +46,7 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: #aac4ff;
+  background-color: var(--blue);
   position: absolute;
   top: 5px;
   left: 5px;
@@ -64,8 +64,8 @@
   height: 53px;
   padding: 16px 72px;
   border-radius: 10px;
-  border: 1px solid #fefefe;
-  background-color: #d2daff;
+  border: 1px solid var(--white);
+  background-color: var(--light-blue);
   font-family: "Noto Sans";
   font-size: 16px;
   font-weight: 700;
@@ -73,19 +73,19 @@
 }
 
 .deliveryBlock {
-    padding: 16px;
-    margin: 16px 0;
-    border: 1px solid #dee0e3;
-    cursor: pointer;
+  padding: 16px;
+  margin: 16px 0;
+  border: 1px solid #dee0e3;
+  cursor: pointer;
 }
 
 .selectElement {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .addressText {
-    margin: 12px 0;
+  margin: 12px 0;
   font-family: "Noto Sans";
   font-size: 12px;
   line-height: 150%;
@@ -109,7 +109,7 @@
 .selectInput {
   padding: 10px 16px;
   border-radius: 10px;
-  border: 1px solid #aac4ff;
+  border: 1px solid var(--blue);
   font-family: "Noto Sans";
   font-size: 14px;
   line-height: 150%;

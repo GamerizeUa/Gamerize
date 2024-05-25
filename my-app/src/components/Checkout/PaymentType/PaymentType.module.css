@@ -1,79 +1,79 @@
 .orderText {
-    font-family: "Noto Sans";
-    font-size: 14px;
-    cursor: pointer;
+  font-family: "Noto Sans";
+  font-size: 14px;
+  cursor: pointer;
 }
 
 .selectElement {
-    display: flex;
-    justify-content: space-between;
-    padding: 16px;
-    margin: 16px 0;
-    border: 1px solid #dee0e3;
-    cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  margin: 16px 0;
+  border: 1px solid #dee0e3;
+  cursor: pointer;
 }
 
 .radioInputBox {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .inputWrapper {
-    position: relative;
+  position: relative;
 }
 
 .fakeInput {
-    position: absolute;
-    display: block;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 1px solid #dee0e3;
-    background-color: #fff;
-    pointer-events: none;
+  position: absolute;
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid #dee0e3;
+  background-color: var(--white-white);
+  pointer-events: none;
 }
 
 .selectorInput {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
 }
 
 .selectorInput:checked::before {
-    content: "";
-    display: block;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #aac4ff;
-    position: absolute;
-    top: 5px;
-    left: 5px;
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--blue);
+  position: absolute;
+  top: 5px;
+  left: 5px;
 }
 
 .details {
-    margin-top: 12px;
-    font-family: "Noto Sans";
-    font-size: 12px;
-    line-height: 150%;
+  margin-top: 12px;
+  font-family: "Noto Sans";
+  font-size: 12px;
+  line-height: 150%;
 }
 
 .paymentImg {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 .orderBtn {
-    width: 350px;
-    height: 53px;
-    padding: 16px 72px;
-    border-radius: 10px;
-    border: 1px solid #fefefe;
-    background-color: #d2daff;
-    font-family: "Noto Sans";
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 16%;
+  width: 350px;
+  height: 53px;
+  padding: 16px 72px;
+  border-radius: 10px;
+  border: 1px solid var(--white);
+  background-color: #d2daff;
+  font-family: "Noto Sans";
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 16%;
 }

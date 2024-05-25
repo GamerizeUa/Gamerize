@@ -1,75 +1,75 @@
 .header {
-    padding-bottom: 16px;
-    margin-bottom: 24px;
-    border-bottom: 1px solid #eeeef0;
-    font-family: "Noto Sans";
-    font-size: 24px;
-    line-height: 130%;
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #eeeef0;
+  font-family: "Noto Sans";
+  font-size: 24px;
+  line-height: 130%;
 }
 
 .orderElement {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
 }
 
 .orderText {
-    font-family: "Noto Sans";
-    font-size: 14px;
+  font-family: "Noto Sans";
+  font-size: 14px;
 }
 
 .inputBox {
-    position: relative;
+  position: relative;
 }
 
 .inputBox::after {
-    content: "";
-    position: absolute;
-    top: 12px;
-    left: 50px;
-    width: 1px;
-    height: 20px;
-    background-color: #8e8e8e;
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 50px;
+  width: 1px;
+  height: 20px;
+  background-color: #8e8e8e;
 }
 
 .orderInput {
-    width: 430px;
-    padding: 10px 16px 10px 60px;
-    border-radius: 10px;
-    border: 1px solid #aac4ff;
-    font-family: "Noto Sans";
-    font-size: 14px;
+  width: 430px;
+  padding: 10px 16px 10px 60px;
+  border-radius: 10px;
+  border: 1px solid var(--blue);
+  font-family: "Noto Sans";
+  font-size: 14px;
 }
 
 .inputIcon {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 16px;
-    width: 24px;
-    height: 24px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 16px;
+  width: 24px;
+  height: 24px;
 }
 
 .orderBtn {
-    width: 350px;
-    height: 53px;
-    padding: 16px 72px;
-    border-radius: 10px;
-    border: 1px solid #fefefe;
-    background-color: #d2daff;
-    font-family: "Noto Sans";
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 16%;
+  width: 350px;
+  height: 53px;
+  padding: 16px 72px;
+  border-radius: 10px;
+  border: 1px solid var(--white);
+  background-color: var(--light-blue);
+  font-family: "Noto Sans";
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 16%;
 }
 
-.errorMessage{
-    font-family: "Noto Sans";
-    font-size: 14px;
-    color: rgb(207, 17, 17);
+.errorMessage {
+  font-family: "Noto Sans";
+  font-size: 14px;
+  color: rgb(207, 17, 17);
 }
 
-.errorInput{
-    border-color: rgb(207, 17, 17);
+.errorInput {
+  border-color: rgb(207, 17, 17);
 }

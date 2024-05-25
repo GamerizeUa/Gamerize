@@ -44,7 +44,7 @@
   font-size: 78px;
   font-weight: 700;
   line-height: 24%;
-  color: #6566ac;
+  color: var(--dark-purple);
 }
 @media (min-width: 744px) {
   .notFoundNumber {
@@ -80,7 +80,7 @@
   width: 288px;
   height: 53px;
   border-radius: 10px;
-  background: #aac4ff;
+  background: var(--blue);
   color: black;
   font-size: 14px;
   font-weight: 700;

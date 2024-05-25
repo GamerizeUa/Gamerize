@@ -1,7 +1,7 @@
 .orderCart {
   width: 451px;
   padding: 32px 24px;
-  background-color: #eef1ff;
+  background-color: var(--light-blue-gray);
 }
 
 .cartTitle {
@@ -68,7 +68,7 @@
   align-items: center;
   gap: 10px;
   padding: 5px;
-  background-color: #fefefe;
+  background-color: var(--white);
 }
 
 .cartProductPriceWrapper {
@@ -104,7 +104,7 @@
   height: 30px;
   padding: 7px;
   border-radius: 10px;
-  border: 1px solid var(--Blue, #aac4ff);
+  border: 1px solid var(--blue);
 }
 
 .priceContainer {
