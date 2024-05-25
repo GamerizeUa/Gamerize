@@ -10,10 +10,16 @@ export const CartExcerpt = ({ id, photo, name, price, count }) => {
     const [countFieldValue, setCountFieldValue] = useState(count);
 
     const handleCountChange = (newCount) => {
-        if (isNaN(newCount) || newCount < 0) return;
+        setCountFieldValue(newCount <= 0 ? '' : newCount);
 
-        setCountFieldValue(newCount);
+        if (isNaN(newCount) || newCount <= 0) return;
         dispatch(updateCartProduct({ id, modifier: newCount - count }));
+    };
+
+    const handleBlur = () => {
+        if (countFieldValue >= 1) return;
+
+        setCountFieldValue(count);
     };
 
     const handleRemoveFromCart = () => {
@@ -56,11 +62,12 @@ export const CartExcerpt = ({ id, photo, name, price, count }) => {
                             </svg>
                         </button>
                         <input
-                            type="text"
+                            type="number"
                             value={countFieldValue}
                             onChange={({ target: { value } }) =>
                                 handleCountChange(Number(value))
                             }
+                            onBlur={handleBlur}
                             className={styles['counter__input']}
                         />
                         <button
