@@ -1,92 +1,92 @@
 .headerSection {
-    width: 100%;
-    background-color: #aac4ff;
+  width: 100%;
+  background-color: var(--blue);
 }
 
 .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 16px;
-    margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 16px;
+  margin: 0 auto;
 }
 
 @media (min-width: 744px) {
-    .header {
-        padding: 34px 36px;
-    }
+  .header {
+    padding: 34px 36px;
+  }
 }
 
 @media (min-width: 1280px) {
-    .header {
-        max-width: 1440px;
-        padding: 22px 80px;
-        align-items: flex-end;
-    }
+  .header {
+    max-width: 1440px;
+    padding: 22px 80px;
+    align-items: flex-end;
+  }
 }
 
 .logoWrapper {
-    display: flex;
-    align-items: flex-end;
-    gap: 24px;
+  display: flex;
+  align-items: flex-end;
+  gap: 24px;
 }
 
 .headerInfoBloc {
-    display: flex;
-    gap: 24px;
+  display: flex;
+  gap: 24px;
 }
 
 .headerList {
-    display: flex;
-    align-items: center;
-    gap: 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }
 
 .headerListItem {
-    position: relative;
+  position: relative;
 }
 
 .telLink {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    color: #fefefe;
-    font-size: 20px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--white);
+  font-size: 20px;
 }
 
 .headerButton {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .cartIcon {
-    width: 24px;
-    height: 24px;
+  width: 24px;
+  height: 24px;
 }
 @media (min-width: 744px) {
-    .cartIcon {
-        width: 32px;
-        height: 32px;
-    }
+  .cartIcon {
+    width: 32px;
+    height: 32px;
+  }
 }
 
 .cartButton {
-    position: relative;
+  position: relative;
 }
 
 .cartCounter {
-    position: absolute;
-    inset: 0 0 auto auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: clamp(1rem, 0.9643rem + 0.1786vi, 1.125rem);
-    height: clamp(1rem, 0.9643rem + 0.1786vi, 1.125rem);
-    border-radius: 50%;
-    background: #fefefe;
+  position: absolute;
+  inset: 0 0 auto auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(1rem, 0.9643rem + 0.1786vi, 1.125rem);
+  height: clamp(1rem, 0.9643rem + 0.1786vi, 1.125rem);
+  border-radius: 50%;
+  background: var(--white);
 }
 
 .cartCounterValue {
-    font-size: clamp(0.5rem, 0.4286rem + 0.3571vi, 0.75rem);
+  font-size: clamp(0.5rem, 0.4286rem + 0.3571vi, 0.75rem);
 }

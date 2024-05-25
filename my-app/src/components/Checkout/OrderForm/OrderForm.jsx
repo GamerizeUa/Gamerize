@@ -13,8 +13,8 @@ import {
 } from "../../../redux/selectors";
 import { clearCart } from "../../../redux/cartSlice";
 import { clearDiscounts } from "../../../redux/discountSlice";
-import styles from "./OrderForm.module.css";
 import { OrderModal } from "../OrderModal/OrderModal";
+import styles from "./OrderForm.module.css";
 
 export const OrderForm = () => {
   const dispatch = useDispatch();

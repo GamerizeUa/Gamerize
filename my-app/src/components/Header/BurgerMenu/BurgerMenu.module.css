@@ -1,95 +1,94 @@
-.backdrop{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, .2);
-    opacity: 1;
-    transition-property: opacity;
-    z-index: 20;
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  opacity: 1;
+  transition-property: opacity;
+  z-index: 20;
 }
 
-.burgerMenuWrapper{
-    width: 320px;
-    max-height: 100vh;
-    position: fixed;
-    overflow-y: auto;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    z-index: 50;
-    font-size: 14px;
-    font-weight: 500;
-    background-color: #FFFFFF;
+.burgerMenuWrapper {
+  width: 320px;
+  max-height: 100vh;
+  position: fixed;
+  overflow-y: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 50;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: var(--white-white);
 }
 
-.closeIcon{
-    position: absolute;
-    top: 10px;
-    left: 14px;
+.closeIcon {
+  position: absolute;
+  top: 10px;
+  left: 14px;
 }
 
-.burgerMenuHeader{
-    height: 44px;
-    background-color: #AAC4FF;
+.burgerMenuHeader {
+  height: 44px;
+  background-color: var(--blue);
 }
 
-.iconsList{
-    display: flex;
-    align-items: center;
-    gap: 38px;
-    padding: 26px 75px;
+.iconsList {
+  display: flex;
+  align-items: center;
+  gap: 38px;
+  padding: 26px 75px;
 }
 
-.burgerMenuListItem{
-    display: flex;
-    justify-content: space-between;
-    padding: 20px 12px;
-    border-top: 1px solid #AAC4FF;
-    font-family: "Noto Sans";
-    font-weight: 500;
-    font-size: 14px;
+.burgerMenuListItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 12px;
+  border-top: 1px solid var(--blue);
+  font-family: "Noto Sans";
+  font-weight: 500;
+  font-size: 14px;
 }
 
 .burgerMenuListItem svg {
-    width: 24px;
-    height: 24px;
+  width: 24px;
+  height: 24px;
 }
 
-.menuInfoList{
-    background-color: #EEF1FF;
-    font-weight: 500;
+.menuInfoList {
+  background-color: var(--light-blue-gray);
+  font-weight: 500;
 }
 
-.menuInfoListItem{
-    padding: 22px 12px;
+.menuInfoListItem {
+  padding: 22px 12px;
 }
 
-.menuInfoListLink{
-    color: #000;
+.menuInfoListLink {
+  color: #000;
 }
 
-.logOutBloc{
-display: flex;
-align-items: center;
-gap: 8px;
-padding: 17px 12px;
+.logOutBloc {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 17px 12px;
 }
 
 .categoryListItem {
-    padding: 20px 12px;
-    border-top: 1px solid #AAC4FF;
-    font-family: "Noto Sans";
-    font-weight: 500;
-    font-size: 12px;
-    background: #EEF1FF;
+  padding: 20px 12px;
+  border-top: 1px solid var(--blue);
+  font-family: "Noto Sans";
+  font-weight: 500;
+  font-size: 12px;
+  background: var(--light-blue-gray);
 }
 
-.categoryListLink{
-color: #2B2B2B;
+.categoryListLink {
+  color: var(--black);
 }
-
 
 /* @keyframes slideDown {
     0% {

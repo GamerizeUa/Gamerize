@@ -21,7 +21,7 @@
   font-family: "Oswald";
   font-size: 28px;
   font-weight: 400;
-  background-color: #eef1ff;
+  background-color: var(--light-blue-gray);
 }
 
 @media (min-width: 744px) {
@@ -115,10 +115,11 @@
   top: 40px;
   width: 204px;
   height: 130px;
-  background-color: #fefefe;
+  background-color: var(--white);
   padding: 20px 16px;
   border-radius: 4px;
 }
+
 .selectorWrapper::after {
   display: block;
   content: "";
@@ -128,7 +129,7 @@
   right: 50%;
   border: 6px solid transparent;
   top: -15px;
-  border-bottom: 10px solid #fefefe;
+  border-bottom: 10px solid var(--white);
 }
 
 .selectorContent {
@@ -154,7 +155,7 @@
   height: 20px;
   border-radius: 50%;
   border: 1px solid #dee0e3;
-  background-color: #fff;
+  background-color: var(--white-white);
   pointer-events: none;
 }
 
@@ -169,7 +170,7 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: #aac4ff;
+  background-color: var(--blue);
   position: absolute;
   top: 5px;
   left: 5px;

@@ -1,95 +1,94 @@
-.accountLinksWrapper{
-    position: absolute;
-    top: 40px;
-    left: 65%;
-    transform: translateX(-50%) scale(1);
-    background-color: #fff;
-    padding-top: 6px;
-    border-radius: 4px;
-    z-index: 10;
+.accountLinksWrapper {
+  position: absolute;
+  top: 40px;
+  left: 65%;
+  transform: translateX(-50%) scale(1);
+  background-color: #fff;
+  padding-top: 6px;
+  border-radius: 4px;
+  z-index: 10;
 }
 
 .accountLinksWrapper::after {
-    display: block;
-    content: "";
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    right: 50%;
-    border: 6px solid transparent;
-    top: -15px;
-    border-bottom: 10px solid #fff;
+  display: block;
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  right: 50%;
+  border: 6px solid transparent;
+  top: -15px;
+  border-bottom: 10px solid #fff;
 }
 
 .accountList {
-    padding-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 .accountListItem {
-    padding: 7px 16px;
-    font-family: 'Inter';
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
+  padding: 7px 16px;
+  font-family: "Inter";
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
 
-    transition-property: background-color;
-    transition-duration: 250ms;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: background-color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.accountListItem svg{
-width: 24px;
-height: 24px;
+.accountListItem svg {
+  width: 24px;
+  height: 24px;
 }
 
 .accountListItem:hover,
 .accountListItem:focus {
-    background-color: #EEF1FF;
+  background-color: var(--light-blue-gray);
 }
 
-.accountLink{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
-    color: black;
+.accountLink {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  color: black;
 }
 
-.accountLinkText{
-    font-family: "Inter";
-    white-space: nowrap;
-    font-size: 16px;
-    line-height: 1.5;
-    letter-spacing: -0.02em;
-    font-weight: 500;
+.accountLinkText {
+  font-family: "Inter";
+  white-space: nowrap;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  font-weight: 500;
 }
 
-.accountlogOut{
-    padding: 10px 0;
-    border-top: 1px solid #AAC4FF;
-    background-color: #fff;
+.accountlogOut {
+  padding: 10px 0;
+  border-top: 1px solid var(--blue);
+  background-color: #fff;
 }
 
-.logOutLink{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
-    color: black;
+.logOutLink {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  color: black;
 
-    padding: 7px 16px;
-    font-family: 'Inter';
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-            
-    transition-property: background-color;
-    transition-duration: 250ms;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-            
+  padding: 7px 16px;
+  font-family: "Inter";
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+
+  transition-property: background-color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .logOutLink:hover,
 .logOutLink:focus {
-    background-color: #EEF1FF;
+  background-color: var(--light-blue-gray);
 }
