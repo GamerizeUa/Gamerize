@@ -10,7 +10,7 @@ import { CartTotal } from './CartTotal';
 const Cart = ({
     cartClose,
     headerTitle = 'Кошик',
-    emptyMessage = 'Ваш кошик порожній.',
+    emptyMessage = 'Ваш кошик порожній',
     totalLabel = 'Сума:',
     btnLabel = 'Замовити',
 }) => {
