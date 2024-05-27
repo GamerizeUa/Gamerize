@@ -39,7 +39,7 @@ export const QuestioningForm = () => {
     }
 
     const onSubmit = (data) => {
-        Axios.post('https://gamerize.ltd.ua/Questions', data)
+        Axios.post('https://gamerize.ltd.ua/api/Question/Questions', data)
             .then(changeVisibility)
             .catch((err) => console.log(err))
 
@@ -99,7 +99,7 @@ export const QuestioningForm = () => {
                     </div>
                 </div>
             </div>
-            {isVisible && <PopUp changeVisibility={changeVisibility} isVisible={isVisible}/>}
+            {isVisible && <PopUp changeVisibility={changeVisibility} />}
         </section>
     )
 }

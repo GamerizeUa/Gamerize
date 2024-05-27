@@ -1,20 +1,18 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import styles from './popUp.module.css'
+import useNoScroll from "../../hooks/useNoScroll.js";
 
-export const PopUp = ({changeVisibility, isVisible}) => {
-    useEffect(() => {
-        if (isVisible) {
-            document.body.classList.add('no-scroll');
-        } else {
-            document.body.classList.remove('no-scroll');
+export const PopUp = ({changeVisibility}) => {
+    useNoScroll(true);
+
+    const closePopupByClicking = (event) => {
+        if (event.currentTarget === event.target) {
+            changeVisibility();
         }
-        return () => {
-            document.body.classList.remove('no-scroll');
-        };
-    }, [isVisible]);
+    }
 
     return(
-        <div className={styles.popUp_background}>
+        <div className={styles.popUp_background} onClick={closePopupByClicking}>
             <div className={styles.popUp}>
                 <div className={styles.popUp_container}>
                     <div className={styles.popUp_crossContainer}>
