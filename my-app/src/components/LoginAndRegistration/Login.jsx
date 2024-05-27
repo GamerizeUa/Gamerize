@@ -1,29 +1,15 @@
 import styles from "./LoginAndRegistration.module.css";
-import React, { useEffect, useState } from "react";
-import { Registration } from "./Registration.jsx";
+import React, { useState } from "react";
 import sprite from "../../assets/icons/sprite.svg";
 import * as yup from "yup";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import Axios from "axios";
+import useNoScroll from "../hooks/useNoScroll.js";
 
-export const Login = ({ setDisplayedLoginPopUp }) => {
-  const [isVisible, setIsVisible] = useState(true);
-  const [isDisplayedRegistrationPopUp, setIsDisplayedRegistrationPopUp] =
-    useState(false);
+export const Login = ({ setDisplayedLoginPopUp, setIsDisplayedRegistrationPopUp }) => {
   const [isErrorVisible, setIsErrorVisible] = useState(false);
-
-  useEffect(() => {
-    if (isVisible) {
-      document.body.classList.add("no-scroll");
-    } else {
-      document.body.classList.remove("no-scroll");
-      setDisplayedLoginPopUp(false);
-    }
-    return () => {
-      document.body.classList.remove("no-scroll");
-    };
-  }, [isVisible]);
+  useNoScroll(true);
 
   const schema = yup.object().shape({
     email: yup.string().required("Введіть е-пошту")
@@ -31,37 +17,42 @@ export const Login = ({ setDisplayedLoginPopUp }) => {
     password: yup.string().required("Введіть пароль"),
   });
 
-  const {register, handleSubmit, formState: {errors}, reset} = useForm({
+  const {register, handleSubmit, formState: {errors}} = useForm({
     resolver: yupResolver(schema),
     mode: 'onChange'
   });
 
   const onSubmit = (data) =>{
-    console.log(data)
     Axios.post('https://gamerize.ltd.ua/api/Login/login', data)
         .then((res) => {
-          changeVisibility();
+          closePopUp();
           localStorage.setItem("token", res.data.token);
         })
-        .catch((err) => {
+        .catch(() => {
           setIsErrorVisible(true)
         })
   }
 
-  const changeVisibility = () => {
-    setIsVisible(!isVisible);
+  const closePopupByClicking = (event) => {
+    if (event.currentTarget === event.target) {
+      closePopUp();
+    }
+  }
+
+  const closePopUp = () => {
+    setDisplayedLoginPopUp(false);
   };
 
   return (
-    <div className={styles.popUp_background}>
+    <div className={styles.popUp_background} onClick={closePopupByClicking}>
       <div className={styles.popUp}>
         <div className={styles.popUp_header}>
           <p className={styles.popUp_title}>Вхід</p>
-          <div className={styles.popUp_cross} onClick={changeVisibility}></div>
+          <div className={styles.popUp_cross} onClick={closePopUp}></div>
         </div>
         <div className={styles.popUp_container}>
           <form className={styles.popUp_form} onSubmit={handleSubmit(onSubmit)}>
-            <div className={styles.popUp_fromGroup}>
+            <div className={styles.popUp_formGroup}>
               <label>Електронна пошта*</label>
               <div className={styles.popUp_inputContainer}>
                 <svg width="24" height="24">
@@ -75,7 +66,7 @@ export const Login = ({ setDisplayedLoginPopUp }) => {
               </div>
               <p className={styles.input_error}>{errors.email?.message}</p>
             </div>
-            <div className={styles.popUp_fromGroup}>
+            <div className={styles.popUp_formGroup}>
               <label>Пароль*</label>
               <div className={styles.popUp_inputContainer}>
                 <svg width="24" height="24">
@@ -101,11 +92,6 @@ export const Login = ({ setDisplayedLoginPopUp }) => {
             Зареєструватись
           </button>
         </div>
-        {isDisplayedRegistrationPopUp && (
-          <Registration
-            setIsDisplayedRegistrationPopUp={setIsDisplayedRegistrationPopUp}
-          />
-        )}
       </div>
     </div>
   );

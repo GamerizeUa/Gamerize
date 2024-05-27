@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import Header from "../Header/Header";
 import {Outlet, useLocation} from "react-router-dom";
 import Footer from "../Footer/Footer";
@@ -8,11 +8,14 @@ import Cart from "../Cart/Cart";
 import BurgerMenu from "../Header/BurgerMenu/BurgerMenu";
 import {Login} from "../LoginAndRegistration/Login.jsx";
 import {ConfirmEmailPopup} from "../LoginAndRegistration/ConfirmEmail/ConfirmEmailPopup.jsx";
+import {Registration} from "../LoginAndRegistration/Registration.jsx";
 
 const Layout = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const [burgerMenuOpen, setBurgerMenuOpen] = useState(false);
   const [isDisplayedLoginPopUp, setIsDisplayedLoginPopUp] = useState(false);
+  const [isDisplayedRegistrationPopUp, setIsDisplayedRegistrationPopUp] =
+      useState(false);
   const location = useLocation();
   const { state } = location;
 
@@ -53,8 +56,15 @@ const Layout = () => {
       {burgerMenuOpen && <BurgerMenu burgerMenuClose={burgerMenuClose}
                                      setIsDisplayedLoginPopUp={setIsDisplayedLoginPopUp} />}
       {cartOpen && <Cart cartClose={cartClose} />}
-      {isDisplayedLoginPopUp && (
-          <Login setDisplayedLoginPopUp={setIsDisplayedLoginPopUp} />
+      {isDisplayedLoginPopUp && !isDisplayedRegistrationPopUp && (
+          <Login setDisplayedLoginPopUp={setIsDisplayedLoginPopUp}
+                 setIsDisplayedRegistrationPopUp={setIsDisplayedRegistrationPopUp}/>
+      )}
+      {isDisplayedRegistrationPopUp && (
+          <Registration
+              setIsDisplayedRegistrationPopUp={setIsDisplayedRegistrationPopUp}
+              setDisplayedLoginPopUp={setIsDisplayedLoginPopUp}
+          />
       )}
       {state?.showPopup &&
           <ConfirmEmailPopup setIsDisplayedLoginPopUp={setIsDisplayedLoginPopUp} />}

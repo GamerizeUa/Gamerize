@@ -1,21 +1,28 @@
 import styles from "./ConfirmEmailPopup.module.css";
 import React, {useRef, useState} from "react";
+import useNoScroll from "../../hooks/useNoScroll.js";
 
 
 export const ConfirmEmailPopup = ({ setIsDisplayedLoginPopUp}) => {
     const popUpRef = useRef(null);
+
+    const closePopupByClicking = (event) => {
+        if (event.currentTarget === event.target) {
+            closeConfirmEmailPop();
+        }
+    }
 
     const closeConfirmEmailPop = () => {
         popUpRef.current.style.display = "none";
     }
 
     const openLoginPopUp = () => {
-        popUpRef.current.style.display = "none";
+        closeConfirmEmailPop();
         setIsDisplayedLoginPopUp(true);
     }
 
     return (
-        <div className={styles.background} ref={popUpRef}>
+        <div className={styles.background} ref={popUpRef} onClick={closePopupByClicking}>
             <div className={styles.container}>
                 <div className={styles.crossContainer}>
                     <div className={styles.cross} onClick={closeConfirmEmailPop}></div>
