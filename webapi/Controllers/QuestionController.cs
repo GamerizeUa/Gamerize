@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace webapi.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
     [ApiController]
     public class QuestionController : ControllerBase
     {

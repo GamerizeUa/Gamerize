@@ -43,7 +43,7 @@ namespace Gamerize.BLL.Services
             {
                 Id = user.Id,
                 Name = user.Name,
-                Phone = user.PhoneNumber,
+                PhoneNumber = user.PhoneNumber,
                 Email = user.Email,
                 City = user.City,
                 DeliveryAddress = user.DeliveryAddress,

@@ -5,6 +5,7 @@ using Gamerize.BLL.Services;
 using Gamerize.DAL.UnitOfWork.Interfaces;
 using Gamerize.DAL.UnitOfWork;
 using DiscountCouponService = Gamerize.BLL.Services.DiscountCouponService;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace webapi.Extensions.DI
 {
@@ -28,6 +29,6 @@ namespace webapi.Extensions.DI
 			services.AddTransient<PuzzleService>();
 			services.AddTransient<MindGamesService>();
 			services.AddTransient<ProfileService>();
-		}
+        }
 	}
 }

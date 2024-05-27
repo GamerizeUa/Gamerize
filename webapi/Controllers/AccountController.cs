@@ -5,6 +5,10 @@ using System.Security.Claims;
 using Gamerize.BLL.Models;
 using Microsoft.AspNetCore.Identity;
 using Gamerize.DAL.Entities.Admin;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Text;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using System.Text.Encodings.Web;
 
 namespace webapi.Controllers;
 
@@ -18,12 +22,15 @@ public class AccountController : ControllerBase
     private readonly ILogger<AccountController> _logger;
     private readonly ProfileService _profileService;
     private readonly UserManager<User> _userManager;
+    private readonly IEmailSender _emailSender;
 
-    public AccountController(UserManager<User> userManager, ProfileService profileService, ILogger<AccountController> logger)
+    public AccountController(UserManager<User> userManager, ProfileService profileService, ILogger<AccountController> logger,
+        IEmailSender emailSender)
     {
         _profileService = profileService;
         _logger = logger;
         _userManager = userManager;
+        _emailSender = emailSender;
     }
 
     [HttpGet("profile")]

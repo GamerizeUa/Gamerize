@@ -1,8 +1,11 @@
 using Gamerize.BLL.AutoMapper;
+using Gamerize.BLL.Models;
+using Gamerize.BLL.Services;
 using Gamerize.DAL.Contexts;
 using Gamerize.DAL.Entities.Admin;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -84,6 +87,16 @@ builder.Services.AddCors(options =>
     );
 
 builder.Services.AddDependencyInjections();
+
+builder.Services.AddTransient<IEmailSender, EmailSenderService>();
+builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
+
+builder.Services.ConfigureApplicationCookie(o => {
+    o.ExpireTimeSpan = TimeSpan.FromDays(5);
+    o.SlidingExpiration = true;
+});
+
+builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration.GetSection("AuthMessageSenderOptions"));
 
 var app = builder.Build();
 
