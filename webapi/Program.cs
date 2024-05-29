@@ -12,33 +12,34 @@ using System.Text;
 using webapi.Extensions.DI;
 
 var builder = WebApplication.CreateBuilder(args);
-    builder.Services.AddSwaggerGen(options =>
-    {
-        options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
-        {
-            Name = "Authorization",
-            Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
-            Scheme = "Bearer",
-            BearerFormat = "JWT",
-            In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-            Description = "JWT Authorization header using the Bearer scheme."
-        });
 
-        options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
-            {
-                {
-                    new Microsoft.OpenApi.Models.OpenApiSecurityScheme
-                    {
-                        Reference = new Microsoft.OpenApi.Models.OpenApiReference
-                        {
-                            Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
-                            Id = "Bearer"
-                        }
-                    },
-                    new string[] {}
-                }
-            });
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "JWT Authorization header using the Bearer scheme."
     });
+
+    options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+        {
+            {
+                new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                {
+                    Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                    {
+                        Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                },
+                new string[] {}
+            }
+        });
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -49,13 +50,12 @@ builder.Services.AddAuthentication(cfg => {
     cfg.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(x => {
     x.RequireHttpsMetadata = false;
-    x.SaveToken = false;
+    x.SaveToken = true;
     x.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8
-            .GetBytes(builder.Configuration["Jwt:JWT_Secret"])
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:JWT_Secret"])
         ),
         ValidateIssuer = false,
         ValidateAudience = false,
@@ -67,8 +67,8 @@ builder.Services.AddDbContext<ApiDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("SqlConnection")));
 
 builder.Services.AddIdentityCore<User>()
-            .AddEntityFrameworkStores<ApiDbContext>()
-            .AddDefaultTokenProviders();
+        .AddEntityFrameworkStores<ApiDbContext>()
+        .AddDefaultTokenProviders();
 
 builder.Services.AddScoped<SignInManager<User>>();
 builder.Services.AddHttpContextAccessor();
@@ -80,11 +80,12 @@ builder.Services.AddControllers();
 builder.Services.AddCors(options =>
     options.AddPolicy("AllowAnyOrigin", builder =>
     {
-        builder.AllowAnyOrigin()
+        builder
+            .AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader();
     })
-    );
+);
 
 builder.Services.AddDependencyInjections();
 
@@ -115,6 +116,16 @@ else
     app.UseHsts();
 }
 
+app.Use(async (context, next) =>
+{
+    var token = context.Request.Cookies["jwt"];
+    if (!string.IsNullOrEmpty(token))
+    {
+        context.Request.Headers.Add("Authorization", "Bearer " + token);
+    }
+    await next();
+});
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -123,4 +134,5 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 app.MapFallbackToFile("index.html");
+
 app.Run();

@@ -58,7 +58,24 @@ namespace webapi.Controllers
                 return BadRequest(new { Message = "Failed to generate token" });
             }
 
-            return Ok(new { Token = token });
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddDays(1)
+            };
+
+            Response.Cookies.Append("jwt", token, cookieOptions);
+
+            return Ok(new { Message = "Login successful" });
+        }
+
+        [HttpGet("check")]
+        [Authorize]
+        public IActionResult CheckAuth()
+        {
+            return Ok(new { Message = "User is authenticated" });
         }
 
         [HttpPost("forgot-password")]
