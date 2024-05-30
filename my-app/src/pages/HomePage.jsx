@@ -24,7 +24,7 @@ const HomePage = () => {
     return () => {
       axios.interceptors.response.eject(responseInterceptor);
     };
-  }, [logoutClient]);
+  }, []);
 
   // productsList just for tests
   const productsList = [
