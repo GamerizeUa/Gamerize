@@ -21,6 +21,7 @@ import { mindGamesReducer } from "./categories/mindGamesSlice.js";
 import { reviewsReducer } from "./reviewsSlice.js";
 import cartSlice from "./cartSlice.js";
 import discountReducer from "./discountSlice";
+import authorizationReducer from "./authorizationSlice.js";
 
 const persistConfig = {
   key: "root",
@@ -40,6 +41,7 @@ const rootReducer = combineReducers({
   reviews: reviewsReducer,
   cart: cartSlice,
   discount: discountReducer,
+  authorization: authorizationReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
