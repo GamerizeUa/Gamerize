@@ -22,7 +22,20 @@ namespace webapi.Controllers
         [Authorize]
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
+            await _signInManager.SignOutAsync();
+
+            if (Request.Cookies["jwt"] != null)
+            {
+                var cookieOptions = new CookieOptions
+                {
+                    Expires = DateTime.UtcNow.AddDays(-1),
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.Strict
+                };
+
+                Response.Cookies.Append("jwt", "", cookieOptions);
+            }
 
             return Ok(new { Message = "Logout successful" });
         }

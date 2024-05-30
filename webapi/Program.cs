@@ -49,7 +49,7 @@ builder.Services.AddAuthentication(cfg => {
     cfg.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     cfg.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(x => {
-    x.RequireHttpsMetadata = false;
+    x.RequireHttpsMetadata = true;
     x.SaveToken = true;
     x.TokenValidationParameters = new TokenValidationParameters
     {
@@ -125,6 +125,8 @@ app.Use(async (context, next) =>
     }
     await next();
 });
+
+app.UseMiddleware<JwtMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
