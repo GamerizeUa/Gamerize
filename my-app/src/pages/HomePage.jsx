@@ -4,27 +4,9 @@ import { QuestioningForm } from "../components/landing-page/QuestioningForm/Ques
 import { SelectionOfGames } from "../components/landing-page/SelectionOfGames/SelectionOfGames.jsx";
 import { Banner } from "../components/landing-page/Banner/Banner.jsx";
 import axios from "axios";
-import {useLogoutClient} from "../components/hooks/useLogoutClient.js";
-import {useEffect} from "react";
 
 const HomePage = () => {
-  const logoutClient = useLogoutClient();
   axios.defaults.withCredentials = true;
-
-  useEffect(() => {
-    const responseInterceptor = axios.interceptors.response.use(
-        response => response,
-        error => {
-          if (error.response && error.response.status === 401) {
-            logoutClient();
-          }
-          return Promise.reject(error);
-        }
-    );
-    return () => {
-      axios.interceptors.response.eject(responseInterceptor);
-    };
-  }, []);
 
   // productsList just for tests
   const productsList = [
