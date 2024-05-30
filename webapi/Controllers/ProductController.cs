@@ -1,4 +1,5 @@
 ﻿using Gamerize.BLL.Models;
+using Gamerize.BLL.Models.Requests;
 using Gamerize.BLL.Services;
 using Gamerize.Common.Extensions.Exceptions;
 using Microsoft.AspNetCore.Mvc;
@@ -19,12 +20,12 @@ namespace webapi.Controllers
             _productService = productService;
         }
 
-        [HttpGet("GetSimpleList")]
-        public async Task<ActionResult<(IEnumerable<ProductShortDTO>, int)>> GetSimpleList(int page = 1, int pageSize = 12)
+        [HttpPost("GetSimpleList")]
+        public async Task<ActionResult<(IEnumerable<ProductShortDTO>, int)>> GetSimpleList([FromBody] ProductListFilterRequest request, int page = 1, int pageSize = 12)
         {
             try
             {
-                var (products, totalPages) = await _productService.GetSimpleListAsync(page, pageSize);
+                var (products, totalPages) = await _productService.GetSimpleListAsync(request, page, pageSize);
                 return Ok(new { products, totalPages });
             }
             catch (ServerErrorException ex)

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Gamerize.BLL.Builder;
 using Gamerize.BLL.Models;
+using Gamerize.BLL.Models.Requests;
 using Gamerize.BLL.Specifications;
 using Gamerize.Common.Config;
 using Gamerize.Common.Extensions.Exceptions;
@@ -55,12 +57,19 @@ namespace Gamerize.BLL.Services
             }
         }
 
-        public async Task<(IEnumerable<ProductShortDTO>, int)> GetSimpleListAsync(int page, int pageSize)
+        public async Task<(IEnumerable<ProductShortDTO>, int)> GetSimpleListAsync(ProductListFilterRequest request, int page, int pageSize)
         {
             try
             {
                 var spec = new ProductSpecification().IncludeShort();
                 var orderedProducts = await _repository.Pagination(p => p.Id);
+
+                if (request != null)
+                {
+                    var queryDilterBuilder = new FilterBuilder();
+                    orderedProducts = queryDilterBuilder.BuildProductFilter(orderedProducts, request);
+                }
+
                 var totalProductsCount = await orderedProducts.CountAsync();
                 var productsPage = await orderedProducts.Skip((page - 1) * pageSize)
                                                          .Take(pageSize)
