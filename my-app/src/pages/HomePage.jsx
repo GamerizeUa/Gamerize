@@ -4,9 +4,10 @@ import { QuestioningForm } from "../components/landing-page/QuestioningForm/Ques
 import { SelectionOfGames } from "../components/landing-page/SelectionOfGames/SelectionOfGames.jsx";
 import { Banner } from "../components/landing-page/Banner/Banner.jsx";
 import axios from "axios";
-import {logoutClient} from "../components/Logout/Logout.jsx";
+import {useLogoutClient} from "../components/hooks/useLogoutClient.js";
 
 const HomePage = () => {
+  const logoutClient = useLogoutClient();
   axios.defaults.withCredentials = true;
   axios.interceptors.response.use(
       response => response,
