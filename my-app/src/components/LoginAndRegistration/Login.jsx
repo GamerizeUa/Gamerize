@@ -23,7 +23,7 @@ export const Login = ({setDisplayedLoginPopUp, setIsDisplayedRegistrationPopUp, 
     });
 
     const onSubmit = (data) => {
-        Axios.post('https://gamerize.ltd.ua/api/Login/login', data, {withCredentials: true})
+        Axios.post('https://gamerize.ltd.ua/api/Login/login', data)
             .then((res) => {
                 closePopUp();
             })

@@ -4,15 +4,18 @@ import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 import Axios from 'axios';
 import styles from './PersonalAccount.module.css';
+import useCheckAuth from "../hooks/useCheckAuth.js";
+import {useNavigate} from "react-router-dom";
 
 export const PersonalAccount = () => {
     const [avatar, setAvatar] = useState(null);
     const hiddenFileInput = useRef(null);
     const [photoFile, setPhotoFile] = useState(null);
-    const [token, setToken] = useState(null);
     const [uploadedPhoto, setUploadedPhoto] = useState(null);
     const nameRef = useRef(null);
     const buttonSubmitRef = useRef(null);
+    const isAuthenticated = useCheckAuth();
+    const navigate = useNavigate();
 
     const schema = yup.object().shape({
         name: yup.string().nullable(),
@@ -38,17 +41,15 @@ export const PersonalAccount = () => {
     });
 
     useEffect(() => {
-        setToken(localStorage.getItem('token'))
-        getPersonalInformation();
-    }, [token]);
+        if(isAuthenticated){
+            getPersonalInformation();
+        }else{
+            navigate('/');
+        }
+    }, []);
 
     const getPersonalInformation = () => {
-        if(token){
-            Axios.get('https://gamerize.ltd.ua/api/Account/profile', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
+            Axios.get('https://gamerize.ltd.ua/api/Account/profile')
                 .then((res) => {
                     reset(res.data)
                     setUploadedPhoto(res.data?.profilePicture)
@@ -57,7 +58,7 @@ export const PersonalAccount = () => {
                     }
                 })
                 .catch((err) => console.log(err))
-        }
+
     }
 
     const onSubmit = (data) => {
@@ -68,21 +69,18 @@ export const PersonalAccount = () => {
             data.profilePicture = null;
             deletePhotoOnServer();
         }
-        token && Axios.patch("https://gamerize.ltd.ua/api/Account/update-profile", data, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        }).then(() => showMessage()).catch((err) => console.log(err))
+        Axios.patch("https://gamerize.ltd.ua/api/Account/update-profile", data)
+            .then(() => showMessage())
+            .catch((err) => console.log(err))
     }
 
     const sendPhoto = () => {
         const formData = new FormData();
         formData.append('file', photoFile);
-        if(token && formData.has('file')){
+        if(formData.has('file')){
             Axios.post('https://gamerize.ltd.ua/api/Account/profile/picture', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${token}`
                 }
             }).then(() => showMessage()).catch((err) => console.log(err))
 
@@ -100,18 +98,15 @@ export const PersonalAccount = () => {
     }
 
     const deletePhotoOnServer = () => {
-        Axios.delete('https://gamerize.ltd.ua/api/Account/delete-photo', {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        }).then((res) => console.log(res)).catch((err) => console.log(err))
+        Axios.delete('https://gamerize.ltd.ua/api/Account/delete-photo')
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err))
     }
 
     const showMessage = () => {
         if(buttonSubmitRef){
             buttonSubmitRef.current.classList.add(styles.account_buttonUpdatedInfo)
             setTimeout(() => {
-                console.log('AAA')
                 buttonSubmitRef.current.classList.remove(styles.account_buttonUpdatedInfo);
             }, 3000);
         }

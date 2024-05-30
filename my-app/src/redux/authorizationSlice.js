@@ -4,9 +4,7 @@ import axios from "axios";
 export const checkAuth = createAsyncThunk(
     'auth/checkAuth',
     async (_, { rejectWithValue }) => {
-            const response = await axios.get('https://gamerize.ltd.ua/api/Login/check', {
-                withCredentials: true
-            });
+            const response = await axios.get('https://gamerize.ltd.ua/api/Login/check');
             console.log(response)
             if (response.status === 200) {
                 return true;}

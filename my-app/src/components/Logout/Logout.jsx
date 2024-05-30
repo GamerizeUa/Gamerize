@@ -1,38 +1,41 @@
 import sprite from "../../assets/icons/sprite.svg";
 import styles from "../Header/AccountInformation/AccountInformation.module.css";
 import useClickAccount from "../hooks/useClickAccount.js";
+import {logout} from "../../redux/authorizationSlice.js";
 import Axios from "axios";
+import useCheckAuth from "../hooks/useCheckAuth.js";
+import {useDispatch} from "react-redux";
+import {useNavigate} from "react-router-dom";
+
+export const logoutClient = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    Axios.post('https://gamerize.ltd.ua/api/Logout/logout')
+        .then(() => {
+            dispatch(logout());
+            navigate('/');
+        })
+}
 
 export const Logout = ({setIsDisplayedLoginPopUp}) => {
-    const token = localStorage.getItem('token');
-    const handleLogIn = useClickAccount(setIsDisplayedLoginPopUp);
-
-    const handleLogout = () => {
-        if(token){
-            Axios.post('https://gamerize.ltd.ua/api/Logout/logout', {},{
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-                .then(() => localStorage.removeItem('token'))
-                .catch((err) => console.log(err))
-        }
-    }
+    const handleClickAccount = useClickAccount(setIsDisplayedLoginPopUp);
+    const isAuthenticated = useCheckAuth();
 
     return(
         <>
-            {token ? <>
+            {isAuthenticated ? <>
                 <svg width="24" height="24">
                     <use href={sprite + "#icon-log-out"}></use>
                 </svg>
-                <p className={styles.accountLinkText} onClick={handleLogout}>
+                <p className={styles.accountLinkText} onClick={logoutClient}>
                     Вихід
                 </p>
             </> : <>
                 <svg width="24" height="24">
                     <use href={sprite + "#icon-log-in"}></use>
                 </svg>
-                <p className={styles.accountLinkText} onClick={handleLogIn}>
+                <p className={styles.accountLinkText} onClick={handleClickAccount}>
                     Вхід
                 </p>
             </>}

@@ -3,8 +3,21 @@ import ProductsCarousel from "../components/common-components/ProductsCarousel/P
 import { QuestioningForm } from "../components/landing-page/QuestioningForm/QuestioningForm.jsx";
 import { SelectionOfGames } from "../components/landing-page/SelectionOfGames/SelectionOfGames.jsx";
 import { Banner } from "../components/landing-page/Banner/Banner.jsx";
+import axios from "axios";
+import {logoutClient} from "../components/Logout/Logout.jsx";
 
 const HomePage = () => {
+  axios.defaults.withCredentials = true;
+  axios.interceptors.response.use(
+      response => response,
+      error => {
+        if (error.response && error.response.status === 401) {
+          logoutClient()
+        }
+        return Promise.reject(error);
+      }
+  );
+
   // productsList just for tests
   const productsList = [
     {
