@@ -19,7 +19,7 @@ export const PersonalAccount = () => {
 
     const schema = yup.object().shape({
         name: yup.string().nullable(),
-        phone: yup.string().nullable().matches(/^\+380\d{9}$/, {
+        phoneNumber: yup.string().nullable().matches(/^\+380\d{9}$/, {
             message: 'Номер телефону повинен починатись з +380 та мати 12 чисел у сумі',
             excludeEmptyString: true,
         }),
@@ -164,12 +164,12 @@ export const PersonalAccount = () => {
                             <div className={styles.account_inputContainer}>
                                 <p className={styles.account_title}>Телефон</p>
                                 <input type='tel'
-                                       className={`${styles.account_input } ${errors.phone?.message 
+                                       className={`${styles.account_input } ${errors.phoneNumber?.message 
                                            ? styles.account_errorBorder: ''}`}
                                        placeholder="Телефон"
-                                       {...register("phone")}
+                                       {...register("phoneNumber")}
                                 />
-                                <p className={styles.account_inputError}>{errors.phone?.message}</p>
+                                <p className={styles.account_inputError}>{errors.phoneNumber?.message}</p>
                             </div>
                             <div className={styles.account_inputContainer}>
                                 <p className={styles.account_title}>Е-пошта</p>
