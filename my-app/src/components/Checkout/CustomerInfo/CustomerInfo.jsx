@@ -6,18 +6,18 @@ import styles from "./CustomerInfo.module.css";
 
 export const CustomerInfo = ({ onSubmit, currentStep, setCurrentStep }) => {
   const schema = yup.object().shape({
-    name: yup
+    customerName: yup
       .string()
       .matches(/^[A-Za-zА-Яа-я\s]+$/, "Введіть коректне ім'я")
       .required("Введіть ім'я"),
-    phone: yup
+    customerPhone: yup
       .string()
       .matches(
         /^\+380\d{9}$/,
         "Введіть коректний номер телефону (+380XXXXXXXXX)"
       )
       .required("Введіть номер телефону"),
-    email: yup
+    customerEmail: yup
       .string()
       .email("Введіть коректну електронну пошту")
       .required("Введіть електронну пошту"),
@@ -41,7 +41,7 @@ export const CustomerInfo = ({ onSubmit, currentStep, setCurrentStep }) => {
     <div>
       <p className={styles.header}>1. Дані клієнта</p>
       <div className={styles.orderElement}>
-        <label htmlFor="name" className={styles.orderText}>
+        <label htmlFor="customerName" className={styles.orderText}>
           Ваше ім’я та прізвище
         </label>
         <div className={styles.inputBox}>
@@ -51,21 +51,23 @@ export const CustomerInfo = ({ onSubmit, currentStep, setCurrentStep }) => {
           <input
             type="text"
             placeholder="Ім’я"
-            id="name"
+            id="customerName"
             className={`${styles.orderInput} ${
-              errors.name && styles.errorInput
+              errors.customerName && styles.errorInput
             }`}
-            {...register("name")}
+            {...register("customerName")}
           />
         </div>
         <div>
-          {errors?.name && (
-            <p className={styles.errorMessage}>{errors?.name.message}</p>
+          {errors?.customerName && (
+            <p className={styles.errorMessage}>
+              {errors?.customerName.message}
+            </p>
           )}
         </div>
       </div>
       <div className={styles.orderElement}>
-        <label htmlFor="tel" className={styles.orderText}>
+        <label htmlFor="customerPhone" className={styles.orderText}>
           Контактний номер телефону
         </label>
         <div className={styles.inputBox}>
@@ -79,22 +81,24 @@ export const CustomerInfo = ({ onSubmit, currentStep, setCurrentStep }) => {
           <input
             type="tel"
             placeholder="+380"
-            id="phone"
+            id="customerPhone"
             defaultValue="+380"
             className={`${styles.orderInput} ${
-              errors.phone && styles.errorInput
+              errors.customerPhone && styles.errorInput
             }`}
-            {...register("phone")}
+            {...register("customerPhone")}
           />
         </div>
         <div>
-          {errors?.phone && (
-            <p className={styles.errorMessage}>{errors?.phone.message}</p>
+          {errors?.customerPhone && (
+            <p className={styles.errorMessage}>
+              {errors?.customerPhone.message}
+            </p>
           )}
         </div>
       </div>
       <div className={styles.orderElement}>
-        <label htmlFor="email" className={styles.orderText}>
+        <label htmlFor="customerEmail" className={styles.orderText}>
           Електронна пошта
         </label>
         <div className={styles.inputBox}>
@@ -103,16 +107,18 @@ export const CustomerInfo = ({ onSubmit, currentStep, setCurrentStep }) => {
           </svg>
           <input
             type="email"
-            id="email"
+            id="customerEmail"
             className={`${styles.orderInput} ${
-              errors.email && styles.errorInput
+              errors.customerEmail && styles.errorInput
             }`}
-            {...register("email")}
+            {...register("customerEmail")}
           />
         </div>
         <div>
-          {errors?.email && (
-            <p className={styles.errorMessage}>{errors?.email.message}</p>
+          {errors?.customerEmail && (
+            <p className={styles.errorMessage}>
+              {errors?.customerEmail.message}
+            </p>
           )}
         </div>
       </div>

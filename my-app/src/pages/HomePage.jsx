@@ -3,8 +3,11 @@ import ProductsCarousel from "../components/common-components/ProductsCarousel/P
 import { QuestioningForm } from "../components/landing-page/QuestioningForm/QuestioningForm.jsx";
 import { SelectionOfGames } from "../components/landing-page/SelectionOfGames/SelectionOfGames.jsx";
 import { Banner } from "../components/landing-page/Banner/Banner.jsx";
+import axios from "axios";
 
 const HomePage = () => {
+  axios.defaults.withCredentials = true;
+
   // productsList just for tests
   const productsList = [
     {

@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom';
+import useCheckAuth from "./useCheckAuth.js";
 
 const useClickAccount = (setIsDisplayedLoginPopUp, optionalCloseFunction) => {
     const navigate = useNavigate();
+    const isAuthenticated = useCheckAuth();
 
     const closeBurger = () => {
         if (optionalCloseFunction && typeof optionalCloseFunction === 'function') {
@@ -11,9 +13,7 @@ const useClickAccount = (setIsDisplayedLoginPopUp, optionalCloseFunction) => {
 
     const handleClickAccount = (e) => {
         e.preventDefault();
-        const token = localStorage.getItem('token');
-
-        if (token) {
+        if (isAuthenticated) {
             navigate('/login');
             setIsDisplayedLoginPopUp(false);
             closeBurger();

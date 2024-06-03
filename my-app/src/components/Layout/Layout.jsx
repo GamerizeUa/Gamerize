@@ -9,6 +9,8 @@ import BurgerMenu from "../Header/BurgerMenu/BurgerMenu";
 import {Login} from "../LoginAndRegistration/Login.jsx";
 import {ConfirmEmailPopup} from "../LoginAndRegistration/ConfirmEmail/ConfirmEmailPopup.jsx";
 import {Registration} from "../LoginAndRegistration/Registration.jsx";
+import {EmailForm} from "../LoginAndRegistration/ForgotPassword/EmailForm.jsx";
+import {NewPasswordForm} from "../LoginAndRegistration/ForgotPassword/ NewPasswordForm.jsx";
 
 const Layout = () => {
   const [cartOpen, setCartOpen] = useState(false);
@@ -16,6 +18,8 @@ const Layout = () => {
   const [isDisplayedLoginPopUp, setIsDisplayedLoginPopUp] = useState(false);
   const [isDisplayedRegistrationPopUp, setIsDisplayedRegistrationPopUp] =
       useState(false);
+  const [isDisplayedEmailForm, setIsDisplayedEmailForm] = useState(false);
+  const [isDisplayedNewPasswordForm, setIsDisplayedNewPasswordForm] = useState(false);
   const location = useLocation();
   const { state } = location;
 
@@ -29,6 +33,11 @@ const Layout = () => {
       document.body.classList.remove("no-scroll");
     };
   }, [cartOpen, burgerMenuOpen]);
+
+  useEffect(() => {
+    location.pathname.includes('/reset-password')
+        ? setIsDisplayedNewPasswordForm(true) : setIsDisplayedNewPasswordForm(false);
+  }, []);
 
   function openCart() {
     setCartOpen(true);
@@ -58,7 +67,8 @@ const Layout = () => {
       {cartOpen && <Cart cartClose={cartClose} />}
       {isDisplayedLoginPopUp && !isDisplayedRegistrationPopUp && (
           <Login setDisplayedLoginPopUp={setIsDisplayedLoginPopUp}
-                 setIsDisplayedRegistrationPopUp={setIsDisplayedRegistrationPopUp}/>
+                 setIsDisplayedRegistrationPopUp={setIsDisplayedRegistrationPopUp}
+                 setIsDisplayedEmailForm={setIsDisplayedEmailForm}/>
       )}
       {isDisplayedRegistrationPopUp && (
           <Registration
@@ -66,8 +76,11 @@ const Layout = () => {
               setDisplayedLoginPopUp={setIsDisplayedLoginPopUp}
           />
       )}
+      {isDisplayedEmailForm && <EmailForm setIsDisplayedEmailForm={setIsDisplayedEmailForm}
+                                          setDisplayedLoginPopUp={setIsDisplayedLoginPopUp}/>}
       {state?.showPopup &&
           <ConfirmEmailPopup setIsDisplayedLoginPopUp={setIsDisplayedLoginPopUp} />}
+      {isDisplayedNewPasswordForm && <NewPasswordForm setIsDisplayedNewPasswordForm={setIsDisplayedNewPasswordForm} />}
       <main className={styles.container}>
         <Suspense fallback={<div>Loading...</div>}>
           <Outlet />

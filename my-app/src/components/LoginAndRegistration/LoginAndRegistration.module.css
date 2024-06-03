@@ -19,12 +19,13 @@
     z-index: 70;
     right: 0;
     top: 0;
-    height: 100vh;
+    height: 100%;
     overflow: hidden;
 }
 
 .popUp_container{
     padding: 24px 16px;
+    height: 100%;
 }
 
 .popUp_header{
@@ -109,10 +110,9 @@
 .popUp_form{
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    justify-content: center;
     align-items: center;
     width: 100%;
+    gap: 20px;
 }
 
 .popUp_formGroup{
@@ -187,6 +187,19 @@
     cursor: pointer;
 }
 
+.changePassword{
+    color: #2B2B2B;
+    font-family: Oswald;
+    font-size: 36px;
+    font-weight: 400;
+    margin: 34px 0 18px 0;
+    text-align: center;
+}
+
+.popUp a:hover{
+    font-weight: 500;
+}
+
 .popUp_registrationHr{
     padding-left: 0 !important;
     margin-left: 0 !important;
@@ -214,6 +227,7 @@
 @media screen and (min-width: 744px){
     .popUp{
         width: 320px;
+        height: 800px;
         max-width: none;
     }
 

@@ -30,6 +30,7 @@ function App() {
         <Route path="/order-pay" element={<OrderAndPay />} />
         <Route path="/return" element={<Return />} />
         <Route path="/confirm-email" element={<ConfirmEmailPage />} />
+        <Route path="/reset-password" element={<HomePage />} />
         <Route path="*" element={<NotFound />} />
       </Route>
       {/* <Route path="admin/*" element={<AdminPage />}>

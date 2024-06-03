@@ -74,7 +74,7 @@ export const Registration = ({setIsDisplayedRegistrationPopUp, setDisplayedLogin
                                 <div className={styles.popUp_formGroup}>
                                     <label>Ім'я та Прізвище*</label>
                                     <div className={styles.popUp_inputContainer}>
-                                        <svg width="24" height="24">
+                                        <svg width="20" height="20">
                                             <use
                                                 href={sprite + "#icon-user24"}
                                                 fill="none"
