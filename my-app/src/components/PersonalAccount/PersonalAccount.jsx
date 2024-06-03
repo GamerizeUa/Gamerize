@@ -20,7 +20,7 @@ export const PersonalAccount = () => {
     const schema = yup.object().shape({
         name: yup.string().nullable(),
         phoneNumber: yup.string().nullable().matches(/^\+380\d{9}$/, {
-            message: 'Номер телефону повинен починатись з +380 та мати 12 чисел у сумі',
+            message: 'Введіть коректний номер телефону (+380XXXXXXXXX)',
             excludeEmptyString: true,
         }),
         email: yup.string().nullable()
@@ -43,9 +43,10 @@ export const PersonalAccount = () => {
     useEffect(() => {
         if(isAuthenticated){
             getPersonalInformation();
-        }else{
-            navigate('/');
         }
+        // else{
+        //     navigate('/');
+        // }
     }, []);
 
     const getPersonalInformation = () => {
@@ -125,6 +126,24 @@ export const PersonalAccount = () => {
         }
     };
 
+    const handlePhoneNumberChange = (e) => {
+        if (e.target.value === '+380' || e.target.value === '+38') {
+            e.target.value = '+380';
+        }
+    }
+
+    const handlePhoneNumberFocus = (e) => {
+        if (e.target.value.length < 4) {
+            e.target.value = "+380"
+        }
+    }
+
+    const handlePhoneNumberBlur = (e) => {
+        if (e.target.value === "+380") {
+            e.target.value = "";
+        }
+    };
+
     return (
         <section className={styles.account}>
             <div className='container'>
@@ -167,7 +186,10 @@ export const PersonalAccount = () => {
                                        className={`${styles.account_input } ${errors.phoneNumber?.message 
                                            ? styles.account_errorBorder: ''}`}
                                        placeholder="Телефон"
+                                       onFocus={handlePhoneNumberFocus}
                                        {...register("phoneNumber")}
+                                       onChange={handlePhoneNumberChange}
+                                       onBlur={handlePhoneNumberBlur}
                                 />
                                 <p className={styles.account_inputError}>{errors.phoneNumber?.message}</p>
                             </div>
