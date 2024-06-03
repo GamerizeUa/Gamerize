@@ -57,6 +57,7 @@ export const OrderForm = () => {
   };
 
   const onSubmit = (data) => {
+    // const customerId = customer.id ? customer.id : uuidv4();
     const updatedFormData = {
       ...formData,
       ...data,
@@ -64,6 +65,7 @@ export const OrderForm = () => {
       total,
       promoCode,
       giftCard,
+      // customerId,
       status: "Замовлення оформлено",
     };
     setFormData(updatedFormData);

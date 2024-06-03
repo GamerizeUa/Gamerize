@@ -4,6 +4,7 @@ import { AddressForm } from "./AddressForm";
 
 export const DeliveryType = ({ onSubmit, currentStep, setCurrentStep }) => {
   const [deliveryMethod, setDeliveryMethod] = useState("");
+  const [addressData, setAddressData] = useState({});
 
   const handleRadioClick = (method) => {
     setDeliveryMethod(method);
@@ -12,7 +13,14 @@ export const DeliveryType = ({ onSubmit, currentStep, setCurrentStep }) => {
 
   const handleContinue = () => {
     if (deliveryMethod) {
-      onSubmit({ deliveryMethod });
+      if (
+        deliveryMethod === "delivery" &&
+        (!addressData.city || !addressData.address)
+      ) {
+        alert("Будь ласка, введіть адресу доставки");
+        return;
+      }
+      onSubmit({ deliveryMethod, ...addressData });
       setCurrentStep(currentStep + 1);
     } else {
       alert("Будь ласка, оберіть спосіб доставки");
@@ -72,7 +80,9 @@ export const DeliveryType = ({ onSubmit, currentStep, setCurrentStep }) => {
           </div>
           <p className={styles.orderText}>Безкоштовно</p>
         </div>
-        {deliveryMethod === "delivery" && <AddressForm></AddressForm>}
+        {deliveryMethod === "delivery" && (
+          <AddressForm setAddressData={setAddressData} />
+        )}
       </div>
       <button
         className={styles.orderBtn}
