@@ -19,7 +19,7 @@ export const NewPasswordForm = ({setIsDisplayedNewPasswordForm}) => {
         setEmailParam(params.get('email'))
     }, [])
 
-    const schema = yup.object().shape({
+    const schema = emailParam ? (yup.object().shape({
         email: yup.string().required("Введіть е-пошту")
             .matches(/^[a-zA-Z0-9._-]+@[a-zA-Z]+\.[a-zA-Z]+$/i, "Введіть коректну е-пошту"),
         password: yup.string().required("Введіть пароль").matches(
@@ -28,7 +28,20 @@ export const NewPasswordForm = ({setIsDisplayedNewPasswordForm}) => {
         ),
         repeatPassword: yup.string().oneOf([yup.ref('password'), null],
             'Паролі повинні співпадати').required("Повторіть пароль")
-    });
+    })) : (
+        yup.object().shape({
+            newPassword: yup.string().required("Введіть пароль").matches(
+                /^(?=.*\d)(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{6,}$/,
+                'Мінімум 6 символів, цифра, велика та мала літери, спецсимвол'
+            ),
+            password: yup.string().required("Введіть пароль").matches(
+                /^(?=.*\d)(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{6,}$/,
+                'Мінімум 6 символів, цифра, велика та мала літери, спецсимвол'
+            ),
+            repeatNewPassword: yup.string().oneOf([yup.ref('newPassword'), null],
+                'Паролі повинні співпадати').required("Повторіть пароль")
+        })
+    );
 
     const {register, handleSubmit, formState: {errors}} = useForm({
         resolver: yupResolver(schema),
@@ -46,11 +59,20 @@ export const NewPasswordForm = ({setIsDisplayedNewPasswordForm}) => {
     }
 
     const onSubmit = (data) => {
-        Axios.post('https://gamerize.ltd.ua/api/Login/reset-password', data)
-            .then(() => {
-                closePopUp();
-                navigate('/');
-            })
+        if(emailParam){
+            Axios.post('https://gamerize.ltd.ua/api/Login/reset-password', data)
+                .then(() => {
+                    closePopUp();
+                    navigate('/');
+                })
+        }else{
+            Axios.post('https://gamerize.ltd.ua/api/Account/change-password', data)
+                .then(() => {
+                    closePopUp();
+                    navigate('/');
+                })
+        }
+
     }
 
     return (
@@ -63,7 +85,7 @@ export const NewPasswordForm = ({setIsDisplayedNewPasswordForm}) => {
                     <p className={styles.changePassword}>Змінити пароль</p>
                 <div className={styles.popUp_container}>
                     <form className={styles.popUp_form} onSubmit={handleSubmit(onSubmit)}>
-                        <div className={styles.popUp_formGroup}>
+                        {emailParam ? (<div className={styles.popUp_formGroup}>
                             <label>Електронна пошта*</label>
                             <div className={styles.popUp_inputContainer}>
                                 <svg width="24" height="24">
@@ -73,12 +95,12 @@ export const NewPasswordForm = ({setIsDisplayedNewPasswordForm}) => {
                                         stroke="currentColor"
                                     ></use>
                                 </svg>
-                                <input type="text" value={emailParam || ''} {...register("email")} readOnly />
+                                <input type="text" value={emailParam || ''} {...register("email")} readOnly/>
                             </div>
                             <p className={styles.input_error}>{errors.email?.message}</p>
-                        </div>
-                        <div className={styles.popUp_formGroup}>
-                            <label>Пароль*</label>
+                        </div>)
+                            : (<div className={styles.popUp_formGroup}>
+                            <label>Поточний пароль*</label>
                             <div className={styles.popUp_inputContainer}>
                                 <svg width="24" height="24">
                                     <use
@@ -90,9 +112,9 @@ export const NewPasswordForm = ({setIsDisplayedNewPasswordForm}) => {
                                 <input type="password" {...register("password")}/>
                             </div>
                             <p className={styles.input_error}>{errors.password?.message}</p>
-                        </div>
+                        </div>)}
                         <div className={styles.popUp_formGroup}>
-                            <label>Повторити пароль*</label>
+                            <label>{emailParam ? 'Пароль*': 'Новий пароль*' }</label>
                             <div className={styles.popUp_inputContainer}>
                                 <svg width="24" height="24">
                                     <use
@@ -101,9 +123,32 @@ export const NewPasswordForm = ({setIsDisplayedNewPasswordForm}) => {
                                         stroke="currentColor"
                                     ></use>
                                 </svg>
-                                <input type="password" {...register("repeatPassword")}/>
+                                <input type="password"
+                                       {...register(emailParam ? "password" : "newPassword")}
+                                />
                             </div>
-                            <p className={styles.input_error}>{errors.repeatPassword?.message}</p>
+                            <p className={styles.input_error}>
+                                {emailParam ? errors.password?.message : errors.newPassword?.message}
+                            </p>
+                        </div>
+                        <div className={styles.popUp_formGroup}>
+                            <label>{emailParam ? 'Повторити пароль*': 'Повторити новий пароль*' }</label>
+                            <div className={styles.popUp_inputContainer}>
+                                <svg width="24" height="24">
+                                    <use
+                                        href={sprite + "#icon-lock"}
+                                        fill="#EEF1FF"
+                                        stroke="currentColor"
+                                    ></use>
+                                </svg>
+                                <input
+                                    type="password"
+                                    {...register(emailParam ? "repeatPassword" : "repeatNewPassword")}
+                                />
+                            </div>
+                            <p className={styles.input_error}>
+                                {emailParam ? errors.repeatPassword?.message : errors.repeatNewPassword?.message }
+                            </p>
                         </div>
                         <button type="submit">Змінити пароль</button>
                     </form>

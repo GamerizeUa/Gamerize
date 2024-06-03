@@ -191,6 +191,21 @@
     animation: setOpacity 3s ease-in-out;
 }
 
+.account_changePasswordLink{
+    color: #2B2B2B;
+    font-family: "Noto Sans";
+    font-size: 16px;
+    font-weight: 400;
+    text-decoration-line: underline;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.account_changePasswordLink:hover{
+    font-weight: 500;
+}
+
 @media screen and (min-width: 744px) {
     .account{
         padding-top: 0;

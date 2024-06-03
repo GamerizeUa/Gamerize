@@ -6,8 +6,10 @@ import Axios from 'axios';
 import styles from './PersonalAccount.module.css';
 import useCheckAuth from "../hooks/useCheckAuth.js";
 import {useNavigate} from "react-router-dom";
+import {NewPasswordForm} from "../LoginAndRegistration/ForgotPassword/ NewPasswordForm.jsx";
 
 export const PersonalAccount = () => {
+    const [isDisplayedNewPasswordForm, setIsDisplayedNewPasswordForm] = useState(false);
     const [avatar, setAvatar] = useState(null);
     const hiddenFileInput = useRef(null);
     const [photoFile, setPhotoFile] = useState(null);
@@ -43,10 +45,9 @@ export const PersonalAccount = () => {
     useEffect(() => {
         if(isAuthenticated){
             getPersonalInformation();
+        } else{
+            navigate('/');
         }
-        // else{
-        //     navigate('/');
-        // }
     }, []);
 
     const getPersonalInformation = () => {
@@ -173,8 +174,8 @@ export const PersonalAccount = () => {
                             <div className={styles.account_inputContainer}>
                                 <p className={styles.account_title}>Ім’я та прізвище</p>
                                 <input type='text'
-                                       className={`${styles.account_input } ${errors.name?.message 
-                                           ? styles.account_errorBorder: ''}`}
+                                       className={`${styles.account_input} ${errors.name?.message
+                                           ? styles.account_errorBorder : ''}`}
                                        placeholder="Ім'я та прізвище"
                                        {...register("name")}
                                 />
@@ -183,8 +184,8 @@ export const PersonalAccount = () => {
                             <div className={styles.account_inputContainer}>
                                 <p className={styles.account_title}>Телефон</p>
                                 <input type='tel'
-                                       className={`${styles.account_input } ${errors.phoneNumber?.message 
-                                           ? styles.account_errorBorder: ''}`}
+                                       className={`${styles.account_input} ${errors.phoneNumber?.message
+                                           ? styles.account_errorBorder : ''}`}
                                        placeholder="Телефон"
                                        onFocus={handlePhoneNumberFocus}
                                        {...register("phoneNumber")}
@@ -196,8 +197,8 @@ export const PersonalAccount = () => {
                             <div className={styles.account_inputContainer}>
                                 <p className={styles.account_title}>Е-пошта</p>
                                 <input type='email'
-                                       className={`${styles.account_input } ${errors.email?.message 
-                                           ? styles.account_errorBorder: ''}`}
+                                       className={`${styles.account_input} ${errors.email?.message
+                                           ? styles.account_errorBorder : ''}`}
                                        placeholder="Е-пошта"
                                        readOnly
                                        {...register("email")}
@@ -207,8 +208,8 @@ export const PersonalAccount = () => {
                             <div className={styles.account_inputContainer}>
                                 <p className={styles.account_title}>Місто</p>
                                 <input type='text'
-                                       className={`${styles.account_input } 
-                                       ${errors.city?.message ? styles.account_errorBorder: ''}`}
+                                       className={`${styles.account_input} 
+                                       ${errors.city?.message ? styles.account_errorBorder : ''}`}
                                        placeholder="Місто"
                                        {...register("city")}
                                 />
@@ -217,8 +218,8 @@ export const PersonalAccount = () => {
                             <div className={styles.account_inputContainer}>
                                 <p className={styles.account_title}>Адреса доставки</p>
                                 <input type='text'
-                                       className={`${styles.account_input } 
-                                       ${errors.deliveryAddress?.message ? styles.account_errorBorder: ''}`}
+                                       className={`${styles.account_input} 
+                                       ${errors.deliveryAddress?.message ? styles.account_errorBorder : ''}`}
                                        placeholder="Адреса доставки"
                                        {...register("deliveryAddress")}
                                 />
@@ -227,10 +228,16 @@ export const PersonalAccount = () => {
                             <button type='submit' className={styles.account_button} ref={buttonSubmitRef}>
                                 Зберегти зміни
                             </button>
+                            <a className={styles.account_changePasswordLink}
+                               onClick={() => setIsDisplayedNewPasswordForm(true)}>
+                                Змінити пароль
+                            </a>
                         </form>
                     </div>
                 </div>
             </div>
+            {isDisplayedNewPasswordForm &&
+                <NewPasswordForm setIsDisplayedNewPasswordForm={setIsDisplayedNewPasswordForm} />}
         </section>
     )
 }
