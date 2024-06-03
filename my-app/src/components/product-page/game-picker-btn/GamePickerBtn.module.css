@@ -1,36 +1,23 @@
-.container {
-    position: relative;
-}
 .btn {
+    inline-size: max-content;
     display: flex;
-    height: 24px;
     align-items: center;
+    margin-inline: auto;
+    margin-block: 33px 11px;
     gap: 12px;
-    position: absolute;
-    top: 33px;
-    right: 16px;
-    background-color: transparent;
-}
-.btn span {
-    color: #6566ac;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-}
-.btn svg {
-    width: 24px;
-    height: 24px;
-}
-@media screen and (min-width: 744px) {
-    .btn {
-        top: 52px;
-        right: 32px;
+
+    @media screen and (width >= 1280px) {
+        margin: 33px 0px 11px auto;
     }
 }
 
-@media screen and (min-width: 1280px) {
-    .btn {
-        top: 39px;
-        right: 80px;
-    }
+.btn__title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #6566ac;
+}
+
+.btn__icon {
+    width: 24px;
+    aspect-ratio: 1 / 1;
 }

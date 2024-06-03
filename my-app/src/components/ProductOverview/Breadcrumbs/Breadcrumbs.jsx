@@ -1,20 +1,26 @@
-import React from "react";
-import styles from './Breadcrumbs.module.css'
-import {Link} from "react-router-dom";
+import styles from './Breadcrumbs.module.css';
+import { Link } from 'react-router-dom';
 import ArrowIcon from '../icons/ArrowIcon.jsx';
 
-export const Breadcrumbs = ({page}) => {
-    const array = ['Головна сторінка', ...page?.name];
-    const links = ['/', ...page?.link]
+export const Breadcrumbs = ({ page }) => {
+    if (!page) return null;
 
-    return(
-        <div className={styles.breadcrumbs}>
-            {array.map((breadcrumb, index) => (
-                <div className={styles.breadcrumbs_container} key={index} >
+    const pageNames = ['Головна сторінка', ...page.name];
+    const links = ['/', ...page.link];
+
+    return (
+        <section className={styles.breadcrumbs}>
+            {pageNames.map((breadcrumb, index) => (
+                <div className={styles['breadcrumbs__container']} key={index}>
                     {index !== 0 && <ArrowIcon />}
-                    <Link to={links[index]} className={styles.breadcrumbs_crumb}>{breadcrumb}</Link>
+                    <Link
+                        to={links[index]}
+                        className={styles['breadcrumbs__item']}
+                    >
+                        {breadcrumb}
+                    </Link>
                 </div>
             ))}
-        </div>
-    )
-}
+        </section>
+    );
+};

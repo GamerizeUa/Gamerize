@@ -1,114 +1,101 @@
-.deliveryAndPayment{
+.delivery-and-payment {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 24px;
+
+    @media screen and (width >= 744px) {
+        gap: 42px;
+    }
+
+    @media screen and (width >= 1280px) {
+        gap: 40px;
+    }
 }
 
-.deliveryAndPayment_navBar{
+.delivery-and-payment__navbar {
     width: 100%;
     overflow: hidden;
+
+    @media screen and (width >= 744px) {
+        width: 85.58%;
+    }
+
+    @media screen and (width >= 1280px) {
+        width: 100%;
+    }
 }
 
-.deliveryAndPayment_navBar ul{
+.delivery-and-payment__nav-list {
     display: flex;
-    flex-direction: row;
     align-items: flex-start;
 }
 
-.disabled{
-    cursor: default !important;
-    color:  #2B2B2B !important;
-}
-
-.deliveryAndPayment_navBar li{
-    color:  #8E8E8E;
+.delivery-and-payment__item {
+    color: #8e8e8e;
     font-size: 14px;
     font-weight: 700;
     padding: 0 35px 10px 35px;
     width: 144px;
     text-align: center;
     cursor: pointer;
-}
+    background: transparent;
 
-.deliveryAndPayment_navLine{
-    width: 100%;
-    height: 6px;
-    background-color: #D2DAFF;
-    border-radius: 4px;
-}
-
-.deliveryAndPayment_navLine div{
-    background-color: #6566AC;
-    width: 144px;
-    height: 6px;
-    border-radius: 4px;
-    transition: transform 0.4s ease;
-}
-
-.deliveryAndPayment_detailsContainer{
-    width: 100%;
-    border-radius: 10px;
-    border: 1px solid #8E8E8E;
-    transition: all 0.4s ease-in-out;
-    overflow: hidden;
-}
-
-.deliveryAndPayment_details{
-    display: flex;
-    flex-direction: column;
-    padding: 24px 24px 24px 17px;
-}
-
-@media screen and (min-width: 744px) {
-    .deliveryAndPayment{
-        gap: 42px;
-    }
-
-    .deliveryAndPayment_navBar{
-        width: 85.58%;
-    }
-
-    .deliveryAndPayment_navBar li{
+    @media screen and (width >= 744px) {
         padding: 0 29px 8px 29px;
         width: 128px;
     }
 
-    .deliveryAndPayment_navLine{
+    @media screen and (width >= 1440px) {
+        font-size: 16px;
+    }
+}
+
+.delivery-and-payment__nav-line {
+    width: 100%;
+    height: 6px;
+    background-color: #d2daff;
+    border-radius: 4px;
+
+    @media screen and (width >= 744px) {
         height: 4px;
     }
+}
 
-    .deliveryAndPayment_navLine div{
+.delivery-and-payment__nav-line-indicator {
+    display: block;
+    background-color: #6566ac;
+    width: 144px;
+    height: 6px;
+    border-radius: 4px;
+    transition: transform 0.4s ease;
+
+    @media screen and (width >= 744px) {
         width: 128px;
         height: 4px;
     }
+}
 
-    .deliveryAndPayment_detailsContainer{
+.delivery-and-payment__details {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #8e8e8e;
+    transition: all 0.4s ease-in-out;
+
+    @media screen and (width >= 744px) {
         width: 85.58%;
     }
 
-    .deliveryAndPayment_details{
-        padding: 24px;
-    }
-}
-
-@media screen and (min-width: 1280px) {
-    .deliveryAndPayment{
-        gap: 40px;
-    }
-
-    .deliveryAndPayment_navBar{
-        width: 100%;
-    }
-
-    .deliveryAndPayment_detailsContainer{
+    @media screen and (width >= 1280px) {
         width: 100%;
     }
 }
 
-@media screen and (min-width: 1440px) {
-    .deliveryAndPayment_navBar li{
-        font-size: 16px;
-    }
+.delivery-and-payment__item--disabled {
+    cursor: default !important;
+    color: #2b2b2b !important;
 }

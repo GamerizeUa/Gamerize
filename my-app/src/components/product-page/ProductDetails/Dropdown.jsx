@@ -1,42 +1,35 @@
-import css from "./Dropdown.module.css";
-import ArrowDownIcon from "../../icons/ArrowDownIcon";
-import { useState } from "react";
+import styles from './Dropdown.module.css';
+import ArrowDownIcon from '../../icons/ArrowDownIcon';
+import { useState } from 'react';
 
 const Dropdown = ({ children, title }) => {
-  const [isVisible, setIsVisible] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
 
-  const toggleVisibility = () => {
-    setIsVisible(!isVisible);
-  };
+    const toggleVisibility = () => {
+        setIsVisible(!isVisible);
+    };
 
-  return (
-    <div className={css.details}>
-      <div>
-        <div className={css.item}>
-          <p className={css.dataTitle} onClick={toggleVisibility}>
-            {title}
-          </p>
-          <button
-            type="button"
-            className={css.button}
-            onClick={toggleVisibility}
-            style={{
-              transform: isVisible ? "rotate(0deg)" : "rotate(180deg)",
-            }}
-          >
-            <ArrowDownIcon />
-          </button>
-        </div>
-        <div
-          className={`${css.children} ${
-            isVisible ? css["children-visible"] : ""
-          }`}
-        >
-          {children}
-        </div>
-      </div>
-    </div>
-  );
+    return (
+        <article className={styles.dropdown}>
+            <header className={styles['dropdown__header']}>
+                <p
+                    className={styles['dropdown__title']}
+                    onClick={toggleVisibility}
+                >
+                    {title}
+                </p>
+                <button
+                    type="button"
+                    className={styles['dropdown__btn']}
+                    onClick={toggleVisibility}
+                    aria-expanded={isVisible}
+                >
+                    <ArrowDownIcon />
+                </button>
+            </header>
+            <div className={styles['dropdown__item']}>{children}</div>
+        </article>
+    );
 };
 
 export default Dropdown;

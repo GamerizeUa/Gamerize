@@ -1,100 +1,80 @@
-.items {
-  background-color: var(--light-blue-gray);
-  padding: 20px;
+.details {
+    background-color: var(--light-blue-gray);
+    padding: 20px;
+    /* transition: height 250ms; */
+
+    @media screen and (width >= 1280px) {
+        padding: 32px;
+    }
 }
 
-.items > div:not(:last-child) {
-  margin-bottom: 30px;
+.details > article:not(:last-child) {
+    margin-bottom: 30px;
+
+    @media screen and (width >= 744px) {
+        margin-bottom: 36px;
+    }
+
+    @media screen and (width >= 1280px) {
+        margin-bottom: 48px;
+    }
 }
 
-.equipment {
-  display: flex;
+.entry {
+    display: flex;
+    margin-bottom: 16px;
 }
 
-.charItem {
-  display: flex;
-  margin-bottom: 16px;
+.entry:nth-last-child(2) {
+    margin-bottom: 30px;
+
+    @media screen and (width >= 744px) {
+        margin-bottom: 40px;
+    }
 }
 
-.charItem:nth-last-child(2) {
-  margin-bottom: 30px;
+.entry:last-child {
+    margin-bottom: 0;
 }
 
-.charItem:last-child {
-  margin-bottom: 0;
+.entry__title {
+    width: 118px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #8e8e8e;
+    margin-right: 12px;
+
+    @media screen and (width >= 744px) {
+        width: 133px;
+        font-size: 16px;
+        font-weight: 400;
+        margin-right: 60px;
+    }
+
+    @media screen and (width >= 1280px) {
+        margin-right: 70px;
+    }
+
+    @media screen and (width >= 1440px) {
+        margin-right: 88px;
+    }
 }
 
-.charName {
-  width: 118px;
-  font-size: 12px;
-  font-weight: 500;
-  color: #8e8e8e;
-  margin-right: 12px;
+.entry__body {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--black);
+
+    @media screen and (width >= 744px) {
+        font-size: 16px;
+        font-weight: 400;
+    }
 }
 
-.charData {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--black);
-}
+.details__text {
+    font-size: 12px;
 
-.descrText {
-  font-size: 12px;
-}
-
-.equipment {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-@media screen and (min-width: 744px) {
-  .charName {
-    width: 133px;
-    font-size: 16px;
-    font-weight: 400;
-    margin-right: 60px;
-  }
-
-  .charData {
-    font-size: 16px;
-    font-weight: 400;
-  }
-
-  .descrText {
-    font-size: 16px;
-  }
-
-  .charItem:nth-last-child(2) {
-    margin-bottom: 40px;
-  }
-
-  .equipment {
-    flex-direction: row;
-    gap: 0;
-  }
-
-  .items > div:not(:last-child) {
-    margin-bottom: 36px;
-  }
-}
-
-@media screen and (min-width: 1280px) {
-  .items {
-    padding: 32px;
-  }
-
-  .charName {
-    margin-right: 70px;
-  }
-
-  .items > div:not(:last-child) {
-    margin-bottom: 48px;
-  }
-}
-
-@media screen and (min-width: 1440px) {
-  .charName {
-    margin-right: 88px;
-  }
+    @media screen and (width >= 744px) {
+        font-size: 16px;
+    }
 }
