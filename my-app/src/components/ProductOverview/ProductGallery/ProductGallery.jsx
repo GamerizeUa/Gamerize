@@ -1,225 +1,119 @@
-import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
+import { useState, useEffect, useLayoutEffect, createContext } from 'react';
 import styles from './ProductGallery.module.css';
-import mainProductPhoto from '../../../assets/images/mainProductPhoto.png'
-import imageCompanyGame from "../../../assets/images/selection_company.jpg";
-import feedback from "../../../assets/images/feedback.svg";
-import product from "../../../assets/images/product.png";
-import box from "../../../assets/images/presentBox.png";
-import {Breadcrumbs} from "../Breadcrumbs/Breadcrumbs.jsx";
-import {ActionsBar} from "../ActionsBar/ActionsBar.jsx";
-import ArrowGalleryIcon from "../icons/ArrowGalleryIcon.jsx";
+import mainProductPhoto from '../../../assets/images/mainProductPhoto.png';
+import imageCompanyGame from '../../../assets/images/selection_company.jpg';
+import feedback from '../../../assets/images/feedback.svg';
+import product from '../../../assets/images/product.png';
+import box from '../../../assets/images/presentBox.png';
+import { Breadcrumbs } from '../Breadcrumbs/Breadcrumbs.jsx';
+import { ActionsBar } from '../ActionsBar/ActionsBar.jsx';
+import { useResizeObserver } from '../../../hooks/useResizeObserver.jsx';
+import { Slider } from './Slider.jsx';
+import { SliderControl } from './SliderControl.jsx';
+import { useMove } from '../../../hooks/useMove.jsx';
 
-export const ProductGallery = ({breadcrumbsDetails}) => {
-    const photoArray = [mainProductPhoto, imageCompanyGame, feedback, imageCompanyGame, product, box, feedback];
-    const thumbnailsContainer = useRef(null);
-    const mainPhotoContainer = useRef(null);
+export const GalleryContext = createContext(null);
+
+export const ProductGallery = ({ breadcrumbsDetails }) => {
+    const images = [
+        mainProductPhoto,
+        imageCompanyGame,
+        feedback,
+        imageCompanyGame,
+        product,
+        box,
+        feedback,
+    ];
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    const [thumbnailsContainerGap, setThumbnailsContainerGap] = useState(0);
-    const [thumbnailsContainerWidth, setThumbnailsContainerWidth] = useState(0);
-    const [mainPhotoContainerWidth, setMainPhotoContainerWidth] = useState(0);
-    const [initialPointGallery, setInitialPointGallery] = useState(0);
-    const [initialPointMainPhoto, setInitialPointMainPhoto] = useState(0);
-    const [initialTouchPointGallery, setInitialTouchPointGallery] = useState(0);
-    const [initialTouchPointMainPhoto, setInitialTouchPointMainPhoto] = useState(0);
-    const [currentGallerySlide, setCurrentGallerySlide] = useState(4);
-    const [currentSlide, setCurrentSlide] = useState(0);
+    const [state, setState] = useState({
+        thumbsGap: 0,
+        thumbsWidth: 0,
+        mainPhotoWidth: 0,
+        initPointGallery: 0,
+        initPointMain: 0,
+        initTouch: 0,
+        currentGallerySlide: 4,
+        currentSlide: 0,
+    });
+    const { thumbsRef, mainPhotoRef } = useResizeObserver(setState);
+
     const slides = 4;
     const mainPhotoWidthPercentage = 100;
-    const thumbnailWidthHeight = (thumbnailsContainerWidth - (thumbnailsContainerGap * 3)) / 4;
-    const galleryMove = (thumbnailWidthHeight + thumbnailsContainerGap) / thumbnailsContainerWidth * 100;
-    const rightEdgeGallery = -(galleryMove * photoArray.length - galleryMove * slides);
-    const rightEdgeMainPhoto = -(mainPhotoWidthPercentage * (photoArray.length - 1));
+    const thumbSize = (state.thumbsWidth - state.thumbsGap * 3) / 4;
+    const galleryMove =
+        ((thumbSize + state.thumbsGap) / state.thumbsWidth) * 100;
+    const rightEdgeGallery = -(
+        galleryMove * images.length -
+        galleryMove * slides
+    );
+    const rightEdgeMain = -(mainPhotoWidthPercentage * (images.length - 1));
 
     useEffect(() => {
-        const observer = new ResizeObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.target === thumbnailsContainer.current) {
-                    setThumbnailsContainerWidth(entry.contentRect.width);
-                } else {
-                    setMainPhotoContainerWidth(entry.contentRect.width);
-                }
-            });
-            const divWidth = parseFloat(getComputedStyle(thumbnailsContainer.current).width);
-            const divGap = parseFloat(getComputedStyle(thumbnailsContainer.current).gap);
-            setThumbnailsContainerGap((divWidth * divGap) / 100);
-        });
-        observer.observe(thumbnailsContainer.current);
-        observer.observe(mainPhotoContainer.current);
-        return () => {
-            observer.disconnect();
-        };
-    }, []);
-
-    useEffect(() => {
-        function handleResize() {
-            setWindowWidth(window.innerWidth);
-        }
+        const handleResize = () => setWindowWidth(window.innerWidth);
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
     useLayoutEffect(() => {
-        thumbnailsContainer.current.style.transform = 'translate(' + initialPointGallery + '%)';
-    }, [initialPointGallery]);
+        thumbsRef.current.style.transform = `translate(${state.initPointGallery}%)`;
+    }, [state.initPointGallery, thumbsRef]);
 
     useLayoutEffect(() => {
-        mainPhotoContainer.current.style.transform = 'translate(' + initialPointMainPhoto + '%)';
-    }, [initialPointMainPhoto]);
+        mainPhotoRef.current.style.transform = `translate(${state.initPointMain}%)`;
+    }, [state.initPointMain, mainPhotoRef]);
 
-    const handleTouchStartMainPhoto = (e) => {
-        setInitialTouchPointMainPhoto(e.touches[0].clientX);
-    }
-
-    const handleTouchMoveMainPhoto = (e) => {
-        const touchDifference = initialTouchPointMainPhoto - e.touches[0].clientX;
-        const translatePercentage = initialPointMainPhoto - (touchDifference / mainPhotoContainerWidth * 100);
-        if (initialTouchPointMainPhoto < e.touches[0].clientX) {
-            mainPhotoContainer.current.style.transform =
-                `translate(${translatePercentage < 0 ? translatePercentage : 0}%)`;
-        } else {
-            mainPhotoContainer.current.style.transform =
-                `translate(${translatePercentage > rightEdgeMainPhoto ? translatePercentage : rightEdgeMainPhoto}%)`;
-        }
-    }
-
-    const handleTouchEndMainPhoto = (e) => {
-        const touchDifference = initialTouchPointMainPhoto - e.changedTouches[0].clientX;
-        touchDifference > 0 ? moveRightPhoto() : moveLeftMainPhoto();
-    }
-
-    const moveLeftMainPhoto = () => {
-        if (initialPointMainPhoto !== 0) {
-            setInitialPointMainPhoto(prevNumber => prevNumber + mainPhotoWidthPercentage);
-            setCurrentSlide(prevNumber => prevNumber - 1);
-            {
-                currentSlide <= photoArray.length - slides ? moveLeftGallery(1) : '';
-            }
-        }
-    }
-
-    const moveRightPhoto = () => {
-        if (initialPointMainPhoto !== rightEdgeMainPhoto) {
-            setInitialPointMainPhoto(prevNumber => prevNumber - mainPhotoWidthPercentage);
-            setCurrentSlide(prevNumber => prevNumber + 1);
-            {
-                currentSlide + 1 >= slides && initialPointGallery !== rightEdgeGallery
-                    ? moveRightGallery(1)
-                    : '';
-            }
-        }
-    }
-
+    const { moveLeftGallery, moveRightGallery, moveLeftMain, moveRightMain } =
+        useMove({
+            slides,
+            state,
+            setState,
+            galleryMove,
+            images,
+            mainPhotoWidthPercentage,
+            rightEdgeMain,
+            rightEdgeGallery,
+        });
 
     const changeMainPhoto = (index) => {
-        const slidesDifference = Math.abs(index - currentSlide);
-        {
-            currentSlide < index
-                ? setInitialPointMainPhoto(prevNumber => prevNumber - mainPhotoWidthPercentage * slidesDifference)
-                : setInitialPointMainPhoto(prevNumber => prevNumber + mainPhotoWidthPercentage * slidesDifference)
-        }
-        setCurrentSlide(index);
-    }
-
-    const handleTouchStartGallery = (e) => {
-        setInitialTouchPointGallery(e.touches[0].clientX);
-    }
-
-    const handleTouchMoveGallery = (e) => {
-        const touchDifference = initialTouchPointGallery - e.touches[0].clientX;
-        const translatePercentage = initialPointGallery - (touchDifference / thumbnailsContainerWidth * 100);
-        if (initialTouchPointGallery < e.touches[0].clientX) {
-            thumbnailsContainer.current.style.transform =
-                `translate(${translatePercentage < 0 ? translatePercentage : 0}%)`;
-        } else {
-            thumbnailsContainer.current.style.transform =
-                `translate(${translatePercentage > rightEdgeGallery ? translatePercentage : rightEdgeGallery}%)`;
-        }
-    }
-
-    const handleTouchEndGallery = (e) => {
-        const touchDifference = initialTouchPointGallery - e.changedTouches[0].clientX;
-        const slidesTouched = Math.abs(Math.round(touchDifference / thumbnailWidthHeight));
-        if (slidesTouched === 0) {
-            thumbnailsContainer.current.style.transform = 'translate(' + initialPointGallery + '%)';
-        } else {
-            touchDifference > 0 && slidesTouched >= 1 ? moveRightGallery(slidesTouched) : moveLeftGallery(slidesTouched);
-        }
-    }
-
-    const moveLeftGallery = (slidesToMove = 1) => {
-        if (slides <= (currentGallerySlide - slidesToMove)) {
-            setCurrentGallerySlide(currentGallerySlide - slidesToMove);
-            setInitialPointGallery(prevNumber => prevNumber + (galleryMove * slidesToMove));
-        } else {
-            setInitialPointGallery(0);
-        }
-    }
-
-    const moveRightGallery = (slidesToMove = 1) => {
-        if (photoArray.length >= currentGallerySlide + slidesToMove) {
-            setCurrentGallerySlide(currentGallerySlide + slidesToMove);
-            setInitialPointGallery(prevNumber => prevNumber - (galleryMove * slidesToMove));
-        } else {
-            setInitialPointGallery(-(galleryMove * (photoArray.length - slides)))
-        }
-    }
+        const slidesDiff = Math.abs(index - state.currentSlide);
+        setState((prev) => ({
+            ...prev,
+            initPointMain:
+                state.currentSlide < index
+                    ? prev.initPointMain - mainPhotoWidthPercentage * slidesDiff
+                    : prev.initPointMain +
+                      mainPhotoWidthPercentage * slidesDiff,
+            currentSlide: index,
+        }));
+    };
 
     return (
-        <div className={styles.productGallery}>
-            {windowWidth < 1280 && <Breadcrumbs  page={breadcrumbsDetails}/>}
-            <div className={styles.productGallery_actionsBar}>
-                {windowWidth < 1280 && <ActionsBar />}
-            </div>
-            <div className={styles.productGallery_mainImageContainer}>
-                <div className={styles.productGallery_mainImagesList}
-                     ref={mainPhotoContainer}
-                     onTouchStart={handleTouchStartMainPhoto}
-                     onTouchMove={handleTouchMoveMainPhoto}
-                     onTouchEnd={handleTouchEndMainPhoto}
-                >
-                    {photoArray.map((image, index) => (
-                        <div key={index}>
-                            <img
-                                src={image}
-                                alt={`MainProductImage`}
-                                className={styles.productGallery_mainImage}
-                            />
-                        </div>
-                    ))}
+        <GalleryContext.Provider value={{ images, state, setState }}>
+            <section className={styles['product-gallery']}>
+                {windowWidth < 1280 && (
+                    <Breadcrumbs page={breadcrumbsDetails} />
+                )}
+                <div className={styles['product-gallery__actions']}>
+                    {windowWidth < 1280 && <ActionsBar />}
                 </div>
-            </div>
-            <div className={styles.productGallery_gallery}>
-                <ArrowGalleryIcon classArrow={styles.productGallery_arrow}
-                                  funcOnClick={() => moveLeftGallery(1)}/>
-                <div className={styles.productGallery_thumbnailsContainer}>
-                    <div className={styles.productGallery_thumbnailsList}
-                         ref={thumbnailsContainer}
-                         onTouchStart={rightEdgeGallery <= 0 ? handleTouchStartGallery : undefined}
-                         onTouchMove={rightEdgeGallery <= 0 ? handleTouchMoveGallery : undefined}
-                         onTouchEnd={rightEdgeGallery <= 0 ? handleTouchEndGallery : undefined}
-                    >
-                        {photoArray.map((image, index) => (
-                            <div key={index}>
-                                <img
-                                    src={image}
-                                    alt={`Thumbnail ${index}`}
-                                    className={styles.productGallery_thumbnail}
-                                    style={{
-                                        width: `${thumbnailWidthHeight}px`, height: `${thumbnailWidthHeight}px`,
-                                        filter: index === currentSlide ? 'none' : 'grayscale(50%)',
-                                        opacity: index === currentSlide ? '1' : '0.5'
-                                    }}
-                                    onClick={() => changeMainPhoto(index)}
-                                />
-                            </div>
-                        ))}
-                    </div>
+                <div className={styles['product-gallery__container']}>
+                    <Slider
+                        ref={mainPhotoRef}
+                        rightEdge={rightEdgeMain}
+                        moveLeft={moveLeftMain}
+                        moveRight={moveRightMain}
+                    />
                 </div>
-                <ArrowGalleryIcon classArrow={styles.productGallery_arrow}
-                                 funcOnClick={() => moveRightGallery(1)}
-                                 style={{transform: 'rotate(180deg)'}}
+                <SliderControl
+                    ref={thumbsRef}
+                    moveLeft={moveLeftGallery}
+                    moveRight={moveRightGallery}
+                    changeMainPhoto={changeMainPhoto}
+                    rightEdge={rightEdgeGallery}
+                    thumbSize={thumbSize}
+                    currentSlide={state.currentSlide}
                 />
-            </div>
-        </div>
-    )
-}
+            </section>
+        </GalleryContext.Provider>
+    );
+};

@@ -1,8 +1,11 @@
-import RateStars from "../RateStars/RateStars";
-import ProductDetailedRateString from "./ProductDetailedRateString";
-import styles from "./ProductRating.module.css";
+import { useContext } from 'react';
+import RateStars from '../RateStars/RateStars';
+import ProductDetailedRateString from './ProductDetailedRateString';
+import styles from './ProductRating.module.css';
+import { ProductContext } from '../Product';
 
-export default function ProductRating({ feedbacks, rate }) {
+export default function ProductRating() {
+    const { feedbacks, rate } = useContext(ProductContext);
     // code below counts amount of 5/4/3/2/1 stars rates and percent of 5/4/3/2/1 stars rates of total rates amount, based on feedbacks array
     let starsAmounts = [null, 0, 0, 0, 0, 0]; // index is equal to 1/2/3/4/5 stars rate, value is amount of corresponding rates
 
@@ -59,7 +62,7 @@ export default function ProductRating({ feedbacks, rate }) {
     }
     return (
         <section className={styles.wrap}>
-            <div className={styles.container + " container"}>
+            <div className={styles.container + ' container'}>
                 <p className={styles.title}>Відгуки</p>
                 <div className={styles.body}>
                     <div className={styles.overall_rate}>

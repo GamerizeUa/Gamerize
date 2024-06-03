@@ -1,6 +1,6 @@
-import RateStars from "../RateStars/RateStars";
-import React from "react";
-import styles from "./ProductDetailedRateString.module.css";
+import RateStars from '../RateStars/RateStars';
+import React from 'react';
+import styles from './ProductDetailedRateString.module.css';
 
 export default function ProductDetailedRateString({
     filledStarsAmount = 5,
@@ -21,9 +21,9 @@ export default function ProductDetailedRateString({
                 </div>
             </div>
             <p className={styles.percent_digit}>
-                {starsAmountInPercents + "%"}
+                {starsAmountInPercents + '%'}
             </p>
-            <p className={styles.review_amount}>{"(" + starsAmount + ")"}</p>
+            <p className={styles.review_amount}>{'(' + starsAmount + ')'}</p>
         </div>
     );
 }

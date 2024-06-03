@@ -1,74 +1,125 @@
-import React, {useEffect, useRef, useState} from 'react';
-import styles from './ProductDeliveryAndPayment.module.css'
-import {ProductDelivery} from "../ProductDelivery/ProductDelivery.jsx";
-import {ProductPayment} from "../ProductPayment/ProductPayment.jsx";
+import { useEffect, useRef, useState } from 'react';
+import styles from './ProductDeliveryAndPayment.module.css';
+import DeliveryIcon from '../icons/DeliveryIcon.jsx';
+import ReturnIcon from '../icons/ReturnIcon.jsx';
+import NonCashPaymentIcon from '../icons/NonCashPaymentIcon.jsx';
+import PostPaymentIcon from '../icons/PostPaymentIcon.jsx';
+import { InfoSection } from '../InfoSection/InfoSection';
 
 export const ProductDeliveryAndPayment = () => {
-    const [translation, setTranslation] = useState(0);
-    const [itemClicked, setItemClicked] = useState({item1: true, item2: false});
+    const [activeTab, setActiveTab] = useState({ id: 1, translation: 0 });
     const [lineWidth, setLineWidth] = useState(null);
-    const [prevElement, setPrevElement] = useState('item1');
-    const [detailsWidth, setDetailsWidth] = useState(null)
     const navLineRef = useRef(null);
-    const detailsRef = useRef(null);
+
+    const tabs = [
+        { id: 1, name: 'Доставка' },
+        { id: 2, name: 'Оплата' },
+    ];
+
+    const deliveryItems = [
+        {
+            icon: <DeliveryIcon />,
+            title: 'Нова пошта',
+            description:
+                'Доставка здійснюється по всій Україні (Безкоштовна доставка при замовленні на суму 1900 грн)',
+        },
+        {
+            icon: <DeliveryIcon />,
+            title: 'Укрпошта',
+            description:
+                'Доставка здійснюється по всій Україні (Безкоштовна доставка при замовленні на суму 1900 грн)',
+            underlined: true,
+        },
+        {
+            icon: <ReturnIcon />,
+            title: 'Повернення',
+            description:
+                'Безкоштовне повернення протягом 14 днів з моменту покупки',
+        },
+    ];
+
+    const paymentItems = [
+        {
+            icon: <NonCashPaymentIcon />,
+            title: 'Безготівкова оплата',
+            description:
+                'Оплата замовлення здійснюється на сайті під час оформлення',
+        },
+        {
+            icon: <PostPaymentIcon />,
+            title: 'Накладеним платежем',
+            description:
+                'Ви оплачуєте замовлення після отримання: У відділенні перевізника (вартість послуги: "Нова пошта": 20 грн. + 2% від суми замовлення). Кур\'єру при доставці (по Україні, згідно з тарифами перевізника).',
+        },
+    ];
 
     useEffect(() => {
         const updateWidth = () => {
             if (navLineRef.current) {
                 setLineWidth(navLineRef.current.offsetWidth);
             }
-            if (detailsRef.current) {
-                setDetailsWidth(parseFloat(getComputedStyle(detailsRef.current).height));
-            }
-
         };
+
         updateWidth();
         window.addEventListener('resize', updateWidth);
+
         return () => {
             window.removeEventListener('resize', updateWidth);
         };
-    }, [prevElement]);
+    }, []);
 
-    const handleClickActive = (itemId) => {
-        if (!itemClicked[itemId]) {
-            setDetailsWidth(parseFloat(getComputedStyle(detailsRef.current).height));
-            if (Number(itemId[itemId.length - 1]) > Number(prevElement[prevElement.length - 1])) {
-                setTranslation((prevTranslation) => prevTranslation + lineWidth);
-            } else {
-                setTranslation((prevTranslation) => prevTranslation - lineWidth);
-            }
-            setItemClicked((prev) => {
-                const updatedState = {};
-                Object.keys(prev).forEach((key) => {
-                    updatedState[key] = key === itemId;
-                });
-                return updatedState;
-            });
-            setPrevElement(itemId)
-        }
+    const handleChangeActive = (tabId) => {
+        if (activeTab.id === tabId) return;
+
+        const newTranslation =
+            tabId > activeTab.id
+                ? activeTab.translation + lineWidth
+                : activeTab.translation - lineWidth;
+
+        setActiveTab({ id: tabId, translation: newTranslation });
     };
 
+    const isActiveTab = (tabId) => activeTab.id === tabId;
+
     return (
-        <div className={styles.deliveryAndPayment}>
-            <nav className={styles.deliveryAndPayment_navBar}>
-                <ul>
-                    <li onClick={() => handleClickActive('item1')}
-                        className={itemClicked['item1'] ? styles.disabled : ''}>Доставка
-                    </li>
-                    <li onClick={() => handleClickActive('item2')}
-                        className={itemClicked['item2'] ? styles.disabled : ''}>Оплата
-                    </li>
+        <section className={styles['delivery-and-payment']}>
+            <nav className={styles['delivery-and-payment__navbar']}>
+                <ul className={styles['delivery-and-payment__nav-list']}>
+                    {tabs.map(({ id, name }) => (
+                        <li
+                            key={id}
+                            onClick={() => handleChangeActive(id)}
+                            className={`${
+                                styles['delivery-and-payment__item']
+                            } ${
+                                isActiveTab(id)
+                                    ? styles[
+                                          'delivery-and-payment__item--disabled'
+                                      ]
+                                    : ''
+                            }`}
+                        >
+                            {name}
+                        </li>
+                    ))}
                 </ul>
-                <div className={styles.deliveryAndPayment_navLine}>
-                    <div ref={navLineRef} style={{transform: `translateX(${translation}px)`}}></div>
+                <div className={styles['delivery-and-payment__nav-line']}>
+                    <span
+                        ref={navLineRef}
+                        className={
+                            styles['delivery-and-payment__nav-line-indicator']
+                        }
+                        style={{
+                            transform: `translateX(${activeTab.translation}px)`,
+                        }}
+                    ></span>
                 </div>
             </nav>
-            <div className={styles.deliveryAndPayment_detailsContainer} style={{height: `${detailsWidth}px`}}>
-                <div className={styles.deliveryAndPayment_details} ref={detailsRef}>
-                    {prevElement === 'item1' && <ProductDelivery/>}
-                    {prevElement === 'item2' && <ProductPayment/>}
-                </div>
+            <div className={styles['delivery-and-payment__details']}>
+                <InfoSection
+                    items={activeTab.id === 1 ? deliveryItems : paymentItems}
+                />
             </div>
-        </div>
-    )
-}
+        </section>
+    );
+};

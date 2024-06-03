@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
-import ShareIcon from "../icons/ShareIcon.jsx";
-import HeartIcon from "../icons/HeartIcon.jsx";
-import {Share} from "../Share/Share.jsx";
-import styles from "./ActionsBar.module.css";
+import { useEffect, useState } from 'react';
+import ShareIcon from '../icons/ShareIcon.jsx';
+import HeartIcon from '../icons/HeartIcon.jsx';
+import { Share } from '../Share/Share.jsx';
+import styles from './ActionsBar.module.css';
 
 export const ActionsBar = () => {
     const [isIconFilled, setIsIconFilled] = useState(false);
@@ -21,24 +21,36 @@ export const ActionsBar = () => {
     }, []);
 
     const handleClickFavorite = () => {
-        setIsIconFilled(!isIconFilled);
+        setIsIconFilled((prev) => !prev);
     };
 
     const changeVisibility = () => {
         setIsVisible(!isVisible);
-    }
+    };
 
     return (
-        <div className={styles.actions}>
+        <div className={styles['action-list']}>
             <div
-                className={`${styles.actions_action} ${isIconFilled ? styles.actions_actionPhrase : ''}`}
-                onClick={handleClickFavorite}>
-                <HeartIcon isFilled={isIconFilled}/>
+                className={styles['action-list__item']}
+                data-filled={isIconFilled}
+                onClick={handleClickFavorite}
+            >
+                <HeartIcon isFilled={isIconFilled} />
             </div>
-            {windowWidth > 1280 && <div className={styles.actions_action} onClick={changeVisibility}>
-                <ShareIcon/>
-            </div>}
-            {isVisible && <Share changeVisibility={changeVisibility} isVisible={isVisible}/>}
+            {windowWidth > 1280 && (
+                <div
+                    className={styles['action-list__item']}
+                    onClick={changeVisibility}
+                >
+                    <ShareIcon />
+                </div>
+            )}
+            {isVisible && (
+                <Share
+                    changeVisibility={changeVisibility}
+                    isVisible={isVisible}
+                />
+            )}
         </div>
-    )
-}
+    );
+};
