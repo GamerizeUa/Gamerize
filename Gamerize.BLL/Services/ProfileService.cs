@@ -157,5 +157,17 @@ namespace Gamerize.BLL.Services
 
             service.Files.Delete(fileId).Execute();
         }
+
+        public async Task<IdentityResult> ChangePassword(string userId, ChangePasswordDTO changePasswordDto)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            var result = await _userManager.ChangePasswordAsync(user, changePasswordDto.Password, changePasswordDto.NewPassword);
+            return result;
+        }
     }
 }

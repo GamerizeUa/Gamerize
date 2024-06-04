@@ -134,4 +134,41 @@ public class AccountController : ControllerBase
 
         return Ok("Your photo has been deleted");
     }
+
+    [HttpPost("change-password")]
+    [Authorize]
+    public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDTO changePasswordDto)
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userId == null)
+        {
+            _logger.LogInformation("User not authenticated");
+            return BadRequest("User not authenticated");
+        }
+
+        if (changePasswordDto.NewPassword != changePasswordDto.RepeatNewPassword)
+        {
+            return BadRequest("New passwords do not match");
+        }
+
+        if (changePasswordDto.Password == changePasswordDto.NewPassword)
+        {
+            return BadRequest("New password cannot be the same as the old password");
+        }
+
+        try
+        {
+            var result = await _profileService.ChangePassword(userId, changePasswordDto);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+            return Ok("Password changed successfully");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to change password");
+            return StatusCode(500, "Failed to change password");
+        }
+    }
 }
