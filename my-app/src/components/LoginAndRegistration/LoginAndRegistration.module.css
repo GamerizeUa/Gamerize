@@ -224,6 +224,10 @@
     margin: 32px 0;
 }
 
+.newPassword_button{
+    margin-top: 30px;
+}
+
 @media screen and (min-width: 744px){
     .popUp{
         width: 320px;

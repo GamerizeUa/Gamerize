@@ -11,6 +11,7 @@ import useNoScroll from "../../hooks/useNoScroll.js";
 export const NewPasswordForm = ({setIsDisplayedNewPasswordForm}) => {
     const location = useLocation();
     const [emailParam, setEmailParam] = useState("");
+    const [error, setError] = useState("");
     const navigate = useNavigate()
     useNoScroll(true);
 
@@ -33,7 +34,9 @@ export const NewPasswordForm = ({setIsDisplayedNewPasswordForm}) => {
             newPassword: yup.string().required("Введіть пароль").matches(
                 /^(?=.*\d)(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{6,}$/,
                 'Мінімум 6 символів, цифра, велика та мала літери, спецсимвол'
-            ),
+            ).test('passwords-differ', 'Новий пароль збігається зі старим', function (value) {
+                return value !== this.parent.password;
+            }),
             password: yup.string().required("Введіть пароль").matches(
                 /^(?=.*\d)(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{6,}$/,
                 'Мінімум 6 символів, цифра, велика та мала літери, спецсимвол'
@@ -69,8 +72,7 @@ export const NewPasswordForm = ({setIsDisplayedNewPasswordForm}) => {
             Axios.post('https://gamerize.ltd.ua/api/Account/change-password', data)
                 .then(() => {
                     closePopUp();
-                    navigate('/');
-                })
+                }).catch((err) => {setError(err.message)})
         }
 
     }
@@ -150,7 +152,8 @@ export const NewPasswordForm = ({setIsDisplayedNewPasswordForm}) => {
                                 {emailParam ? errors.repeatPassword?.message : errors.repeatNewPassword?.message }
                             </p>
                         </div>
-                        <button type="submit">Змінити пароль</button>
+                        {error && <p className={styles.input_userError}>{error}</p>}
+                        <button type="submit" className={styles.newPassword_button}>Змінити пароль</button>
                     </form>
                 </div>
             </div>
