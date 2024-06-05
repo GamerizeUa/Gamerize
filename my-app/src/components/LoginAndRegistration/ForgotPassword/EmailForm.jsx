@@ -54,7 +54,7 @@ export const EmailForm = ({setIsDisplayedEmailForm, setDisplayedLoginPopUp}) => 
                             <div className={stylesCommon.confirmEmail_info}>
                                 <p className={stylesCommon.confirmEmail_title}>Перейдіть за посиланням у листі</p>
                                 <p className={stylesCommon.confirmEmail_subtitle}>
-                                    Підтвердіть email, щоб завершити створення профілю.
+                                    Перейдіть на email, щоб завершити скидання паролю.
                                 </p>
                             </div>
                         </div>) :
