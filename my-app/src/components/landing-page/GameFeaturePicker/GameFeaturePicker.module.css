@@ -38,6 +38,10 @@
 .item:hover {
     background: var(--light-blue-gray);
 }
+.item:last-child:hover {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
 .icon {
     width: 24px;
     height: 24px;
