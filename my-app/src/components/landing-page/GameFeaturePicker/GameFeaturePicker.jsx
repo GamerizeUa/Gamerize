@@ -48,7 +48,14 @@ export default function GameFeaturePicker({
                     </div>
                 </div>
                 {isMenuActive && (
-                    <div className={styles.items_container}>
+                    <div
+                        className={styles.items_container}
+                        style={{
+                            overflow: `${
+                                featureItems.length >= 5 ? "scroll" : "visible"
+                            }`,
+                        }}
+                    >
                         <div
                             onClick={(e) => {
                                 chooseItem(null);

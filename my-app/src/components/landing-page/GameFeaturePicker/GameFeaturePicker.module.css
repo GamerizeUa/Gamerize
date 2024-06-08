@@ -23,7 +23,7 @@
 .items_container {
     border-top: 1px solid var(--blue);
     width: 100%;
-    /* max-height: 287px; */
+    max-height: 224px;
 }
 .item {
     width: 100%;
