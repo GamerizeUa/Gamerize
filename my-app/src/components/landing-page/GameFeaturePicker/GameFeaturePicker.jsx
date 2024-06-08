@@ -49,6 +49,15 @@ export default function GameFeaturePicker({
                 </div>
                 {isMenuActive && (
                     <div className={styles.items_container}>
+                        <div
+                            onClick={(e) => {
+                                chooseItem(null);
+                                e.stopPropagation();
+                            }}
+                            className={styles.item}
+                        >
+                            <p>Скинути</p>
+                        </div>
                         {featureItems.map((item) => {
                             function chooseItemOnclick(e) {
                                 chooseItem(item);
