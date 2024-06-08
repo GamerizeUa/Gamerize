@@ -17,7 +17,7 @@ export default function GameFeaturePicker({
         setIsMenuActive(!isMenuActive);
     }
     function closeMenuOnclick(e) {
-        if (isMenuActive && !e.target.closest("." + menuUniqueCSSClass)) {
+        if (!e.target.closest("." + menuUniqueCSSClass)) {
             setIsMenuActive(false);
         }
     }
@@ -31,7 +31,7 @@ export default function GameFeaturePicker({
             window.removeEventListener("click", closeMenuOnclick, {
                 capture: true,
             });
-    });
+    }, []);
     return (
         <div className={styles.wrap}>
             <div
