@@ -25,7 +25,7 @@ export const NavigationTabs = () => {
     useEffect(() => {
         let activeTabRef;
         switch (location.pathname) {
-            case '/login':
+            case '/personal-account':
                 activeTabRef = loginRef;
                 break;
             case '/order/history':
@@ -50,7 +50,7 @@ export const NavigationTabs = () => {
         <div className={styles.navigationTabs}>
             <nav className={styles.navigationTabs_tabs} ref={navContainerRef}>
                 <ul>
-                    <Link to="/login" ref={loginRef} onClick={handleClickAccount}><li>Акаунт</li></Link>
+                    <Link to="/personal-account" ref={loginRef} onClick={handleClickAccount}><li>Акаунт</li></Link>
                     <Link to="/order/history" ref={orderHistoryRef}><li>Історія замовлень</li></Link>
                     <Link to="/wish-list" ref={favoritesRef}><li>Список бажань</li></Link>
                 </ul>

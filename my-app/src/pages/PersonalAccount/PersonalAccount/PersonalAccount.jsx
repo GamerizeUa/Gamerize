@@ -4,9 +4,9 @@ import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 import Axios from 'axios';
 import styles from './PersonalAccount.module.css';
-import useCheckAuth from "../hooks/useCheckAuth.js";
+import useCheckAuth from "../../../components/hooks/useCheckAuth.js";
 import {useNavigate} from "react-router-dom";
-import {NewPasswordForm} from "../LoginAndRegistration/ForgotPassword/ NewPasswordForm.jsx";
+import {NewPasswordForm} from "../../../components/LoginAndRegistration/ForgotPassword/ NewPasswordForm.jsx";
 
 export const PersonalAccount = () => {
     const [isDisplayedNewPasswordForm, setIsDisplayedNewPasswordForm] = useState(false);

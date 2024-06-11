@@ -4,7 +4,7 @@ import HomePage from "./pages/HomePage";
 import Catalog from "./pages/Catalog/Catalog.jsx";
 import ProductPage from "./pages/ProductPage";
 import RegisterPage from "./pages/RegisterPage";
-import LoginPage from "./pages/LoginPage";
+import PersonalAccountPage from "./pages/PersonalAccount/PersonalAccountPage.jsx";
 import WishListPage from "./pages/WishListPage.jsx";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import NotFound from "./pages/NotFound/NotFound";
@@ -20,7 +20,7 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/personal-account" element={<PersonalAccountPage />} />
         <Route path="/catalog" element={<Catalog />} />
         <Route path="catalog/:Id" element={<ProductPage />}></Route>
         <Route path="/wish-list" element={<WishListPage />} />

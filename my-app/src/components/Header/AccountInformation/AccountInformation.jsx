@@ -9,7 +9,7 @@ const AccountInformation = ({setIsDisplayedLoginPopUp}) => {
     <div className={styles.accountLinksWrapper}>
       <ul className={styles.accountList}>
         <li className={styles.accountListItem}>
-          <Link to="/login" className={styles.accountLink}>
+          <Link to="/personal-account" className={styles.accountLink}>
             <div>
               <svg width="24" height="24">
                 <use href={sprite + "#icon-settings"}></use>

@@ -99,7 +99,7 @@ const Header = ({ openCart, openBurgerMenu, setIsDisplayedLoginPopUp }) => {
                 }}
               >
                 <Link
-                  to="/login"
+                  to="/personal-account"
                   className={styles.headerButton}
                   onClick={handleClickAccount}
                 >

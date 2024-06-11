@@ -14,7 +14,7 @@ const useClickAccount = (setIsDisplayedLoginPopUp, optionalCloseFunction) => {
     const handleClickAccount = (e) => {
         e.preventDefault();
         if (isAuthenticated) {
-            navigate('/login');
+            navigate('/personal-account');
             setIsDisplayedLoginPopUp(false);
             closeBurger();
         } else {

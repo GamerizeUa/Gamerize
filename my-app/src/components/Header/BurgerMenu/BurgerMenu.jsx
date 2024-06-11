@@ -78,7 +78,7 @@ const BurgerMenu = ({ burgerMenuClose, setIsDisplayedLoginPopUp }) => {
         <ul className={styles.iconsList}>
           <li>
             <Link
-              to="/login"
+              to="/personal-account"
               className={styles.burgerMenuLink}
               onClick={handleClickAccount}
             >
