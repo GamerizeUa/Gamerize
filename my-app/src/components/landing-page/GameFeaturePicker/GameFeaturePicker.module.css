@@ -23,7 +23,7 @@
 .items_container {
     border-top: 1px solid var(--blue);
     width: 100%;
-    /* max-height: 287px; */
+    max-height: 224px;
 }
 .item {
     width: 100%;
@@ -37,6 +37,10 @@
 }
 .item:hover {
     background: var(--light-blue-gray);
+}
+.item:last-child:hover {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 .icon {
     width: 24px;

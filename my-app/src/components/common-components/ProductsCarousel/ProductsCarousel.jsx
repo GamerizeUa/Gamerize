@@ -142,26 +142,18 @@ export default function ProductsCarousel({
                 className={styles.container}
             >
                 <h4 className={styles.title_container}>{carouselTitle}</h4>
-                {limitedWindowWidth < 1280 || (
-                    <>
-                        <div
-                            className={
-                                styles.chevron + " " + styles.chevron_right
-                            }
-                            onClick={arrowRightOnclick}
-                        >
-                            <ArrowRightIcon />
-                        </div>
-                        <div
-                            className={
-                                styles.chevron + " " + styles.chevron_left
-                            }
-                            onClick={arrowLeftOnclick}
-                        >
-                            <ArrowLeftIcon />
-                        </div>
-                    </>
-                )}
+                <div
+                    className={styles.chevron + " " + styles.chevron_right}
+                    onClick={arrowRightOnclick}
+                >
+                    <ArrowRightIcon />
+                </div>
+                <div
+                    className={styles.chevron + " " + styles.chevron_left}
+                    onClick={arrowLeftOnclick}
+                >
+                    <ArrowLeftIcon />
+                </div>
                 <div
                     className={styles.body_container}
                     onTouchStart={handleTouchStart}

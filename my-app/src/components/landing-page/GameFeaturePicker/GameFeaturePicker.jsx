@@ -17,7 +17,7 @@ export default function GameFeaturePicker({
         setIsMenuActive(!isMenuActive);
     }
     function closeMenuOnclick(e) {
-        if (isMenuActive && !e.target.closest("." + menuUniqueCSSClass)) {
+        if (!e.target.closest("." + menuUniqueCSSClass)) {
             setIsMenuActive(false);
         }
     }
@@ -31,7 +31,7 @@ export default function GameFeaturePicker({
             window.removeEventListener("click", closeMenuOnclick, {
                 capture: true,
             });
-    });
+    }, []);
     return (
         <div className={styles.wrap}>
             <div
@@ -48,7 +48,23 @@ export default function GameFeaturePicker({
                     </div>
                 </div>
                 {isMenuActive && (
-                    <div className={styles.items_container}>
+                    <div
+                        className={styles.items_container}
+                        style={{
+                            overflow: `${
+                                featureItems.length >= 5 ? "scroll" : "visible"
+                            }`,
+                        }}
+                    >
+                        <div
+                            onClick={(e) => {
+                                chooseItem(null);
+                                e.stopPropagation();
+                            }}
+                            className={styles.item}
+                        >
+                            <p>Скинути</p>
+                        </div>
                         {featureItems.map((item) => {
                             function chooseItemOnclick(e) {
                                 chooseItem(item);
