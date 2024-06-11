@@ -7,11 +7,10 @@ import styles from './PersonalAccount.module.css';
 import useCheckAuth from "../../../components/hooks/useCheckAuth.js";
 import {useNavigate} from "react-router-dom";
 import {NewPasswordForm} from "../../../components/LoginAndRegistration/ForgotPassword/ NewPasswordForm.jsx";
+import {UserPhoto} from "./UserPhoto.jsx";
 
 export const PersonalAccount = () => {
     const [isDisplayedNewPasswordForm, setIsDisplayedNewPasswordForm] = useState(false);
-    const [avatar, setAvatar] = useState(null);
-    const hiddenFileInput = useRef(null);
     const [photoFile, setPhotoFile] = useState(null);
     const [uploadedPhoto, setUploadedPhoto] = useState(null);
     const nameRef = useRef(null);
@@ -60,7 +59,6 @@ export const PersonalAccount = () => {
                     }
                 })
                 .catch((err) => console.log(err))
-
     }
 
     const onSubmit = (data) => {
@@ -85,18 +83,7 @@ export const PersonalAccount = () => {
                     'Content-Type': 'multipart/form-data',
                 }
             }).then(() => showMessage()).catch((err) => console.log(err))
-
         }
-    }
-
-    const changeAvatar = () => {
-        hiddenFileInput.current.click();
-    };
-
-    const deletePhoto = () => {
-        setUploadedPhoto(null);
-        setAvatar(null);
-        setPhotoFile(null);
     }
 
     const deletePhotoOnServer = () => {
@@ -113,19 +100,6 @@ export const PersonalAccount = () => {
             }, 3000);
         }
     }
-
-    const handleChange = (e) => {
-        if (avatar) {
-            URL.revokeObjectURL(avatar);
-        }
-        const file = e.target.files[0];
-        if (file && file.type.startsWith('image/')) {
-            setPhotoFile(file);
-            setAvatar(URL.createObjectURL(file));
-        } else {
-            setAvatar(null);
-        }
-    };
 
     const handlePhoneNumberChange = (e) => {
         if (e.target.value === '+380' || e.target.value === '+38') {
@@ -153,23 +127,11 @@ export const PersonalAccount = () => {
                         <p className={styles.account_pageTitle}>Особисті дані</p>
                     </div>
                     <div className={styles.account_formContainer}>
-                        <div className={styles.account_imageName}>
-                            <div className={styles.account_imageContainer}
-                                 onClick={changeAvatar}
-                                 style={avatar || uploadedPhoto
-                                     ? { backgroundImage: `url(${avatar || uploadedPhoto})`
-                                         , color: 'transparent'}
-                                     : {backgroundImage : 'none'}}
-                            >Оберіть фото</div>
-                            <input type="file" accept="image/*" onChange={handleChange}
-                                className={styles.account_inputFile}
-                                ref={hiddenFileInput}
-                            />
-                            <span className={styles.account_deletePhoto} onClick={deletePhoto}>
-                                Видалити фото
-                            </span>
-                            <p className={styles.account_name} ref={nameRef}></p>
-                        </div>
+                        <UserPhoto setPhotoFile={setPhotoFile}
+                                   uploadedPhoto={uploadedPhoto}
+                                   setUploadedPhoto={setUploadedPhoto}
+                                   nameRef={nameRef}
+                        />
                         <form className={styles.account_form} onSubmit={handleSubmit(onSubmit)}>
                             <div className={styles.account_inputContainer}>
                                 <p className={styles.account_title}>Ім’я та прізвище</p>
