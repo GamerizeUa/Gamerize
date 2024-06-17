@@ -6,7 +6,6 @@ import { Banner } from "../components/landing-page/Banner/Banner.jsx";
 import axios from "axios";
 
 const HomePage = () => {
-  axios.defaults.withCredentials = true;
 
   // productsList just for tests
   const productsList = [

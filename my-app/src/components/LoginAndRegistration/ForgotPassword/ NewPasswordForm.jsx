@@ -12,6 +12,7 @@ export const NewPasswordForm = ({setIsDisplayedNewPasswordForm}) => {
     const location = useLocation();
     const [emailParam, setEmailParam] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
     useNoScroll(true);
 
@@ -61,20 +62,30 @@ export const NewPasswordForm = ({setIsDisplayedNewPasswordForm}) => {
         setIsDisplayedNewPasswordForm(false);
     }
 
-    const onSubmit = (data) => {
-        if(emailParam){
-            Axios.post('https://gamerize.ltd.ua/api/Login/reset-password', data)
-                .then(() => {
+    const onSubmit = async(data) => {
+        let success = false;
+        try {
+            if (emailParam) {
+                await Axios.post('https://gamerize.ltd.ua/api/Login/reset-password', data)
+                success = true;
+            } else {
+                await Axios.post('https://gamerize.ltd.ua/api/Account/change-password', data)
+                success = true;
+            }
+        } catch (err) {
+            setError(err.response.data);
+        } finally {
+            if (success) {
+                setLoading(true);
+                setTimeout(() => {
+                    setLoading(false);
                     closePopUp();
-                    navigate('/');
-                })
-        }else{
-            Axios.post('https://gamerize.ltd.ua/api/Account/change-password', data)
-                .then(() => {
-                    closePopUp();
-                }).catch((err) => {setError(err.message)})
+                    if(emailParam) navigate('/');
+                }, 1000);
+            } else {
+                setLoading(false);
+            }
         }
-
     }
 
     return (
@@ -153,7 +164,11 @@ export const NewPasswordForm = ({setIsDisplayedNewPasswordForm}) => {
                             </p>
                         </div>
                         {error && <p className={styles.input_userError}>{error}</p>}
-                        <button type="submit" className={styles.newPassword_button}>Змінити пароль</button>
+                        <button type="submit"
+                                className={loading ? styles.newPassword_buttonLoading : styles.newPassword_button}
+                        >
+                            {loading ? "Зміна пароля..." : "Змінити пароль"}
+                        </button>
                     </form>
                 </div>
             </div>

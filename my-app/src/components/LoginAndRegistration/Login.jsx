@@ -6,6 +6,7 @@ import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import Axios from "axios";
 import useNoScroll from "../hooks/useNoScroll.js";
+import Cookies from "js-cookie";
 
 export const Login = ({setDisplayedLoginPopUp, setIsDisplayedRegistrationPopUp, setIsDisplayedEmailForm}) => {
     const [isErrorVisible, setIsErrorVisible] = useState(false);
@@ -25,6 +26,7 @@ export const Login = ({setDisplayedLoginPopUp, setIsDisplayedRegistrationPopUp, 
     const onSubmit = (data) => {
         Axios.post('https://gamerize.ltd.ua/api/Login/login', data)
             .then((res) => {
+                Cookies.set('auth', "true")
                 closePopUp();
             })
             .catch(() => {

@@ -228,6 +228,12 @@
     margin-top: 30px;
 }
 
+.newPassword_buttonLoading{
+    margin-top: 30px;
+    color: #8E8E8E !important;
+    filter: grayscale(20%);
+}
+
 @media screen and (min-width: 744px){
     .popUp{
         width: 320px;
