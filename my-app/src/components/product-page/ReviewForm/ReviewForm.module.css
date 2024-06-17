@@ -1,132 +1,135 @@
 .reviewFormSection {
-  padding-top: 32px;
+    padding-top: 32px;
+    margin-block-end: 64px;
 }
+
 @media (min-width: 744px) {
-  .reviewFormBloc {
-    padding-top: 64px;
-  }
+    .reviewFormBloc {
+        padding-top: 64px;
+    }
 }
 @media (min-width: 1440px) {
-  .reviewFormBloc {
-    padding-top: 56px;
-  }
+    .reviewFormBloc {
+        padding-top: 56px;
+    }
 }
 
 .reviewFormBloc {
-  background-color: var(--light-blue-gray);
-  padding: 32px;
+    background-color: var(--light-blue-gray);
+    padding: 32px;
 }
 @media (min-width: 1280px) {
-  .reviewFormBloc {
-    border-radius: 10px;
-  }
+    .reviewFormBloc {
+        border-radius: 10px;
+    }
 }
 
 .reviewFormTitle {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 40px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 40px;
 }
 @media (min-width: 1280px) {
-  .reviewFormTitle {
-    font-size: 20px;
-    font-weight: 700;
-  }
+    .reviewFormTitle {
+        font-size: 20px;
+        font-weight: 700;
+    }
 }
 
 .reviewFormText {
-  font-size: 14px;
+    font-size: 14px;
 }
 @media (min-width: 1280px) {
-  .reviewFormTitle {
-    font-size: 16px;
-  }
+    .reviewFormTitle {
+        font-size: 16px;
+    }
 }
 
 .rating {
-  display: flex;
-  margin-top: 17px;
-  margin-bottom: 40px;
+    display: flex;
+    margin-top: 17px;
+    margin-bottom: 40px;
 }
 @media (min-width: 744px) {
-  .rating {
-    margin-bottom: 26px;
-  }
+    .rating {
+        margin-bottom: 26px;
+    }
 }
 @media (min-width: 1280px) {
-  .rating {
-    margin-top: 16px;
-    margin-bottom: 26px;
-  }
+    .rating {
+        margin-top: 16px;
+        margin-bottom: 26px;
+    }
 }
 
 .starIcon {
-  width: 28px;
-  height: 20px;
-  cursor: pointer;
-  padding-right: 8px;
+    width: 28px;
+    height: 20px;
+    cursor: pointer;
+    padding-right: 8px;
 }
 
 .ratingItem {
-  display: none;
+    display: none;
 }
 
 .textareaContainer {
-  max-width: 850px;
-  min-height: 185px;
-  position: relative;
+    max-width: 850px;
+    min-height: 185px;
+    position: relative;
 }
 
 .textarea {
-  max-width: 850px;
-  min-height: 185px;
-  width: 100%;
-  height: 100%;
-  padding-top: 19px;
-  padding-left: 22px;
-  border-radius: 10px;
-  border: 1px solid #8e8e8e;
-  font-size: 14px;
+    max-width: 850px;
+    min-height: 185px;
+    width: 100%;
+    height: 100%;
+    padding-top: 19px;
+    padding-left: 22px;
+    border-radius: 10px;
+    border: 1px solid #8e8e8e;
+    font-size: 14px;
 }
 
 @media (min-width: 744px) {
-  .textarea {
-    min-height: 250px;
-    margin-top: 25px;
-  }
+    .textarea {
+        min-height: 250px;
+        margin-top: 25px;
+    }
 }
 
 @media (min-width: 1280px) {
-  .textarea {
-    margin-top: 24px;
-  }
+    .textarea {
+        margin-top: 24px;
+    }
 }
 
 .symbolsAmount {
-  position: absolute;
-  right: 16px;
-  bottom: 16px;
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
 }
 
 .textareaError {
-  margin-top: 10px;
-  margin-bottom: 20px;
-  font-size: 14px;
-  color: rgb(183, 60, 60);
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: rgb(183, 60, 60);
 }
 
 .reviewFormBtn {
-  width: 225px;
-  height: 53px;
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 10px;
-  background-color: var(--blue);
-  box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    width: 225px;
+    height: 53px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    background-color: var(--blue);
+    box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15),
+        0 1px 2px 0 rgba(0, 0, 0, 0.3);
 }
 
 .reviewFormBtn:hover,
 .reviewFormBtn:focus,
 .reviewFormBtn:active {
-  background-color: var(--dark-blue);
+    background-color: var(--dark-blue);
 }
