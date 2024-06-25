@@ -6,8 +6,9 @@ import {useLogoutClient} from "../hooks/useLogoutClient.js";
 
 export const Logout = ({setIsDisplayedLoginPopUp}) => {
     const handleClickAccount = useClickAccount(setIsDisplayedLoginPopUp);
-    const isAuthenticated = useCheckAuth();
+    const {checkAuthentication} = useCheckAuth();
     const logoutClient = useLogoutClient();
+    const isAuthenticated = checkAuthentication();
 
     return(
         <>

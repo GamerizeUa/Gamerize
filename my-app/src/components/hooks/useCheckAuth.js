@@ -1,16 +1,13 @@
-import {useSelector, useDispatch} from "react-redux";
-import {useEffect} from "react";
-import {checkAuth} from "../../redux/authorizationSlice.js";
+import Cookies from "js-cookie";
 
 const useCheckAuth = () => {
-    const dispatch = useDispatch();
-    const { isAuthenticated} = useSelector((state) => state.authorization);
+    const checkAuthentication = () => {
+        const isAuthenticated = Cookies.get("auth");
+        return isAuthenticated === 'true';
+    }
 
-    useEffect(() => {
-        dispatch(checkAuth());
-    }, [dispatch])
 
-    return isAuthenticated;
+    return {checkAuthentication};
 }
 
 export default useCheckAuth;

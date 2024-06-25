@@ -11,6 +11,8 @@ import {ConfirmEmailPopup} from "../LoginAndRegistration/ConfirmEmail/ConfirmEma
 import {Registration} from "../LoginAndRegistration/Registration.jsx";
 import {EmailForm} from "../LoginAndRegistration/ForgotPassword/EmailForm.jsx";
 import {NewPasswordForm} from "../LoginAndRegistration/ForgotPassword/ NewPasswordForm.jsx";
+import axios from "axios";
+import Cookies from 'js-cookie';
 
 const Layout = () => {
   const [cartOpen, setCartOpen] = useState(false);
@@ -22,6 +24,15 @@ const Layout = () => {
   const [isDisplayedNewPasswordForm, setIsDisplayedNewPasswordForm] = useState(false);
   const location = useLocation();
   const { state } = location;
+  axios.defaults.withCredentials = true;
+
+  useEffect(() => {
+    axios.get('https://gamerize.ltd.ua/api/Login/check')
+        .then(() => {
+          Cookies.set('auth', "true")
+        })
+        .catch(() => Cookies.set('auth', "false"))
+  }, [])
 
   useEffect(() => {
     if (cartOpen || burgerMenuOpen) {

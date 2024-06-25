@@ -4,8 +4,6 @@ import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 import Axios from 'axios';
 import styles from './PersonalAccount.module.css';
-import useCheckAuth from "../../../components/hooks/useCheckAuth.js";
-import {useNavigate} from "react-router-dom";
 import {NewPasswordForm} from "../../../components/LoginAndRegistration/ForgotPassword/ NewPasswordForm.jsx";
 import {UserPhoto} from "./UserPhoto.jsx";
 
@@ -15,57 +13,48 @@ export const PersonalAccount = () => {
     const [uploadedPhoto, setUploadedPhoto] = useState(null);
     const nameRef = useRef(null);
     const buttonSubmitRef = useRef(null);
-    const isAuthenticated = useCheckAuth();
-    const navigate = useNavigate();
 
     const schema = yup.object().shape({
         name: yup.string().nullable(),
-        phoneNumber: yup.string().nullable().matches(/^\+380\d{9}$/, {
-            message: 'Введіть коректний номер телефону (+380XXXXXXXXX)',
-            excludeEmptyString: true,
-        }),
+        phoneNumber: yup.string().nullable().test(
+            'isValidPhoneNumber',
+            'Введіть коректний номер телефону (+380XXXXXXXXX)',
+            value => value === '' || /^\+380\d{9}$/.test(value)
+        ),
         email: yup.string().nullable()
             .matches(/^[a-zA-Z0-9._-]+@[a-zA-Z]+\.[a-zA-Z]+$/i, {
                 message: '"Введіть коректну е-пошту"',
                 excludeEmptyString: true,
             }),
-        city: yup.string().nullable(),
+        city: yup.string().nullable().matches(/^[А-яа-я]+$/i, {message: "Введіть місто кирилицею"}),
         deliveryAddress: yup.string().nullable()
-            .matches(/(?=.*[A-Za-zА-Яа-я])(?=.*\d)[A-Za-zА-Яа-я\d]/,{
-                message:'Адреса повинна мати назву вулиці та номер будинку',
+            .matches(/(?=.*[A-Za-zА-Яа-я])(?=.*\d)[A-Za-zА-Яа-я\d]/, {
+                message: 'Адреса повинна мати назву вулиці та номер будинку',
                 excludeEmptyString: true,
             })
     });
 
-    const {register, handleSubmit, formState: {errors}, reset} = useForm({
+    const {register, handleSubmit, formState: {errors}, clearErrors, reset} = useForm({
         resolver: yupResolver(schema)
     });
 
     useEffect(() => {
-        if(isAuthenticated){
-            getPersonalInformation();
-        } else{
-            navigate('/');
-        }
+        Axios.get('https://gamerize.ltd.ua/api/Account/profile')
+            .then((res) => {
+                reset(res.data)
+                setUploadedPhoto(res.data?.profilePicture)
+                if (nameRef.current && res.data) {
+                    nameRef.current.textContent = res.data.name;
+                }
+            })
+            .catch((err) => console.log(err))
     }, []);
 
-    const getPersonalInformation = () => {
-            Axios.get('https://gamerize.ltd.ua/api/Account/profile')
-                .then((res) => {
-                    reset(res.data)
-                    setUploadedPhoto(res.data?.profilePicture)
-                    if (nameRef.current && res.data) {
-                        nameRef.current.textContent = res.data.name;
-                    }
-                })
-                .catch((err) => console.log(err))
-    }
-
     const onSubmit = (data) => {
-        if(photoFile){
+        if (photoFile) {
             sendPhoto();
         }
-        if(!uploadedPhoto && data.profilePicture){
+        if (!uploadedPhoto && data.profilePicture) {
             data.profilePicture = null;
             deletePhotoOnServer();
         }
@@ -77,7 +66,7 @@ export const PersonalAccount = () => {
     const sendPhoto = () => {
         const formData = new FormData();
         formData.append('file', photoFile);
-        if(formData.has('file')){
+        if (formData.has('file')) {
             Axios.post('https://gamerize.ltd.ua/api/Account/profile/picture', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -93,7 +82,7 @@ export const PersonalAccount = () => {
     }
 
     const showMessage = () => {
-        if(buttonSubmitRef){
+        if (buttonSubmitRef) {
             buttonSubmitRef.current.classList.add(styles.account_buttonUpdatedInfo)
             setTimeout(() => {
                 buttonSubmitRef.current.classList.remove(styles.account_buttonUpdatedInfo);
@@ -114,8 +103,9 @@ export const PersonalAccount = () => {
     }
 
     const handlePhoneNumberBlur = (e) => {
-        if (e.target.value === "+380") {
+        if (e.target.value.length <= 4) {
             e.target.value = "";
+            clearErrors('phoneNumber')
         }
     };
 
@@ -150,8 +140,8 @@ export const PersonalAccount = () => {
                                            ? styles.account_errorBorder : ''}`}
                                        placeholder="Телефон"
                                        onFocus={handlePhoneNumberFocus}
-                                       {...register("phoneNumber")}
                                        onChange={handlePhoneNumberChange}
+                                       {...register("phoneNumber")}
                                        onBlur={handlePhoneNumberBlur}
                                 />
                                 <p className={styles.account_inputError}>{errors.phoneNumber?.message}</p>
@@ -199,7 +189,7 @@ export const PersonalAccount = () => {
                 </div>
             </div>
             {isDisplayedNewPasswordForm &&
-                <NewPasswordForm setIsDisplayedNewPasswordForm={setIsDisplayedNewPasswordForm} />}
+                <NewPasswordForm setIsDisplayedNewPasswordForm={setIsDisplayedNewPasswordForm}/>}
         </section>
     )
 }

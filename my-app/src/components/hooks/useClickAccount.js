@@ -3,7 +3,7 @@ import useCheckAuth from "./useCheckAuth.js";
 
 const useClickAccount = (setIsDisplayedLoginPopUp, optionalCloseFunction) => {
     const navigate = useNavigate();
-    const isAuthenticated = useCheckAuth();
+    const {checkAuthentication} = useCheckAuth();
 
     const closeBurger = () => {
         if (optionalCloseFunction && typeof optionalCloseFunction === 'function') {
@@ -13,6 +13,7 @@ const useClickAccount = (setIsDisplayedLoginPopUp, optionalCloseFunction) => {
 
     const handleClickAccount = (e) => {
         e.preventDefault();
+        const isAuthenticated = checkAuthentication();
         if (isAuthenticated) {
             navigate('/personal-account');
             setIsDisplayedLoginPopUp(false);
