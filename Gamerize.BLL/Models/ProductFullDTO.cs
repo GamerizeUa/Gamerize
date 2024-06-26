@@ -1,5 +1,6 @@
 ﻿using Gamerize.BLL.Models.Interfaces;
 using Gamerize.DAL.Entities.Shop;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Gamerize.BLL.Models
 {
@@ -8,7 +9,7 @@ namespace Gamerize.BLL.Models
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
-		public decimal Price { get; set; }
+        public decimal Price { get; set; }
 		public int MinPlayers { get; set; }
 		public int MaxPlayers { get; set; }
 		public int MinAge { get; set; }

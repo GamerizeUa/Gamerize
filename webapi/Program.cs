@@ -80,12 +80,18 @@ builder.Services.AddControllers();
 builder.Services.AddCors(options =>
     options.AddPolicy("AllowAnyOrigin", builder =>
     {
-        builder
-            .AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader();
+        builder.WithOrigins("http://localhost:5173", "https://gamerize.ltd.ua")
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               .AllowCredentials();
     })
 );
+
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+    options.Secure = CookieSecurePolicy.None; 
+});
 
 builder.Services.AddDependencyInjections();
 
@@ -99,10 +105,19 @@ builder.Services.ConfigureApplicationCookie(o => {
 
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration.GetSection("AuthMessageSenderOptions"));
 
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+    options.Secure = CookieSecurePolicy.None;
+});
+
 var app = builder.Build();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
+
+app.UseCookiePolicy();
+app.UseCors("AllowAnyOrigin");
 
 if (app.Environment.IsDevelopment())
 {
@@ -115,6 +130,8 @@ else
     app.UseSwaggerUI();
     app.UseHsts();
 }
+
+app.UseHttpsRedirection();
 
 app.Use(async (context, next) =>
 {
@@ -130,9 +147,6 @@ app.UseMiddleware<JwtMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.UseCors("AllowAnyOrigin");
-app.UseHttpsRedirection();
 
 app.MapControllers();
 app.MapFallbackToFile("index.html");

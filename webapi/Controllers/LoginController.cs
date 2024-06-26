@@ -61,7 +61,7 @@ namespace webapi.Controllers
             {
                 HttpOnly = true,
                 Secure = true,
-                SameSite = SameSiteMode.Strict,
+                SameSite = SameSiteMode.None,
                 Expires = DateTime.UtcNow.AddDays(1)
             };
 
@@ -89,13 +89,13 @@ namespace webapi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new { Message = "Invalid model state" });
+                return BadRequest(new { Message = "Помилковий стан моделі" });
             }
 
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
-                return BadRequest(new { Message = "User not found" });
+                return BadRequest(new { Message = "Користувача не знайдено" });
             }
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -110,13 +110,13 @@ namespace webapi.Controllers
             {
                 HttpOnly = true,
                 Secure = true,
-                SameSite = SameSiteMode.Strict,
+                SameSite = SameSiteMode.None,
                 Expires = DateTime.UtcNow.AddHours(1)
             };
 
             Response.Cookies.Append("resetToken", token, resetTokenCookieOptions);
 
-            return Ok(new { Message = "Password reset link has been sent to your email.", model.Email });
+            return Ok(new { Message = "Посилання для зміни пароля надіслано на вашу електронну адресу.", model.Email });
         }
 
         [HttpPost("reset-password")]
@@ -125,33 +125,33 @@ namespace webapi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new { Message = "Invalid model state" });
+                return BadRequest(new { Message = "Недійсний стан моделі" });
             }
 
             if (model.Password != model.RepeatPassword)
             {
-                return BadRequest(new { Message = "Passwords do not match" });
+                return BadRequest(new { Message = "Паролі не збігаються" });
             }
 
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
-                return BadRequest(new { Message = "User not found" });
+                return BadRequest(new { Message = "Користувач не знайдений" });
             }
 
             var token = Request.Cookies["resetToken"];
             if (string.IsNullOrEmpty(token))
             {
-                return BadRequest(new { Message = "Invalid or expired reset token" });
+                return BadRequest(new { Message = "Недійсний або прострочений маркер скидання" });
             }
 
             var result = await _userManager.ResetPasswordAsync(user, token, model.Password);
             if (!result.Succeeded)
             {
-                return BadRequest(new { Message = "Error resetting password", Errors = result.Errors });
+                return BadRequest(new { Message = "Помилка скидання пароля", Errors = result.Errors });
             }
 
-            return Ok(new { Message = "Password has been reset successfully." });
+            return Ok(new { Message = "Пароль успішно скинуто." });
         }
     }
 }

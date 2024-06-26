@@ -62,7 +62,15 @@ namespace Gamerize.BLL.Services
                 throw new Exception("User not found");
             }
 
+            var currentEmail = user.Email;
+
+            if (string.IsNullOrWhiteSpace(profileUpdate.PhoneNumber))
+            {
+                profileUpdate.PhoneNumber = null;
+            }
+
             _mapper.Map(profileUpdate, user);
+            user.Email = currentEmail;
 
             var result = await _userManager.UpdateAsync(user);
 
@@ -163,11 +171,22 @@ namespace Gamerize.BLL.Services
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
-                throw new Exception("User not found");
+                throw new Exception("Користувача не знайдено!");
             }
 
             var result = await _userManager.ChangePasswordAsync(user, changePasswordDto.Password, changePasswordDto.NewPassword);
             return result;
         }
+
+        public async Task<bool> ValidateCurrentPassword(string userId, string currentPassword)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return false;
+            }
+            return await _userManager.CheckPasswordAsync(user, currentPassword);
+        }
+
     }
 }

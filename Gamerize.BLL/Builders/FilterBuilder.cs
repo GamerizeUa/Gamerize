@@ -1,109 +1,92 @@
 ﻿using Gamerize.BLL.Models;
 using Gamerize.BLL.Models.Requests;
-using Gamerize.BLL.Specifications;
 using Gamerize.DAL.Entities.Shop;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gamerize.BLL.Builder
 {
     public class FilterBuilder
     {
-        public IQueryable<Product> BuildProductFilter(IQueryable<Product> query, ProductListFilterRequest request)
+        internal IEnumerable<ProductFullDTO> ApplyFilters(IEnumerable<ProductFullDTO> products, ProductListFilterRequest filterRequest)
         {
-
-            var actions = new Dictionary<string, Action>
+            if (filterRequest.Languages != null && filterRequest.Languages.Any(l => l.HasValue && l.Value != 0))
             {
-                { nameof(request.MindGames), () => query = ByMindGames(query, request.MindGames) },
-                { nameof(request.Languages), () => query = ByLanguages(query, request.Languages) },
-                { nameof(request.Ages), () => query = ByAge(query,request.Ages) },
-                { nameof(request.PlayersAmount), () => query = ByPlayersAmount(query, request.PlayersAmount) },
-                { nameof(request.Categories), () => query = ByCategory(query, request.Categories) },
-                { nameof(request.GameTime), () => query = ByGameTime(query, request.GameTime) },
-                { nameof(request.Genres), () => query = ByGenres(query, request.Genres) },
-                { nameof(request.Price), () => query = ByPrice(query,request.Price) },
-                { nameof(request.Puzzles), () => query = ByPuzzles(query, request.Puzzles) },
-                { nameof(request.Themes), () =>  query = ByThemes(query,request.Themes) },
-            };
+                products = products.Where(p => p.Language != null && filterRequest.Languages.Contains(p.Language.Id)).ToList();
+            }
 
-            foreach (var action in actions)
+            if (filterRequest.Categories != null && filterRequest.Categories.Any(c => c.HasValue && c.Value != 0))
             {
-                var property = typeof(ProductListFilterRequest).GetProperty(action.Key);
-                if (property != null && property.GetValue(request) != null)
+                products = products.Where(p => p.Category != null && filterRequest.Categories.Contains(p.Category.Id));
+            }
+
+            if (filterRequest.Genres != null && filterRequest.Genres.Any(g => g.HasValue && g.Value != 0))
+            {
+                products = products.Where(p => p.Genre != null && filterRequest.Genres.Contains(p.Genre.Id));
+            }
+
+            if (filterRequest.MindGames != null && filterRequest.MindGames.Any(m => m.HasValue && m.Value != 0))
+            {
+                products = products.Where(p => p.MindGames != null && filterRequest.MindGames.Contains(p.MindGames.Id));
+            }
+
+            if (filterRequest.Puzzles != null && filterRequest.Puzzles.Any(pz => pz.HasValue && pz.Value != 0))
+            {
+                products = products.Where(p => p.Puzzle != null && filterRequest.Puzzles.Contains(p.Puzzle.Id));
+            }
+
+            if (filterRequest.Themes != null && filterRequest.Themes.Any(t => t.HasValue && t.Value != 0))
+            {
+                products = products.Where(p => p.Theme != null && filterRequest.Themes.Contains(p.Theme.Id));
+            }
+
+            if (filterRequest.Ages != null)
+            {
+                if (filterRequest.Ages.Min.HasValue && filterRequest.Ages.Min.Value != 0)
                 {
-                    action.Value.Invoke();
+                    products = products.Where(p => p.MinAge >= filterRequest.Ages.Min.Value);
+                }
+                if (filterRequest.Ages.Max.HasValue && filterRequest.Ages.Max.Value != 0)
+                {
+                    products = products.Where(p => p.MinAge <= filterRequest.Ages.Max.Value);
                 }
             }
 
-            return query;
+            if (filterRequest.PlayersAmount != null)
+            {
+                if (filterRequest.PlayersAmount.Min.HasValue && filterRequest.PlayersAmount.Min.Value != 0)
+                {
+                    products = products.Where(p => p.MinPlayers >= filterRequest.PlayersAmount.Min.Value);
+                }
+                if (filterRequest.PlayersAmount.Max.HasValue && filterRequest.PlayersAmount.Max.Value != 0)
+                {
+                    products = products.Where(p => p.MaxPlayers <= filterRequest.PlayersAmount.Max.Value);
+                }
+            }
 
+            if (filterRequest.Price != null)
+            {
+                if (filterRequest.Price.Min.HasValue && filterRequest.Price.Min.Value != 0)
+                {
+                    products = products.Where(p => p.Price >= filterRequest.Price.Min.Value);
+                }
+                if (filterRequest.Price.Max.HasValue && filterRequest.Price.Max.Value != 0)
+                {
+                    products = products.Where(p => p.Price <= filterRequest.Price.Max.Value);
+                }
+            }
+
+            if (filterRequest.GameTime != null)
+            {
+                if (filterRequest.GameTime.Min.HasValue && filterRequest.GameTime.Min.Value != 0)
+                {
+                    products = products.Where(p => p.MinGameTimeMinutes >= filterRequest.GameTime.Min.Value);
+                }
+                if (filterRequest.GameTime.Max.HasValue && filterRequest.GameTime.Max.Value != 0)
+                {
+                    products = products.Where(p => p.MaxGameTimeMinutes <= filterRequest.GameTime.Max.Value);
+                }
+            }
+
+            return products;
         }
-
-
-        private IQueryable<Product> ByCategory(IQueryable<Product> query, List<int?> categories)
-        {
-            query = query.Where(x => categories.Contains(x.CategoryId));
-            return query;
-        }
-
-        private IQueryable<Product> ByGenres(IQueryable<Product> query, List<int?> genres)
-        {
-            query = query.Where(x => genres.Contains(x.GenreId));
-            return query;
-        }
-
-        private IQueryable<Product> ByLanguages(IQueryable<Product> query, List<int?> languages)
-        {
-            query = query.Where(x => languages.Contains(x.LanguageId));
-            return query;
-        }
-
-        private IQueryable<Product> ByMindGames(IQueryable<Product> query, List<int?> mindGames)
-        {
-            query = query.Where(x => mindGames.Contains(x.MindGamesId));
-            return query;
-        }
-
-        private IQueryable<Product> ByPuzzles(IQueryable<Product> query, List<int?> puzzles)
-        {
-            query = query.Where(x => puzzles.Contains(x.PuzzleId));
-            return query;
-        }
-
-        private IQueryable<Product> ByThemes(IQueryable<Product> query, List<int?> themes)
-        {
-            query = query.Where(x => themes.Contains(x.ThemeId));
-            return query;
-        }
-
-        private IQueryable<Product> ByAge(IQueryable<Product> query, NumericFilterParameter ageFilter)
-        {
-            query = query.Where(x => x.MinAge >= ageFilter.Min);
-            return query;
-        }
-        private IQueryable<Product> ByPlayersAmount(IQueryable<Product> query, NumericFilterParameter playersAmountFilter)
-        {
-            query = query.Where(x => x.MinPlayers >= playersAmountFilter.Min
-                && x.MaxPlayers <= playersAmountFilter.Max);
-            return query;
-        }
-
-        private IQueryable<Product> ByPrice(IQueryable<Product> query, NumericFilterParameter priceFilter)
-        {
-            query = query.Where(x => x.Price >= priceFilter.Min
-                && x.Price <= priceFilter.Max);
-            return query;
-        }
-
-        public IQueryable<Product> ByGameTime(IQueryable<Product> query, NumericFilterParameter gameTimeFilter)
-        {
-            query = query.Where(x => x.MinGameTimeMinutes >= gameTimeFilter.Min
-                && x.MaxGameTimeMinutes <= gameTimeFilter.Max);
-            return query;
-        }
-
     }
 }

@@ -31,7 +31,7 @@ namespace webapi.Controllers
                     Expires = DateTime.UtcNow.AddDays(-1),
                     HttpOnly = true,
                     Secure = true,
-                    SameSite = SameSiteMode.Strict
+                    SameSite = SameSiteMode.None
                 };
 
                 Response.Cookies.Append("jwt", "", cookieOptions);

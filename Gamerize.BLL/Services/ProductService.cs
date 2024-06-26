@@ -10,11 +10,15 @@ using Gamerize.DAL.Repositories.Interfaces;
 using Gamerize.DAL.UnitOfWork.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace Gamerize.BLL.Services
 {
     public class ProductService
     {
+        private const decimal MinPrice = 0m;
+        private const decimal MaxPrice = 9999.99m;
+
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<Product> _repository;
         private readonly IMapper _mapper;
@@ -25,6 +29,7 @@ namespace Gamerize.BLL.Services
             _repository = _unitOfWork.GetRepository<Product>();
             _mapper = mapper;
         }
+
         public async Task<ProductFullDTO> CreateAsync(ProductNewDTO newEntity)
         {
             try
@@ -47,6 +52,19 @@ namespace Gamerize.BLL.Services
                 if (newEntity.MindGamesId.HasValue && !await EntityExistsAsync<MindGames>(newEntity.MindGamesId.Value))
                     throw new InvalidIdException($"MindGames з ID: {newEntity.MindGamesId} ще/вже не існує.");
 
+                if (decimal.TryParse(newEntity.Price.ToString(), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out decimal parsedPrice))
+                {
+                    if (parsedPrice < MinPrice || parsedPrice > MaxPrice)
+                    {
+                        throw new InvalidIdException($"Price must be between {MinPrice} and {MaxPrice}.");
+                    }
+                    newEntity.Price = parsedPrice;
+                }
+                else
+                {
+                    throw new InvalidIdException("Price value is not in a valid format.");
+                }
+
                 var product = await CreateProductAsync(newEntity);
                 await SaveImagesAsync(newEntity.NewImages, product.Id);
                 return _mapper.Map<ProductFullDTO>(product);
@@ -57,32 +75,53 @@ namespace Gamerize.BLL.Services
             }
         }
 
-        public async Task<(IEnumerable<ProductShortDTO>, int)> GetSimpleListAsync(ProductListFilterRequest request, int page, int pageSize)
+        public async Task<(IEnumerable<ProductFullDTO> products, int totalPages)> GetFilteredProductsAsync(ProductListFilterRequest filterRequest, int page, int pageSize)
         {
             try
             {
-                var spec = new ProductSpecification().IncludeShort();
-                var orderedProducts = await _repository.Pagination(p => p.Id);
+                var query = _repository.Get()
+                    .Include(x => x.Language)
+                    .Include(x => x.Category)
+                    .Include(x => x.Genre)
+                    .Include(x => x.Theme)
+                    .Include(x => x.Feedbacks)
+                    .Include(x => x.Tags)
+                    .Include(x => x.Images);
 
-                if (request != null)
+                var products = await query.ToListAsync();
+                var productsDTO = _mapper.Map<List<ProductFullDTO>>(products);
+
+                if (filterRequest != null && filterRequest.HasFilters())
                 {
-                    var queryDilterBuilder = new FilterBuilder();
-                    orderedProducts = queryDilterBuilder.BuildProductFilter(orderedProducts, request);
+                    FilterBuilder filterBuilder = new FilterBuilder();
+                    productsDTO = filterBuilder.ApplyFilters(productsDTO, filterRequest).ToList();
                 }
 
-                var totalProductsCount = await orderedProducts.CountAsync();
-                var productsPage = await orderedProducts.Skip((page - 1) * pageSize)
-                                                         .Take(pageSize)
-                                                         .ToListAsync();
+                int totalCount = productsDTO.Count();
+                int totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
 
-                var productsDTO = _mapper.Map<List<ProductShortDTO>>(productsPage)
-                    .Select(item =>
+                var pagedProducts = productsDTO
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+
+                var result = pagedProducts.Select(item =>
+                {
+                    var mainImage = item.Images.FirstOrDefault();
+                    if (mainImage != null)
                     {
-                        item.ImagePath ??= Path.Combine(Config.ProductImagesPath, Config.NoImage);
-                        return item;
-                    });
+                        mainImage.Path = Path.Combine(Config.ProductImagesPath, mainImage.Path);
+                    }
+                    else
+                    {
+                        var noImage = new ImageDTO { Path = Path.Combine(Config.ProductImagesPath, Config.NoImage) };
+                        item.Images = new List<ImageDTO> { noImage };
+                    }
 
-                return (productsDTO, (totalProductsCount + pageSize - 1) / pageSize);
+                    return item;
+                });
+
+                return (result, totalPages);
             }
             catch (DbUpdateException ex)
             {

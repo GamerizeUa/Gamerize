@@ -21,12 +21,12 @@ namespace webapi.Controllers
         }
 
         [HttpPost("GetSimpleList")]
-        public async Task<ActionResult<(IEnumerable<ProductShortDTO>, int)>> GetSimpleList([FromBody] ProductListFilterRequest request, int page = 1, int pageSize = 12)
+        public async Task<IActionResult> GetAllProducts([FromBody] ProductListFilterRequest filterRequest, int page = 1, int pageSize = 12)
         {
             try
             {
-                var (products, totalPages) = await _productService.GetSimpleListAsync(request, page, pageSize);
-                return Ok(new { products, totalPages });
+                var (products, totalPages) = await _productService.GetFilteredProductsAsync(filterRequest, page, pageSize);
+                return Ok(new { Products = products, TotalPages = totalPages });
             }
             catch (ServerErrorException ex)
             {

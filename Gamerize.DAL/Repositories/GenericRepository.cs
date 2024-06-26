@@ -121,6 +121,5 @@ namespace Gamerize.DAL.Repositories
         {
             return await _context.Set<Question>().Include(q => q.Answer).ToListAsync();
         }
-
     }
 }

@@ -142,33 +142,39 @@ public class AccountController : ControllerBase
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (userId == null)
         {
-            _logger.LogInformation("User not authenticated");
-            return BadRequest("User not authenticated");
+            _logger.LogInformation("Користувач не автентифікований");
+            return BadRequest("Користувач не автентифікований");
         }
 
         if (changePasswordDto.NewPassword != changePasswordDto.RepeatNewPassword)
         {
-            return BadRequest("New passwords do not match");
+            return BadRequest("Нові паролі не збігаються");
         }
 
         if (changePasswordDto.Password == changePasswordDto.NewPassword)
         {
-            return BadRequest("New password cannot be the same as the old password");
+            return BadRequest("Новий пароль не може збігатися зі старим");
         }
 
         try
         {
+            var isCurrentPasswordValid = await _profileService.ValidateCurrentPassword(userId, changePasswordDto.Password);
+            if (!isCurrentPasswordValid)
+            {
+                return BadRequest("Неправильний поточний пароль");
+            }
+
             var result = await _profileService.ChangePassword(userId, changePasswordDto);
             if (!result.Succeeded)
             {
                 return BadRequest(result.Errors);
             }
-            return Ok("Password changed successfully");
+            return Ok("Пароль успішно змінено");
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to change password");
-            return StatusCode(500, "Failed to change password");
+            _logger.LogError(ex, "Не вдалося змінити пароль");
+            return StatusCode(500, "Не вдалося змінити пароль");
         }
     }
 }
