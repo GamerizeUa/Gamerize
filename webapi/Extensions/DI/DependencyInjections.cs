@@ -29,6 +29,11 @@ namespace webapi.Extensions.DI
 			services.AddTransient<PuzzleService>();
 			services.AddTransient<MindGamesService>();
 			services.AddTransient<ProfileService>();
+			services.AddTransient<StatusService>();
+			services.AddTransient<OrderService>();
+			services.AddTransient<UserService>();
+			services.AddTransient<DeliveryMethodService>();
+			services.AddTransient<PaymentMethodService>();
         }
 	}
 }

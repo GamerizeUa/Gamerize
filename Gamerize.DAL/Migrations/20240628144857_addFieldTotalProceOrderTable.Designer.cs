@@ -4,6 +4,7 @@ using Gamerize.DAL.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gamerize.DAL.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240628144857_addFieldTotalProceOrderTable")]
+    partial class addFieldTotalProceOrderTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,23 +24,6 @@ namespace Gamerize.DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Gamerize.DAL.Entities.Admin.DeliveryMethod", b =>
-                {
-                    b.Property<byte>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<byte>("Id"));
-
-                    b.Property<string>("DeliveryMethodName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DeliveryMethods");
-                });
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Admin.Order", b =>
                 {
@@ -51,41 +37,40 @@ namespace Gamerize.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Comment")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<byte>("DeliveryMethodId")
-                        .HasColumnType("tinyint");
+                    b.Property<string>("DeliveryMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DiscountCouponId")
+                    b.Property<int>("DiscountCouponId")
                         .HasColumnType("int");
 
                     b.Property<byte>("OrderStatusId")
                         .HasColumnType("tinyint");
 
-                    b.Property<byte>("PaymentMethodId")
-                        .HasColumnType("tinyint");
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(10,2)");
+                        .HasColumnType("decimal(6,2)");
 
                     b.Property<DateTime?>("UpdatedAd")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DeliveryMethodId");
-
                     b.HasIndex("DiscountCouponId");
 
                     b.HasIndex("OrderStatusId");
-
-                    b.HasIndex("PaymentMethodId");
 
                     b.HasIndex("UserId");
 
@@ -136,23 +121,6 @@ namespace Gamerize.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OrderStatuses");
-                });
-
-            modelBuilder.Entity("Gamerize.DAL.Entities.Admin.PaymentMethod", b =>
-                {
-                    b.Property<byte>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<byte>("Id"));
-
-                    b.Property<string>("PaymentMethodName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PaymentMethods");
                 });
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Admin.User", b =>
@@ -793,15 +761,11 @@ namespace Gamerize.DAL.Migrations
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Admin.Order", b =>
                 {
-                    b.HasOne("Gamerize.DAL.Entities.Admin.DeliveryMethod", "DeliveryMethod")
-                        .WithMany("Orders")
-                        .HasForeignKey("DeliveryMethodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Gamerize.DAL.Entities.Shop.DiscountCoupon", "DiscountCoupon")
                         .WithMany()
-                        .HasForeignKey("DiscountCouponId");
+                        .HasForeignKey("DiscountCouponId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Gamerize.DAL.Entities.Admin.OrderStatus", "Status")
                         .WithMany("Orders")
@@ -809,21 +773,13 @@ namespace Gamerize.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Gamerize.DAL.Entities.Admin.PaymentMethod", "PaymentMethod")
-                        .WithMany("Orders")
-                        .HasForeignKey("PaymentMethodId")
+                    b.HasOne("Gamerize.DAL.Entities.Admin.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Gamerize.DAL.Entities.Admin.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("DeliveryMethod");
-
                     b.Navigation("DiscountCoupon");
-
-                    b.Navigation("PaymentMethod");
 
                     b.Navigation("Status");
 
@@ -1019,22 +975,12 @@ namespace Gamerize.DAL.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Gamerize.DAL.Entities.Admin.DeliveryMethod", b =>
-                {
-                    b.Navigation("Orders");
-                });
-
             modelBuilder.Entity("Gamerize.DAL.Entities.Admin.Order", b =>
                 {
                     b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Admin.OrderStatus", b =>
-                {
-                    b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("Gamerize.DAL.Entities.Admin.PaymentMethod", b =>
                 {
                     b.Navigation("Orders");
                 });

@@ -6,6 +6,7 @@ namespace Gamerize.DAL.Entities.Admin
 	public class OrderItem
 	{
 		public int Id { get; set; }
+
 		public required int OrderId { get; set; }
 		public virtual Order Order { get; set; }
 		public required int ProductId { get; set; }

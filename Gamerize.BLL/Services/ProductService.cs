@@ -66,7 +66,12 @@ namespace Gamerize.BLL.Services
                 }
 
                 var product = await CreateProductAsync(newEntity);
-                await SaveImagesAsync(newEntity.NewImages, product.Id);
+
+                if (newEntity.NewImages != null && newEntity.NewImages.Any())
+                {
+                    await SaveImagesAsync(newEntity.NewImages, product.Id);
+                }
+
                 return _mapper.Map<ProductFullDTO>(product);
             }
             catch (DbUpdateException ex)
@@ -91,10 +96,19 @@ namespace Gamerize.BLL.Services
                 var products = await query.ToListAsync();
                 var productsDTO = _mapper.Map<List<ProductFullDTO>>(products);
 
-                if (filterRequest != null && filterRequest.HasFilters())
+                if (filterRequest != null)
                 {
                     FilterBuilder filterBuilder = new FilterBuilder();
-                    productsDTO = filterBuilder.ApplyFilters(productsDTO, filterRequest).ToList();
+
+                    if (filterRequest.HasFilters())
+                    {
+                        productsDTO = filterBuilder.ApplyFilters(productsDTO, filterRequest).ToList();
+                    }
+
+                    if (!string.IsNullOrEmpty(filterRequest.SortOrder))
+                    {
+                        productsDTO = filterBuilder.ApplySorting(productsDTO, filterRequest.SortOrder).ToList();
+                    }
                 }
 
                 int totalCount = productsDTO.Count();
@@ -152,6 +166,7 @@ namespace Gamerize.BLL.Services
                 throw new ServerErrorException(ex.Message, ex);
             }
         }
+        
         public async Task DeleteAsync(int id)
         {
             try
@@ -209,7 +224,6 @@ namespace Gamerize.BLL.Services
                 throw new ServerErrorException(ex.Message, ex);
             }
         }
-
 
         #region Supporting methods
         private string ExceptionMessage(object? value = null) =>

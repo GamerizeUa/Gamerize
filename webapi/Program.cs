@@ -77,6 +77,11 @@ builder.Services.AddDataProtection();
 builder.Services.AddAutoMapper(typeof(ToDtoMappingProfile));
 builder.Services.AddControllers();
 
+//.AddJsonOptions(options =>
+// {
+//     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+// });
+
 builder.Services.AddCors(options =>
     options.AddPolicy("AllowAnyOrigin", builder =>
     {

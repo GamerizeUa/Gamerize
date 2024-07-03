@@ -88,5 +88,27 @@ namespace Gamerize.BLL.Builder
 
             return products;
         }
+
+        internal IEnumerable<ProductFullDTO> ApplySorting(IEnumerable<ProductFullDTO> products, string sortOrder)
+        {
+            switch (sortOrder)
+            {
+                case "price_desc":
+                    products = products.OrderByDescending(p => p.Price);
+                    break;
+                case "price_asc":
+                    products = products.OrderBy(p => p.Price);
+                    break;
+                case "name_asc":
+                    products = products.OrderBy(p => p.Name);
+                    break;
+                case "name_desc":
+                    products = products.OrderByDescending(p => p.Name);
+                    break;
+                default:
+                    break;
+            }
+            return products;
+        }
     }
 }

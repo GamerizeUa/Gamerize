@@ -30,6 +30,12 @@ namespace Gamerize.BLL.AutoMapper
 			CreateMap<Puzzle, PuzzleDTO>().ReverseMap();
 			CreateMap<MindGames, MindGamesDTO>().ReverseMap();
 			CreateMap<User, ProfileDTO>().ReverseMap();
-		}
+			CreateMap<OrderStatus, StatusDTO>().ReverseMap();
+			CreateMap<OrderItem, OrderItemDTO>().ReverseMap();
+			CreateMap<Order, OrderDTO>().ReverseMap();
+			CreateMap<User, UnregisteredUserDTO>().ReverseMap();
+			CreateMap<DeliveryMethod, DeliveryMethodDTO>().ReverseMap();
+			CreateMap<PaymentMethod, PaymentMethodDTO>().ReverseMap();
+        }
 	}
 }

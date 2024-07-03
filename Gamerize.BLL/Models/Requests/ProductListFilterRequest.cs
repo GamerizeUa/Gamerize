@@ -14,6 +14,8 @@
         public NumericFilterParameter? Price { get; set; }
         public NumericFilterParameter? GameTime { get; set; }
 
+        public string? SortOrder { get; set; }
+
         public bool HasFilters()
         {
             return (Categories != null && Categories.Any(c => c.HasValue && c.Value != 0)) ||

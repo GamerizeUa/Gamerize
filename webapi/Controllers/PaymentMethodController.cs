@@ -1,5 +1,4 @@
 ﻿using Gamerize.BLL.Models;
-using Gamerize.BLL.Models.Requests;
 using Gamerize.BLL.Services;
 using Gamerize.Common.Extensions.Exceptions;
 using Microsoft.AspNetCore.Mvc;
@@ -8,35 +7,29 @@ namespace webapi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class PaymentMethodController : ControllerBase
     {
-        private readonly ProductService _productService;
-        public ProductController(
-            ProductService productService)
-        {
-            _productService = productService;
-        }
+        private readonly PaymentMethodService _service;
+        public PaymentMethodController(PaymentMethodService service) => _service = service;
 
-        [HttpPost("GetSimpleList")]
-        public async Task<IActionResult> GetAllProducts([FromBody] ProductListFilterRequest filterRequest, int page = 1, int pageSize = 12)
+        [HttpGet("GetAll")]
+        public async Task<ActionResult<ICollection<PaymentMethodDTO>>> GetAllAsync()
         {
             try
             {
-                var (products, totalPages) = await _productService.GetFilteredProductsAsync(filterRequest, page, pageSize);
-                return Ok(new { Products = products, TotalPages = totalPages });
+                return Ok(await _service.GetAllAsync());
             }
             catch (ServerErrorException ex)
             {
                 return StatusCode(500, ex.Message);
             }
         }
-
         [HttpGet("GetById/{id:int}")]
-        public async Task<ActionResult<ProductFullDTO>> GetById(int id)
+        public async Task<ActionResult<PaymentMethodDTO>> GetByIdAsync(int id)
         {
             try
             {
-                return Ok(await _productService.GetByIdAsync(id));
+                return Ok(await _service.GetByIdAsync(id));
             }
             catch (InvalidIdException ex)
             {
@@ -47,22 +40,38 @@ namespace webapi.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromForm] ProductNewDTO newProduct)
+        public async Task<ActionResult<PaymentMethodDTO>> CreateAsync([FromBody] PaymentMethodDTO newEntity)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
             try
             {
-                return Ok(await _productService.CreateAsync(newProduct));
+                return (!ModelState.IsValid) ?
+                        BadRequest() :
+                        Ok(await _service.CreateAsync(newEntity));
             }
             catch (DuplicateItemException ex)
             {
-                return StatusCode(409, ex.Message);
+                return StatusCode(400, ex.Message);
+            }
+            catch (ServerErrorException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpPatch("Update")]
+        public async Task<ActionResult<PaymentMethodDTO>> UpdateAsync([FromBody] PaymentMethodDTO update)
+        {
+            try
+            {
+                return (!ModelState.IsValid) ?
+                    BadRequest() :
+                    Ok(await _service.UpdateAsync(update));
             }
             catch (InvalidIdException ex)
+            {
+                return StatusCode(400, ex.Message);
+            }
+            catch (DuplicateItemException ex)
             {
                 return StatusCode(400, ex.Message);
             }
@@ -71,34 +80,13 @@ namespace webapi.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-
         [HttpDelete("Delete/{id:int}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
             try
             {
-                await _productService.DeleteAsync(id);
+                await _service.DeleteAsync(id);
                 return NoContent();
-            }
-            catch (InvalidIdException ex)
-            {
-                return StatusCode(400, ex.Message);
-            }
-            catch (ServerErrorException ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-        }
-        [HttpPut("Update/{id:int}")]
-        public async Task<IActionResult> Update(int id, [FromForm] ProductNewDTO updatedProduct)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            try
-            {
-                var updatedEntity = await _productService.UpdateAsync(id, updatedProduct);
-                return Ok(updatedEntity);
             }
             catch (InvalidIdException ex)
             {

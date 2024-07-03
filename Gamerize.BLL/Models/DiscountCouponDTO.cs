@@ -11,5 +11,4 @@ namespace Gamerize.BLL.Models
 		public double Discount { get; set; }
 		
 	}
-	
 }
