@@ -2,7 +2,6 @@ import styles from "./CatalogSorting.module.css"
 import ArrowIconGallery from "../../ProductOverview/icons/ArrowGalleryIcon.jsx";
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {setSortingMethod} from "../../../redux/productsCatalogSlice.js";
 import {DisplayThreeIcon} from "../icons/DisplayThreeIcon.jsx";
 import {DisplayFourIcon} from "../icons/DisplayFourIcon.jsx";
 
@@ -23,7 +22,6 @@ export const CatalogSorting = ({setChosenDisplaying}) => {
     const handleOptionClick = (optionText) => {
         setChosenOption(optionText);
         setIsSortingVisible(false);
-        dispatch(setSortingMethod(optionText));
     };
 
     return (

@@ -2,7 +2,6 @@ import styles from "./CatalogFilters.module.css";
 import {filterProducts} from './filters.js';
 import React, {useEffect, useState} from "react";
 import {arrayProducts} from '../../../pages/Catalog/test.js';
-import {setProductsCatalog} from "../../../redux/productsCatalogSlice.js";
 import {useDispatch, useSelector} from "react-redux";
 import {DropdownFilters} from "./DropdownFilters.jsx";
 import {selectCategories, selectGenres, selectThemes, selectPuzzles, selectMindGames} from "../../../redux/selectors.js";
@@ -102,7 +101,6 @@ export  const CatalogFilters = () => {
         };
         const products = arrayProducts();
         const result = filterProducts(products,filters);
-        dispatch(setProductsCatalog(result));
     };
 
     const handleResetFilters = () => {

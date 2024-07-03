@@ -1,33 +1,57 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import axios from "axios";
 
-const sortingOperations = {
-    'Ціна: Від нижчої': (a, b) => a.price - b.price,
-    'Назва: Я - А': (a, b) => b.name.localeCompare(a.name),
-    'Ціна: Від вищої': (a, b) => b.price - a.price,
-    'Назва: А - Я': (a, b) => a.name.localeCompare(b.name),
-};
+export const fetchProducts = createAsyncThunk(
+    'productsCatalog/fetchProducts',
+    async ({page, pageSize}, { rejectWithValue }) => {
+        try {
+            const response = await axios.post('https://gamerize.ltd.ua/api/Product/GetSimpleList', {},{
+                params: { page, pageSize},
+            });
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
 
 const initialState = {
     products: [],
-    sortingMethod: ''
+    totalPages: 0,
+    loading: false,
+    filters: {},
+    page: 1,
+    pageSize: 12,
 }
 
 export const productsCatalogSlice = createSlice({
     name: "productsCatalog",
     initialState,
     reducers: {
-        setProductsCatalog: (state, action) => {
-            state.products = action.payload;
-            if (state.sortingMethod && sortingOperations[state.sortingMethod]) {
-                state.products = state.products.sort(sortingOperations[state.sortingMethod]);
-            }
+        setPage: (state, action) => {
+            state.page = action.payload;
         },
-        setSortingMethod: (state, action) => {
-            state.sortingMethod = action.payload;
-            state.products = state.products.sort(sortingOperations[state.sortingMethod])
-        }
-    }
+        setFilters: (state, action) => {
+            state.filters = action.payload;
+        },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchProducts.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchProducts.fulfilled, (state, action) => {
+                state.loading = false;
+                state.products = action.payload.products;
+                state.totalPages = action.payload.totalPages
+            })
+            .addCase(fetchProducts.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            });
+    },
 });
 
-export const {setProductsCatalog, setSortingMethod} = productsCatalogSlice.actions;
+export const {setPage, setFilters} = productsCatalogSlice.actions;
 export default productsCatalogSlice.reducer;
