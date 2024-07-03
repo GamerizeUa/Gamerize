@@ -8,6 +8,7 @@ import {setPage} from "../../redux/productsCatalogSlice.js";
 import {fetchProducts} from "../../redux/productsCatalogSlice.js";
 import {useDispatch, useSelector} from "react-redux";
 import ProductCardList from "../../components/common-components/ProductCardList/ProductCardList.jsx";
+import handleLinkClick from "../../helpers/ScrollToTop.js";
 
 const Catalog = () => {
   const {products, totalPages, page, pageSize, loading } = useSelector((state) => state.productsCatalog);
@@ -66,16 +67,17 @@ const Catalog = () => {
               </div>
               <div className={styles.catalog_displaying}>
                 <CatalogSorting setChosenDisplaying={setChosenDisplaying} />
+                {loading ? <p className={styles.catalog_empty}>Завантаження товарів ...</p> : ''}
                 <div className={styles.catalog_products}>
                   <ProductCardList productCardList={products}
                                    confingarationObj={configurationObj}  />
                 </div>
-                {loading ? <p className={styles.catalog_empty}>Завантаження товарів ...</p> : ''}
                 {!loading && products.length === 0 ? <p className={styles.catalog_empty}>Товарів не знайдено</p> : ''}
               </div>
             </div>
-            <div className={styles.catalog_pagination}><PaginationButtons pagesAmount={totalPages}
-                                                                          pageChangeFunc={changePage}/></div>
+            <div className={styles.catalog_pagination} onClick={handleLinkClick}>
+              <PaginationButtons pagesAmount={totalPages} pageChangeFunc={changePage}/>
+            </div>
           </div>
         </div>
       </div>
