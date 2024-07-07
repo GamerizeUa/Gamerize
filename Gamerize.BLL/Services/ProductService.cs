@@ -143,7 +143,7 @@ namespace Gamerize.BLL.Services
             }
         }
 
-        public async Task<ProductFullDTO> GetByIdAsync(int id)
+        public async Task<object> GetByIdAsync(int id)
         {
             try
             {
@@ -155,18 +155,143 @@ namespace Gamerize.BLL.Services
                     .Include(x => x.Feedbacks)
                     .Include(x => x.Tags)
                     .Include(x => x.Images)
+                    .Include(x => x.Ratings)
                     .FirstOrDefaultAsync(x => x.Id == id);
 
-                return (product is not null) ?
-                    _mapper.Map<ProductFullDTO>(product) :
+                if (product is null)
+                {
                     throw new InvalidIdException(ExceptionMessage(id));
+                }
+
+                var averageRating = product.Ratings.Any()
+                    ? product.Ratings.Average(r => r.Rate)
+                    : 0;
+
+                var productDTO = _mapper.Map<ProductFullDTO>(product);
+
+                return new
+                {
+                    Product = productDTO,
+                    AverageRating = averageRating
+                };
             }
             catch (DbUpdateException ex)
             {
                 throw new ServerErrorException(ex.Message, ex);
             }
         }
-        
+
+        public async Task<IEnumerable<ProductFullDTO>> GetPopularProductsAsync(int count = 10)
+        {
+            try
+            {
+                var query = _repository.Get()
+                    .Include(x => x.Language)
+                    .Include(x => x.Category)
+                    .Include(x => x.Genre)
+                    .Include(x => x.Theme)
+                    .Include(x => x.Feedbacks)
+                    .Include(x => x.Tags)
+                    .Include(x => x.Images)
+                    .Include(x => x.Ratings);
+
+                var productsWithRatings = await query
+                    .Select(p => new
+                    {
+                        Product = p,
+                        AverageRating = p.Ratings.Any() ? p.Ratings.Average(r => r.Rate) : 0
+                    })
+                    .OrderByDescending(p => p.AverageRating)
+                    .ThenBy(p => p.Product.Name)
+                    .Take(count)  
+                    .ToListAsync();
+
+                var result = productsWithRatings
+                    .Select(p => _mapper.Map<ProductFullDTO>(p.Product))
+                    .ToList();
+
+                return result;
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new ServerErrorException(ex.Message, ex);
+            }
+        }
+
+        public async Task<IEnumerable<ProductFullDTO>> GetProductsWithBiggestDiscountAsync(int count = 10)
+        {
+            try
+            {
+                var query = _repository.Get()
+                    .Include(x => x.Language)
+                    .Include(x => x.Category)
+                    .Include(x => x.Genre)
+                    .Include(x => x.Theme)
+                    .Include(x => x.Feedbacks)
+                    .Include(x => x.Tags)
+                    .Include(x => x.Images)
+                    .Include(x => x.Ratings)
+                    .Include(x => x.Discounts);
+
+                var productsWithDiscounts = await query
+                    .Select(p => new
+                    {
+                        Product = p,
+                        BiggestDiscount = p.Discounts.Any() ? p.Discounts.Max(d => d.CurrentDiscount) : 0
+                    })
+                    .OrderByDescending(p => p.BiggestDiscount)
+                    .ThenBy(p => p.Product.Name)
+                    .Take(count) 
+                    .ToListAsync();
+
+                var result = productsWithDiscounts
+                    .Select(p => _mapper.Map<ProductFullDTO>(p.Product))
+                    .ToList();
+
+                return result;
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new ServerErrorException(ex.Message, ex);
+            }
+        }
+
+        public async Task<RatingDTO> CreateRate(RatingDTO ratingDTO, int userId)
+        {
+            try
+            {
+                var product = await _repository.Get()
+                    .Include(x => x.Ratings)
+                    .FirstOrDefaultAsync(x => x.Id == ratingDTO.ProductId);
+
+                if (product is null)
+                {
+                    throw new InvalidIdException(ExceptionMessage(ratingDTO.ProductId));
+                }
+
+                if (product.Ratings.Any(r => r.UserId == userId))
+                {
+                    throw new DuplicateItemException("User has already rated this product.");
+                }
+
+                var rating = new Rating
+                {
+                    ProductId = ratingDTO.ProductId,
+                    Rate = ratingDTO.Rate,
+                    UserId = userId
+                };
+
+                product.Ratings.Add(rating);
+                await _unitOfWork.SaveChangesAsync();
+
+                return _mapper.Map<RatingDTO>(rating);
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new ServerErrorException(ex.Message, ex);
+            }
+        }
+
         public async Task DeleteAsync(int id)
         {
             try

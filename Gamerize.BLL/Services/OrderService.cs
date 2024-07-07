@@ -179,6 +179,11 @@ namespace Gamerize.BLL.Services
                     .Include(x => x.DeliveryMethod)
                     .ToListAsync();
 
+                if (orders == null || !orders.Any())
+                {
+                    throw new Exception("User has no orders");
+                }
+
                 return _mapper.Map<ICollection<OrderDTO>>(orders);
             }
             catch (DbUpdateException ex)

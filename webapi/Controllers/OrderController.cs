@@ -52,10 +52,15 @@ namespace webapi.Controllers
         {
             try
             {
-                return Ok(await _orderService.GetByUserIdAsync(id));
+                var orders = await _orderService.GetByUserIdAsync(id);
+                return Ok(orders);
             }
-            catch (ServerErrorException ex)
+            catch (Exception ex)
             {
+                if (ex.Message == "User not found" || ex.Message == "User has no orders")
+                {
+                    return NotFound(ex.Message);
+                }
                 return StatusCode(500, ex.Message);
             }
         }

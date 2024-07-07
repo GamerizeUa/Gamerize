@@ -95,11 +95,15 @@ public class AccountController : ControllerBase
 
         try
         {
-            var uploadedUrl = await ProfileService.UploadProfilePhoto(credentialPath, folderId, file);
+            var uploadedUrl = await ProfileService.UploadProfilePhoto(credentialPath, folderId, file, userId);
 
-            await _profileService.UpdateProfilePicture(userId, uploadedUrl);
+            await _profileService.UpdateProfilePicture(userId, uploadedUrl, credentialPath);
 
             return Ok("Profile picture uploaded successfully");
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
         }
         catch (Exception ex)
         {
@@ -109,6 +113,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpDelete("delete-photo")]
+    [Authorize]
     public async Task<IActionResult> DeletePhotoAsync()
     {
         var user = await _userManager.GetUserAsync(User);

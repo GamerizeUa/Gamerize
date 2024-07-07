@@ -1,6 +1,4 @@
 ﻿using Gamerize.BLL.Models.Interfaces;
-using Gamerize.DAL.Entities.Shop;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Gamerize.BLL.Models
 {
@@ -22,8 +20,10 @@ namespace Gamerize.BLL.Models
         public PuzzleDTO Puzzle { get; set; }
         public MindGamesDTO MindGames { get; set; }
 
+        public virtual ICollection<DiscountDTO> Discounts { get; set; }
         public ICollection<FeedbackDTO> Feedbacks { get; set; }
 		public ICollection<TagDTO> Tags { get; set; }
 		public ICollection<ImageDTO> Images { get; set; }
+		public ICollection<RatingDTO> Ratings { get; set; }
 	}
 }

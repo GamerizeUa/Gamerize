@@ -4,6 +4,7 @@ using Gamerize.DAL.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gamerize.DAL.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240707085232_addRatesFieldInProduct")]
+    partial class addRatesFieldInProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -529,6 +532,9 @@ namespace Gamerize.DAL.Migrations
                     b.Property<byte?>("PuzzleId")
                         .HasColumnType("tinyint");
 
+                    b.Property<decimal>("Rates")
+                        .HasColumnType("decimal(1,2)");
+
                     b.Property<byte?>("ThemeId")
                         .HasColumnType("tinyint");
 
@@ -601,32 +607,6 @@ namespace Gamerize.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Questions");
-                });
-
-            modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Rating", b =>
-                {
-                    b.Property<byte>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<byte>("Id"));
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Rate")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Tag", b =>
@@ -979,25 +959,6 @@ namespace Gamerize.DAL.Migrations
                     b.Navigation("Theme");
                 });
 
-            modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Rating", b =>
-                {
-                    b.HasOne("Gamerize.DAL.Entities.Shop.Product", "Product")
-                        .WithMany("Ratings")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Gamerize.DAL.Entities.Admin.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
@@ -1111,8 +1072,6 @@ namespace Gamerize.DAL.Migrations
                     b.Navigation("Feedbacks");
 
                     b.Navigation("Images");
-
-                    b.Navigation("Ratings");
                 });
 
             modelBuilder.Entity("Gamerize.DAL.Entities.Shop.Puzzle", b =>

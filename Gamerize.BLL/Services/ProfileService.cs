@@ -1,17 +1,12 @@
 ﻿using AutoMapper;
 using Gamerize.BLL.Models;
-using Gamerize.Common.Extensions.Exceptions;
-using Gamerize.DAL.Entities.Admin;
-using Gamerize.DAL.Entities.Shop;
 using Gamerize.DAL.Repositories.Interfaces;
-using Gamerize.DAL.UnitOfWork;
 using Gamerize.DAL.UnitOfWork.Interfaces;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace Gamerize.BLL.Services
 {
@@ -118,9 +113,22 @@ namespace Gamerize.BLL.Services
             return $"https://drive.google.com/thumbnail?id={uploadPhoto.Id}";
         }
 
-        public static async Task<string> UploadProfilePhoto(string credentialPath, string folderId, IFormFile photo)
+        public static async Task<string> UploadProfilePhoto(string credentialPath, string folderId, IFormFile photo, string userId)
         {
-            var filePath = Path.GetTempFileName();
+            if (!photo.ContentType.StartsWith("image/"))
+            {
+                throw new ArgumentException("File is not a valid image");
+            }
+
+            if (photo.Length > 10 * 1024 * 1024)
+            {
+                throw new ArgumentException("File size exceeds 10MB limit");
+            }
+
+            var fileExtension = Path.GetExtension(photo.FileName);
+            var newFileName = $"{userId}{fileExtension}";
+            var filePath = Path.Combine(Path.GetTempPath(), newFileName);
+
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await photo.CopyToAsync(stream);
@@ -133,11 +141,17 @@ namespace Gamerize.BLL.Services
             return uploadedUrl;
         }
 
-        public async Task UpdateProfilePicture(string userId, string pictureUrl)
+        public async Task UpdateProfilePicture(string userId, string pictureUrl, string credentialPath)
         {
             var user = await _userManager.FindByIdAsync(userId);
             if (user != null)
             {
+                if (!string.IsNullOrEmpty(user.ProfilePicture))
+                {
+                    var oldFileId = user.ProfilePicture.Split("id=")[1];
+                    DeleteFileFromGoogleDrive(credentialPath, oldFileId);
+                }
+
                 user.ProfilePicture = pictureUrl;
                 await _userManager.UpdateAsync(user);
             }

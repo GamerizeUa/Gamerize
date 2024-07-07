@@ -7,7 +7,6 @@ namespace Gamerize.BLL.Models
         public int Id { get; set; }
         public string? Name { get; set; }
         public string Email { get; set; }
-        //[Phone]
         [RegularExpression(@"(^$|\+380\d{9})", ErrorMessage = "Номер телефону має бути у форматі +380XXXXXXXXX.")]
         public string? PhoneNumber { get; set; }
         [RegularExpression(@"^[А-Яа-яІіЇїЄєҐґ\s]+$", ErrorMessage = "Назва міста може містити лише літери українського алфавіту.")]

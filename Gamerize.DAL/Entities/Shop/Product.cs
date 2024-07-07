@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Gamerize.DAL.Entities.Shop
 {
@@ -11,7 +10,7 @@ namespace Gamerize.DAL.Entities.Shop
 		public required string Description { get; set; }
 		[Column(TypeName = "decimal(6,2)")]
 		public required decimal Price { get; set; }
-		[Column(TypeName = "tinyint")]
+        [Column(TypeName = "tinyint")]
 		public required int MinPlayers { get; set; }
 		[Column(TypeName = "tinyint")]
 		public int? MaxPlayers { get; set; }
@@ -46,5 +45,6 @@ namespace Gamerize.DAL.Entities.Shop
 		public virtual ICollection<Tag> Tags { get; set; }
 		public virtual ICollection<Image> Images { get; set; }
 		public virtual ICollection<Discount> Discounts { get; set; }
-	}
+        public virtual ICollection<Rating> Ratings { get; set; }
+    }
 }
