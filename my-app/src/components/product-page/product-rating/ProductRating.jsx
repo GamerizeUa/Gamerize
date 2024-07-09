@@ -4,62 +4,63 @@ import ProductDetailedRateString from './ProductDetailedRateString';
 import styles from './ProductRating.module.css';
 import { ProductContext } from '../Product';
 
-export default function ProductRating() {
-    const { feedbacks, rate } = useContext(ProductContext);
-    // code below counts amount of 5/4/3/2/1 stars rates and percent of 5/4/3/2/1 stars rates of total rates amount, based on feedbacks array
-    let starsAmounts = [null, 0, 0, 0, 0, 0]; // index is equal to 1/2/3/4/5 stars rate, value is amount of corresponding rates
+const getRatingFromFeedbacks = (feedbacks) => {
+    if (feedbacks.length === 0) return 0;
 
-    feedbacks.forEach(({ rate }) => {
-        if (rate === 1) starsAmounts[1]++;
-        else if (rate === 2) starsAmounts[2]++;
-        else if (rate === 3) starsAmounts[3]++;
-        else if (rate === 4) starsAmounts[4]++;
-        else if (rate === 5) starsAmounts[5]++;
-    });
+    let ratings = 0;
 
-    let starsAmountsInPercents = [
-        // index is equal to 1/2/3/4/5 stars rate, value is percentage of corresponding rates of total rates amount
-        null,
-        Math.round((starsAmounts[1] / feedbacks.length) * 100),
-        Math.round((starsAmounts[2] / feedbacks.length) * 100),
-        Math.round((starsAmounts[3] / feedbacks.length) * 100),
-        Math.round((starsAmounts[4] / feedbacks.length) * 100),
-        Math.round((starsAmounts[5] / feedbacks.length) * 100),
-    ];
+    for (let feedback of feedbacks) {
+        ratings += feedback.rate;
+    }
+    return Math.round(ratings / feedbacks.length);
+};
 
-    // counted sum of percents, to detect if it is not equal to 100%
-    let starsAmountsOverallPercent =
-        starsAmountsInPercents[1] +
-        starsAmountsInPercents[2] +
-        starsAmountsInPercents[3] +
-        starsAmountsInPercents[4] +
-        starsAmountsInPercents[5];
-    if (100 !== starsAmountsOverallPercent) {
-        let extraPercents = 100 - starsAmountsOverallPercent;
+const getStarsAmount = (ratings) => {
+    const amount = {};
 
-        if (extraPercents > 0) {
-            // if counted sum of percents is less than 100, extra percents will be added starting from higher rate in favour of product
-            for (let i = starsAmountsInPercents.length - 1; i >= 1; i--) {
-                if (extraPercents === 0) break;
+    for (const rate of ratings) {
+        amount[rate] = amount[rate] ? amount[rate] + 1 : 1;
+    }
 
-                if (starsAmountsInPercents[i] < 100) {
-                    starsAmountsInPercents[i]++;
-                    extraPercents--;
-                }
-            }
-        } else {
-            // else (if counted sum of percents is more than 100) extra percents will be removed starting from lower rate in favour of product
-            extraPercents = -extraPercents;
-            for (let i = 1; i < starsAmountsInPercents.length; i++) {
-                if (extraPercents === 0) break;
+    return amount;
+};
 
-                if (starsAmountsInPercents[i] >= 1) {
-                    starsAmountsInPercents[i]--;
-                    extraPercents--;
-                }
-            }
+const getStarsAmountsInPercents = (amount) => {
+    const percents = {};
+    const sum = Object.values(amount).reduce(
+        (sum, current) => sum + current,
+        0
+    );
+
+    let totalPercents = 0;
+    let maxRate = null;
+    let maxPercent = 0;
+
+    for (const rate in amount) {
+        percents[rate] = Math.round((amount[rate] / sum) * 100);
+        totalPercents += percents[rate];
+
+        if (percents[rate] > maxPercent) {
+            maxPercent = percents[rate];
+            maxRate = rate;
         }
     }
+
+    if (totalPercents !== 100 && maxRate !== null) {
+        percents[maxRate] += 100 - totalPercents;
+    }
+
+    return percents;
+};
+
+export default function ProductRating() {
+    const { feedbacks } = useContext(ProductContext);
+    const rate = getRatingFromFeedbacks(feedbacks);
+    let starsAmounts = getStarsAmount(
+        feedbacks.map((feedback) => feedback.rate)
+    );
+    let starsAmountsInPercents = getStarsAmountsInPercents(starsAmounts);
+
     return (
         <section className={styles.wrap}>
             <div className={styles.container + ' container'}>

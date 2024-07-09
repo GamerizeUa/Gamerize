@@ -51,10 +51,7 @@ export default function ProductCard({
 
     return (
         <div className={styles.all_content}>
-            <Link
-                className={styles.all_card_link}
-                to={'/catalog/:product'}
-            ></Link>
+            <Link className={styles.all_card_link} to={`/catalog/${id}`}></Link>
             <div className={styles.card_top}>
                 <div className={styles.icons_bar}>
                     {configurationObject.isDiscount ? (

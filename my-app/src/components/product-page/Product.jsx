@@ -8,12 +8,12 @@ import GamePickerBtn from './game-picker-btn/GamePickerBtn.jsx';
 
 export const ProductContext = createContext(null);
 
-const Product = ({ feedbacks, rate, details, gamePickerFilters, children }) => {
+const Product = ({ product, gamePickerFilters, children }) => {
+    if (!product) return null;
+
     return (
         <div className="container">
-            <ProductContext.Provider
-                value={{ feedbacks, rate, gamePickerFilters, details }}
-            >
+            <ProductContext.Provider value={{ ...product, gamePickerFilters }}>
                 {children}
             </ProductContext.Provider>
         </div>

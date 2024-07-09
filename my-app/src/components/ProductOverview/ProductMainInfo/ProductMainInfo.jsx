@@ -1,16 +1,27 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import styles from './ProductMainInfo.module.css';
 import { Breadcrumbs } from '../Breadcrumbs/Breadcrumbs.jsx';
 import { ActionsBar } from '../ActionsBar/ActionsBar.jsx';
 import { ProductDeliveryAndPayment } from '../ProductDeliveryAndPayment/ProductDeliveryAndPayment.jsx';
 import CartIcon from '../icons/CartIcon.jsx';
+import { ProductContext } from '../../product-page/Product.jsx';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../../redux/cartSlice.js';
+import { Link } from 'react-router-dom';
+
+const calculateDiscount = (discounts) =>
+    discounts?.reduce((sum, current) => sum + current, 0);
 
 export const ProductMainInfo = ({ breadcrumbsDetails }) => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const dispatch = useDispatch();
+    const product = useContext(ProductContext);
+    const discount = calculateDiscount(product.discounts);
 
-    function handleResize() {
+    const handleAddToCart = () => dispatch(addToCart(product));
+    const handleResize = () => {
         setWindowWidth(window.innerWidth);
-    }
+    };
 
     useEffect(() => {
         window.addEventListener('resize', handleResize);
@@ -23,10 +34,10 @@ export const ProductMainInfo = ({ breadcrumbsDetails }) => {
             <section className={styles['product-info__header']}>
                 <div>
                     <h2 className={styles['product-info__title']}>
-                        Кодові імена: гра слів
+                        {product.name}
                     </h2>
                     <p className={styles['product-info__vendor-code']}>
-                        Артикул: 1497490495
+                        Артикул: {product.id}
                     </p>
                 </div>
                 {windowWidth >= 1280 && <ActionsBar />}
@@ -35,37 +46,38 @@ export const ProductMainInfo = ({ breadcrumbsDetails }) => {
             <section className={styles['product-info__body']}>
                 <div className={styles['product-info__pricing']}>
                     <p className={styles['product-info__discount-price']}>
-                        2000₴
+                        {discount > 0
+                            ? product.price - discount
+                            : product.price}
+                        ₴
                     </p>
-                    <p className={styles['product-info__price']}>2450₴</p>
+                    {discount > 0 && (
+                        <p className={styles['product-info__price']}>
+                            {product.price}₴
+                        </p>
+                    )}
                 </div>
                 <p className={styles['product-info__description']}>
-                    Неймовірно популярна гра для вечірок, що розходиться
-                    мільйонними тиражами. Гру створив знаменитий чеський
-                    гейм-дизайнер Владя Хватил, автор таких хітів як «Крізь
-                    Століття: Нова Історія Цивілізації», «Космічні
-                    далекобійники», «Mage Knight», «Dungeon Lords» і «Dungeon
-                    Petz». З моменту створення в 2015 році гра «Codenames» була
-                    визнана грою року в Німеччині, Бельгії, Японії, Польщі та
-                    Чехії і зайняла перші місця на конкурсах «The Dice Tower» і
-                    «Golden Geek».
+                    {product.description}
                 </p>
                 <div className={styles['product-info__button-group']}>
-                    <button
+                    <Link
                         className={
                             styles['product-info__btn'] +
                             ' ' +
                             styles['product-info__btn--secondary']
                         }
+                        to="/checkout"
                     >
                         Купити в 1 клік
-                    </button>
+                    </Link>
                     <button
                         className={
                             styles['product-info__btn'] +
                             ' ' +
                             styles['product-info__btn--primary']
                         }
+                        onClick={handleAddToCart}
                     >
                         <CartIcon />
                         Додати в кошик
