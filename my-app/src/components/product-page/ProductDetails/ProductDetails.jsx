@@ -4,9 +4,45 @@ import { useContext } from 'react';
 import { ProductContext } from '../Product';
 import { Entry } from './Entry';
 
-const ProductDetails = () => {
-    const { details } = useContext(ProductContext);
+const getProductCharacteristics = ({
+    minPlayers,
+    maxPlayers,
+    minAge,
+    minGameTimeMinutes,
+    maxGameTimeMinutes,
+    description,
+    category: { name: categoryName },
+    language: { name: languageName },
+}) => {
+    const details = {
+        characteristics: {
+            playersQuantity: `${minPlayers}-${maxPlayers}`,
+            age: `${minAge}+`,
+            gameTime: `${minGameTimeMinutes}-${maxGameTimeMinutes} хв`,
+            language: languageName,
+            category: categoryName,
+            equipment: [
+                'Ігрове поле',
+                '240 жетонів',
+                '108 жетонів валют',
+                '72 видових карти',
+                '50 карт джерел',
+                '50 карт бункерів',
+                '50 карт променевих веж',
+                'Правила гри',
+            ],
+        },
+        description,
+        returnPolicy:
+            'Повернення товару можливе протягом 14 днів після покупки при збереженні упаковки та чека.',
+    };
 
+    return details;
+};
+
+const ProductDetails = () => {
+    const product = useContext(ProductContext);
+    const details = getProductCharacteristics(product);
     const characteristics = Object.entries(details.characteristics);
 
     return (

@@ -5,15 +5,16 @@ import ReviewForm from './ReviewForm/ReviewForm.jsx';
 import ReviewsList from './ReviewsList/ReviewsList.jsx';
 import ProductRating from './product-rating/ProductRating';
 import GamePickerBtn from './game-picker-btn/GamePickerBtn.jsx';
+import { RecentlyViewed } from './RecentlyViewed.jsx';
 
 export const ProductContext = createContext(null);
 
-const Product = ({ feedbacks, rate, details, gamePickerFilters, children }) => {
+const Product = ({ product, gamePickerFilters, children }) => {
+    if (!product) return null;
+
     return (
         <div className="container">
-            <ProductContext.Provider
-                value={{ feedbacks, rate, gamePickerFilters, details }}
-            >
+            <ProductContext.Provider value={{ ...product, gamePickerFilters }}>
                 {children}
             </ProductContext.Provider>
         </div>
@@ -26,5 +27,6 @@ Product.Details = ProductDetails;
 Product.Rating = ProductRating;
 Product.ReviewList = ReviewsList;
 Product.ReviewForm = ReviewForm;
+Product.RecentlyViewed = RecentlyViewed;
 
 export default Product;
