@@ -42,3 +42,17 @@ export const selectProductById = createSelector(
     (catalog, productID) =>
         catalog.products.find((product) => product?.id == productID)
 );
+
+export const selectViewsHistory = createSelector(
+    [(state) => state.views, (state, productID) => productID],
+    (views, productID) => {
+        const { history, isEmpty } = views;
+
+        if (isEmpty) return [];
+
+        const relevantHistory =
+            history.length <= 10 ? history : history.slice(9);
+
+        return relevantHistory.filter((product) => product.id !== productID);
+    }
+);

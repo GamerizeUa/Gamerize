@@ -5,6 +5,7 @@ import ReviewForm from './ReviewForm/ReviewForm.jsx';
 import ReviewsList from './ReviewsList/ReviewsList.jsx';
 import ProductRating from './product-rating/ProductRating';
 import GamePickerBtn from './game-picker-btn/GamePickerBtn.jsx';
+import { RecentlyViewed } from './RecentlyViewed.jsx';
 
 export const ProductContext = createContext(null);
 
@@ -26,5 +27,6 @@ Product.Details = ProductDetails;
 Product.Rating = ProductRating;
 Product.ReviewList = ReviewsList;
 Product.ReviewForm = ReviewForm;
+Product.RecentlyViewed = RecentlyViewed;
 
 export default Product;

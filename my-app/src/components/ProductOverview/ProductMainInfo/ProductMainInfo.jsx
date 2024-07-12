@@ -9,14 +9,10 @@ import { useDispatch } from 'react-redux';
 import { addToCart } from '../../../redux/cartSlice.js';
 import { Link } from 'react-router-dom';
 
-const calculateDiscount = (discounts) =>
-    discounts?.reduce((sum, current) => sum + current, 0);
-
 export const ProductMainInfo = ({ breadcrumbsDetails }) => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const dispatch = useDispatch();
     const product = useContext(ProductContext);
-    const discount = calculateDiscount(product.discounts);
 
     const handleAddToCart = () => dispatch(addToCart(product));
     const handleResize = () => {
@@ -46,16 +42,11 @@ export const ProductMainInfo = ({ breadcrumbsDetails }) => {
             <section className={styles['product-info__body']}>
                 <div className={styles['product-info__pricing']}>
                     <p className={styles['product-info__discount-price']}>
-                        {discount > 0
-                            ? product.price - discount
-                            : product.price}
-                        ₴
+                        {product.price}₴
                     </p>
-                    {discount > 0 && (
-                        <p className={styles['product-info__price']}>
+                    {/* <p className={styles['product-info__price']}>
                             {product.price}₴
-                        </p>
-                    )}
+                        </p> */}
                 </div>
                 <p className={styles['product-info__description']}>
                     {product.description}
