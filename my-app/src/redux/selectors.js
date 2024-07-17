@@ -46,9 +46,9 @@ export const selectProductById = createSelector(
 export const selectViewsHistory = createSelector(
     [(state) => state.views, (state, productID) => productID],
     (views, productID) => {
-        const { history, isEmpty } = views;
+        const { history } = views;
 
-        if (isEmpty) return [];
+        if (history.length === 0) return history;
 
         const relevantHistory =
             history.length <= 10 ? history : history.slice(9);
