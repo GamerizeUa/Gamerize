@@ -19,6 +19,7 @@ import { fetchAllCategories } from "../../redux/categories/categoriesSlice";
 import { fetchAllThemes } from "../../redux/categories/themesSlice";
 import { fetchAllPuzzles } from "../../redux/categories/puzzlesSlice";
 import { fetchAllMindGames } from "../../redux/categories/mindGamesSlice";
+import {fetchAllLanguages} from "../../redux/categories/languagesSlice.js";
 
 const CategoryHeader = () => {
   const [isCategory, setIsCategory] = useState(false);
@@ -59,6 +60,7 @@ const CategoryHeader = () => {
     dispatch(fetchAllThemes());
     dispatch(fetchAllPuzzles());
     dispatch(fetchAllMindGames());
+    dispatch(fetchAllLanguages());
   }, [dispatch]);
 
   const categories = useSelector(selectCategories);

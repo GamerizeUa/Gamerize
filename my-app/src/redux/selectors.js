@@ -10,6 +10,8 @@ export const selectPuzzles = (state) => state.puzzles.items;
 
 export const selectMindGames = (state) => state.mindGames.items;
 
+export const selectLanguages = (state) => state.languages.items;
+
 export const selectWishListProductsIdList = (state) =>
     state.wishList.productsIdList;
 

@@ -4,11 +4,13 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {DisplayThreeIcon} from "../icons/DisplayThreeIcon.jsx";
 import {DisplayFourIcon} from "../icons/DisplayFourIcon.jsx";
+import useWindowWidth from "../../hooks/useWindowWidth.js";
 
 export const CatalogSorting = ({setChosenDisplaying}) => {
     const[isSortingVisible, setIsSortingVisible] = useState(false);
     const [chosenOption, setChosenOption] = useState('За ціною');
     const [isActive, setIsActive] = useState({displayingThree: true, displayingFour: false});
+    const windowWidth = useWindowWidth();
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -27,7 +29,9 @@ export const CatalogSorting = ({setChosenDisplaying}) => {
     return (
         <div className={styles.catalogSorting_options}>
             <div className={styles.catalogSorting_toSort}>
+                {windowWidth >= 1280 &&
                 <span>Сортування:</span>
+                }
                 <div className={styles.catalogSorting_sorting}
                      onClick={handleClickSorting}>{chosenOption}
                     <ArrowIconGallery style={{transform: isSortingVisible ? 'rotate(90deg)' : 'rotate(-90deg)'}}/>
@@ -41,6 +45,7 @@ export const CatalogSorting = ({setChosenDisplaying}) => {
                     </div>
                 }
             </div>
+            {windowWidth >= 1280 &&
             <div className={styles.catalogSorting_displaying}>
                 <span>Відображення:</span>
                 <div className={styles.catalogSorting_icons}>
@@ -48,6 +53,7 @@ export const CatalogSorting = ({setChosenDisplaying}) => {
                     <DisplayFourIcon isActive={isActive.displayingFour} setIsActive={setIsActive}/>
                 </div>
             </div>
+            }
         </div>
     )
 }

@@ -132,7 +132,6 @@
 .button_apply, .button_reset{
     height: 44px;
     border-radius: 10px;
-    background: #D2DAFF;
     box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.30);
     color: #2B2B2B;
     font-family: "Noto Sans";
@@ -141,14 +140,46 @@
 }
 
 .button_apply{
-    width: 100%;
+    background: #D2DAFF;
 }
 
 .button_reset{
-    width: 166px;
+    border: 1px solid #D2DAFF;
+    background: #FEFEFE;
+}
+
+.button_apply, .button_reset{
+    width: calc(100vw - 48px);
 }
 
 .button_apply:hover, .button_reset:hover{
     background-color: #AAC4FF;
     transition: all 0.3s ease-in-out;
+}
+
+@media screen and (min-width: 744px){
+    .button_apply, .button_reset{
+        width: 272px;
+    }
+}
+
+@media screen and (min-width: 1280px){
+    .button_apply, .button_reset{
+        height: 44px;
+        border-radius: 10px;
+        background: #D2DAFF;
+        box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.30);
+        color: #2B2B2B;
+        font-family: "Noto Sans";
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .button_apply{
+        width: 100%;
+    }
+
+    .button_reset{
+        width: 166px;
+    }
 }
