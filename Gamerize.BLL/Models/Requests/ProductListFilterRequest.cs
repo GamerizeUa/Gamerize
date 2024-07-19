@@ -9,12 +9,13 @@
         public List<int?>? Puzzles { get; set; }
         public List<int?>? Themes { get; set; }
 
-        public NumericFilterParameter? Ages { get; set; }
-        public NumericFilterParameter? PlayersAmount { get; set; }
-        public NumericFilterParameter? Price { get; set; }
-        public NumericFilterParameter? GameTime { get; set; }
+        public List<NumericFilterParameter>? Ages { get; set; }
+        public List<NumericFilterParameter>? PlayersAmount { get; set; }
+        public List<NumericFilterParameter>? Price { get; set; }
+        public List<NumericFilterParameter>? GameTime { get; set; }
 
         public string? SortOrder { get; set; }
+        public string? SearchTerm { get; set; }
 
         public bool HasFilters()
         {
@@ -24,10 +25,11 @@
                    (MindGames != null && MindGames.Any(m => m.HasValue && m.Value != 0)) ||
                    (Puzzles != null && Puzzles.Any(p => p.HasValue && p.Value != 0)) ||
                    (Themes != null && Themes.Any(t => t.HasValue && t.Value != 0)) ||
-                   (Ages != null && (Ages.Min.HasValue || Ages.Max.HasValue)) ||
-                   (PlayersAmount != null && (PlayersAmount.Min.HasValue || PlayersAmount.Max.HasValue)) ||
-                   (Price != null && (Price.Min.HasValue || Price.Max.HasValue)) ||
-                   (GameTime != null && (GameTime.Min.HasValue || GameTime.Max.HasValue));
+                   (Ages != null && Ages.Any(a => (a.Min.HasValue && a.Min.Value != 0) || (a.Max.HasValue && a.Max.Value != 0))) ||
+                   (PlayersAmount != null && PlayersAmount.Any(pa => (pa.Min.HasValue && pa.Min.Value != 0) || (pa.Max.HasValue && pa.Max.Value != 0))) ||
+                   (Price != null && Price.Any(p => (p.Min.HasValue && p.Min.Value != 0) || (p.Max.HasValue && p.Max.Value != 0))) ||
+                   (GameTime != null && GameTime.Any(gt => (gt.Min.HasValue && gt.Min.Value != 0) || (gt.Max.HasValue && gt.Max.Value != 0))) ||
+                   !string.IsNullOrEmpty(SearchTerm);
         }
     }
 }

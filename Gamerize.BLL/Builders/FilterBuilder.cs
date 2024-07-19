@@ -1,6 +1,5 @@
-﻿using Gamerize.BLL.Models;
-using Gamerize.BLL.Models.Requests;
-using Gamerize.DAL.Entities.Shop;
+﻿using Gamerize.BLL.Models.Requests;
+using Gamerize.BLL.Models;
 
 namespace Gamerize.BLL.Builder
 {
@@ -8,6 +7,15 @@ namespace Gamerize.BLL.Builder
     {
         internal IEnumerable<ProductFullDTO> ApplyFilters(IEnumerable<ProductFullDTO> products, ProductListFilterRequest filterRequest)
         {
+            if (!string.IsNullOrEmpty(filterRequest.SearchTerm))
+            {
+                var searchTerm = filterRequest.SearchTerm.ToLower();
+                products = products.Where(p =>
+                    p.Name.ToLower().Contains(searchTerm) ||
+                    p.Tags.Any(t => t.Name.ToLower().Contains(searchTerm))
+                ).ToList();
+            }
+
             if (filterRequest.Languages != null && filterRequest.Languages.Any(l => l.HasValue && l.Value != 0))
             {
                 products = products.Where(p => p.Language != null && filterRequest.Languages.Contains(p.Language.Id)).ToList();
@@ -38,51 +46,119 @@ namespace Gamerize.BLL.Builder
                 products = products.Where(p => p.Theme != null && filterRequest.Themes.Contains(p.Theme.Id));
             }
 
-            if (filterRequest.Ages != null)
+            if (filterRequest.Ages != null && filterRequest.Ages.Any())
             {
-                if (filterRequest.Ages.Min.HasValue && filterRequest.Ages.Min.Value != 0)
+                var ageRanges = filterRequest.Ages.Where(a => (a.Min.HasValue && a.Min.Value != 0) || (a.Max.HasValue && a.Max.Value != 0)).ToList();
+
+                if (ageRanges.Any())
                 {
-                    products = products.Where(p => p.MinAge >= filterRequest.Ages.Min.Value);
-                }
-                if (filterRequest.Ages.Max.HasValue && filterRequest.Ages.Max.Value != 0)
-                {
-                    products = products.Where(p => p.MinAge <= filterRequest.Ages.Max.Value);
+                    var ageFilteredProducts = new List<ProductFullDTO>();
+
+                    foreach (var ageFilter in ageRanges)
+                    {
+                        var tempProducts = products;
+
+                        if (ageFilter.Min.HasValue && ageFilter.Min.Value != 0)
+                        {
+                            tempProducts = tempProducts.Where(p => p.MinAge >= ageFilter.Min.Value);
+                        }
+
+                        if (ageFilter.Max.HasValue && ageFilter.Max.Value != 0)
+                        {
+                            tempProducts = tempProducts.Where(p => p.MinAge <= ageFilter.Max.Value);
+                        }
+
+                        ageFilteredProducts.AddRange(tempProducts);
+                    }
+
+                    products = ageFilteredProducts.Distinct().ToList();
                 }
             }
 
-            if (filterRequest.PlayersAmount != null)
+            if (filterRequest.PlayersAmount != null && filterRequest.PlayersAmount.Any())
             {
-                if (filterRequest.PlayersAmount.Min.HasValue && filterRequest.PlayersAmount.Min.Value != 0)
+                var playerRanges = filterRequest.PlayersAmount.Where(p => (p.Min.HasValue && p.Min.Value != 0) || (p.Max.HasValue && p.Max.Value != 0)).ToList();
+
+                if (playerRanges.Any())
                 {
-                    products = products.Where(p => p.MinPlayers >= filterRequest.PlayersAmount.Min.Value);
-                }
-                if (filterRequest.PlayersAmount.Max.HasValue && filterRequest.PlayersAmount.Max.Value != 0)
-                {
-                    products = products.Where(p => p.MaxPlayers <= filterRequest.PlayersAmount.Max.Value);
+                    var playerFilteredProducts = new List<ProductFullDTO>();
+
+                    foreach (var playersFilter in playerRanges)
+                    {
+                        var tempProducts = products;
+
+                        if (playersFilter.Min.HasValue && playersFilter.Min.Value != 0)
+                        {
+                            tempProducts = tempProducts.Where(p => p.MinPlayers >= playersFilter.Min.Value);
+                        }
+
+                        if (playersFilter.Max.HasValue && playersFilter.Max.Value != 0)
+                        {
+                            tempProducts = tempProducts.Where(p => p.MaxPlayers <= playersFilter.Max.Value);
+                        }
+
+                        playerFilteredProducts.AddRange(tempProducts);
+                    }
+
+                    products = playerFilteredProducts.Distinct().ToList();
                 }
             }
 
-            if (filterRequest.Price != null)
+            if (filterRequest.Price != null && filterRequest.Price.Any())
             {
-                if (filterRequest.Price.Min.HasValue && filterRequest.Price.Min.Value != 0)
+                var priceRanges = filterRequest.Price.Where(p => (p.Min.HasValue && p.Min.Value != 0) || (p.Max.HasValue && p.Max.Value != 0)).ToList();
+
+                if (priceRanges.Any())
                 {
-                    products = products.Where(p => p.Price >= filterRequest.Price.Min.Value);
-                }
-                if (filterRequest.Price.Max.HasValue && filterRequest.Price.Max.Value != 0)
-                {
-                    products = products.Where(p => p.Price <= filterRequest.Price.Max.Value);
+                    var priceFilteredProducts = new List<ProductFullDTO>();
+
+                    foreach (var priceFilter in priceRanges)
+                    {
+                        var tempProducts = products;
+
+                        if (priceFilter.Min.HasValue && priceFilter.Min.Value != 0)
+                        {
+                            tempProducts = tempProducts.Where(p => p.Price >= priceFilter.Min.Value);
+                        }
+
+                        if (priceFilter.Max.HasValue && priceFilter.Max.Value != 0)
+                        {
+                            tempProducts = tempProducts.Where(p => p.Price <= priceFilter.Max.Value);
+                        }
+
+                        priceFilteredProducts.AddRange(tempProducts);
+                    }
+
+                    products = priceFilteredProducts.Distinct().ToList();
                 }
             }
 
-            if (filterRequest.GameTime != null)
+            if (filterRequest.GameTime != null && filterRequest.GameTime.Any())
             {
-                if (filterRequest.GameTime.Min.HasValue && filterRequest.GameTime.Min.Value != 0)
+                var gameTimeRanges = filterRequest.GameTime.Where(g => (g.Min.HasValue && g.Min.Value != 0) || (g.Max.HasValue && g.Max.Value != 0)).ToList();
+
+                if (gameTimeRanges.Any())
                 {
-                    products = products.Where(p => p.MinGameTimeMinutes >= filterRequest.GameTime.Min.Value);
-                }
-                if (filterRequest.GameTime.Max.HasValue && filterRequest.GameTime.Max.Value != 0)
-                {
-                    products = products.Where(p => p.MaxGameTimeMinutes <= filterRequest.GameTime.Max.Value);
+                    var gameTimeFilteredProducts = new List<ProductFullDTO>();
+
+                    foreach (var gameTimeFilter in gameTimeRanges)
+                    {
+                        var tempProducts = products;
+
+                        if (gameTimeFilter.Min.HasValue && gameTimeFilter.Min.Value != 0)
+                        {
+                            tempProducts = tempProducts.Where(p => p.MinGameTimeMinutes >= gameTimeFilter.Min.Value);
+                        }
+
+                        if (gameTimeFilter.Max.HasValue && gameTimeFilter.Max.Value != 0)
+                        {
+                            tempProducts = tempProducts.Where(p => p.MaxGameTimeMinutes <= gameTimeFilter.Max.Value);
+                        }
+
+                        gameTimeFilteredProducts.AddRange(tempProducts);
+                    }
+
+                    products = gameTimeFilteredProducts.Distinct().ToList();
                 }
             }
 

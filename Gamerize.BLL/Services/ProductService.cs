@@ -218,7 +218,7 @@ namespace Gamerize.BLL.Services
             }
         }
 
-        public async Task<IEnumerable<ProductFullDTO>> GetProductsWithBiggestDiscountAsync(int count = 10)
+        public async Task<IEnumerable<object>> GetProductsWithBiggestDiscountAsync(int count = 10)
         {
             try
             {
@@ -237,15 +237,20 @@ namespace Gamerize.BLL.Services
                     .Select(p => new
                     {
                         Product = p,
-                        BiggestDiscount = p.Discounts.Any() ? p.Discounts.Max(d => d.CurrentDiscount) : 0
+                        BiggestDiscount = p.Discounts.Any() ? p.Discounts.Max(d => d.CurrentDiscount) : 0,
+                        NewPrice = p.Discounts.Any() ? p.Price * (decimal)(1 - p.Discounts.Max(d => d.CurrentDiscount)) : p.Price
                     })
                     .OrderByDescending(p => p.BiggestDiscount)
                     .ThenBy(p => p.Product.Name)
-                    .Take(count) 
+                    .Take(count)
                     .ToListAsync();
 
                 var result = productsWithDiscounts
-                    .Select(p => _mapper.Map<ProductFullDTO>(p.Product))
+                    .Select(p => new
+                    {
+                        Product = _mapper.Map<ProductFullDTO>(p.Product),
+                        NewPrice = p.NewPrice
+                    })
                     .ToList();
 
                 return result;

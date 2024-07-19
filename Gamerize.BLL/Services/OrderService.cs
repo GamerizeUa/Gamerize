@@ -259,10 +259,17 @@ namespace Gamerize.BLL.Services
                 if (createOrderDTO.DiscountCouponId.HasValue)
                 {
                     var discountCoupon = await _couponRepository.GetByIdAsync(createOrderDTO.DiscountCouponId.Value);
-                    if (discountCoupon != null && discountCoupon.ActiveFrom <= DateTime.Now && (!discountCoupon.ActiveTo.HasValue || discountCoupon.ActiveTo.Value >= DateTime.Now))
+                    if (discountCoupon != null)
                     {
-                        var discountAmount = totalPrice * (decimal)discountCoupon.Discount / 100;
-                        totalPrice -= discountAmount;
+                        if (discountCoupon.ActiveFrom <= DateTime.Now && (!discountCoupon.ActiveTo.HasValue || discountCoupon.ActiveTo.Value >= DateTime.Now))
+                        {
+                            var discountAmount = totalPrice * (decimal)discountCoupon.Discount / 100;
+                            totalPrice -= discountAmount;
+                        }
+                        else
+                        {
+                            throw new Exception("The discount coupon has expired or is not yet active.");
+                        }
                     }
                 }
 
