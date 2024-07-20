@@ -9,12 +9,16 @@ import {fetchProducts} from "../../redux/productsCatalogSlice.js";
 import {useDispatch, useSelector} from "react-redux";
 import ProductCardList from "../../components/common-components/ProductCardList/ProductCardList.jsx";
 import handleLinkClick from "../../helpers/ScrollToTop.js";
+import useWindowWidth from "../../components/hooks/useWindowWidth.js";
+import {CatalogMobileTabs} from "../../components/Catalog/CatalogMobileTabs/CatalogMobileTabs.jsx";
 
 const Catalog = () => {
   const {products, totalPages, page, pageSize, loading } = useSelector((state) => state.productsCatalog);
   const dispatch = useDispatch();
   const [productsLimitOnPage, setProductsLimitOnPage] = useState(12);
   const [chosenDisplaying, setChosenDisplaying] = useState({displayingThree: true, displayingFour: false});
+  const windowWidth = useWindowWidth();
+
   const displayingThreeProductsInRow = {
     oneLineDesktopCardsAmount: 3,
     oneLineTabletCardsAmount: 3,
@@ -36,6 +40,12 @@ const Catalog = () => {
   useEffect(() => {
     dispatch(fetchProducts({page, pageSize}));
   }, [dispatch, page, pageSize]);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+    });
+  }, []);
 
   useEffect(() => {
     if(chosenDisplaying.displayingThree){
@@ -62,11 +72,16 @@ const Catalog = () => {
               <p className={styles.catalog_pageTitle}>Каталог</p>
             </div>
             <div className={styles.catalog_mainContainer}>
+              {windowWidth >= 1280 &&
               <div className={styles.catalog_filters}>
                 <CatalogFilters/>
               </div>
+              }
               <div className={styles.catalog_displaying}>
-                <CatalogSorting setChosenDisplaying={setChosenDisplaying} />
+                {windowWidth >= 1280 ?
+                <CatalogSorting setChosenDisplaying={setChosenDisplaying} /> :
+                    <CatalogMobileTabs setChosenDisplaying={setChosenDisplaying}/>
+                }
                 {loading ? <p className={styles.catalog_empty}>Завантаження товарів ...</p> : ''}
                 <div className={styles.catalog_products}>
                   <ProductCardList productCardList={products}

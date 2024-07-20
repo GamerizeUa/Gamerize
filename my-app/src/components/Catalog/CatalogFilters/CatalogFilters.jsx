@@ -4,23 +4,29 @@ import React, {useEffect, useState} from "react";
 import {arrayProducts} from '../../../pages/Catalog/test.js';
 import {useDispatch, useSelector} from "react-redux";
 import {DropdownFilters} from "./DropdownFilters.jsx";
-import {selectCategories, selectGenres, selectThemes, selectPuzzles, selectMindGames} from "../../../redux/selectors.js";
+import {
+    selectCategories,
+    selectGenres,
+    selectThemes,
+    selectPuzzles,
+    selectMindGames,
+    selectLanguages
+} from "../../../redux/selectors.js";
 import {useLocation} from "react-router-dom";
 
 export  const CatalogFilters = () => {
     const age = ["3 - 6", "6 - 9", "9 - 12", "12 - 18", "18+"];
     const players = ["1 - 3", "4 - 6", "більше 6"];
     const timeGame = ["15 - 30", "40 - 60", "70 - 90", "115 - 180", "240"];
-    const languages = ["Українська", "Англійська", "Іспанська"];
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [selectedThemes, setSelectedThemes] = useState([]);
     const [selectedPuzzles, setSelectedPuzzles] = useState([]);
     const [selectedMindGames, setSelectedMindGames] = useState([]);
-    const [priceRange, setPriceRange] = useState({ min: '', max: '' });
-    const [selectedAges, setSelectedAges] = useState([]);
-    const [selectedPlayersAmount, setSelectedPlayersAmount] = useState([]);
-    const [selectedGameTimes, setSelectedGameTimes] = useState([]);
+    const [priceRange, setPriceRange] = useState({ min: 0, max: 0 });
+    const [selectedAges, setSelectedAges] = useState({ min: 0, max: 0 });
+    const [selectedPlayersAmount, setSelectedPlayersAmount] = useState({ min: 0, max: 0 });
+    const [selectedGameTimes, setSelectedGameTimes] = useState({ min: 0, max: 0 });
     const [selectedLanguages, setSelectedLanguages] = useState([]);
     const [isReadyForResetting, setIsReadyForResetting] = useState(false);
     const dispatch = useDispatch();
@@ -29,8 +35,8 @@ export  const CatalogFilters = () => {
     const themes = useSelector(selectThemes);
     const puzzles = useSelector(selectPuzzles);
     const mindGames = useSelector(selectMindGames);
+    const languages = useSelector(selectLanguages);
     const location = useLocation();
-
 
     const handlePriceInputChange = (event, type) => {
         event.target.value = event.target.value.replace(/[^0-9]/g, '');
@@ -99,6 +105,7 @@ export  const CatalogFilters = () => {
             gameTimes: selectedGameTimes,
             languages: selectedLanguages,
         };
+        console.log(filters)
         const products = arrayProducts();
         const result = filterProducts(products,filters);
     };

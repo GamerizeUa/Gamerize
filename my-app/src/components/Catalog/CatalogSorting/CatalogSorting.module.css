@@ -1,8 +1,5 @@
 .catalogSorting_options{
-    display: flex;
-    justify-content: flex-end;
-    gap: 23px;
-    height: 44px;
+    width: 50%;
 }
 
 .catalogSorting_toSort{
@@ -10,40 +7,31 @@
     justify-content: center;
     align-items: center;
     position: relative;
-}
-
-.catalogSorting_options span{
-    color: #000;
-    text-align: center;
-    font-family: "Noto Sans";
-    font-size: 16px;
-    font-weight: 400;
-    padding-right: 11px;
+    max-width: 200px;
 }
 
 .catalogSorting_sorting{
-    border-radius: 10px;
-    border: 1px solid #AAC4FF;
+    border: 1px solid #686868;
     background: #FEFEFE;
-    color: #2B2B2B;
+    color: #686868;
     font-family: "Noto Sans";
     font-size: 12px;
-    font-weight: 500;
-    padding: 10px 16px;
+    font-weight: 400;
+    padding: 8px 8px;
     display: flex;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    width: 162px;
     height: 44px;
 }
 
 .catalogSorting_sortingOptions{
     border-radius: 0 0 10px 10px;
-    border: 1px solid #AAC4FF;
+    border: 1px solid #686868;
     background: #FEFEFE;
     border-top: none;
-    width: 162px;
+    width: 100%;
     height: 156px;
     display: flex;
     flex-direction: column;
@@ -72,30 +60,88 @@
     transform: rotate(180deg);
 }
 
-.catalogSorting_displaying{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+@media screen and (min-width: 744px){
+    .catalogSorting_options{
+        width: 150px;
+    }
+
+    .catalogSorting_sorting{
+        border: 1px solid #AAC4FF;
+        border-radius: 10px;
+    }
+
+    .catalogSorting_sortingOptions{
+        border: 1px solid #AAC4FF;
+        border-top: none;
+    }
 }
 
-.catalogSorting_icons{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
+@media screen and (min-width: 1280px){
+    .catalogSorting_options{
+        display: flex;
+        justify-content: flex-end;
+        gap: 23px;
+        height: 44px;
+        width: auto;
+    }
 
-.catalogSorting_icon{
-    cursor: pointer;
-}
+    .catalogSorting_toSort{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        max-width: none;
+        width: auto;
+    }
 
-.catalogSorting_icons svg:hover, .catalogSorting_icons svg:hover path{
-    fill: #6566AC;
-    stroke: #6566AC;
-    cursor: pointer;
-}
+    .catalogSorting_options span{
+        color: #000;
+        text-align: center;
+        font-family: "Noto Sans";
+        font-size: 16px;
+        font-weight: 400;
+        padding-right: 11px;
+    }
 
-.active, .active path{
-    fill: #6566AC;
-    stroke: #6566AC;
+    .catalogSorting_sorting{
+        background: #FEFEFE;
+        color: #2B2B2B;
+        font-family: "Noto Sans";
+        font-size: 12px;
+        font-weight: 500;
+        padding: 10px 16px;
+        width: 162px;
+    }
+
+    .catalogSorting_sortingOptions{
+        width: 162px;
+    }
+
+    .catalogSorting_displaying{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .catalogSorting_icons{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .catalogSorting_icon{
+        cursor: pointer;
+    }
+
+    .catalogSorting_icons svg:hover, .catalogSorting_icons svg:hover path{
+        fill: #6566AC;
+        stroke: #6566AC;
+        cursor: pointer;
+    }
+
+    .active, .active path{
+        fill: #6566AC;
+        stroke: #6566AC;
+    }
 }

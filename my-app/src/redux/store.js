@@ -18,6 +18,7 @@ import productsCatalogReducer from './productsCatalogSlice.js';
 import { wishListReducer } from './wishListSlice.js';
 import { puzzlesReducer } from './categories/puzzlesSlice.js';
 import { mindGamesReducer } from './categories/mindGamesSlice.js';
+import { languagesReducer } from './categories/languagesSlice.js';
 import cartSlice from './cartSlice.js';
 import discountReducer from './discountSlice';
 import viewsHistorySlice from './viewsHistory.js';
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
     themes: themesReducer,
     puzzles: puzzlesReducer,
     mindGames: mindGamesReducer,
+    languages: languagesReducer,
     translationTab: translationTabReducer,
     productsCatalog: productsCatalogReducer,
     wishList: wishListReducer,
