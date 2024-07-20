@@ -1,0 +1,8 @@
+.feedback_border {
+    border-bottom: 1px solid var(--dark-purple);
+}
+
+.pagination_btn_group {
+    display: flex;
+    justify-content: center;
+}

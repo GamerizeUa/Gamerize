@@ -1,48 +1,43 @@
-.reviewFormSection {
-    padding-top: 32px;
-    margin-block-end: 64px;
-}
-
-@media (min-width: 744px) {
-    .reviewFormBloc {
-        padding-top: 64px;
-    }
-}
-@media (min-width: 1440px) {
-    .reviewFormBloc {
-        padding-top: 56px;
-    }
-}
-
-.reviewFormBloc {
+.feedbackForm {
     background-color: var(--light-blue-gray);
     padding: 32px;
+    margin-block: 32px 64px;
 }
-@media (min-width: 1280px) {
-    .reviewFormBloc {
+
+@media (width >= 744px) {
+    .feedbackForm {
+        padding-block: 64px;
+        margin-block-start: 64px;
+    }
+}
+
+@media (width >= 1280px) {
+    .feedbackForm {
         border-radius: 10px;
     }
 }
 
-.reviewFormTitle {
+@media (width >= 1440px) {
+    .feedbackForm {
+        padding-block: 56px;
+    }
+}
+
+.feedbackFormTitle {
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 40px;
 }
-@media (min-width: 1280px) {
-    .reviewFormTitle {
+
+@media (width >= 1280px) {
+    .feedbackFormTitle {
         font-size: 20px;
         font-weight: 700;
     }
 }
 
-.reviewFormText {
+.feedbackFormText {
     font-size: 14px;
-}
-@media (min-width: 1280px) {
-    .reviewFormTitle {
-        font-size: 16px;
-    }
 }
 
 .rating {
@@ -50,15 +45,16 @@
     margin-top: 17px;
     margin-bottom: 40px;
 }
-@media (min-width: 744px) {
+
+@media (width >= 744px) {
     .rating {
         margin-bottom: 26px;
     }
 }
-@media (min-width: 1280px) {
+
+@media (width >= 1280px) {
     .rating {
         margin-top: 16px;
-        margin-bottom: 26px;
     }
 }
 
@@ -84,21 +80,21 @@
     min-height: 185px;
     width: 100%;
     height: 100%;
-    padding-top: 19px;
-    padding-left: 22px;
+    padding: 19px 0px 0px 22px;
     border-radius: 10px;
     border: 1px solid #8e8e8e;
     font-size: 14px;
+    margin-top: 20px;
 }
 
-@media (min-width: 744px) {
+@media (width >= 744px) {
     .textarea {
         min-height: 250px;
         margin-top: 25px;
     }
 }
 
-@media (min-width: 1280px) {
+@media (width >= 1280px) {
     .textarea {
         margin-top: 24px;
     }
@@ -117,7 +113,7 @@
     color: rgb(183, 60, 60);
 }
 
-.reviewFormBtn {
+.feedbackFormBtn {
     width: 225px;
     height: 53px;
     font-size: 16px;
@@ -128,8 +124,8 @@
         0 1px 2px 0 rgba(0, 0, 0, 0.3);
 }
 
-.reviewFormBtn:hover,
-.reviewFormBtn:focus,
-.reviewFormBtn:active {
+.feedbackFormBtn:hover,
+.feedbackFormBtn:focus,
+.feedbackFormBtn:active {
     background-color: var(--dark-blue);
 }
