@@ -1,24 +1,24 @@
 import { useContext } from 'react';
+import { ProductContext } from '../Product';
 import RateStars from '../RateStars/RateStars';
 import ProductDetailedRateString from './ProductDetailedRateString';
 import styles from './ProductRating.module.css';
-import { ProductContext } from '../Product';
 
 const getRatingFromFeedbacks = (feedbacks) => {
     if (feedbacks.length === 0) return 0;
 
-    let ratings = 0;
+    let rates = 0;
 
     for (let feedback of feedbacks) {
-        ratings += feedback.rate;
+        rates += feedback.rate;
     }
-    return Math.round(ratings / feedbacks.length);
+    return Math.round(rates / feedbacks.length);
 };
 
-const getStarsAmount = (ratings) => {
+const getStarsAmount = (rates) => {
     const amount = {};
 
-    for (const rate of ratings) {
+    for (const rate of rates) {
         amount[rate] = amount[rate] ? amount[rate] + 1 : 1;
     }
 
@@ -27,6 +27,7 @@ const getStarsAmount = (ratings) => {
 
 const getStarsAmountsInPercents = (amount) => {
     const percents = {};
+
     const sum = Object.values(amount).reduce(
         (sum, current) => sum + current,
         0
@@ -55,49 +56,34 @@ const getStarsAmountsInPercents = (amount) => {
 
 export default function ProductRating() {
     const { feedbacks } = useContext(ProductContext);
-    const rate = getRatingFromFeedbacks(feedbacks);
-    let starsAmounts = getStarsAmount(
+    const rating = getRatingFromFeedbacks(feedbacks);
+    let starsAmount = getStarsAmount(
         feedbacks.map((feedback) => feedback.rate)
     );
-    let starsAmountsInPercents = getStarsAmountsInPercents(starsAmounts);
+    let starsAmountsInPercents = getStarsAmountsInPercents(starsAmount);
+
+    const renderRateString = (rate, index) => (
+        <ProductDetailedRateString
+            filledStarsAmount={rate}
+            starsAmount={starsAmount[rate]}
+            starsAmountInPercents={starsAmountsInPercents[rate]}
+            key={index}
+        />
+    );
 
     return (
         <section className={styles.wrap}>
-            <div className={styles.container + ' container'}>
-                <p className={styles.title}>Відгуки</p>
+            <div className={styles.container}>
+                <h2 className={styles.title}>Відгуки</h2>
                 <div className={styles.body}>
                     <div className={styles.overall_rate}>
-                        <p className={styles.overall_digit}>{rate}</p>
+                        <p className={styles.overall_digit}>{rating}</p>
                         <div className={styles.overall_stars_container}>
-                            <RateStars filledStarsAmount={Math.round(rate)} />
+                            <RateStars filledStarsAmount={Math.round(rating)} />
                         </div>
                     </div>
                     <div className={styles.detailed_rate}>
-                        <ProductDetailedRateString
-                            filledStarsAmount={5}
-                            starsAmount={starsAmounts[5]}
-                            starsAmountInPercents={starsAmountsInPercents[5]}
-                        />
-                        <ProductDetailedRateString
-                            filledStarsAmount={4}
-                            starsAmount={starsAmounts[4]}
-                            starsAmountInPercents={starsAmountsInPercents[4]}
-                        />
-                        <ProductDetailedRateString
-                            filledStarsAmount={3}
-                            starsAmount={starsAmounts[3]}
-                            starsAmountInPercents={starsAmountsInPercents[3]}
-                        />
-                        <ProductDetailedRateString
-                            filledStarsAmount={2}
-                            starsAmount={starsAmounts[2]}
-                            starsAmountInPercents={starsAmountsInPercents[2]}
-                        />
-                        <ProductDetailedRateString
-                            filledStarsAmount={1}
-                            starsAmount={starsAmounts[1]}
-                            starsAmountInPercents={starsAmountsInPercents[1]}
-                        />
+                        {[5, 4, 3, 2, 1].map(renderRateString)}
                     </div>
                 </div>
             </div>

@@ -18,7 +18,6 @@ import productsCatalogReducer from './productsCatalogSlice.js';
 import { wishListReducer } from './wishListSlice.js';
 import { puzzlesReducer } from './categories/puzzlesSlice.js';
 import { mindGamesReducer } from './categories/mindGamesSlice.js';
-import { reviewsReducer } from './reviewsSlice.js';
 import cartSlice from './cartSlice.js';
 import discountReducer from './discountSlice';
 import viewsHistorySlice from './viewsHistory.js';
@@ -38,7 +37,6 @@ const rootReducer = combineReducers({
     translationTab: translationTabReducer,
     productsCatalog: productsCatalogReducer,
     wishList: wishListReducer,
-    reviews: reviewsReducer,
     cart: cartSlice,
     views: viewsHistorySlice,
     discount: discountReducer,

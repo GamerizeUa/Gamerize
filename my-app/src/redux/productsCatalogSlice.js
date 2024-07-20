@@ -1,14 +1,34 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import axios from "axios";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 export const fetchProducts = createAsyncThunk(
     'productsCatalog/fetchProducts',
-    async ({page, pageSize}, { rejectWithValue }) => {
+    async ({ page, pageSize }, { rejectWithValue }) => {
         try {
-            const response = await axios.post('https://gamerize.ltd.ua/api/Product/GetSimpleList', {},{
-                params: { page, pageSize},
-            });
+            const response = await axios.post(
+                'https://gamerize.ltd.ua/api/Product/GetSimpleList',
+                {},
+                {
+                    params: { page, pageSize },
+                }
+            );
             return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
+export const addFeedback = createAsyncThunk(
+    'productsCatalog/addFeedback',
+    async (feedback, { rejectWithValue }) => {
+        try {
+            await axios.post(
+                'https://gamerize.ltd.ua/api/Feedback/Create',
+                feedback
+            );
+
+            return feedback;
         } catch (error) {
             return rejectWithValue(error.response.data);
         }
@@ -22,10 +42,10 @@ const initialState = {
     filters: {},
     page: 1,
     pageSize: 12,
-}
+};
 
 export const productsCatalogSlice = createSlice({
-    name: "productsCatalog",
+    name: 'productsCatalog',
     initialState,
     reducers: {
         setPage: (state, action) => {
@@ -41,17 +61,32 @@ export const productsCatalogSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
+            .addCase(addFeedback.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
             .addCase(fetchProducts.fulfilled, (state, action) => {
                 state.loading = false;
                 state.products = action.payload.products;
-                state.totalPages = action.payload.totalPages
+                state.totalPages = action.payload.totalPages;
+            })
+            .addCase(addFeedback.fulfilled, (state, action) => {
+                state.loading = false;
+                const productToUpdate = state.products.find(
+                    (product) => product.id == action.payload.productId
+                );
+                productToUpdate.feedbacks.push(action.payload);
             })
             .addCase(fetchProducts.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+            .addCase(addFeedback.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             });
     },
 });
 
-export const {setPage, setFilters} = productsCatalogSlice.actions;
+export const { setPage, setFilters } = productsCatalogSlice.actions;
 export default productsCatalogSlice.reducer;

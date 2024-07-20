@@ -30,8 +30,8 @@ const ProductPage = () => {
             <Product.Overview />
             <Product.Details />
             <Product.Rating />
-            <Product.ReviewList />
-            <Product.ReviewForm />
+            <Product.FeedbackList />
+            <Product.FeedbackForm />
             <Product.RecentlyViewed />
         </Product>
     );
