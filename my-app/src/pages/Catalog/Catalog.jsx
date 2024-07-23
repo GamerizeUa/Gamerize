@@ -13,7 +13,7 @@ import useWindowWidth from "../../components/hooks/useWindowWidth.js";
 import {CatalogMobileTabs} from "../../components/Catalog/CatalogMobileTabs/CatalogMobileTabs.jsx";
 
 const Catalog = () => {
-  const {products, totalPages, page, pageSize, loading } = useSelector((state) => state.productsCatalog);
+  const {products, totalPages, page, pageSize, loading, filters } = useSelector((state) => state.productsCatalog);
   const dispatch = useDispatch();
   const [productsLimitOnPage, setProductsLimitOnPage] = useState(12);
   const [chosenDisplaying, setChosenDisplaying] = useState({displayingThree: true, displayingFour: false});
@@ -38,8 +38,8 @@ const Catalog = () => {
   const [configurationObj, setConfigurationObj] = useState(displayingThreeProductsInRow)
 
   useEffect(() => {
-    dispatch(fetchProducts({page, pageSize}));
-  }, [dispatch, page, pageSize]);
+    dispatch(fetchProducts({page, pageSize, filters}));
+  }, [dispatch, page, pageSize, filters]);
 
   useEffect(() => {
     window.scrollTo({

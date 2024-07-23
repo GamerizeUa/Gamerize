@@ -1,7 +1,5 @@
 import styles from "./CatalogFilters.module.css";
-import {filterProducts} from './filters.js';
 import React, {useEffect, useState} from "react";
-import {arrayProducts} from '../../../pages/Catalog/test.js';
 import {useDispatch, useSelector} from "react-redux";
 import {DropdownFilters} from "./DropdownFilters.jsx";
 import {
@@ -13,6 +11,8 @@ import {
     selectLanguages
 } from "../../../redux/selectors.js";
 import {useLocation} from "react-router-dom";
+import {fetchProducts, setFilters} from "../../../redux/productsCatalogSlice.js";
+import handleLinkClick from "../../../helpers/ScrollToTop.js";
 
 export  const CatalogFilters = () => {
     const age = ["3 - 6", "6 - 9", "9 - 12", "12 - 18", "18+"];
@@ -23,10 +23,10 @@ export  const CatalogFilters = () => {
     const [selectedThemes, setSelectedThemes] = useState([]);
     const [selectedPuzzles, setSelectedPuzzles] = useState([]);
     const [selectedMindGames, setSelectedMindGames] = useState([]);
-    const [priceRange, setPriceRange] = useState({ min: 0, max: 0 });
-    const [selectedAges, setSelectedAges] = useState({ min: 0, max: 0 });
-    const [selectedPlayersAmount, setSelectedPlayersAmount] = useState({ min: 0, max: 0 });
-    const [selectedGameTimes, setSelectedGameTimes] = useState({ min: 0, max: 0 });
+    const [priceRange, setPriceRange] = useState([{ min: 0, max: 0 }]);
+    const [selectedAges, setSelectedAges] = useState([]);
+    const [selectedPlayersAmount, setSelectedPlayersAmount] = useState([]);
+    const [selectedGameTimes, setSelectedGameTimes] = useState([]);
     const [selectedLanguages, setSelectedLanguages] = useState([]);
     const [isReadyForResetting, setIsReadyForResetting] = useState(false);
     const dispatch = useDispatch();
@@ -39,11 +39,11 @@ export  const CatalogFilters = () => {
     const location = useLocation();
 
     const handlePriceInputChange = (event, type) => {
-        event.target.value = event.target.value.replace(/[^0-9]/g, '');
-        setPriceRange((prevRange) => ({
-            ...prevRange,
-            [type]: event.target.value ,
-        }));
+        const value = event.target.value.replace(/[^0-9]/g, '');
+        setPriceRange((prevRange) => [{
+            ...prevRange[0],
+            [type]: value ? parseInt(value, 10) : 0,
+        }]);
     };
 
     useEffect(() => {
@@ -102,12 +102,10 @@ export  const CatalogFilters = () => {
             price: priceRange,
             ages: selectedAges,
             playersAmount: selectedPlayersAmount,
-            gameTimes: selectedGameTimes,
+            gameTime: selectedGameTimes,
             languages: selectedLanguages,
         };
-        console.log(filters)
-        const products = arrayProducts();
-        const result = filterProducts(products,filters);
+        dispatch(setFilters(filters))
     };
 
     const handleResetFilters = () => {
@@ -116,7 +114,7 @@ export  const CatalogFilters = () => {
         setSelectedThemes([]);
         setSelectedPuzzles([]);
         setSelectedMindGames([]);
-        setPriceRange({min: '', max: ''})
+        setPriceRange([{min: 0, max: 0}])
         setSelectedAges([]);
         setSelectedPlayersAmount([]);
         setSelectedGameTimes([]);
@@ -206,7 +204,7 @@ export  const CatalogFilters = () => {
                              selectedCategories={selectedLanguages}
                              setSelectedCategories={setSelectedLanguages}>
             </DropdownFilters>
-            <div className={styles.filters_buttons}>
+            <div className={styles.filters_buttons} onClick={handleLinkClick}>
                 <button className={styles.button_apply} type="submit" onClick={getSelectedFilters}>Застосувати</button>
                 <button className={styles.button_reset} onClick={handleResetFilters}>Скинути фільтри</button>
             </div>

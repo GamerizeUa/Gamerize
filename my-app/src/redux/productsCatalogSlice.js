@@ -3,11 +3,11 @@ import axios from 'axios';
 
 export const fetchProducts = createAsyncThunk(
     'productsCatalog/fetchProducts',
-    async ({ page, pageSize }, { rejectWithValue }) => {
+    async ({ page, pageSize, filters}, { rejectWithValue }) => {
         try {
             const response = await axios.post(
                 'https://gamerize.ltd.ua/api/Product/GetSimpleList',
-                {},
+                filters,
                 {
                     params: { page, pageSize },
                 }
