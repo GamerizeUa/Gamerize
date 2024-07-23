@@ -1,61 +1,85 @@
 import axios from "axios";
 import { createAppSlice } from "./createAppSlice";
 
-axios.defaults.baseURL = "https://gamerize.ltd.ua/api/Product/";
+axios.defaults.baseURL = "https://gamerize.ltd.ua/";
 
 const initialState = {
-  statusOfPopular: "loading",
-  statusOfWithDiscount: "loading",
-  popularProducts: [],
-  productsWithDiscount: [],
+    statusOfPopular: "loading",
+    statusOfWithDiscount: "loading",
+    popularProducts: [],
+    productsWithDiscount: [],
 };
 
-const reviewsSlice = createAppSlice({
-  name: "homeCarouselProducts",
-  initialState,
-  reducers: (create) => ({
-    getPopularAsync: create.asyncThunk(
-      async ({ count }) => {
-        const response = await axios.get(
-          `GetPopularProducts`,
-          {
-            params: {
-              count,
+const carouselProductsSlice = createAppSlice({
+    name: "homeCarouselProducts",
+    initialState,
+    reducers: (create) => ({
+        getPopularAsync: create.asyncThunk(
+            async (count) => {
+                const response = await axios.get(`/api/Product/GetPopularProducts`, {
+                    params: {
+                        count,
+                    },
+                });
+                return {
+                    products: response.data,
+                };
             },
-          }
-        );
-        console.log(response.data);
-        return {
-          products: response.data,
-        };
-      },
-      {
-        pending: (state) => {
-          state.popularStatus = "loading";
-        },
-        fulfilled: (state, action) => {
-            state.statusOfPopular = "fulfilled";
-            state.popularProducts = action.payload.products;
-            console.log(action.payload.products);
-        },
-        rejected: (state) => {
-          state.popularStatus = "failed";
-        },
-      }
-    ),
-  }),
-  selectors: {
-    selectPopularProducts: (state) => state.popularProducts,
-    selectProductsWithDiscount: (state) => state.productsWithDiscount,
-  },
+            {
+                pending: (state) => {
+                    state.statusOfPopular = "loading";
+                },
+                fulfilled: (state, action) => {
+                    state.statusOfPopular = "fulfilled";
+                    state.popularProducts = action.payload.products;
+                },
+                rejected: (state) => {
+                    state.statusOfPopular = "failed";
+                },
+            }
+        ),
+        getWithDiscountAsync: create.asyncThunk(
+            async (count) => {
+                const response = await axios.get(
+                    `/api/Product/GetProductsWithBiggestDiscount`,
+                    {
+                        params: {
+                            count,
+                        },
+                    }
+                );
+                return {
+                    data: response.data,
+                };
+            },
+            {
+                pending: (state) => {
+                    state.statusOfWithDiscount = "loading";
+                },
+                fulfilled: (state, action) => {
+                    state.statusOfWithDiscount = "fulfilled";
+                    state.productsWithDiscount = action.payload.data.map(
+                        ({ product, newPrice }) => {
+                            product.newPrice = newPrice;
+                            return product;
+                        }
+                    );
+                },
+                rejected: (state) => {
+                    state.statusOfWithDiscount = "failed";
+                },
+            }
+        ),
+    }),
+    selectors: {
+        selectPopularProducts: (state) => state.popularProducts,
+        selectProductsWithDiscount: (state) => state.productsWithDiscount,
+    },
 });
 
-export const { getPopularAsync } =
-  reviewsSlice.actions;
+export const { getPopularAsync, getWithDiscountAsync } = carouselProductsSlice.actions;
 
-export const reviewsReducer = reviewsSlice.reducer;
+export const carouselProductsReducer = carouselProductsSlice.reducer;
 
-export const {
-    selectPopularProducts,
-    selectProductsWithDiscount,
-} = reviewsSlice.selectors;
+export const { selectPopularProducts, selectProductsWithDiscount } =
+    carouselProductsSlice.selectors;

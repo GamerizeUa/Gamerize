@@ -5,161 +5,33 @@ import { SelectionOfGames } from "../components/landing-page/SelectionOfGames/Se
 import { Banner } from "../components/landing-page/Banner/Banner.jsx";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPopularAsync, selectPopularProducts } from "../redux/homeCarouselProductsSlice.js";
+import { getPopularAsync, getWithDiscountAsync, selectPopularProducts } from "../redux/homeCarouselProductsSlice.js";
 
 const HomePage = () => {
     const dispatch = useDispatch();
-    //const popularProducts = useSelector(selectPopularProducts);
-    // productsList just for tests
+    const popularProducts = useSelector(({carouselProducts : {popularProducts}}) => popularProducts);
+    const productsWithDiscount = useSelector(({carouselProducts : {productsWithDiscount}}) => productsWithDiscount);
+    
     useEffect(() => {
         dispatch(getPopularAsync(10));
-        // dispatch(clearReviews());
+        dispatch(getWithDiscountAsync(10));
     }, []);
-    const productsList = [
-        {
-            id: 1,
-            discount: 20,
-            name: "Дюна імперіум1",
-            minPlayers: 4,
-            maxPlayers: 6,
-            minAge: 16,
-            price: 2250,
-            oldPrice: 2812,
-            gameTimeMinutes: 80,
-            photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
-        },
-        {
-            id: 2,
-            discount: 20,
-            name: "Дюна імперіум2",
-            minPlayers: 4,
-            maxPlayers: null,
-            minAge: 16,
-            price: 2250,
-            oldPrice: 2812,
-            gameTimeMinutes: 80,
-            photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
-        },
-        {
-            id: 3,
-            discount: 20,
-            name: "Дюна імперіум3",
-            minPlayers: 4,
-            maxPlayers: 6,
-            minAge: 16,
-            price: 2250,
-            oldPrice: 2812,
-            gameTimeMinutes: 80,
-            photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
-        },
-        {
-            id: 4,
-            discount: 20,
-            name: "Дюна імперіум4",
-            minPlayers: 4,
-            maxPlayers: null,
-            minAge: 16,
-            price: 2250,
-            oldPrice: 2812,
-            gameTimeMinutes: 80,
-            photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
-        },
-        {
-            id: 5,
-            discount: 20,
-            name: "Дюна імперіум5",
-            minPlayers: 4,
-            maxPlayers: 6,
-            minAge: 16,
-            price: 2250,
-            oldPrice: 2812,
-            gameTimeMinutes: 80,
-            photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
-        },
-        {
-            id: 6,
-            discount: 20,
-            name: "Дюна імперіум6",
-            minPlayers: 4,
-            maxPlayers: 6,
-            minAge: 16,
-            price: 2250,
-            oldPrice: 2812,
-            gameTimeMinutes: 80,
-            photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
-        },
-        {
-            id: 7,
-            discount: 20,
-            name: "Дюна імперіум7",
-            minPlayers: 4,
-            maxPlayers: 6,
-            minAge: 16,
-            price: 2250,
-            oldPrice: 2812,
-            gameTimeMinutes: 80,
-            photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
-        },
-        {
-            id: 8,
-            discount: 20,
-            name: "Дюна імперіум8",
-            minPlayers: 4,
-            maxPlayers: null,
-            minAge: 16,
-            price: 2250,
-            oldPrice: 2812,
-            gameTimeMinutes: 80,
-            photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
-        },
-        {
-            id: 9,
-            discount: 20,
-            name: "Дюна імперіум9",
-            minPlayers: 4,
-            maxPlayers: 6,
-            minAge: 16,
-            price: 2250,
-            oldPrice: 2812,
-            gameTimeMinutes: 80,
-            photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
-        },
-        {
-            id: 10,
-            discount: 20,
-            name: "Дюна імперіум10",
-            minPlayers: 4,
-            maxPlayers: null,
-            minAge: 16,
-            price: 2250,
-            oldPrice: 2812,
-            gameTimeMinutes: 80,
-            photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
-        },
-        //{id : 21231, discount : 20, name : "Дюна імперіум", minPlayers : 4, maxPlayers : 6, minAge : 16 , price : 2250, oldPrice: 2812, gameTimeMinutes : 80, photo : "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png"},
-        //{id : 31241, discount : 20, name : "Дюна імперіум", minPlayers : 4, maxPlayers : 6, minAge : 16 , price : 2250, oldPrice: 2812, gameTimeMinutes : 80, photo : "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png"},
-        //{id : 41251, discount : 20, name : "Дюна імперіум", minPlayers : 4, maxPlayers : 6, minAge : 16 , price : 2250, oldPrice: 2812, gameTimeMinutes : 80, photo : "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png"},
-        //{id : 51261, discount : 20, name : "Дюна імперіум", minPlayers : 4, maxPlayers : 6, minAge : 16 , price : 2250, oldPrice: 2812, gameTimeMinutes : 80, photo : "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png"},
-    ];
-    // productsList just for tests
 
     return (
         <>
             <GamePicker />
             <ProductsCarousel
-                productsList={productsList}
+                productsList={popularProducts}
                 carouselTitle={"Популярні товари"}
                 productConfigurationObject={{
-                    isOldPrice: false,
                     isDiscount: false,
                     isCartView: false,
                 }}
             />
             <ProductsCarousel
-                productsList={productsList}
+                productsList={productsWithDiscount}
                 carouselTitle={"Розпродаж"}
                 productConfigurationObject={{
-                    isOldPrice: true,
                     isDiscount: true,
                     isCartView: false,
                 }}
