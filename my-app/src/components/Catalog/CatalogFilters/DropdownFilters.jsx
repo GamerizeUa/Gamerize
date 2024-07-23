@@ -3,18 +3,11 @@ import ArrowIconGallery from "../../ProductOverview/icons/ArrowGalleryIcon.jsx";
 import React, {useEffect, useState} from "react";
 import CheckIcon from "../../icons/CheckIcon.jsx";
 
-
 export const DropdownFilters = ({title, categories, selectedCategories, setSelectedCategories}) => {
     const[isCategoryVisible, setIsCategoryVisible] = useState(false);
 
     useEffect(() => {
         if (Array.isArray(selectedCategories) && selectedCategories.length !== 0) {
-            setIsCategoryVisible(true);
-        } else if (
-            !Array.isArray(selectedCategories) &&
-            selectedCategories &&
-            !Object.values(selectedCategories).every(value => value === 0 || '')
-        ) {
             setIsCategoryVisible(true);
         } else {
             setIsCategoryVisible(false);
@@ -25,31 +18,6 @@ export const DropdownFilters = ({title, categories, selectedCategories, setSelec
         setIsCategoryVisible(!isCategoryVisible);
     };
 
-    // const checkCategory = (categoryName, isCanDelete) => {
-    //     return selectedCategories.some(category => {
-    //         if (categoryName.includes('-') && !category.includes('-')) {
-    //             categoryName.replace(/\s/g, '')
-    //             const [minPlayers, maxPlayers] = categoryName.split('-').map(Number);
-    //             setSelectedCategories((prevRange) => ({
-    //                 ...prevRange,
-    //                 'min': minPlayers ,
-    //                 'max': maxPlayers ,
-    //             }));
-    //             // const result = Number(category) >= minPlayers && Number(category) <= maxPlayers;
-    //             // isCanDelete && result
-    //             //     ? setSelectedCategories(prevItems => prevItems.filter((i) => i !== category)) : '';
-    //             // return result;
-    //         }else if(categoryName.includes('-') && category.includes('-')){
-    //             const result = categoryName.replace(/\s/g, '') === category.replace(/\s/g, '')
-    //             isCanDelete && result
-    //                 ? setSelectedCategories(prevItems => prevItems.filter((i) => i !== category)) : '';
-    //             return result ;
-    //         }else{
-    //             return selectedCategories.includes(categoryName);
-    //         }
-    //     })
-    // }
-
     const handleCheckBoxChange = (arrayFunc, itemId, item) => {
         if(itemId){
             arrayFunc((prevItems) =>
@@ -59,38 +27,57 @@ export const DropdownFilters = ({title, categories, selectedCategories, setSelec
             )
         }else{
             if(item.includes('-')){
-                item.replace(/\s/g, '')
-                console.log(item);
-                const [minItem, maxItem] = item.split('-').map(Number);
-                console.log(minItem, maxItem);
-                setSelectedCategories((prevRange) => ({
-                    ...prevRange,
-                    // min: minItem,
-                    // max: minItem
-                    min: prevRange.min !== 0 ? Math.min(prevRange.min, minItem) : minItem,
-                    max: prevRange.max !== undefined ? Math.max(prevRange.max, maxItem) : maxItem,
-                }));
+                const newRange = separateRange(item);
+                setSelectedCategories((prevRanges) =>
+                    deleteOrAddCategory(prevRanges, newRange)
+                );
             }else{
-                const extractedNumber = item.match(/\d+/g);
-                setSelectedCategories((prevRange) => ({
-                    ...prevRange,
-                    'min': Number(extractedNumber) ,
-                    'max': ''
-                }));
+                const extractedNumber = Number(item.match(/\d+/g));
+                setSelectedCategories((prevRanges) =>
+                    deleteOrAddCategory(prevRanges, extractedNumber)
+                );
             }
         }
     }
 
+    const deleteOrAddCategory = (prevRanges, newItem) => {
+        let existingRangeIndex = -1;
+        if(typeof newItem === 'number'){
+            existingRangeIndex = prevRanges.findIndex(
+                (range) => range.min === newItem && range.max === 0
+            );
+        }else{
+            existingRangeIndex = prevRanges.findIndex(
+                (range) => range.min === newItem.min && range.max === newItem.max
+            );
+        }
+        if (existingRangeIndex >= 0) {
+            return prevRanges.filter((_, index) => index !== existingRangeIndex);
+        } else {
+            return[...prevRanges, typeof newItem === 'number' ? {min: newItem , max: 0} : newItem];
+        }
+    }
+
+    const separateRange = (category) => {
+        category.replace(/\s/g, '')
+        const [categoryMin, categoryMax] = category.split('-').map(Number);
+        return {min: categoryMin, max: categoryMax};
+    }
+
     const isCategorySelected = (selectedCategories, category) => {
-        if (Array.isArray(selectedCategories)) {
+        if (selectedCategories && selectedCategories.some(item => typeof item === 'number')) {
             return selectedCategories.includes(category.id || category);
         }
 
-        if (selectedCategories.min !== undefined && selectedCategories.max !== undefined) {
-            const [categoryMin, categoryMax] = (category.id || category).split('-').map(Number);
-            return categoryMin >= selectedCategories.min && categoryMax <= selectedCategories.max;
+        if (selectedCategories && selectedCategories.some(item => typeof item === 'object')) {
+            if(category.includes('-')){
+                const range = separateRange(category);
+                return selectedCategories.some(item => item.min === range.min && item.max === range.max);
+            }else{
+                const extractedNumber = Number(category.match(/\d+/g));
+                return selectedCategories.some(item => item.min === extractedNumber && item.max === 0);
+            }
         }
-
         return false;
     };
 
@@ -106,35 +93,10 @@ export const DropdownFilters = ({title, categories, selectedCategories, setSelec
                     <label
                         className={`${styles.category_option} 
                         ${isCategorySelected(selectedCategories, category) ? styles.category_checkedLabel : ''}`}
-
-                        // className={`${styles.category_option} ${
-                        //     Array.isArray(selectedCategories)
-                        //         ? selectedCategories.includes(category.id || category)
-                        //             ? styles.category_checkedLabel
-                        //             : ''
-                        //         : (`${selectedCategories.min} - ${selectedCategories.max}` === category)
-                        //             ? styles.category_checkedLabel
-                        //             : ''
-                        // }`}
-
                         key={index}>{category.name || category}
                         <input type="checkbox"
                                className={`${styles.option_checkbox} 
                         ${isCategorySelected(selectedCategories, category) ? styles.option_checkedOption : ''}`}
-                               // className={`${styles.option_checkbox} ${
-                               //     Array.isArray(selectedCategories)
-                               //         ? selectedCategories.includes(category.id || category)
-                               //             ? styles.option_checkedOption
-                               //             : ''
-                               //         : (selectedCategories.min !== undefined && selectedCategories.max !== undefined &&
-                               //             `${selectedCategories.min} - ${selectedCategories.max}` === category)
-                               //             ? styles.option_checkedOption
-                               //             : ''
-                               // }`}
-
-                               // className={`${styles.option_checkbox}
-                               // ${category.id ? category.id : index
-                               //     ? styles.option_checkedOption : ''}`}
                                onChange={() =>
                                    handleCheckBoxChange(setSelectedCategories, category.id,
                                        category.name ? '' : category)}
@@ -145,6 +107,5 @@ export const DropdownFilters = ({title, categories, selectedCategories, setSelec
                 ))}
             </div>}
         </div>
-
     )
 }
