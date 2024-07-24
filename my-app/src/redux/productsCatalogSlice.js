@@ -73,6 +73,9 @@ export const productsCatalogSlice = createSlice({
         },
         setSortOrder: (state, action) => {
             state.filters.sortOrder = action.payload;
+        },
+        setPageSize: (state, action) => {
+            state.pageSize = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -108,5 +111,5 @@ export const productsCatalogSlice = createSlice({
     },
 });
 
-export const { setPage, setFilters, setSortOrder } = productsCatalogSlice.actions;
+export const { setPage, setFilters, setSortOrder, setPageSize } = productsCatalogSlice.actions;
 export default productsCatalogSlice.reducer;

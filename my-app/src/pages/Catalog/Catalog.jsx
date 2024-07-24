@@ -4,7 +4,7 @@ import {CatalogFilters} from "../../components/Catalog/CatalogFilters/CatalogFil
 import {CatalogSorting} from "../../components/Catalog/CatalogSorting/CatalogSorting.jsx";
 import PaginationButtons from "../../components/common-components/PaginationButtons/PaginationButtons.jsx";
 import {Breadcrumbs} from "../../components/ProductOverview/Breadcrumbs/Breadcrumbs.jsx";
-import {setPage} from "../../redux/productsCatalogSlice.js";
+import {setPage, setPageSize} from "../../redux/productsCatalogSlice.js";
 import {fetchProducts} from "../../redux/productsCatalogSlice.js";
 import {useDispatch, useSelector} from "react-redux";
 import ProductCardList from "../../components/common-components/ProductCardList/ProductCardList.jsx";
@@ -15,10 +15,8 @@ import {CatalogMobileTabs} from "../../components/Catalog/CatalogMobileTabs/Cata
 const Catalog = () => {
   const {products, totalPages, page, pageSize, loading, filters } = useSelector((state) => state.productsCatalog);
   const dispatch = useDispatch();
-  const [productsLimitOnPage, setProductsLimitOnPage] = useState(12);
   const [chosenDisplaying, setChosenDisplaying] = useState({displayingThree: true, displayingFour: false});
   const windowWidth = useWindowWidth();
-
   const displayingThreeProductsInRow = {
     oneLineDesktopCardsAmount: 3,
     oneLineTabletCardsAmount: 3,
@@ -50,10 +48,10 @@ const Catalog = () => {
   useEffect(() => {
     if(chosenDisplaying.displayingThree){
       setConfigurationObj((prevConfig) => ({ ...prevConfig, ...displayingThreeProductsInRow }));
-      setProductsLimitOnPage(12);
+      dispatch(setPageSize(12))
     }else{
       setConfigurationObj((prevConfig) => ({ ...prevConfig, ...displayingFourProductsInRow }));
-      setProductsLimitOnPage(20);
+      dispatch(setPageSize(20))
     }
   }, [chosenDisplaying]);
 
