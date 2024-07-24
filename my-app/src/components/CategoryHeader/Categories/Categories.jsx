@@ -42,7 +42,7 @@ const Categories = ({
           <li key={category.id} className={styles.categoryListItem}>
             <Link
               to="/catalog"
-              state={{ categories: category.name }}
+              state={{ categories: category.id }}
               className={styles.categoryListLink}
             >
               <div className={styles.categoryIcon}>

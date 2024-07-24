@@ -20,7 +20,7 @@ const MindGames = ({
           <li key={game.id} className={styles.mindGamesListItem}>
             <Link
               to="/catalog"
-              state={{ mindGames: game.name }}
+              state={{ mindGames: game.id }}
               className={styles.mindGamesListLink}
             >
               <div className={styles.mindGamesIcon}>

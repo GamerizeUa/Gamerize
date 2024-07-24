@@ -62,7 +62,7 @@ export  const CatalogFilters = () => {
                         [...prevState, ...(Array.isArray(location.state[key])
                         ? location.state[key].map(item => item && String(item)).filter(item => item !== null
                             && item !== '' && item !== undefined)
-                        : [String(location.state[key])])]);
+                        : [location.state[key]])]);
                     setterFunction(prevState => [...new Set(prevState)]);
                 }
             });
@@ -105,6 +105,7 @@ export  const CatalogFilters = () => {
             gameTime: selectedGameTimes,
             languages: selectedLanguages,
         };
+        // console.log(filters);
         dispatch(setFilters(filters))
     };
 
