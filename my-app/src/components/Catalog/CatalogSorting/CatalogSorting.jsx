@@ -5,13 +5,20 @@ import {useDispatch, useSelector} from "react-redux";
 import {DisplayThreeIcon} from "../icons/DisplayThreeIcon.jsx";
 import {DisplayFourIcon} from "../icons/DisplayFourIcon.jsx";
 import useWindowWidth from "../../hooks/useWindowWidth.js";
+import {setSortOrder} from "../../../redux/productsCatalogSlice.js";
 
 export const CatalogSorting = ({setChosenDisplaying}) => {
     const[isSortingVisible, setIsSortingVisible] = useState(false);
     const [chosenOption, setChosenOption] = useState('За ціною');
     const [isActive, setIsActive] = useState({displayingThree: true, displayingFour: false});
     const windowWidth = useWindowWidth();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const sorting = {
+        'Ціна: Від вищої' : 'price_desc',
+        'Ціна: Від нижчої': 'price_asc',
+        'Назва: Я - А': 'name_desc',
+        'Назва: А - Я': 'name_asc'
+    }
 
     useEffect(() => {
         setChosenDisplaying((prevConfig) => ({ ...prevConfig, ...isActive }));
@@ -23,6 +30,7 @@ export const CatalogSorting = ({setChosenDisplaying}) => {
 
     const handleOptionClick = (optionText) => {
         setChosenOption(optionText);
+        dispatch(setSortOrder(sorting[optionText]));
         setIsSortingVisible(false);
     };
 

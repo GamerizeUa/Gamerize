@@ -39,7 +39,20 @@ const initialState = {
     products: [],
     totalPages: 0,
     loading: false,
-    filters: {},
+    filters: {
+        "categories": [],
+        "genres": [],
+        "languages": [],
+        "mindGames": [],
+        "puzzles": [],
+        "themes": [],
+        "ages": [],
+        "playersAmount": [],
+        "price": [],
+        "gameTime": [],
+        "sortOrder": "",
+        "searchTerm": ""
+    },
     page: 1,
     pageSize: 12,
 };
@@ -52,8 +65,15 @@ export const productsCatalogSlice = createSlice({
             state.page = action.payload;
         },
         setFilters: (state, action) => {
-            state.filters = action.payload;
+            state.filters = {
+                ...state.filters,
+                ...action.payload,
+                sortOrder: state.filters.sortOrder
+            };
         },
+        setSortOrder: (state, action) => {
+            state.filters.sortOrder = action.payload;
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -88,5 +108,5 @@ export const productsCatalogSlice = createSlice({
     },
 });
 
-export const { setPage, setFilters } = productsCatalogSlice.actions;
+export const { setPage, setFilters, setSortOrder } = productsCatalogSlice.actions;
 export default productsCatalogSlice.reducer;
