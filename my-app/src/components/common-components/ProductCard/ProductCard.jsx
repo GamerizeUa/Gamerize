@@ -59,6 +59,13 @@ export default function ProductCard({
         dispatch(updateCartProduct({ id, modifier: 1 }));
     };
 
+    const modifyImagePath = (imagePath) => {
+        const baseUrl = "https://gamerize.ltd.ua/images";
+        const  formattedPath = imagePath.replace(/\.\\wwwroot\\images\\\.\\wwwroot\\images/g, '').replace(/\\/g, '/');
+
+        return baseUrl + formattedPath;
+    }
+
     return (
         <div className={styles.all_content}>
             <Link className={styles.all_card_link} to={`/catalog/${id}`}></Link>
@@ -101,7 +108,7 @@ export default function ProductCard({
                     </div>
                 </div>
                 <div className={styles.image_container}>
-                    <img src={photo} alt={`product ${name} # ${id}`} />
+                    <img src={modifyImagePath(images[0].path)} alt={`product ${name} # ${id}`} />
                 </div>
                 <div className={styles.features_bar}>
                     <p
