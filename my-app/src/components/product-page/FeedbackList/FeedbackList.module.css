@@ -1,3 +1,11 @@
+.feedbacks {
+    margin-block-end: 2rem;
+
+    @media screen and (width >= 720px) {
+        margin-block-end: 4rem;
+    }
+}
+
 .feedback_border {
     border-bottom: 1px solid var(--dark-purple);
 }

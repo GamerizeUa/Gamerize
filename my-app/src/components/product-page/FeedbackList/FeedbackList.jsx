@@ -15,7 +15,7 @@ export default function FeedbackList() {
     } = useFeedbackPagination(reviews, feedbacksPerPage);
 
     return (
-        <section>
+        <section className={styles.feedbacks}>
             {currentReviews.map((review, index) => {
                 return (
                     <div

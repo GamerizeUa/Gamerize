@@ -85,6 +85,7 @@
     border: 1px solid #8e8e8e;
     font-size: 14px;
     margin-top: 20px;
+    resize: none;
 }
 
 @media (width >= 744px) {
