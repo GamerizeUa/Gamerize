@@ -13,26 +13,13 @@
     }
 }
 
-.share__background {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    inset: 0 auto auto 0;
-    z-index: 20;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.2);
-}
-
 .share {
+    margin-inline: auto;
+    inset-block-start: 50%;
+    transform: translateY(-50%);
     border-radius: 16px;
     background: #fefefe;
     width: 576px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     padding: 32px;
 }
 

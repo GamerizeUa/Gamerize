@@ -34,24 +34,26 @@
 .action-list {
     inline-size: max-content;
     display: flex;
-    /* flex-direction: row;
-    justify-self: flex-end; */
     gap: 8px;
     position: relative;
 }
 
 .action-list__item {
-    display: inline-flex;
     padding: 7px;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
     background: #eef1ff;
-    cursor: pointer;
+}
 
-    &:hover path {
-        stroke: #aac4ff;
-    }
+.action-list__item,
+.action-list__item:hover {
+    background: #eef1ff;
+}
+
+.action-list__item:hover path {
+    stroke: #aac4ff;
 }
 
 .action-list__item[data-filled='true']::before {
