@@ -1,38 +1,44 @@
-import { useLocation, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
-import Product from '../components/product-page/Product.jsx';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectProductById } from '../redux/selectors.js';
-import { addToHistory } from '../redux/viewsHistory.js';
+import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {useEffect} from "react";
+import Product from "../components/product-page/Product.jsx";
+import {useDispatch, useSelector} from "react-redux";
+// import { selectProductById } from "../redux/selectors.js";
+import {addToHistory} from "../redux/viewsHistory.js";
+import {getProductById} from "../redux/homeCarouselProductsSlice.js";
 
 const ProductPage = () => {
-    const { productID } = useParams();
-    const product = useSelector((state) => selectProductById(state, productID));
+    const {productID} = useParams();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
+    const location = useLocation();
+    // const product = useSelector((state) => selectProductById(state, productID));
+    const {product, statusOfProduct} = useSelector(({carouselProducts}) => carouselProducts);
+    const gamePickerFilters = location.state?.gamePickerFilters;
+
+    if (statusOfProduct === "failed") {
+        navigate("/");
+    }
 
     useEffect(() => {
         window.scrollTo({
             top: 0,
         });
-    }, []);
+        if (!gamePickerFilters) dispatch(getProductById(productID));
+    }, [productID]);
 
     useEffect(() => {
         dispatch(addToHistory(product));
     }, [product, dispatch]);
-    const location = useLocation();
 
     return (
-        <Product
-            product={product}
-            gamePickerFilters={location.state?.gamePickerFilters}
-        >
-            <Product.GamePickerBtn />
-            <Product.Overview />
-            <Product.Details />
-            <Product.Rating />
-            <Product.FeedbackList />
-            <Product.FeedbackForm />
-            <Product.RecentlyViewed />
+        <Product product={product} gamePickerFilters={gamePickerFilters}>
+            <Product.GamePickerBtn/>
+            <Product.Overview/>
+            <Product.Details/>
+            <Product.Rating/>
+            <Product.FeedbackList/>
+            <Product.FeedbackForm/>
+            <Product.RecentlyViewed/>
         </Product>
     );
 };

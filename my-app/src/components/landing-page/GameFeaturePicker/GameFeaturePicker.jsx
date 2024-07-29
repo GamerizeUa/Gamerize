@@ -32,6 +32,10 @@ export default function GameFeaturePicker({
                 capture: true,
             });
     }, []);
+    let featureName = checkedFeature;
+    if (checkedFeature && typeof checkedFeature !== "string") {
+        featureName = checkedFeature.name;
+    }
     return (
         <div className={styles.wrap}>
             <div
@@ -40,8 +44,7 @@ export default function GameFeaturePicker({
             >
                 <div onClick={toggleMenuOnClick} className={styles.header}>
                     <p className={styles.title}>
-                        {featureTitle +
-                            (checkedFeature ? ": " + checkedFeature : "")}
+                        {featureTitle + (featureName ? ": " + featureName : "")}
                     </p>
                     <div className={styles.icon}>
                         {isMenuActive ? <ArrowUpIcon /> : <ArrowDownIcon />}
@@ -51,9 +54,7 @@ export default function GameFeaturePicker({
                     <div
                         className={styles.items_container}
                         style={{
-                            overflow: `${
-                                featureItems.length >= 5 ? "scroll" : "visible"
-                            }`,
+                            overflow: `${featureItems.length >= 5 ? "scroll" : "visible"}`,
                         }}
                     >
                         <div
@@ -66,17 +67,21 @@ export default function GameFeaturePicker({
                             <p>Скинути</p>
                         </div>
                         {featureItems.map((item) => {
+                            let name = item;
+                            if (typeof item !== "string") {
+                                name = item.name;
+                            }
                             function chooseItemOnclick(e) {
                                 chooseItem(item);
                                 e.stopPropagation();
                             }
                             return (
                                 <div
-                                    key={`${menuUniqueCSSClass}_${item}`}
+                                    key={`${menuUniqueCSSClass}_${name}`}
                                     onClick={chooseItemOnclick}
                                     className={styles.item}
                                 >
-                                    <p>{item}</p>
+                                    <p>{name}</p>
                                 </div>
                             );
                         })}

@@ -39,11 +39,11 @@ export const selectCartProductsCount = createSelector(
 );
 export const selectPromoCode = (state) => state.discount.promoCode;
 export const selectGiftCard = (state) => state.discount.giftCard;
-export const selectProductById = createSelector(
-    [(state) => state.productsCatalog, (state, productID) => productID],
-    (catalog, productID) =>
-        catalog.products.find((product) => product?.id == productID)
-);
+// export const selectProductById = createSelector(
+//     [(state) => state.productsCatalog, (state, productID) => productID],
+//     (catalog, productID) =>
+//         catalog.products.find((product) => product?.id == productID)
+// );
 
 export const selectViewsHistory = createSelector(
     [(state) => state.views, (state, productID) => productID],
