@@ -11,7 +11,7 @@ import {
     selectLanguages
 } from "../../../redux/selectors.js";
 import {useLocation} from "react-router-dom";
-import {fetchProducts, setFilters} from "../../../redux/productsCatalogSlice.js";
+import {setFilters} from "../../../redux/productsCatalogSlice.js";
 import handleLinkClick from "../../../helpers/ScrollToTop.js";
 
 export  const CatalogFilters = () => {
@@ -105,7 +105,6 @@ export  const CatalogFilters = () => {
             gameTime: selectedGameTimes,
             languages: selectedLanguages,
         };
-        // console.log(filters);
         dispatch(setFilters(filters))
     };
 
