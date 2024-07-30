@@ -5,13 +5,13 @@ import { useContext } from 'react';
 import { ProductContext } from '../Product';
 
 export default function GamePickerBtn() {
-    const { filters } = useContext(ProductContext);
+    const { gamePickerFilters } = useContext(ProductContext);
 
-    if (!filters) return null;
+    if (!gamePickerFilters) return null;
 
     return (
         <Link
-            to={{ pathname: '/catalog', state: filters }}
+            to={{ pathname: '/catalog', state: gamePickerFilters }}
             className={styles.btn}
         >
             <span className={styles['btn__title']}>Переглянути всі товари</span>

@@ -1,56 +1,68 @@
 import GameFeaturePicker from "../GameFeaturePicker/GameFeaturePicker";
 import styles from "./GamePicker.module.css";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import image from "../../../assets/images/game_picker_game_photo.png";
-import { useSelector } from "react-redux";
-import { selectCategories } from "../../../redux/selectors";
-import { arrayProducts } from "../../../pages/Catalog/test";
-import { filterProducts } from "../../Catalog/CatalogFilters/filters";
-import { useNavigate } from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {selectCategories} from "../../../redux/selectors";
+import {useNavigate} from "react-router-dom";
+import {getRandomProduct, setProductStatus} from "../../../redux/homeCarouselProductsSlice";
+import {PopUp} from "../QuestionFormPopUp/popUp.jsx";
 
 export default function GamePicker() {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-    let [windowWidth, setWindowWidth] = useState(null); // !! in future it can become a global redux state to check screen width in any component when needed in js
-    let [category, setCategory] = useState(null);
-    let [playersAmount, setPlayersAmount] = useState(null);
-    let [age, setAge] = useState(null);
-    // for test
-    const categories = useSelector(selectCategories).map(
-        (category) => category.name
-    );
+    const [windowWidth, setWindowWidth] = useState(null); // !! in future it can become a global redux state to check screen width in any component when needed in js
+    const [category, setCategory] = useState(null);
+    const [playersAmount, setPlayersAmount] = useState(null);
+    const [age, setAge] = useState(null);
+    const [noMatchingProduct, setNoMatchingProduct] = useState(false);
+    const gettingProductStatus = useSelector(({carouselProducts: {statusOfProduct}}) => statusOfProduct);
+    const categories = useSelector(selectCategories);
     const playersAmounts = ["1 - 3", "4 - 6", "більше 6"];
     const ages = ["3 - 6", "6 - 9", "9 - 12", "12 - 18", "18+"];
-    // for test
+    const isLoading = gettingProductStatus === "loading";
+
     useEffect(() => {
         setWindowWidth(document.documentElement.clientWidth);
         window.addEventListener("resize", function () {
             setWindowWidth(document.documentElement.clientWidth); // !! in future it can be proceeded, for example, in Layout for global redux state
         });
+        dispatch(setProductStatus("undefined"));
     }, []);
 
-    const getRandomArrayElement = (array) => {
-        if (!Array.isArray(array)) return null;
-        return array[Math.floor(Math.random() * array.length)];
+    const getMinMaxObjFromStr = (str) => {
+        let min, max;
+        if (str.includes("-")) {
+            [min, max] = str.replace(/\s/g, "").split("-").map(Number);
+        } else {
+            min = Number(str.match(/\d+/g));
+            max = 0;
+        }
+        return {min, max};
     };
 
-    const pickGame = (e) => {
+    const pickGame = async (e) => {
         e.preventDefault();
         const filters = {
-            categories: category && [category],
-            ages: age && [age],
-            playersAmount: playersAmount && [playersAmount],
+            categories: category && [category.id],
+            ages: age && [getMinMaxObjFromStr(age)],
+            playersAmount: playersAmount && [getMinMaxObjFromStr(playersAmount)],
         };
-        const products = arrayProducts();
-        const filteredProducts = filterProducts(products, filters);
-        console.log(filteredProducts)
-        const product = getRandomArrayElement(filteredProducts);
+        const {payload: {product}} = await dispatch(getRandomProduct(filters));
+        console.log(product);
         if (product) {
             navigate(`catalog/${product.id}`, {
                 state: {
                     gamePickerFilters: filters,
                 },
             });
+        } else {
+            setNoMatchingProduct(true);
         }
+    };
+
+    const changePopupVisibility = () => {
+        setNoMatchingProduct(!noMatchingProduct);
     };
 
     return (
@@ -59,9 +71,7 @@ export default function GamePicker() {
                 <div className={styles.content}>
                     <div className={styles.left}>
                         <div className={styles.title_container}>
-                            <h1 className={styles.title}>
-                                Оберіть гру для себе!
-                            </h1>
+                            <h1 className={styles.title}>Оберіть гру для себе!</h1>
                         </div>
                         <form className={styles.form}>
                             <GameFeaturePicker
@@ -88,13 +98,9 @@ export default function GamePicker() {
                                 setCheckedFeature={setAge}
                                 featureItems={ages}
                             />
-                            <button
-                                onClick={pickGame}
-                                className={styles.button}
-                            >
-                                <span className={styles.button_text}>
-                                    Підібрати гру
-                                </span>
+                            <button disabled={isLoading} onClick={pickGame} className={styles.button}>
+                                <span
+                                    className={styles.button_text}>{isLoading ? "Підбираємо гру..." : "Підібрати гру"}</span>
                             </button>
                         </form>
                     </div>
@@ -109,6 +115,11 @@ export default function GamePicker() {
                     )}
                 </div>
             </div>
+            {
+                noMatchingProduct &&
+                <PopUp changeVisibility={changePopupVisibility} title={"Гру за запитом не знайдено :("}
+                       info={"Спробуйте змінити фільтри і підібрати гру знову"}/>
+            }
         </section>
     );
 }

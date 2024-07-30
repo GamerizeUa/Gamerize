@@ -18,7 +18,6 @@ export default function ProductCard({
         isDiscount: false,
         isWishList: false,
     },
-    product,
     product: {
         id,
         name,
