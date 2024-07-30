@@ -1,29 +1,35 @@
-import { useState, useEffect, useLayoutEffect, createContext } from 'react';
+import {
+    useState,
+    useEffect,
+    useLayoutEffect,
+    createContext,
+    useContext,
+} from 'react';
 import styles from './ProductGallery.module.css';
-import mainProductPhoto from '../../../assets/images/mainProductPhoto.png';
-import imageCompanyGame from '../../../assets/images/selection_company.jpg';
-import feedback from '../../../assets/images/feedback.svg';
-import product from '../../../assets/images/product.png';
-import box from '../../../assets/images/presentBox.png';
 import { Breadcrumbs } from '../Breadcrumbs/Breadcrumbs.jsx';
 import { ActionsBar } from '../ActionsBar/ActionsBar.jsx';
 import { useResizeObserver } from '../../../hooks/useResizeObserver.jsx';
 import { Slider } from './Slider.jsx';
 import { SliderControl } from './SliderControl.jsx';
 import { useMove } from '../../../hooks/useMove.jsx';
+import { ProductContext } from '../../product-page/Product.jsx';
 
 export const GalleryContext = createContext(null);
 
+const getImagePath = (imagePath) => {
+    if (!imagePath) return null;
+
+    const regex = new RegExp(/\.\\wwwroot\\images/g);
+    const formattedPath = imagePath.replaceAll(regex, '').replace(/\\/g, '/');
+
+    return `https://gamerize.ltd.ua/images${formattedPath}`;
+};
+
 export const ProductGallery = ({ breadcrumbsDetails }) => {
-    const images = [
-        mainProductPhoto,
-        imageCompanyGame,
-        feedback,
-        imageCompanyGame,
-        product,
-        box,
-        feedback,
-    ];
+    let { images } = useContext(ProductContext);
+
+    images = images.map((image) => getImagePath(image.path));
+
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [state, setState] = useState({
         thumbsGap: 0,
