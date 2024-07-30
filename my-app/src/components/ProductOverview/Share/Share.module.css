@@ -67,7 +67,8 @@
 
 .share__container {
     display: flex;
-    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
     padding-bottom: 43px;
 }
 
@@ -80,18 +81,15 @@
 }
 
 .share__icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 72px;
-    height: 72px;
-    border-radius: 40px;
-    background: #eef1ff;
+    width: 64px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    transition: all 150ms;
 }
 
 .share__icon:hover {
     transform: scale(1.07);
-    box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .share__name,

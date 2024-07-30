@@ -10,7 +10,7 @@ import { RecentlyViewed } from './RecentlyViewed.jsx';
 export const ProductContext = createContext(null);
 
 const Product = ({ product, gamePickerFilters, children }) => {
-    if (!product) return null;
+    if (!product) return '';
 
     return (
         <div className="container">

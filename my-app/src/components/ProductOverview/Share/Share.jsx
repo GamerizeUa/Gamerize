@@ -1,12 +1,6 @@
 import { useState, useEffect, useCallback, forwardRef } from 'react';
 import CopyIcon from '../icons/CopyIcon.jsx';
 import styles from './Share.module.css';
-import FacebookIcon from '../icons/SocialMedia/FacebookIcon.jsx';
-import TelegramIcon from '../icons/SocialMedia/TelegramIcon.jsx';
-import TwitterIcon from '../icons/SocialMedia/TwitterIcon.jsx';
-import WhatsupIcon from '../icons/SocialMedia/WhatsupIcon.jsx';
-import EmailIcon from '../icons/SocialMedia/EmailIcon.jsx';
-import ViberIcon from '../icons/SocialMedia/ViberIcon.jsx';
 import {
     FacebookShareButton,
     TelegramShareButton,
@@ -14,6 +8,12 @@ import {
     WhatsappShareButton,
     EmailShareButton,
     ViberShareButton,
+    XIcon,
+    FacebookIcon,
+    TelegramIcon,
+    WhatsappIcon,
+    EmailIcon,
+    ViberIcon,
 } from 'react-share';
 
 export const Share = forwardRef(function Share({ isOpen, onClose }, ref) {
@@ -22,7 +22,7 @@ export const Share = forwardRef(function Share({ isOpen, onClose }, ref) {
     const socialNetworks = [
         'Facebook',
         'Telegram',
-        'Twitter',
+        'X',
         'Whatsapp',
         'E-mail',
         'Viber',
@@ -30,8 +30,8 @@ export const Share = forwardRef(function Share({ isOpen, onClose }, ref) {
     const socialMediaIcons = [
         FacebookIcon,
         TelegramIcon,
-        TwitterIcon,
-        WhatsupIcon,
+        XIcon,
+        WhatsappIcon,
         EmailIcon,
         ViberIcon,
     ];
@@ -89,9 +89,10 @@ export const Share = forwardRef(function Share({ isOpen, onClose }, ref) {
                             url={location}
                             className={styles['share__social-media']}
                         >
-                            <div className={styles['share__icon']}>
-                                <ShareIcon />
-                            </div>
+                            <ShareIcon
+                                className={styles['share__icon']}
+                                round
+                            />
                             <p className={styles['share__name']}>{name}</p>
                         </ShareButton>
                     );
