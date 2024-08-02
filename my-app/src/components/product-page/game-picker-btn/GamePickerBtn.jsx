@@ -11,7 +11,8 @@ export default function GamePickerBtn() {
 
     return (
         <Link
-            to={{ pathname: '/catalog', state: gamePickerFilters }}
+            to="/catalog"
+            state={gamePickerFilters}
             className={styles.btn}
         >
             <span className={styles['btn__title']}>Переглянути всі товари</span>

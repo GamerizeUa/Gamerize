@@ -60,7 +60,12 @@ export  const CatalogFilters = () => {
                 if (setterFunction && location.state[key]) {
                     setterFunction(prevState =>
                         [...prevState, ...(Array.isArray(location.state[key])
-                        ? location.state[key].map(item => item && String(item)).filter(item => item !== null
+                        ? location.state[key].map(item => {
+                                if (typeof item === 'object' && item !== null) {
+                                    return item;
+                                }
+                                return item && Number(item);
+                            }).filter(item => item !== null
                             && item !== '' && item !== undefined)
                         : [location.state[key]])]);
                     setterFunction(prevState => [...new Set(prevState)]);
@@ -105,6 +110,7 @@ export  const CatalogFilters = () => {
             gameTime: selectedGameTimes,
             languages: selectedLanguages,
         };
+        console.log(filters);
         dispatch(setFilters(filters))
     };
 
