@@ -23,6 +23,7 @@
   padding-left: 24px;
   border: 1px solid var(--light-blue);
   border-radius: 10px;
+  background-color: #FFFFFF;
 }
 
 .searchIcon {

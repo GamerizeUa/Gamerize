@@ -61,8 +61,9 @@ export default function ProductCard({
     const modifyImagePath = (imagePath) => {
         const baseUrl = "https://gamerize.ltd.ua/images";
         const  formattedPath = imagePath?.replace(/\.\\wwwroot\\images\\\.\\wwwroot\\images/g, '')?.replace(/\\/g, '/');
+        const finalFormattedPath = formattedPath?.replace(/\.\/wwwroot\/images/g, '');
 
-        return baseUrl + formattedPath;
+        return baseUrl + finalFormattedPath;
     }
 
     return (
