@@ -32,12 +32,14 @@ const ProductPage = () => {
 
     return (
         <Product product={product} gamePickerFilters={gamePickerFilters}>
-            <Product.GamePickerBtn/>
-            <Product.Overview/>
-            <Product.Details/>
-            <Product.Rating/>
-            <Product.FeedbackList/>
-            <Product.FeedbackForm/>
+            <div className={"container"}>
+                <Product.GamePickerBtn/>
+                <Product.Overview/>
+                <Product.Details/>
+                <Product.Rating/>
+                <Product.FeedbackList/>
+                <Product.FeedbackForm/>
+            </div>
             <Product.RecentlyViewed/>
         </Product>
     );

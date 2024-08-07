@@ -13,11 +13,11 @@ const Product = ({ product, gamePickerFilters, children }) => {
     if (!product) return '';
 
     return (
-        <div className="container">
+        <>
             <ProductContext.Provider value={{ ...product, gamePickerFilters }}>
                 {children}
             </ProductContext.Provider>
-        </div>
+        </>
     );
 };
 
