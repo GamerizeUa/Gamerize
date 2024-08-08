@@ -1,5 +1,6 @@
 ﻿using Gamerize.BLL.Models.Requests;
 using Gamerize.BLL.Models;
+using System.Linq;
 
 namespace Gamerize.BLL.Builder
 {
@@ -184,6 +185,89 @@ namespace Gamerize.BLL.Builder
                 default:
                     break;
             }
+            return products;
+        }
+
+        internal IEnumerable<ProductFullDTO> ApplySearching(IEnumerable<ProductFullDTO> products, ProductSearchTerm filterRequest)
+        {
+            if (!string.IsNullOrEmpty(filterRequest.SearchTerm))
+            {
+                var searchTerm = filterRequest.SearchTerm.ToLower();
+                products = products.Where(p =>
+                    p.Name.ToLower().Contains(searchTerm) ||
+                    p.Tags.Any(t => t.Name.ToLower().Contains(searchTerm))
+                ).ToList();
+            }
+
+            return products;
+        }
+
+        internal IEnumerable<ProductFullDTO> ApplyRandomProductFilters(IEnumerable<ProductFullDTO> products, ProductRandomRequest filterRequest)
+        {
+
+            if (filterRequest.Categories != null && filterRequest.Categories.Any(c => c.HasValue && c.Value != 0))
+            {
+                products = products.Where(p => p.Category != null && filterRequest.Categories.Contains(p.Category.Id));
+            }
+
+            if (filterRequest.Ages != null && filterRequest.Ages.Any())
+            {
+                var ageRanges = filterRequest.Ages.Where(a => (a.Min.HasValue && a.Min.Value != 0) || (a.Max.HasValue && a.Max.Value != 0)).ToList();
+
+                if (ageRanges.Any())
+                {
+                    var ageFilteredProducts = new List<ProductFullDTO>();
+
+                    foreach (var ageFilter in ageRanges)
+                    {
+                        var tempProducts = products;
+
+                        if (ageFilter.Min.HasValue && ageFilter.Min.Value != 0)
+                        {
+                            tempProducts = tempProducts.Where(p => p.MinAge >= ageFilter.Min.Value);
+                        }
+
+                        if (ageFilter.Max.HasValue && ageFilter.Max.Value != 0)
+                        {
+                            tempProducts = tempProducts.Where(p => p.MinAge <= ageFilter.Max.Value);
+                        }
+
+                        ageFilteredProducts.AddRange(tempProducts);
+                    }
+
+                    products = ageFilteredProducts.Distinct().ToList();
+                }
+            }
+
+            if (filterRequest.PlayersAmount != null && filterRequest.PlayersAmount.Any())
+            {
+                var playerRanges = filterRequest.PlayersAmount.Where(p => (p.Min.HasValue && p.Min.Value != 0) || (p.Max.HasValue && p.Max.Value != 0)).ToList();
+
+                if (playerRanges.Any())
+                {
+                    var playerFilteredProducts = new List<ProductFullDTO>();
+
+                    foreach (var playersFilter in playerRanges)
+                    {
+                        var tempProducts = products;
+
+                        if (playersFilter.Min.HasValue && playersFilter.Min.Value != 0)
+                        {
+                            tempProducts = tempProducts.Where(p => p.MinPlayers >= playersFilter.Min.Value);
+                        }
+
+                        if (playersFilter.Max.HasValue && playersFilter.Max.Value != 0)
+                        {
+                            tempProducts = tempProducts.Where(p => p.MaxPlayers <= playersFilter.Max.Value);
+                        }
+
+                        playerFilteredProducts.AddRange(tempProducts);
+                    }
+
+                    products = playerFilteredProducts.Distinct().ToList();
+                }
+            }
+
             return products;
         }
     }

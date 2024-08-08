@@ -33,6 +33,34 @@ namespace webapi.Controllers
             }
         }
 
+        [HttpPost("SearchProduct")]
+        public async Task<IActionResult> GetAllProducts([FromBody] ProductSearchTerm filterRequest, int page = 1, int pageSize = 12)
+        {
+            try
+            {
+                var (products, totalPages) = await _productService.GetSearchProductsAsync(filterRequest, page, pageSize);
+                return Ok(new { Products = products, TotalPages = totalPages });
+            }
+            catch (ServerErrorException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost("GetRandomProduct")]
+        public async Task<IActionResult> GetRandomProduct([FromBody] ProductRandomRequest filterRequest)
+        {
+            try
+            {
+                var (randomProduct, averageRating) = await _productService.GetRandomProductAsync(filterRequest);
+                return Ok(new { Product = randomProduct, AverageRating = averageRating });
+            }
+            catch (ServerErrorException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpGet("GetById/{id:int}")]
         public async Task<ActionResult<ProductFullDTO>> GetById(int id)
         {
@@ -173,6 +201,23 @@ namespace webapi.Controllers
                 return StatusCode(400, ex.Message);
             }
             catch (ServerErrorException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpPost("{id}/photos")]
+        public async Task<IActionResult> AddPhotos(int id, [FromForm] List<IFormFile> newImages)
+        {
+            try
+            {
+                var product = await _productService.AddPhotosAsync(id, newImages);
+                return Ok(product);
+            }
+            catch (InvalidIdException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
             }

@@ -91,7 +91,9 @@ namespace Gamerize.BLL.Services
                     .Include(x => x.Theme)
                     .Include(x => x.Feedbacks)
                     .Include(x => x.Tags)
-                    .Include(x => x.Images);
+                    .Include(x => x.Images)
+                    .Include(x => x.Ratings)
+                    .Include(x => x.Discounts);
 
                 var products = await query.ToListAsync();
                 var productsDTO = _mapper.Map<List<ProductFullDTO>>(products);
@@ -124,7 +126,10 @@ namespace Gamerize.BLL.Services
                     var mainImage = item.Images.FirstOrDefault();
                     if (mainImage != null)
                     {
-                        mainImage.Path = Path.Combine(Config.ProductImagesPath, mainImage.Path);
+                        if (!mainImage.Path.StartsWith(Config.ProductImagesPath))
+                        {
+                            mainImage.Path = Path.Combine(Config.ProductImagesPath, mainImage.Path);
+                        }
                     }
                     else
                     {
@@ -136,6 +141,115 @@ namespace Gamerize.BLL.Services
                 });
 
                 return (result, totalPages);
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new ServerErrorException(ex.Message, ex);
+            }
+        }
+
+        public async Task<(IEnumerable<ProductFullDTO> products, int totalPages)> GetSearchProductsAsync(ProductSearchTerm filterRequest, int page, int pageSize)
+        {
+            try
+            {
+                var query = _repository.Get()
+                    .Include(x => x.Language)
+                    .Include(x => x.Category)
+                    .Include(x => x.Genre)
+                    .Include(x => x.Theme)
+                    .Include(x => x.Feedbacks)
+                    .Include(x => x.Tags)
+                    .Include(x => x.Images)
+                    .Include(x => x.Ratings)
+                    .Include(x => x.Discounts);
+
+                var products = await query.ToListAsync();
+                var productsDTO = _mapper.Map<List<ProductFullDTO>>(products);
+
+                if (filterRequest != null)
+                {
+                    FilterBuilder filterBuilder = new FilterBuilder();
+
+                    if (filterRequest.HasFilters())
+                    {
+                        productsDTO = filterBuilder.ApplySearching(productsDTO, filterRequest).ToList();
+                    }
+                }
+
+                int totalCount = productsDTO.Count();
+                int totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+
+                var pagedProducts = productsDTO
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+
+                var result = pagedProducts.Select(item =>
+                {
+                    var mainImage = item.Images.FirstOrDefault();
+                    if (mainImage != null)
+                    {
+                        if (!mainImage.Path.StartsWith(Config.ProductImagesPath))
+                        {
+                            mainImage.Path = Path.Combine(Config.ProductImagesPath, mainImage.Path);
+                        }
+                    }
+                    else
+                    {
+                        var noImage = new ImageDTO { Path = Path.Combine(Config.ProductImagesPath, Config.NoImage) };
+                        item.Images = new List<ImageDTO> { noImage };
+                    }
+
+                    return item;
+                });
+
+                return (result, totalPages);
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new ServerErrorException(ex.Message, ex);
+            }
+        }
+
+        public async Task<(ProductFullDTO Product, double AverageRating)> GetRandomProductAsync(ProductRandomRequest filterRequest)
+        {
+            try
+            {
+                var query = _repository.Get()
+                    .Include(x => x.Language)
+                    .Include(x => x.Category)
+                    .Include(x => x.Genre)
+                    .Include(x => x.Theme)
+                    .Include(x => x.Feedbacks)
+                    .Include(x => x.Tags)
+                    .Include(x => x.Images)
+                    .Include(x => x.Ratings)
+                    .Include(x => x.Discounts);
+
+                var products = await query.ToListAsync();
+                var productsDTO = _mapper.Map<List<ProductFullDTO>>(products);
+
+                if (filterRequest != null)
+                {
+                    FilterBuilder filterBuilder = new FilterBuilder();
+
+                    if (filterRequest.HasFilters())
+                    {
+                        productsDTO = filterBuilder.ApplyRandomProductFilters(productsDTO, filterRequest).ToList();
+                    }
+                }
+
+                if (productsDTO.Any())
+                {
+                    var random = new Random();
+                    var randomProduct = productsDTO[random.Next(productsDTO.Count)];
+
+                    var averageRating = randomProduct.Ratings.Any() ? randomProduct.Ratings.Average(r => r.Rate) : 0;
+
+                    return (randomProduct, averageRating);
+                }
+
+                return (null, 0);
             }
             catch (DbUpdateException ex)
             {
@@ -156,6 +270,7 @@ namespace Gamerize.BLL.Services
                     .Include(x => x.Tags)
                     .Include(x => x.Images)
                     .Include(x => x.Ratings)
+                    .Include(x => x.Discounts)
                     .FirstOrDefaultAsync(x => x.Id == id);
 
                 if (product is null)
@@ -193,7 +308,8 @@ namespace Gamerize.BLL.Services
                     .Include(x => x.Feedbacks)
                     .Include(x => x.Tags)
                     .Include(x => x.Images)
-                    .Include(x => x.Ratings);
+                    .Include(x => x.Ratings)
+                    .Include(x => x.Discounts);
 
                 var productsWithRatings = await query
                     .Select(p => new
@@ -322,7 +438,17 @@ namespace Gamerize.BLL.Services
         {
             try
             {
-                var product = await _repository.Get().FirstOrDefaultAsync(x => x.Id == id)
+                var product = await _repository.Get()
+                                    .Include(x => x.Language)
+                                    .Include(x => x.Category)
+                                    .Include(x => x.Genre)
+                                    .Include(x => x.Theme)
+                                    .Include(x => x.Feedbacks)
+                                    .Include(x => x.Tags)
+                                    .Include(x => x.Images)
+                                    .Include(x => x.Ratings)
+                                    .Include(x => x.Discounts)
+                                    .FirstOrDefaultAsync(x => x.Id == id)
                     ?? throw new InvalidIdException($"Продукту з ID: {id} ще/вже не існує.");
 
                 if (!await EntityExistsAsync<Language>(updatedEntity.LanguageId))
@@ -343,9 +469,27 @@ namespace Gamerize.BLL.Services
                 if (updatedEntity.MindGamesId.HasValue && !await EntityExistsAsync<MindGames>(updatedEntity.MindGamesId.Value))
                     throw new InvalidIdException($"MindGames з ID: {updatedEntity.MindGamesId} ще/вже не існує.");
 
+                if (decimal.TryParse(updatedEntity.Price.ToString(), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out decimal parsedPrice))
+                {
+                    if (parsedPrice < MinPrice || parsedPrice > MaxPrice)
+                    {
+                        throw new InvalidIdException($"Price must be between {MinPrice} and {MaxPrice}.");
+                    }
+                    updatedEntity.Price = parsedPrice;
+                }
+                else
+                {
+                    throw new InvalidIdException("Price value is not in a valid format.");
+                }
+
                 product = _mapper.Map(updatedEntity, product);
                 _repository.UpdateAsync(product);
                 await _unitOfWork.SaveChangesAsync();
+
+                if (updatedEntity.NewImages != null && updatedEntity.NewImages.Any())
+                {
+                    await SaveImagesAsync(updatedEntity.NewImages, product.Id);
+                }
 
                 return _mapper.Map<ProductFullDTO>(product);
             }
@@ -353,6 +497,29 @@ namespace Gamerize.BLL.Services
             {
                 throw new ServerErrorException(ex.Message, ex);
             }
+        }
+
+        public async Task<ProductFullDTO> AddPhotosAsync(int productId, List<IFormFile> newImages)
+        {
+            var product = await _repository.Get()
+                .Include(x => x.Language)
+                .Include(x => x.Category)
+                .Include(x => x.Genre)
+                .Include(x => x.Theme)
+                .Include(x => x.Feedbacks)
+                .Include(x => x.Tags)
+                .Include(x => x.Images)
+                .Include(x => x.Ratings)
+                .Include(x => x.Discounts)
+                .FirstOrDefaultAsync(x => x.Id == productId)
+                ?? throw new InvalidIdException($"Продукту з ID: {productId} ще/вже не існує.");
+
+            if (newImages != null && newImages.Any())
+            {
+                await SaveImagesAsync(newImages, product.Id);
+            }
+
+            return _mapper.Map<ProductFullDTO>(product);
         }
 
         #region Supporting methods
