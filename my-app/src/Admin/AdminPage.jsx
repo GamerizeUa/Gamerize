@@ -9,8 +9,7 @@ export const AdminPage = () => {
 
     return (
         <div className={styles.wrapper}>
-            <div className={styles.container}>
-                <Header/>
+            <Header/>
                 <div className={styles.main_section}>
                     <NavBar/>
                     <main>
@@ -19,7 +18,6 @@ export const AdminPage = () => {
                         </Suspense>
                     </main>
                 </div>
-            </div>
         </div>
     )
 }
