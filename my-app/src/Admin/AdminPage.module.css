@@ -1,0 +1,20 @@
+.wrapper {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #EEF1FF;
+}
+
+.container{
+    width: 1440px;
+    margin: 0 auto;
+}
+
+.main_section{
+    display: flex;
+    gap: 20px;
+}
+
+.main_section main{
+    margin-top: 42px;
+}

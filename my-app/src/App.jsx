@@ -13,6 +13,11 @@ import { Checkout } from './components/Checkout/Checkout.jsx';
 import OrderAndPay from './pages/OrderAndPay/OrderAndPay.jsx';
 import Return from './pages/Return/Return.jsx';
 import ConfirmEmailPage from './components/LoginAndRegistration/ConfirmEmail/ConfirmEmail.jsx';
+import {AdminPage} from "./Admin/AdminPage.jsx";
+import {Orders} from "./Admin/OrdersPage/Orders.jsx";
+import {Products} from "./Admin/ProductsPage/Products.jsx";
+import {Questions} from "./Admin/QuestionsPage/Questions.jsx";
+import {Edit} from "./Admin/EditPage/Edit.jsx";
 
 function App() {
     return (
@@ -39,9 +44,12 @@ function App() {
                 <Route path="/reset-password" element={<HomePage />} />
                 <Route path="*" element={<NotFound />} />
             </Route>
-            {/* <Route path="admin/*" element={<AdminPage />}>
-        <Route index element={<AddProduct />} />
-      </Route> */}
+            <Route path="/admin" element={<AdminPage />}>
+                <Route index element={<Orders />} />
+                <Route path="/admin/products" element={<Products />} />
+                <Route path="/admin/questions" element={<Questions />} />
+                <Route path="/admin/edit" element={<Edit />} />
+             </Route>
         </Routes>
     );
 }
