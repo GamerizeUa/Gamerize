@@ -38,6 +38,17 @@ const Catalog = () => {
     }, [dispatch, page, pageSize, filters]);
 
     useEffect(() => {
+        dispatch(setPageSize(12));
+        dispatch(setPage(1));
+    }, []);
+
+    useEffect(() => {
+        if(page > totalPages && totalPages >=1) {
+            dispatch(setPage(totalPages));
+        }
+    }, [totalPages])
+
+    useEffect(() => {
         window.scrollTo({
             top: 0,
         });
