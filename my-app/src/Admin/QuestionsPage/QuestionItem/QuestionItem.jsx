@@ -1,9 +1,10 @@
 import sprite from "../../../assets/icons/sprite.svg";
 import React, {useState} from "react";
 import styles from "./QuestionItem.module.css";
+import {Link} from "react-router-dom";
+import axios from "axios";
 
-export const QuestionItem = ({ question }) => {
-    const [isFavorite, setIsFavorite] = useState(false);
+export const QuestionItem = ({question, keyID, getAllQuestions}) => {
     const [isChecked, setIsChecked] = useState(false);
     const date = new Date(question.dateTime);
     const today = new Date();
@@ -27,14 +28,19 @@ export const QuestionItem = ({ question }) => {
     };
 
     const handleIconCheck = () => {
-        setIsFavorite(prevState => !prevState);
+        axios.post(`https://gamerize.ltd.ua/api/Question/IsStarred/${question.id}`,
+            {'isStarred': !question.isStarred})
+            .then((res) => {
+                getAllQuestions();
+            })
+            .catch((err) => console.log(err))
     }
 
     const handleCheckboxClick = () => {
         setIsChecked(prevState => !prevState);
     }
 
-    return(
+    return (
         <div className={styles.question}>
             <div className={styles.question_leftPart}>
                 <div className={styles.question_actions}>
@@ -52,19 +58,19 @@ export const QuestionItem = ({ question }) => {
                         <svg width="22" height="22">
                             <use
                                 href={sprite + '#icon-admin-favorite'}
-                                fill= {isFavorite ? '#AAC4FF' : 'none'}>
+                                fill={question.isStarred ? '#AAC4FF' : 'none'}>
                             </use>
                         </svg>
                     </div>
                 </div>
+            </div>
+            <Link to='/' >
                 <p className={styles.question_name}>{question.userName}</p>
-            </div>
-            <div className={styles.question_centerPart}>
-                <p className={styles.question_text}>{question.text}</p>
-            </div>
-            <div className={styles.question_rightPart}>
-                <p className={styles.question_time}>{formatDate(date)}</p>
-            </div>
+                <div className={styles.question_rightPart}>
+                    <p className={styles.question_text}>{question.text}</p>
+                    <p className={styles.question_time}>{formatDate(date)}</p>
+                </div>
+            </Link>
         </div>
     )
 }

@@ -1,6 +1,6 @@
 .questions{
     border-radius: 14px;
-    border: 0.3px #B9B9B9;
+    border: 0.3px solid #B9B9B9;
     background: #FFF;
     width: 100%;
 }
@@ -24,8 +24,12 @@
     background: #FAFAFA;
     width: 332px;
     height: 40px;
-    padding: 10px 0 10px 17px;
+    padding: 10px 10px 10px 17px;
     box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
+}
+
+.questions_input input{
+    width: 100%;
 }
 
 .questions_btn_trash{
@@ -36,5 +40,14 @@
 }
 
 .questions_btn_trash:hover{
-    background-color: #E5E4E2;
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.questions_content a{
+    display: block;
+    border-bottom: 0.6px solid #DEDADA;
+}
+
+.questions_content a:last-of-type{
+    border-bottom: none !important;
 }

@@ -1,8 +1,10 @@
 .navbar{
-    width: 277px;
+    display: inline-block;
+    min-width: 277px;
     background-color: #fefefe;
     padding: 12px 31px 433px 31px;
     border-radius: 0 0 10px 0;
+    max-height: 685px;
 }
 
 .navbar_list{

@@ -1,19 +1,26 @@
 .question{
     padding: 20px 26px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    border-bottom: 0.6px solid #DEDADA;
+    gap: 32px;
 }
 
 .question:hover{
     background-color: #F1F5FE;
 }
 
+.question a{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 94%;
+}
+
 .question_leftPart{
     display: flex;
     align-items: center;
+    width: 6%;
     gap: 32px;
 }
 
@@ -49,10 +56,14 @@
     font-family: "Noto Sans";
     font-size: 14px;
     font-weight: 700;
+    align-self: flex-start;
 }
 
-.question_centerPart{
-    width: 414px;
+.question_rightPart{
+    display: flex;
+    align-items: center;
+    width: 70%;
+    justify-content: space-between;
 }
 
 .question_text{
@@ -63,6 +74,7 @@
     font-family: "Noto Sans";
     font-size: 14px;
     font-weight: 400;
+    width: 414px;
 }
 
 .question_time{
