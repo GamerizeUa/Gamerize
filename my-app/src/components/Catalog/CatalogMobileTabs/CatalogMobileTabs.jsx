@@ -28,10 +28,12 @@ export const CatalogMobileTabs = ({setChosenDisplaying}) => {
             {isFiltersVisible &&
                 <div className={styles.filters_background} onClick={closeFiltersByClicking}>
                     <div className={styles.filters}>
-                        <div className={styles.filters_cross}
-                             onClick={() => handleOpenFilters(false)}>
+                        <div className={styles.filters_container}>
+                            <div className={styles.filters_cross}
+                                 onClick={() => handleOpenFilters(false)}>
+                            </div>
+                            <CatalogFilters/>
                         </div>
-                        <CatalogFilters/>
                     </div>
                 </div>
             }

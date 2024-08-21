@@ -16,8 +16,8 @@ export const ProductsMatch = ({searchText, setMatchesDisplayed}) => {
 
 
     const modifyImagePath = (imagePath) => {
-        const baseUrl = "https://gamerize.ltd.ua/images";
-        const formattedPath = imagePath?.replace(/\.\\wwwroot\\images\\\.\\wwwroot\\images/g, '')?.replace(/\\/g, '/');
+        const baseUrl = "https://gamerize.ltd.ua";
+        const formattedPath = imagePath?.replace(/\.\\wwwroot/g , '').replace(/\\/g, '/');
 
         return baseUrl + formattedPath;
     }

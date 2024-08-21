@@ -10,7 +10,7 @@ export const Banner = () => {
                 <div className={styles.banner_container}>
                     <div className={styles.banner_leftPart}>
                         <div className={styles.banner_title}>
-                            <p className={styles.banner_highTitle}>Зимові</p>
+                            <p className={styles.banner_highTitle}>Супер</p>
                             <p className={styles.banner_lowTitle}>ЗНИЖКИ</p>
                         </div>
                         <img src={presentBox} className={styles.banner_presentBox} alt="Present box"/>
