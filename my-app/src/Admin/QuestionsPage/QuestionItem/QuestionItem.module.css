@@ -39,6 +39,11 @@
     justify-content: center;
 }
 
+.question_checkbox span{
+    padding-top: 7px;
+    padding-left: 2px;
+}
+
 .question_checkbox input{
     position: absolute;
     opacity: 0;

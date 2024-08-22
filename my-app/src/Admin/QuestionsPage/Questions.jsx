@@ -3,18 +3,40 @@ import sprite from "../../assets/icons/sprite.svg";
 import React, {useEffect, useState} from "react";
 import {QuestionItem} from "./QuestionItem/QuestionItem.jsx";
 import axios from "axios";
-import {Link} from "react-router-dom";
 import {Pagination} from "../Pagination/Pagination.jsx";
 
 export const Questions = () => {
     const [questions, setQuestions] = useState([]);
+    const [totalQuestions, setTotalQuestions] = useState(null);
+    const [totalPages, setTotalPages] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [questionsToDelete, setQuestionsToDelete] = useState([]);
 
     useEffect(() => {
         getAllQuestions();
-    }, [])
+    }, [currentPage])
 
     const getAllQuestions = () => {
-        axios.get("https://gamerize.ltd.ua/api/Question/GetAll").then((res) => setQuestions(res.data.questions))
+        axios.get("https://gamerize.ltd.ua/api/Question/GetAll", {params: {page: currentPage}})
+            .then((res) => {
+            setQuestions(res.data.questions)
+            setTotalQuestions(res.data.totalMessages)
+            setTotalPages(res.data.totalPages)
+            setCurrentPage(res.data.page)
+        })
+    }
+
+    const deleteQuestions = () => {
+        axios.delete("https://gamerize.ltd.ua/api/Question/Questions/Delete", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: questionsToDelete
+        })
+            .then(() => {
+                getAllQuestions()
+                setQuestionsToDelete([])
+            })
     }
 
     return (
@@ -31,7 +53,9 @@ export const Questions = () => {
                             </svg>
                             <input type="text" placeholder="Пошук"/>
                         </div>
-                        <div className={styles.questions_btn_trash}>
+                        <div className={styles.questions_btn_trash}
+                             onClick={deleteQuestions}
+                        >
                             <svg width="16" height="16">
                                 <use
                                     href={sprite + '#icon-admin-trash'}
@@ -42,12 +66,21 @@ export const Questions = () => {
                     </div>
                     <div className={styles.questions_content}>
                         {questions.map((question, i) => (
-                            <QuestionItem question={question} key={i} getAllQuestions={getAllQuestions}/>
+                            <QuestionItem
+                                question={question} key={i}
+                                getAllQuestions={getAllQuestions}
+                                setQuestionsToDelete={setQuestionsToDelete}
+                                questionsToDelete={questionsToDelete}
+                            />
                         ))}
                     </div>
                 </div>
             </div>
-            <Pagination/>
+            <Pagination totalItems={totalQuestions}
+                        totalPages={totalPages}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+            />
         </>
     )
 }

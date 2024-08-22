@@ -33,6 +33,7 @@
     font-weight: 600;
     color: black;
     width: 50%;
+    user-select: none;
 }
 
 .pagination_buttons div:hover{
@@ -45,6 +46,6 @@
 
 .pagination_buttons .blocked{
     color: #797C80;
-    cursor: not-allowed;
     box-shadow: none !important;
+    cursor: not-allowed;
 }

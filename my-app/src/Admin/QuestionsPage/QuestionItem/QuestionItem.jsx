@@ -4,8 +4,7 @@ import styles from "./QuestionItem.module.css";
 import {Link} from "react-router-dom";
 import axios from "axios";
 
-export const QuestionItem = ({question, keyID, getAllQuestions}) => {
-    const [isChecked, setIsChecked] = useState(false);
+export const QuestionItem = ({question, getAllQuestions, setQuestionsToDelete, questionsToDelete}) => {
     const date = new Date(question.dateTime);
     const today = new Date();
     const isToday = date.toDateString() === today.toDateString();
@@ -37,7 +36,10 @@ export const QuestionItem = ({question, keyID, getAllQuestions}) => {
     }
 
     const handleCheckboxClick = () => {
-        setIsChecked(prevState => !prevState);
+        setQuestionsToDelete(prevState =>
+            prevState.includes(question.id)
+                ? prevState.filter((i) => i !== question.id)
+                : [...prevState, question.id]);
     }
 
     return (
@@ -45,7 +47,7 @@ export const QuestionItem = ({question, keyID, getAllQuestions}) => {
             <div className={styles.question_leftPart}>
                 <div className={styles.question_actions}>
                     <div className={styles.question_checkbox} onClick={handleCheckboxClick}>
-                        <span className={`${isChecked ? styles.checked : ''}`}>
+                        <span className={`${questionsToDelete.includes(question.id) ? styles.checked : ''}`}>
                             <svg width="20" height="20">
                             <use
                                 href={sprite + '#icon-admin-checked'}
