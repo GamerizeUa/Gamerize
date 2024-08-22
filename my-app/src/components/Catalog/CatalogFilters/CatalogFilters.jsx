@@ -14,7 +14,7 @@ import {useLocation} from "react-router-dom";
 import {setFilters} from "../../../redux/productsCatalogSlice.js";
 import handleLinkClick from "../../../helpers/ScrollToTop.js";
 
-export  const CatalogFilters = () => {
+export  const CatalogFilters = ({openFiltersFunc}) => {
     const age = ["3 - 6", "6 - 9", "9 - 12", "12 - 18", "18+"];
     const players = ["1 - 3", "4 - 6", "більше 6"];
     const timeGame = ["15 - 30", "40 - 60", "70 - 90", "115 - 180", "240"];
@@ -29,6 +29,7 @@ export  const CatalogFilters = () => {
     const [selectedGameTimes, setSelectedGameTimes] = useState([]);
     const [selectedLanguages, setSelectedLanguages] = useState([]);
     const [isReadyForResetting, setIsReadyForResetting] = useState(false);
+    const {filters} = useSelector((state) => state.productsCatalog);
     const dispatch = useDispatch();
     const categories = useSelector(selectCategories);
     const genres = useSelector(selectGenres);
@@ -53,26 +54,34 @@ export  const CatalogFilters = () => {
         }
     }, [isReadyForResetting])
 
+    const processState = (stateObject) => {
+        Object.keys(stateObject).forEach(key => {
+            const setterFunction = getSetterFunction(key);
+            if (setterFunction && stateObject[key]) {
+                setterFunction(prevState =>
+                    [...prevState, ...(Array.isArray(stateObject[key])
+                        ? stateObject[key].map(item => {
+                            if (typeof item === 'object' && item !== null) {
+                                return item;
+                            }
+                            return item && Number(item);
+                        }).filter(item => item !== null && item !== '' && item !== undefined)
+                        : [stateObject[key]])]);
+                setterFunction(prevState => [...new Set(prevState)]);
+            }
+        });
+    };
+
+    useEffect(() => {
+        processState(filters);
+    }, [filters]);
+
     useEffect(() => {
         if (location.state) {
-            Object.keys(location.state).forEach(key => {
-                const setterFunction = getSetterFunction(key);
-                if (setterFunction && location.state[key]) {
-                    setterFunction(prevState =>
-                        [...prevState, ...(Array.isArray(location.state[key])
-                        ? location.state[key].map(item => {
-                                if (typeof item === 'object' && item !== null) {
-                                    return item;
-                                }
-                                return item && Number(item);
-                            }).filter(item => item !== null
-                            && item !== '' && item !== undefined)
-                        : [location.state[key]])]);
-                    setterFunction(prevState => [...new Set(prevState)]);
-                }
-            });
+            processState(location.state);
             setIsReadyForResetting(true);
-        }},[location.state])
+        }
+    }, [location.state]);
 
     const getSetterFunction = (key) => {
         switch (key) {
@@ -110,7 +119,9 @@ export  const CatalogFilters = () => {
             gameTime: selectedGameTimes,
             languages: selectedLanguages,
         };
-        console.log(filters);
+        if(openFiltersFunc){
+            openFiltersFunc(false);
+        }
         dispatch(setFilters(filters))
     };
 

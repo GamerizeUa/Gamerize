@@ -32,7 +32,7 @@ export const CatalogMobileTabs = ({setChosenDisplaying}) => {
                             <div className={styles.filters_cross}
                                  onClick={() => handleOpenFilters(false)}>
                             </div>
-                            <CatalogFilters/>
+                            <CatalogFilters openFiltersFunc={handleOpenFilters}/>
                         </div>
                     </div>
                 </div>
