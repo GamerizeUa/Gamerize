@@ -13,6 +13,7 @@ namespace Gamerize.DAL.Entities.Shop
         public required string Email { get; set; }
 		public required DateTime DateTime { get; set; }
 		public required bool IsAnswered { get; set; }
+		public bool IsStarred { get; set; }
 
 		public virtual Answer? Answer { get; set; }
 	}

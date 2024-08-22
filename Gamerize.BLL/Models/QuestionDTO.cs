@@ -7,6 +7,7 @@
 		public string Text { get; set; }
 		public string Email { get; set; }
 		public DateTime DateTime { get; set; }
+		public bool IsStarred { get; set; }
 		public AnswerDTO? Answer { get; set; }
 	}
 }

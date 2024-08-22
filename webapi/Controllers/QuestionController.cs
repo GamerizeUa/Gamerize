@@ -1,9 +1,6 @@
 ﻿using Gamerize.BLL.Models;
-using Gamerize.BLL.Models.Interfaces;
 using Gamerize.BLL.Services;
-using Gamerize.BLL.Services.Interfaces;
 using Gamerize.Common.Extensions.Exceptions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace webapi.Controllers
@@ -20,12 +17,21 @@ namespace webapi.Controllers
         }
 
         [HttpGet("/api/Question/GetAll")]
-        public async Task<ActionResult<IEnumerable<QuestionDTO>>> GetAllAsync()
+        public async Task<ActionResult> GetAllAsync(int totalQuestions = 10, int page = 1)
         {
             try
             {
-                var question = await _questionService.GetAllAsync();
-                return Ok(question);
+                var (questions, totalPages, totalMessages) = await _questionService.GetAllAsync(totalQuestions, page);
+
+                var result = new
+                {
+                    Questions = questions,
+                    TotalPages = totalPages,
+                    Page = page,
+                    TotalMessages = totalMessages
+                };
+
+                return Ok(result);
             }
             catch (ServerErrorException ex)
             {
@@ -93,12 +99,12 @@ namespace webapi.Controllers
             }
         }
 
-        [HttpDelete("Question/{id:int}")]
-        public async Task<IActionResult> DeleteQuestionAsync(int id)
+        [HttpDelete("Questions/Delete")]
+        public async Task<IActionResult> DeleteQuestionAsync([FromBody] List<int> ids)
         {
             try
             {
-                await _questionService.DeleteQuestionAsync(id);
+                await _questionService.DeleteQuestionAsync(ids);
 
                 return StatusCode(204);
             }
@@ -133,6 +139,24 @@ namespace webapi.Controllers
             }
         }
 
+        [HttpPost("/api/Question/IsStarred/{id:int}")]
+        public async Task<ActionResult<QuestionDTO>> PostIsStarredAsync(int id)
+        {
+            try
+            {
+                return Ok(await _questionService.PostIsStarredAsync(id));
+            }
+            catch (InvalidIdException ex)
+            {
+                return StatusCode(404, ex.Message);
+            }
+            catch (ServerErrorException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        //_____________________________________________________________________________
         [HttpGet("/api/Answer/GetAll")]
         public async Task<ActionResult<IEnumerable<AnswerDTO>>> GetAllAnswerAsync()
         {
@@ -147,8 +171,8 @@ namespace webapi.Controllers
             }
         }
 
-        [HttpDelete("Answer/{id:int}")]
-        public async Task<IActionResult> DeleteAnswerAsync(int id)
+        [HttpDelete("Answer/Delete")]
+        public async Task<IActionResult> DeleteAnswerAsync([FromBody] List<int> id)
         {
             try
             {
@@ -182,6 +206,27 @@ namespace webapi.Controllers
             catch (DuplicateItemException ex)
             {
                 return StatusCode(400, ex.Message);
+            }
+            catch (ServerErrorException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet("Questions/Search")]
+        public async Task<ActionResult> SearchAsync(string term, int totalQuestions = 10, int page = 1)
+        {
+            try
+            {
+                var (results, totalPages) = await _questionService.SearchAsync(term, totalQuestions, page);
+
+                var result = new
+                {
+                    Questions = results,
+                    TotalPages = totalPages
+                };
+
+                return Ok(result);
             }
             catch (ServerErrorException ex)
             {

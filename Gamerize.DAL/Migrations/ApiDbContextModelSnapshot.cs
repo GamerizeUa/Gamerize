@@ -588,6 +588,9 @@ namespace Gamerize.DAL.Migrations
                     b.Property<bool>("IsAnswered")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsStarred")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasMaxLength(1500)

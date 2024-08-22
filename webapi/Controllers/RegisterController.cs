@@ -51,8 +51,8 @@ namespace webapi.Controllers
                     var callbackUrl = $"{frontendUrl}?userId={user.Id}&code={code}";
 
                     await _emailSender.SendEmailAsync(model.Email, "Підтвердження електронної пошти",
-                        $"Вітаємо, шановний клієнте! Ви щойно зареєструвались на сайті Gamerise! " +
-                        $"\r\nПідтвердіть вашу електронну пошту, перейшовши за посиланням: " +
+                        $"Вітаємо, шановний клієнте! Ви щойно зареєструвались на сайті Gamerise! <br/><br/>" +
+                        $"Підтвердіть вашу електронну пошту, перейшовши за посиланням: " +
                         $"<a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>натисніть тут</a>.");
 
                     return Ok(new { userId = user.Id, code });
