@@ -4,17 +4,27 @@ import {CatalogFilters} from "../../components/Catalog/CatalogFilters/CatalogFil
 import {CatalogSorting} from "../../components/Catalog/CatalogSorting/CatalogSorting.jsx";
 import PaginationButtons from "../../components/common-components/PaginationButtons/PaginationButtons.jsx";
 import {Breadcrumbs} from "../../components/ProductOverview/Breadcrumbs/Breadcrumbs.jsx";
-import {fetchProducts, setPage, setPageSize} from "../../redux/productsCatalogSlice.js";
+import {
+    fetchProducts,
+    resetFilters,
+    setFilters,
+    setPage,
+    setPageSize,
+    setSearchTerm
+} from "../../redux/productsCatalogSlice.js";
 import {useDispatch, useSelector} from "react-redux";
 import ProductCardList from "../../components/common-components/ProductCardList/ProductCardList.jsx";
 import useWindowWidth from "../../components/hooks/useWindowWidth.js";
 import {CatalogMobileTabs} from "../../components/Catalog/CatalogMobileTabs/CatalogMobileTabs.jsx";
+import {useLocation} from "react-router-dom";
 
 const Catalog = () => {
     const {products, totalPages, page, pageSize, loading, filters} = useSelector((state) => state.productsCatalog);
     const dispatch = useDispatch();
     const [chosenDisplaying, setChosenDisplaying] = useState({displayingThree: true, displayingFour: false});
     const windowWidth = useWindowWidth();
+    const [isReadyForResetting, setIsReadyForResetting] = useState(false);
+    const location = useLocation();
     const displayingThreeProductsInRow = {
         oneLineDesktopCardsAmount: 3,
         oneLineTabletCardsAmount: 3,
@@ -34,13 +44,28 @@ const Catalog = () => {
     const [configurationObj, setConfigurationObj] = useState(displayingThreeProductsInRow);
 
     useEffect(() => {
-        dispatch(fetchProducts({page, pageSize, filters}));
-    }, [dispatch, page, pageSize, filters]);
+        const setLocalStates = async () => {
+            await dispatch(resetFilters())
+            if(location.state.searchTerm){
+                await dispatch(setSearchTerm(location.state.searchTerm));
+            }else{
+                await dispatch(setFilters(location.state));
+            }
+            await setIsReadyForResetting(true)
+        }
+
+        setLocalStates();
+    }, []);
 
     useEffect(() => {
-        dispatch(setPageSize(12));
-        dispatch(setPage(1));
-    }, []);
+        if(isReadyForResetting){
+            dispatch(fetchProducts({page, pageSize, filters}));
+        }
+    }, [isReadyForResetting])
+
+    useEffect(() => {
+            dispatch(fetchProducts({page, pageSize, filters}));
+    }, [dispatch, page, pageSize, filters]);
 
     useEffect(() => {
         if(page > totalPages && totalPages >=1) {
@@ -62,6 +87,7 @@ const Catalog = () => {
             setConfigurationObj((prevConfig) => ({...prevConfig, ...displayingFourProductsInRow}));
             dispatch(setPageSize(20));
         }
+        setIsReadyForResetting(true)
     }, [chosenDisplaying]);
 
     const changePage = (newPage) => {

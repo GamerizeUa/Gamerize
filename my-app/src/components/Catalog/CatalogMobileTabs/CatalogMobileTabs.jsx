@@ -1,12 +1,12 @@
 import {CatalogSorting} from "../CatalogSorting/CatalogSorting.jsx";
 import styles from "./CatalogMobileTabs.module.css";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {CatalogFilters} from "../CatalogFilters/CatalogFilters.jsx";
 import useNoScroll from "../../hooks/useNoScroll.js";
 
 export const CatalogMobileTabs = ({setChosenDisplaying}) => {
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
-    useNoScroll(true);
+    useNoScroll(isFiltersVisible);
 
     const handleOpenFilters = (isOpen) => {
         setIsFiltersVisible(isOpen);
