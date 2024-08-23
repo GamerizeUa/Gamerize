@@ -13,17 +13,9 @@ import { Slider } from './Slider.jsx';
 import { SliderControl } from './SliderControl.jsx';
 import { useMove } from '../../../hooks/useMove.jsx';
 import { ProductContext } from '../../product-page/Product.jsx';
+import { getImagePath } from '../../../utils/getImagePath.js';
 
 export const GalleryContext = createContext(null);
-
-const getImagePath = (imagePath) => {
-    if (!imagePath) return null;
-
-    const regex = new RegExp(/\.\\wwwroot\\images/g);
-    const formattedPath = imagePath.replaceAll(regex, '').replace(/\\/g, '/');
-
-    return `https://gamerize.ltd.ua/images${formattedPath}`;
-};
 
 export const ProductGallery = ({ breadcrumbsDetails }) => {
     let { images } = useContext(ProductContext);

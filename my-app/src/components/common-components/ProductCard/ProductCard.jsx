@@ -12,9 +12,10 @@ import {
 } from '../../../redux/wishListSlice';
 import sprite from '../../../assets/icons/sprite.svg';
 import { addToCart, updateCartProduct } from '../../../redux/cartSlice';
+import { getImagePath } from '../../../utils/getImagePath';
 
 export default function ProductCard({
-    configurationObject : {isDiscount, isWishList} = {
+    configurationObject: { isDiscount, isWishList } = {
         isDiscount: false,
         isWishList: false,
     },
@@ -32,12 +33,11 @@ export default function ProductCard({
     },
 }) {
     let discount = 0;
-    if (isDiscount){
+    if (isDiscount) {
         if (newPrice === 0) {
             isDiscount = false;
-        }
-        else {
-            discount = Math.floor((1 - newPrice / price) * 100);    
+        } else {
+            discount = Math.floor((1 - newPrice / price) * 100);
         }
     }
     const dispatch = useDispatch();
@@ -57,14 +57,6 @@ export default function ProductCard({
     const handleUpdateCount = () => {
         dispatch(updateCartProduct({ id, modifier: 1 }));
     };
-
-    const modifyImagePath = (imagePath) => {
-        const baseUrl = "https://gamerize.ltd.ua/images";
-        const  formattedPath = imagePath?.replace(/\.\\wwwroot\\images\\\.\\wwwroot\\images/g, '')?.replace(/\\/g, '/');
-        const finalFormattedPath = formattedPath?.replace(/\.\/wwwroot\/images/g, '');
-
-        return baseUrl + finalFormattedPath;
-    }
 
     return (
         <div className={styles.all_content}>
@@ -108,7 +100,10 @@ export default function ProductCard({
                     </div>
                 </div>
                 <div className={styles.image_container}>
-                    <img src={modifyImagePath(images[0]?.path)} alt={`product ${name} # ${id}`} />
+                    <img
+                        src={getImagePath(images[0]?.path)}
+                        alt={`product ${name} # ${id}`}
+                    />
                 </div>
                 <div className={styles.features_bar}>
                     <p
@@ -134,7 +129,7 @@ export default function ProductCard({
                     )}
                     <p
                         className={styles.price + ' ' + styles.current_price}
-                    >{`${isDiscount? newPrice: price}₴`}</p>
+                    >{`${isDiscount ? newPrice : price}₴`}</p>
                 </div>
 
                 <button
