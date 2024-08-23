@@ -81,8 +81,6 @@ namespace Gamerize.DAL.Repositories
 
 		public async Task<TEntity?> GetByIdAsync(object id) => await _context.Set<TEntity>().FindAsync(id);
 
-
-
 		public void Update(TEntity entity) => _context.Set<TEntity>().Update(entity);
 
 		public async Task UpdateAsync(TEntity entity) => await Task.Run(() => Update(entity));

@@ -1,4 +1,5 @@
-﻿using Gamerize.DAL.Entities.Admin;
+﻿using Gamerize.BLL.Services;
+using Gamerize.DAL.Entities.Admin;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -11,32 +12,18 @@ namespace webapi.Controllers
     [ApiController]
     public class LogoutController : ControllerBase
     {
-        private readonly SignInManager<User> _signInManager;
+        private readonly LogoutService _logoutService;
 
-        public LogoutController(SignInManager<User> signInManager)
+        public LogoutController(LogoutService logoutService)
         {
-            _signInManager = signInManager;
+            _logoutService = logoutService;
         }
 
         [HttpPost("logout")]
         [Authorize]
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
-
-            if (Request.Cookies["jwt"] != null)
-            {
-                var cookieOptions = new CookieOptions
-                {
-                    Expires = DateTime.UtcNow.AddDays(-1),
-                    HttpOnly = true,
-                    Secure = true,
-                    SameSite = SameSiteMode.None
-                };
-
-                Response.Cookies.Append("jwt", "", cookieOptions);
-            }
-
+            await _logoutService.LogoutAsync(Request, Response);
             return Ok(new { Message = "Logout successful" });
         }
     }

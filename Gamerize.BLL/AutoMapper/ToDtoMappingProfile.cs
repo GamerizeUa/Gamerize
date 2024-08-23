@@ -37,6 +37,7 @@ namespace Gamerize.BLL.AutoMapper
 			CreateMap<DeliveryMethod, DeliveryMethodDTO>().ReverseMap();
 			CreateMap<PaymentMethod, PaymentMethodDTO>().ReverseMap();
 			CreateMap<Rating, RatingDTO>().ReverseMap();
+			CreateMap<WishList, WishListDTO>().ReverseMap();
         }
 	}
 }

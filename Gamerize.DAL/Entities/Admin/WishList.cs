@@ -9,6 +9,5 @@ namespace Gamerize.DAL.Entities.Admin
         public virtual User User { get; set; }
         public required int ProductId { get; set; }
         public virtual Product Product { get; set; }
-
     }
 }

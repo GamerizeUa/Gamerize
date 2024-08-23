@@ -10,5 +10,6 @@ namespace Gamerize.DAL.Entities.Admin
 		public string? ProfilePicture { get; set; }
         public string? City { get; set; }
         public string? DeliveryAddress { get; set; }
+		public bool IsAdmin { get; set; } = false;
     }
 }

@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
 using Gamerize.BLL.Models;
+using Gamerize.BLL.Specifications;
+using Gamerize.Common.Config;
+using Gamerize.Common.Extensions.Exceptions;
 using Gamerize.DAL.Repositories.Interfaces;
 using Gamerize.DAL.UnitOfWork.Interfaces;
 using Google.Apis.Auth.OAuth2;
@@ -7,6 +10,7 @@ using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Gamerize.BLL.Services
 {
@@ -42,7 +46,8 @@ namespace Gamerize.BLL.Services
                 Email = user.Email,
                 City = user.City,
                 DeliveryAddress = user.DeliveryAddress,
-                ProfilePicture = user.ProfilePicture
+                ProfilePicture = user.ProfilePicture,
+                IsAdmin = user.IsAdmin,
             };
 
             return userProfileData;
@@ -202,5 +207,28 @@ namespace Gamerize.BLL.Services
             return await _userManager.CheckPasswordAsync(user, currentPassword);
         }
 
+        public async Task DeleteAsync(int id)
+        {
+            try
+            {
+                var currentEntity = await _repository.GetByIdAsync(id) ??
+                    throw new InvalidIdException(ExceptionMessage(id));
+                await _repository.DeleteAsync(currentEntity);
+                await _unitOfWork.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new ServerErrorException(ex.Message, ex);
+            }
+        }
+        #region Supporting methods
+        private string ExceptionMessage(object? value = null) =>
+            value switch
+            {
+                int id when value is int => $"Продукта з id: {id} ще/вже не існує!",
+                string name when value is string => $"...",
+                _ => "Something has gone wrong"
+            };
+        #endregion
     }
 }

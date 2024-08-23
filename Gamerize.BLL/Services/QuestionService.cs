@@ -111,6 +111,7 @@ namespace Gamerize.BLL.Services
                 var sortedQuestions = allQuestions
                     .OrderByDescending(q => q.IsStarred)
                     .ThenBy(q => q.Answer == null)
+                    .ThenByDescending(q => q.DateTime)
                     .ToList();
 
                 var totalCount = allQuestions.Count;

@@ -13,5 +13,6 @@ namespace Gamerize.BLL.Models
         public string? City { get; set; }
         public string? DeliveryAddress { get; set; }
         public string? ProfilePicture { get; set; }
+        public bool? IsAdmin { get; set; }
     }
 }

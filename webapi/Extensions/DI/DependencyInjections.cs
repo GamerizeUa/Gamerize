@@ -34,6 +34,8 @@ namespace webapi.Extensions.DI
 			services.AddTransient<UserService>();
 			services.AddTransient<DeliveryMethodService>();
 			services.AddTransient<PaymentMethodService>();
+			services.AddTransient<WishListService>();
+			services.AddTransient<LogoutService>();
         }
 	}
 }

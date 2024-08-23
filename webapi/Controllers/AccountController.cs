@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.WebUtilities;
 using System.Text;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using System.Text.Encodings.Web;
+using Gamerize.BLL.Services.Interfaces;
+using Gamerize.Common.Extensions.Exceptions;
 
 namespace webapi.Controllers;
 
@@ -23,14 +25,16 @@ public class AccountController : ControllerBase
     private readonly ProfileService _profileService;
     private readonly UserManager<User> _userManager;
     private readonly IEmailSender _emailSender;
+    private readonly LogoutService _logoutService;
 
     public AccountController(UserManager<User> userManager, ProfileService profileService, ILogger<AccountController> logger,
-        IEmailSender emailSender)
+        IEmailSender emailSender, LogoutService logoutService)
     {
         _profileService = profileService;
         _logger = logger;
         _userManager = userManager;
         _emailSender = emailSender;
+        _logoutService = logoutService;
     }
 
     [HttpGet("profile")]
@@ -180,6 +184,25 @@ public class AccountController : ControllerBase
         {
             _logger.LogError(ex, "Не вдалося змінити пароль");
             return StatusCode(500, "Не вдалося змінити пароль");
+        }
+    }
+
+    [HttpDelete("Delete/{id:int}")]
+    public async Task<IActionResult> DeleteAsync(int id)
+    {
+        try
+        {
+            await _logoutService.LogoutAsync(Request, Response);
+            await _profileService.DeleteAsync(id);
+            return NoContent();
+        }
+        catch (InvalidIdException ex)
+        {
+            return StatusCode(400, ex.Message);
+        }
+        catch (ServerErrorException ex)
+        {
+            return StatusCode(500, ex.Message);
         }
     }
 }

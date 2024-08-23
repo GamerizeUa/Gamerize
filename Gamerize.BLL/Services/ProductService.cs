@@ -350,11 +350,12 @@ namespace Gamerize.BLL.Services
                     .Include(x => x.Discounts);
 
                 var productsWithDiscounts = await query
+                    .Where(p => p.Discounts.Any())
                     .Select(p => new
                     {
                         Product = p,
-                        BiggestDiscount = p.Discounts.Any() ? p.Discounts.Max(d => d.CurrentDiscount) : 0,
-                        NewPrice = p.Discounts.Any() ? p.Price * (decimal)(1 - p.Discounts.Max(d => d.CurrentDiscount)) : p.Price
+                        BiggestDiscount = p.Discounts.Max(d => d.CurrentDiscount),
+                        NewPrice = p.Price * (decimal)(1 - p.Discounts.Max(d => d.CurrentDiscount))
                     })
                     .OrderByDescending(p => p.BiggestDiscount)
                     .ThenBy(p => p.Product.Name)

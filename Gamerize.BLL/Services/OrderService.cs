@@ -3,9 +3,11 @@ using Gamerize.BLL.Models;
 using Gamerize.Common.Extensions.Exceptions;
 using Gamerize.DAL.Entities.Admin;
 using Gamerize.DAL.Entities.Shop;
+using Gamerize.DAL.Migrations;
 using Gamerize.DAL.Repositories.Interfaces;
 using Gamerize.DAL.UnitOfWork.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Gamerize.BLL.Services
@@ -14,16 +16,18 @@ namespace Gamerize.BLL.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<Order> _repository;
+        private readonly IRepository<OrderStatus> _orderStatusRepository;
         private readonly IRepository<OrderItem> _orderItemRepository;
         private readonly IRepository<User> _userRepository;
         private readonly IRepository<DiscountCoupon> _couponRepository;
         private readonly IRepository<Product> _productRepository;
         private readonly IMapper _mapper;
         private readonly UserManager<DAL.Entities.Admin.User> _userManager;
+        private readonly IEmailSender _emailSender;
 
         public OrderService(IUnitOfWork unitOfWork, IRepository<Order> repository, IRepository<User> userRepository, 
             IRepository<DiscountCoupon> couponRepository, IRepository<Product> productRepository, IMapper mapper, 
-            IRepository<OrderItem> orderItemRepository, UserManager<User> userManager)
+            IRepository<OrderItem> orderItemRepository, UserManager<User> userManager, IEmailSender emailSender, IRepository<OrderStatus> orderStatusRepository)
         {
             _unitOfWork = unitOfWork;
             _repository = repository;
@@ -33,6 +37,8 @@ namespace Gamerize.BLL.Services
             _mapper = mapper;
             _orderItemRepository = orderItemRepository;
             _userManager = userManager;
+            _emailSender = emailSender;
+            _orderStatusRepository = orderStatusRepository;
         }
 
         public async Task<ICollection<OrderDTO>> GetOrders()
@@ -302,20 +308,36 @@ namespace Gamerize.BLL.Services
         {
             try
             {
-                var order = await _repository.GetByIdAsync(orderId);
+                var order = await _repository.Get()
+                    .Include(o => o.User)   
+                    .Include(o => o.Status)
+                    .FirstOrDefaultAsync(o => o.Id == orderId);
+
                 if (order == null)
                 {
                     throw new Exception($"Order with ID {orderId} not found.");
                 }
 
+                var orderDTO = _mapper.Map<OrderDTO>(order);
+                
                 if (order.OrderStatusId == newStatusId)
                 {
                     throw new Exception("The new status must be different from the current status.");
                 }
 
                 order.OrderStatusId = newStatusId;
+                var newStatus = await _orderStatusRepository.GetByIdAsync(order.OrderStatusId);
 
                 await _unitOfWork.SaveChangesAsync();
+                await _emailSender.SendEmailAsync(
+                    orderDTO.User.Email,
+                    "Зміна статусу замовлення",
+                    $"Вітаємо, шановний {orderDTO.User.Name}! Хочемо повідомити, що статус вашого замовлення успішно змінено!<br/><br/>" +
+                    $"Тепер ваш статус замовлення:<br/>" +
+                    $"<strong>{newStatus.Status}</strong><br/><br/>" +
+                    $"Попередній статус замовлення:<br/>" +
+                    $"<strong>{orderDTO.Status.Status}</strong>"
+                );
             }
             catch (DbUpdateException ex)
             {
