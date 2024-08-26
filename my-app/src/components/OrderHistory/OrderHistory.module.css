@@ -2,18 +2,6 @@
   padding: 24px 16px 48px 16px;
 }
 
-@media (min-width: 744px) {
-  .pageWrapper {
-    padding: 32px 32px 131px 32px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .pageWrapper {
-    padding: 48px 80px 120px 80px;
-  }
-}
-
 .title {
   min-width: 289px;
   padding: 34px 16px;
@@ -24,61 +12,26 @@
   background-color: var(--light-blue-gray);
 }
 
-@media (min-width: 744px) {
-  .title {
-    padding: 45px 46px;
-    margin-bottom: 64px;
-    font-size: 36px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .title {
-    padding: 56px 95px;
-    margin-bottom: 59px;
-  }
-}
-
-@media (min-width: 1440px) {
-  .title {
-    width: 1280px;
-    padding: 56px 108px;
-  }
-}
-
 .orderWrapper {
   position: relative;
 }
 
 .selectingBtn {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 11px;
   margin-bottom: 13px;
   background-color: transparent;
-}
-
-@media (min-width: 744px) {
-  .selectingBtn {
-    gap: 12px;
-    margin-bottom: 20px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .selectingBtn {
-    gap: 16px;
-  }
 }
 
 .selectingBtnText {
   font-size: 18px;
   font-weight: 500;
 }
-@media (min-width: 744px) {
-  .selectingBtnText {
-    font-size: 24px;
-  }
+
+.chevron {
+  width: 20px;
+  height: 20px;
 }
 
 .ordersAmount {
@@ -87,27 +40,11 @@
   font-weight: 500;
   color: #8e8e8e;
 }
-@media (min-width: 744px) {
-  .ordersAmount {
-    margin-bottom: 56px;
-    font-size: 16px;
-  }
-}
 
 .orderList {
   display: flex;
   flex-direction: column;
   gap: 35px;
-}
-@media (min-width: 744px) {
-  .orderList {
-    font-size: 32px;
-  }
-}
-@media (min-width: 1280px) {
-  .orderList {
-    gap: 48px;
-  }
 }
 
 .selectorWrapper {
@@ -183,4 +120,65 @@
   font-size: 16px;
   font-weight: 500;
   letter-spacing: -0.368px;
+}
+
+@media (min-width: 744px) {
+  .pageWrapper {
+    padding: 32px 32px 131px 32px;
+  }
+
+  .title {
+    padding: 45px 46px;
+    margin-bottom: 64px;
+    font-size: 36px;
+  }
+
+  .selectingBtn {
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .selectingBtnText {
+    font-size: 24px;
+  }
+
+  .chevron {
+    width: 24px;
+    height: 24px;
+  }
+
+  .orderList {
+    font-size: 32px;
+  }
+
+  .ordersAmount {
+    margin-bottom: 56px;
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .pageWrapper {
+    padding: 48px 80px 120px 80px;
+  }
+
+  .title {
+    padding: 56px 95px;
+    margin-bottom: 59px;
+  }
+
+  .selectingBtn {
+    gap: 16px;
+  }
+
+  .orderList {
+    gap: 48px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .title {
+    width: 1280px;
+    padding: 56px 108px;
+  }
 }

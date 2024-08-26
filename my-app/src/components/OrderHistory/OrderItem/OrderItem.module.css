@@ -1,15 +1,7 @@
 .orderItem {
   position: relative;
-  /* width: 1276px;
-    height: 296px; */
   background-color: var(--light-blue-gray);
-  padding: 41px 12px;
-}
-
-@media (min-width: 744px) {
-  .orderItem {
-    padding: 24px 32px;
-  }
+  padding: 40px 12px;
 }
 
 .statusMark {
@@ -18,11 +10,6 @@
   position: absolute;
   top: 0;
   left: 0;
-}
-@media (min-width: 744px) {
-  .statusMark {
-    width: 4px;
-  }
 }
 
 .orderStatus {
@@ -51,12 +38,7 @@
 
 .statusText {
   font-size: 14px;
-}
-
-@media (min-width: 744px) {
-  .statusText {
-    font-size: 16px;
-  }
+  font-weight: 500;
 }
 
 .orderContent {
@@ -66,48 +48,15 @@
   padding-top: 16px;
 }
 
-@media (min-width: 744px) {
-  .orderContent {
-    padding-top: 24px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .orderContent {
-    padding: 24px 25px;
-    flex-direction: row;
-  }
-}
-
 .productList {
   min-width: 264px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  row-gap: 24px;
+  column-gap: 24px;
   padding: 25px 12px;
   background-color: var(--white);
   border-radius: 10px;
-}
-
-@media (min-width: 744px) {
-  .productList {
-    min-width: 600px;
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding: 30px 20px;
-  }
-}
-@media (min-width: 1280px) {
-  .productList {
-    /* min-width: 676px; */
-    padding: 27px 50px;
-  }
-}
-@media (min-width: 1440px) {
-  .productList {
-    /* width: 772px; */
-    padding: 27px 58px;
-  }
 }
 
 .productListItem {
@@ -115,39 +64,16 @@
   gap: 10px;
 }
 
-@media (min-width: 1280px) {
-  .productListItem {
-    gap: 24px;
-  }
-}
-
-.productListImg {
-  width: 100px;
-  height: 100px;
-}
-
-@media (min-width: 744px) {
-  .productListImg {
-    width: 107px;
-    height: 120px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .productListImg {
-    width: 135px;
-    height: 135px;
-  }
-}
-
 .productDescription {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  justify-content: center;
 }
 
 .productName {
   font-size: 16px;
+  font-weight: 500;
 }
 
 .productPrice {
@@ -163,6 +89,12 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
+}
+
+.productListImg {
+  width: 100px;
+  height: 100px;
 }
 
 .orderSum {
@@ -170,24 +102,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 18px;
-}
-
-@media (min-width: 744px) {
-  .orderSum {
-    margin-bottom: 0;
-    margin-top: 32px;
-    justify-content: flex-start;
-    gap: 15px;
-    font-size: 20px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .orderSum {
-    margin-top: 0;
-    font-size: 24px;
-    justify-content: space-between;
-  }
+  font-weight: 500;
 }
 
 .orderDetailsBtn {
@@ -204,16 +119,136 @@
 }
 
 @media (min-width: 744px) {
+  .orderItem {
+    padding: 24px 32px;
+  }
+
+  .statusMark {
+    width: 4px;
+  }
+
+  .statusText {
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .orderContent {
+    padding-top: 24px;
+  }
+
+  .productList {
+    min-width: 600px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 30px 20px;
+  }
+
+  .productListImg {
+    width: 107px;
+    height: 120px;
+  }
+
+  .productName {
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .orderSum {
+    margin-bottom: 0;
+    margin-top: 32px;
+    justify-content: flex-start;
+    gap: 15px;
+    font-size: 20px;
+    font-weight: 400;
+  }
+
   .orderDetailsBtn {
     width: 307px;
     margin-top: 32px;
     font-size: 16px;
   }
+
+  .orderDetailsWrapper {
+    align-items: flex-start;
+  }
 }
 
 @media (min-width: 1280px) {
+  .productList {
+    width: 676px;
+    padding: 27px 50px;
+    column-gap: 10px;
+  }
+
+  .orderContent {
+    padding: 24px 25px;
+    flex-direction: row;
+    column-gap: 40px;
+  }
+
+  .productListItem {
+    max-width: 280px;
+    gap: 20px;
+  }
+
+  .productListImg {
+    width: 118px;
+    height: 135px;
+  }
+
+  .productName {
+    font-weight: 500;
+  }
+
+  .productPrice {
+    font-size: 12px;
+  }
+
+  .productDescription {
+    justify-content: flex-start;
+  }
+
+  .orderSum {
+    margin-top: 0;
+    font-size: 20px;
+    justify-content: space-between;
+  }
+
+  .orderDetailsBtn {
+    width: 302px;
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 1440px) {
+  .productList {
+    width: 772px;
+    padding: 27px 58px;
+    column-gap: 24px;
+  }
+
+  .productListImg {
+    width: 135px;
+  }
+
+  .productName {
+    font-size: 16px;
+  }
+
+  .productPrice {
+    font-size: 14px;
+  }
+
   .orderDetailsBtn {
     width: 345px;
-    margin-top: 0;
+  }
+
+  .orderSum {
+    font-size: 24px;
+  }
+
+  .productListItem {
+    max-width: 320px;
+    gap: 24px;
   }
 }

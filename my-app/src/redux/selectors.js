@@ -1,4 +1,4 @@
-import { createSelector } from '@reduxjs/toolkit';
+import { createSelector } from "@reduxjs/toolkit";
 
 export const selectCategories = (state) => state.categories.items;
 
@@ -13,29 +13,29 @@ export const selectMindGames = (state) => state.mindGames.items;
 export const selectLanguages = (state) => state.languages.items;
 
 export const selectWishListProductsIdList = (state) =>
-    state.wishList.productsIdList;
+  state.wishList.productsIdList;
 
 export const selectWishListProductsList = (state) =>
-    state.wishList.productsList;
+  state.wishList.productsList;
 
 export const selectCart = createSelector(
-    (state) => state.cart,
-    (cart) => ({ ...cart })
+  (state) => state.cart,
+  (cart) => ({ ...cart })
 );
 
 export const selectIsInCart = createSelector(
-    [selectCart, (state, productId) => productId],
-    ({ productList }, productId) =>
-        productList.some((product) => product.id === productId)
+  [selectCart, (state, productId) => productId],
+  ({ productList }, productId) =>
+    productList.some((product) => product.id === productId)
 );
 
 export const selectCartProductsCount = createSelector(
-    selectCart,
-    ({ productList }) =>
-        productList.reduce(
-            (totalCount, product) => totalCount + product.count - 1,
-            productList.length
-        )
+  selectCart,
+  ({ productList }) =>
+    productList.reduce(
+      (totalCount, product) => totalCount + product.count - 1,
+      productList.length
+    )
 );
 export const selectPromoCode = (state) => state.discount.promoCode;
 export const selectGiftCard = (state) => state.discount.giftCard;
@@ -46,15 +46,16 @@ export const selectGiftCard = (state) => state.discount.giftCard;
 // );
 
 export const selectViewsHistory = createSelector(
-    [(state) => state.views, (state, productID) => productID],
-    (views, productID) => {
-        const { history } = views;
+  [(state) => state.views, (state, productID) => productID],
+  (views, productID) => {
+    const { history } = views;
 
-        if (history.length === 0) return history;
+    if (history.length === 0) return history;
 
-        const relevantHistory =
-            history.length <= 10 ? history : history.slice(9);
+    const relevantHistory = history.length <= 10 ? history : history.slice(9);
 
-        return relevantHistory.filter((product) => product.id !== productID);
-    }
+    return relevantHistory.filter((product) => product.id !== productID);
+  }
 );
+
+export const ordersByUser = (state) => state.orderHistory.orders;
