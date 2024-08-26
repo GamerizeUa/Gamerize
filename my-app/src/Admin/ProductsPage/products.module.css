@@ -1,0 +1,87 @@
+th {
+    text-align: left;
+}
+
+tr:not(:last-of-type) {
+    border-block-end: 0.8px solid #dedada;
+}
+
+th,
+td {
+    padding: 1rem 1.5rem;
+}
+
+.products {
+    border-radius: 8px;
+    background: white;
+}
+
+.products__header {
+    display: flex;
+    align-items: stretch;
+    padding: 2rem 1rem;
+    gap: 1rem;
+}
+
+.products__field {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    flex-grow: 1;
+    padding: 1rem;
+    border-radius: 12px;
+    background: #fafafa;
+}
+
+.products__icon {
+    inline-size: 1.5rem;
+    aspect-ratio: 1 / 1;
+}
+
+.products__icon--sm {
+    inline-size: 1rem;
+}
+
+.products__input {
+    width: 100%;
+    background: inherit;
+
+    &::placeholder {
+        color: #a0aec0;
+    }
+}
+
+.products__table {
+    width: 100%;
+    margin: 0;
+    border-collapse: collapse;
+}
+
+.products__properties {
+    width: 100%;
+    background: #f7f8fe;
+    padding: 1rem 1.5rem;
+}
+
+.products__btn-group {
+    display: flex;
+    gap: 1rem;
+}
+
+.products__image {
+    width: 4rem;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}

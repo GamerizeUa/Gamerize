@@ -58,3 +58,23 @@ export const selectViewsHistory = createSelector(
         return relevantHistory.filter((product) => product.id !== productID);
     }
 );
+
+export const selectProductsByQuery = createSelector(
+    [(state) => state.productsCatalog, (state, query) => query],
+    (productsCatalog, query) => {
+        if (!query || query.length === 0) return productsCatalog;
+
+        const lowerCaseQuery = query.toLowerCase();
+
+        const filteredProducts = productsCatalog.products.filter(
+            ({ id, name }) => {
+                return (
+                    id.toString().includes(query) ||
+                    name.toLowerCase().includes(lowerCaseQuery)
+                );
+            }
+        );
+
+        return { ...productsCatalog, products: filteredProducts };
+    }
+);
