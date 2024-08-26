@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import OrderItem from "./OrderItem/OrderItem";
 import mainProductPhoto from "../../assets/images/mainProductPhoto.png";
 import sprite from "../../assets/icons/sprite.svg";
 import styles from "./OrderHistory.module.css";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchOrdersByUserId } from "../../redux/orderHistorySlice";
+import { ordersByUser } from "../../redux/selectors";
 
 const orders = [
   {
@@ -159,6 +163,27 @@ const orders = [
 const OrderHistory = () => {
   const [filter, setFilter] = useState("Всі замовлення");
   const [isSelectorOpen, setIsSelectorOpen] = useState(false);
+  const [userID, setUserID] = useState(null);
+  const dispatch = useDispatch();
+  const usersOrders = useSelector(ordersByUser);
+
+  const getAccountInformation = async () => {
+    const res = await axios.get("https://gamerize.ltd.ua/api/Account/profile", {
+      withCredentials: true,
+    });
+
+    setUserID(res.data.id);
+  };
+
+  console.log(userID);
+
+  useEffect(() => {
+    getAccountInformation();
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchOrdersByUserId(userID));
+  }, [userID, dispatch]);
 
   const toggleSelector = () => {
     setIsSelectorOpen((prevIsSelectorOpen) => !prevIsSelectorOpen);
@@ -181,7 +206,7 @@ const OrderHistory = () => {
         <button className={styles.selectingBtn} onClick={toggleSelector}>
           <p className={styles.selectingBtnText}>{filter}</p>
           {isSelectorOpen ? (
-            <svg width="24" height="24">
+            <svg className={styles.chevron}>
               <use
                 href={sprite + "#icon-chevron-up"}
                 fill="#EEF1FF"
@@ -189,7 +214,7 @@ const OrderHistory = () => {
               ></use>
             </svg>
           ) : (
-            <svg width="24" height="24">
+            <svg className={styles.chevron}>
               <use
                 href={sprite + "#icon-chevron-down"}
                 fill="#EEF1FF"
