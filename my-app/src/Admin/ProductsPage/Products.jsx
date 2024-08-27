@@ -13,6 +13,18 @@ import { selectProductsByQuery, selectCategories } from '../../redux/selectors';
 import { ProductFilters } from './Filter/ProductFilters';
 import { fetchAllCategories } from '../../redux/categories/categoriesSlice';
 
+const fetchData = (page, pageSize, filters) => async (dispatch) => {
+    await Promise.all([
+        dispatch(fetchProducts({ page, pageSize, filters })),
+        dispatch(fetchAllCategories()),
+    ]);
+};
+
+const updateFilters = (newFilters) => async (dispatch) => {
+    dispatch(setFilters(newFilters));
+    dispatch(setPage(1));
+};
+
 export const Products = () => {
     const [query, setQuery] = useState('');
     const filterSelectorRef = useRef();
@@ -30,8 +42,7 @@ export const Products = () => {
     };
 
     useEffect(() => {
-        dispatch(fetchProducts({ page, pageSize, filters }));
-        dispatch(fetchAllCategories());
+        dispatch(fetchData(page, pageSize, filters));
     }, [dispatch, page, pageSize, filters]);
 
     return (
@@ -47,8 +58,7 @@ export const Products = () => {
             <ProductFilters
                 categories={categories}
                 updateFilters={(newFilters) => {
-                    dispatch(setFilters(newFilters));
-                    dispatch(setPage(1));
+                    dispatch(updateFilters(newFilters));
                 }}
                 ref={filterSelectorRef}
             />

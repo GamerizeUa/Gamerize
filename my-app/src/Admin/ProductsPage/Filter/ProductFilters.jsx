@@ -14,6 +14,7 @@ export const ProductFilters = forwardRef(function ProductFilters(
         register,
         reset,
         handleSubmit: passData,
+        formState: { errors },
     } = useForm({
         defaultValues,
     });
@@ -53,7 +54,11 @@ export const ProductFilters = forwardRef(function ProductFilters(
                                             message: 'This field is required',
                                         },
                                     })}
+                                    aria-invalid={!!errors?.minPrice}
                                 />
+                                <p className={styles['dialog__error']}>
+                                    {errors?.minPrice?.message}
+                                </p>
                             </label>
                             <label>
                                 До
@@ -66,7 +71,11 @@ export const ProductFilters = forwardRef(function ProductFilters(
                                             message: 'This field is required',
                                         },
                                     })}
+                                    aria-invalid={!!errors?.maxPrice}
                                 />
+                                <p className={styles['dialog__error']}>
+                                    {errors?.maxPrice?.message}
+                                </p>
                             </label>
                         </div>
                     </fieldset>

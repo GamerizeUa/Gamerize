@@ -5,19 +5,29 @@
     padding: 1rem;
     font-size: 1rem;
     border-radius: 12px;
-    transition: background 250ms, color 250ms;
+    transition: background 250ms, color 250ms, filter 250ms;
 }
 
 .btn--secondary {
     background: #fafafa;
     color: #718096;
-}
 
-.btn--icon {
-    background: transparent;
+    &:hover,
+    &:focus {
+        filter: brightness(0.95);
+    }
 }
 
 .btn--primary {
     background: #4d88ef;
     color: white;
+
+    &:hover,
+    &:focus {
+        filter: brightness(1.2);
+    }
+}
+
+.btn--icon {
+    background: transparent;
 }

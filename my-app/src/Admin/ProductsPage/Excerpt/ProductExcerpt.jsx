@@ -4,8 +4,12 @@ import Edit from './Edit.svg';
 import Delete from './delete.svg';
 import styles from '../products.module.css';
 import buttons from '../buttons.module.css';
+import { useDispatch } from 'react-redux';
+import { deleteProduct } from '../../../redux/productsCatalogSlice';
 
 export const ProductExcerpt = ({ product }) => {
+    const dispatch = useDispatch();
+
     if (!product) return null;
 
     const { id, name, price, images, category } = product;
@@ -29,10 +33,15 @@ export const ProductExcerpt = ({ product }) => {
                         <span className={styles['sr-only']}>Edit</span>
                         <img src={Edit} alt="" />
                     </Link>
-                    <Link className={buttons['btn--icon']}>
+                    <button
+                        className={buttons['btn--icon']}
+                        onClick={() =>
+                            dispatch(deleteProduct({ productID: id }))
+                        }
+                    >
                         <span className={styles['sr-only']}>Delete</span>
                         <img src={Delete} alt="" />
-                    </Link>
+                    </button>
                 </div>
             </td>
         </tr>

@@ -22,7 +22,7 @@ fieldset {
 
 .dialog__row {
     display: flex;
-    align-items: center;
+    align-items: start;
     flex-wrap: wrap;
     gap: 1rem;
 }
@@ -41,9 +41,22 @@ fieldset {
     border: 1px solid #dedada;
     transition: background 250ms, color 250ms;
 
+    &[aria-invalid='true'] {
+        border-color: red;
+        color: red;
+    }
+
     > input[type='checkbox'] {
         appearance: none;
     }
+}
+
+.dialog__error {
+    font-family: 'Noto Sans', system-ui, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 300;
+    margin-block-start: 0.5rem;
+    color: red;
 }
 
 .dialog__field:has(input[type='checkbox']:checked) {
