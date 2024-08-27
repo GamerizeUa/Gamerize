@@ -1,19 +1,9 @@
 import styles from './ProductsMatch.module.css';
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
-import {fetchProducts} from "../../../redux/productsCatalogSlice.js";
 import sprite from "../../../assets/icons/sprite.svg";
 import {Link, useNavigate} from "react-router-dom";
 
-export const ProductsMatch = ({searchText, setMatchesDisplayed}) => {
-    const {products, page, pageSize, filters, loading} = useSelector((state) => state.productsCatalog);
-    const dispatch = useDispatch();
+export const ProductsMatch = ({searchText, setMatchesDisplayed, products}) => {
     const navigate = useNavigate();
-
-    useEffect(() => {
-        dispatch(fetchProducts({page, pageSize, filters}))
-    }, [dispatch, searchText]);
-
 
     const modifyImagePath = (imagePath) => {
         const baseUrl = "https://gamerize.ltd.ua";
@@ -23,7 +13,7 @@ export const ProductsMatch = ({searchText, setMatchesDisplayed}) => {
     }
 
     const showAllMatchesInCatalog = () => {
-        navigate('/catalog');
+        navigate('/catalog', { state: { searchTerm: searchText } });
         setMatchesDisplayed(false);
     }
 
@@ -32,12 +22,11 @@ export const ProductsMatch = ({searchText, setMatchesDisplayed}) => {
             <div className={styles.matches}>
                 <div className={styles.matches_container}>
                     <div className={styles.matches_list}>
-                        {loading ? <p className={styles.matches_text}>Пошук товарів...</p> :
+                        {!products ? <p className={styles.matches_text}>Пошук товарів...</p> :
                             (
                                 products.slice(0, 3).map((product, index) => (
-                                    <Link to={`/catalog/${product.id}`}>
+                                    <Link to={`/catalog/${product.id}`} key={index}>
                                         <div className={styles.matches_item}
-                                             key={index}
                                              onClick={() => setMatchesDisplayed(false)}
                                         >
                                             <div className={styles.matches_info}>
@@ -55,12 +44,12 @@ export const ProductsMatch = ({searchText, setMatchesDisplayed}) => {
                                     </Link>
                                 ))
                             )}
-                        {products.length === 0 && !loading &&
+                        {products.length === 0  &&
                             <p className={styles.matches_text}>
                                 Товарів за запитом <span>'{searchText}'</span> не знайдено
                             </p>}
                     </div>
-                    {products.length > 0 && !loading &&
+                    {products.length > 0  &&
                         <div className={styles.matches_all} onClick={showAllMatchesInCatalog}>
                             <p>Переглянути всі</p>
                         </div>

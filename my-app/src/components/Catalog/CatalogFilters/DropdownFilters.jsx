@@ -2,9 +2,17 @@ import styles from "./CatalogFilters.module.css";
 import ArrowIconGallery from "../../ProductOverview/icons/ArrowGalleryIcon.jsx";
 import React, {useEffect, useState} from "react";
 import CheckIcon from "../../icons/CheckIcon.jsx";
+import {resetFilters} from "../../../redux/productsCatalogSlice.js";
+import {useDispatch} from "react-redux";
 
 export const DropdownFilters = ({title, categories, selectedCategories, setSelectedCategories}) => {
     const[isCategoryVisible, setIsCategoryVisible] = useState(false);
+    // const dispatch = useDispatch();
+
+    // useEffect(() => {
+    //     console.log('AAA')
+    //     dispatch(resetFilters());
+    // }, [dispatch]);
 
     useEffect(() => {
         if (Array.isArray(selectedCategories) && selectedCategories.length !== 0) {

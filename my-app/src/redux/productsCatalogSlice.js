@@ -96,6 +96,9 @@ export const productsCatalogSlice = createSlice({
         setSearchTerm: (state, action) => {
             state.filters.searchTerm = action.payload;
         },
+        resetFilters: (state) => {
+            state.filters = initialState.filters;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -135,6 +138,12 @@ export const productsCatalogSlice = createSlice({
     },
 });
 
-export const { setPage, setFilters, setSortOrder, setPageSize, setSearchTerm } =
-    productsCatalogSlice.actions;
+export const {
+    setPage,
+    setFilters,
+    setSortOrder,
+    setPageSize,
+    setSearchTerm,
+    resetFilters,
+} = productsCatalogSlice.actions;
 export default productsCatalogSlice.reducer;

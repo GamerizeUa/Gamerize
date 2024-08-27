@@ -78,3 +78,4 @@ export const selectProductsByQuery = createSelector(
         return { ...productsCatalog, products: filteredProducts };
     }
 );
+export const ordersByUser = (state) => state.orderHistory.orders;
