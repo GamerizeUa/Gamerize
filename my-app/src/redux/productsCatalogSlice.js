@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const fetchProducts = createAsyncThunk(
     'productsCatalog/fetchProducts',
-    async ({ page, pageSize, filters}, { rejectWithValue }) => {
+    async ({ page, pageSize, filters }, { rejectWithValue }) => {
         try {
             const response = await axios.post(
                 'https://gamerize.ltd.ua/api/Product/GetSimpleList',
@@ -35,23 +35,38 @@ export const addFeedback = createAsyncThunk(
     }
 );
 
+export const deleteProduct = createAsyncThunk(
+    'productsCatalog/delete',
+    async ({ productID }, { rejectWithValue }) => {
+        try {
+            await axios.delete(
+                `https://gamerize.ltd.ua/api/Product/Delete/${productID}`
+            );
+
+            return productID;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
 const initialState = {
     products: [],
     totalPages: 0,
     loading: false,
     filters: {
-        "categories": [],
-        "genres": [],
-        "languages": [],
-        "mindGames": [],
-        "puzzles": [],
-        "themes": [],
-        "ages": [],
-        "playersAmount": [],
-        "price": [],
-        "gameTime": [],
-        "sortOrder": "",
-        "searchTerm": ""
+        categories: [],
+        genres: [],
+        languages: [],
+        mindGames: [],
+        puzzles: [],
+        themes: [],
+        ages: [],
+        playersAmount: [],
+        price: [],
+        gameTime: [],
+        sortOrder: '',
+        searchTerm: '',
     },
     page: 1,
     pageSize: 12,
@@ -83,18 +98,11 @@ export const productsCatalogSlice = createSlice({
         },
         resetFilters: (state) => {
             state.filters = initialState.filters;
-        }
+        },
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchProducts.pending, (state) => {
-                state.loading = true;
-                state.error = null;
-            })
-            .addCase(addFeedback.pending, (state) => {
-                state.loading = true;
-                state.error = null;
-            })
+
             .addCase(fetchProducts.fulfilled, (state, action) => {
                 state.loading = false;
                 state.products = action.payload.products;
@@ -107,16 +115,35 @@ export const productsCatalogSlice = createSlice({
                 );
                 productToUpdate.feedbacks.push(action.payload);
             })
-            .addCase(fetchProducts.rejected, (state, action) => {
+            .addCase(deleteProduct.fulfilled, (state, action) => {
                 state.loading = false;
-                state.error = action.payload;
+                state.products = state.products.filter(
+                    (product) => product.id !== action.payload
+                );
             })
-            .addCase(addFeedback.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload;
-            });
+            .addMatcher(
+                (action) => action.type.endsWith('/pending'),
+                (state) => {
+                    state.loading = true;
+                    state.error = null;
+                }
+            )
+            .addMatcher(
+                (action) => action.type.endsWith('/rejected'),
+                (state, action) => {
+                    state.loading = false;
+                    state.error = action.payload;
+                }
+            );
     },
 });
 
-export const { setPage, setFilters, setSortOrder, setPageSize, setSearchTerm, resetFilters} = productsCatalogSlice.actions;
+export const {
+    setPage,
+    setFilters,
+    setSortOrder,
+    setPageSize,
+    setSearchTerm,
+    resetFilters,
+} = productsCatalogSlice.actions;
 export default productsCatalogSlice.reducer;
