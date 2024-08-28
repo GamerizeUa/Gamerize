@@ -4,6 +4,11 @@
     align-items: center;
     cursor: pointer;
     gap: 32px;
+    border-bottom: 0.6px solid #DEDADA;
+}
+
+.question:last-of-type{
+    border-bottom: none !important;
 }
 
 .question:hover{

@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import {Navigate, Route, Routes} from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import HomePage from './pages/HomePage';
 import Catalog from './pages/Catalog/Catalog.jsx';
@@ -20,6 +20,13 @@ import {Questions} from "./Admin/QuestionsPage/Questions.jsx";
 import {Edit} from "./Admin/EditPage/Edit.jsx";
 
 function App() {
+
+    const ProtectedAdminRoute = ({ element }) => {
+        //TO DO admin check
+
+        return element;
+    };
+
     return (
         <Routes>
             <Route path="/" element={<Layout />}>
@@ -44,8 +51,9 @@ function App() {
                 <Route path="/reset-password" element={<HomePage />} />
                 <Route path="*" element={<NotFound />} />
             </Route>
-            <Route path="/admin" element={<AdminPage />}>
+            <Route path="/admin" element={<ProtectedAdminRoute element={<AdminPage />} />}>
                 <Route index element={<Orders />} />
+                <Route path="/admin/orders" element={<Orders />} />
                 <Route path="/admin/products" element={<Products />} />
                 <Route path="/admin/questions" element={<Questions />} />
                 <Route path="/admin/edit" element={<Edit />} />

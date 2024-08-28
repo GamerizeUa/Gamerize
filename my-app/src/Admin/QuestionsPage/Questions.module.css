@@ -42,12 +42,3 @@
 .questions_btn_trash:hover{
     box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
-.questions_content a{
-    display: block;
-    border-bottom: 0.6px solid #DEDADA;
-}
-
-.questions_content a:last-of-type{
-    border-bottom: none !important;
-}

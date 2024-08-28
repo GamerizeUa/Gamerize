@@ -15,27 +15,27 @@ export const Pagination = ({totalItems, totalPages, currentPage, setCurrentPage}
         }
     }
 
-    const checkLastQuestion = () => {
-        const shownQuestions = currentPage * 10;
-        if(shownQuestions > totalItems){
+    const checkLastItem = () => {
+        const shownItems = currentPage * 10;
+        if(shownItems > totalItems){
             return totalItems;
         }else{
-            return shownQuestions;
+            return shownItems;
         }
     }
 
     return (
         <div className={styles.pagination}>
             <div className={styles.pagination_pages}>
-                <p>Показано {currentPage}- {checkLastQuestion()} з {totalItems}</p>
+                <p>Показано {currentPage}- {checkLastItem()} з {totalItems}</p>
             </div>
             <div className={styles.pagination_buttons}>
-                <div className={currentPage === 1 && styles.blocked}
+                <div className={currentPage === 1 ? styles.blocked : undefined}
                      onClick={setPreviousPage}
                 >
                     {'<'}
                 </div>
-                <div className={currentPage === totalPages && styles.blocked}
+                <div className={currentPage === totalPages ? styles.blocked : undefined}
                      onClick={setNextPage}
                 >
                     {'>'}

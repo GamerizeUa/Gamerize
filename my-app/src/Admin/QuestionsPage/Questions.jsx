@@ -4,26 +4,43 @@ import React, {useEffect, useState} from "react";
 import {QuestionItem} from "./QuestionItem/QuestionItem.jsx";
 import axios from "axios";
 import {Pagination} from "../Pagination/Pagination.jsx";
+import {InputSearch} from "./InputSearch.jsx";
 
 export const Questions = () => {
-    const [questions, setQuestions] = useState([]);
-    const [totalQuestions, setTotalQuestions] = useState(null);
-    const [totalPages, setTotalPages] = useState(null);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [questionsState, setQuestionsState] = useState({
+        questions: [],
+        totalQuestions: null,
+        totalPages: null,
+        currentPage: 1,
+    });
     const [questionsToDelete, setQuestionsToDelete] = useState([]);
+    const [isTermSearched, setIsTermSearched] = useState(false);
 
     useEffect(() => {
-        getAllQuestions();
-    }, [currentPage])
+        if (!isTermSearched) {
+            getAllQuestions();
+        }
+    }, [questionsState.currentPage, isTermSearched])
 
     const getAllQuestions = () => {
-        axios.get("https://gamerize.ltd.ua/api/Question/GetAll", {params: {page: currentPage}})
+        axios.get("https://gamerize.ltd.ua/api/Question/GetAll",
+            {params: {page: questionsState.currentPage}})
             .then((res) => {
-            setQuestions(res.data.questions)
-            setTotalQuestions(res.data.totalMessages)
-            setTotalPages(res.data.totalPages)
-            setCurrentPage(res.data.page)
-        })
+                setQuestionsState((prevState) => ({
+                    ...prevState,
+                    questions: res.data.questions,
+                    totalQuestions: res.data.totalMessages,
+                    totalPages: res.data.totalPages,
+                    currentPage: res.data.page,
+                }))
+            })
+    }
+
+    const setCurrentPage = (page) => {
+        setQuestionsState((prevState) => ({
+            ...prevState,
+            currentPage: page
+        }))
     }
 
     const deleteQuestions = () => {
@@ -44,15 +61,11 @@ export const Questions = () => {
             <div className={styles.questions}>
                 <div className={styles.questions_container}>
                     <div className={styles.questions_header}>
-                        <div className={styles.questions_input}>
-                            <svg width="16" height="16">
-                                <use
-                                    href={sprite + '#icon-admin-search'}
-                                    fill="none">
-                                </use>
-                            </svg>
-                            <input type="text" placeholder="Пошук"/>
-                        </div>
+                        <InputSearch
+                            questionsState={questionsState}
+                            setQuestionsState={setQuestionsState}
+                            setIsTermSearched={setIsTermSearched}
+                        />
                         <div className={styles.questions_btn_trash}
                              onClick={deleteQuestions}
                         >
@@ -65,7 +78,7 @@ export const Questions = () => {
                         </div>
                     </div>
                     <div className={styles.questions_content}>
-                        {questions.map((question, i) => (
+                        {questionsState.questions.map((question, i) => (
                             <QuestionItem
                                 question={question} key={i}
                                 getAllQuestions={getAllQuestions}
@@ -76,9 +89,9 @@ export const Questions = () => {
                     </div>
                 </div>
             </div>
-            <Pagination totalItems={totalQuestions}
-                        totalPages={totalPages}
-                        currentPage={currentPage}
+            <Pagination totalItems={questionsState.totalQuestions}
+                        totalPages={questionsState.totalPages}
+                        currentPage={questionsState.currentPage}
                         setCurrentPage={setCurrentPage}
             />
         </>

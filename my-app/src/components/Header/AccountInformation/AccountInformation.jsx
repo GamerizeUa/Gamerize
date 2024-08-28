@@ -31,9 +31,19 @@ const AccountInformation = ({setIsDisplayedLoginPopUp}) => {
         <li className={styles.accountListItem}>
           <Link to="/wish-list" className={styles.accountLink}>
             <div>
-              <HeartIcon strokeColor="#AAC4FF" />
+              <HeartIcon strokeColor="#AAC4FF"/>
             </div>
             <p className={styles.accountLinkText}>Список бажань</p>
+          </Link>
+        </li>
+        <li className={styles.accountListItem}>
+          <Link to="/admin" className={styles.accountLink}>
+            <div>
+              <svg width="20" height="20">
+                <use href={sprite + "#icon-admin-panel"} fill="none"></use>
+              </svg>
+            </div>
+            <p className={styles.accountLinkText}>Адмін панель</p>
           </Link>
         </li>
       </ul>

@@ -1,13 +1,22 @@
 import styles from "./Header.module.css";
-import {useLocation} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {setVocativeCase} from "./vocativeCase.js";
 
 export const Header = () => {
     const location = useLocation();
+    const [name, setName] = useState("");
+
+    useEffect(() => {
+        // axios.get('https://gamerize.ltd.ua/api/Account/profile').then((res) => {
+        //     setName(res.data.name);
+        // })
+    }, []);
 
     const setPageTitle = () => {
-        switch(location.pathname) {
+        switch (location.pathname) {
             case('/admin'):
-                return 'Привіт'
+                return `Привіт, ${setVocativeCase(name.split(" ")[0])}!`
             case '/admin/products':
                 return 'Продукти'
             case '/admin/questions':
@@ -19,16 +28,18 @@ export const Header = () => {
         }
     }
 
-    return(
+    return (
         <header className={styles.header}>
-                <div className={styles.header_leftPart}>
+            <div className={styles.header_leftPart}>
+                <Link to="/admin">
                     <p className={styles.header_logo}>Gamerise</p>
-                    <p className={styles.header_pageTitle}>{setPageTitle()}</p>
-                </div>
-                <div className={styles.header_rightPart}>
-                    <div className={styles.header_photo}></div>
-                    <p className={styles.header_name}>BdfdfB BdfdfdfdfdfdfB</p>
-                </div>
+                </Link>
+                <p className={styles.header_pageTitle}>{setPageTitle()}</p>
+            </div>
+            <div className={styles.header_rightPart}>
+                <div className={styles.header_photo}></div>
+                <p className={styles.header_name}>{name}</p>
+            </div>
         </header>
     )
 }
