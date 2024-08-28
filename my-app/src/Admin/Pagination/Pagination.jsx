@@ -1,7 +1,7 @@
 import styles from "./Pagination.module.css";
 import React from "react";
 
-export const Pagination = ({totalItems, totalPages, currentPage, setCurrentPage}) => {
+export const Pagination = ({totalItems, totalPages, currentPage, setCurrentPage, itemsOnPage}) => {
 
     const setPreviousPage = () => {
         if(currentPage !== 1){
@@ -16,7 +16,7 @@ export const Pagination = ({totalItems, totalPages, currentPage, setCurrentPage}
     }
 
     const checkLastItem = () => {
-        const shownItems = currentPage * 10;
+        const shownItems = currentPage * itemsOnPage;
         if(shownItems > totalItems){
             return totalItems;
         }else{

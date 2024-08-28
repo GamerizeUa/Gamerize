@@ -15,6 +15,7 @@ export const Questions = () => {
     });
     const [questionsToDelete, setQuestionsToDelete] = useState([]);
     const [isTermSearched, setIsTermSearched] = useState(false);
+    const questionsOnPage = 10;
 
     useEffect(() => {
         if (!isTermSearched) {
@@ -93,6 +94,7 @@ export const Questions = () => {
                         totalPages={questionsState.totalPages}
                         currentPage={questionsState.currentPage}
                         setCurrentPage={setCurrentPage}
+                        itemsOnPage={questionsOnPage}
             />
         </>
     )
