@@ -64,9 +64,10 @@ export const Products = () => {
             />
             {!loading && (
                 <Pagination
-                    totalItems={pageSize * (totalPages - 1)}
+                    totalItems={pageSize * totalPages}
                     totalPages={totalPages}
                     currentPage={page}
+                    itemsOnPage={12}
                     setCurrentPage={(nextPage) => dispatch(setPage(nextPage))}
                 />
             )}
