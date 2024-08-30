@@ -1,5 +1,5 @@
 import sprite from "../../../assets/icons/sprite.svg";
-import React, {useState} from "react";
+import React from "react";
 import styles from "./QuestionItem.module.css";
 import {Link} from "react-router-dom";
 import axios from "axios";
@@ -66,7 +66,7 @@ export const QuestionItem = ({question, getAllQuestions, setQuestionsToDelete, q
                     </div>
                 </div>
             </div>
-            <Link to='/' >
+            <Link to='/' className={`${question.answer ? styles.question_read : ''}`}>
                 <p className={styles.question_name}>{question.userName}</p>
                 <div className={styles.question_rightPart}>
                     <p className={styles.question_text}>{question.text}</p>

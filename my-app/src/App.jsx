@@ -18,8 +18,19 @@ import {Orders} from "./Admin/OrdersPage/Orders.jsx";
 import {Products} from "./Admin/ProductsPage/Products.jsx";
 import {Questions} from "./Admin/QuestionsPage/Questions.jsx";
 import {Edit} from "./Admin/EditPage/Edit.jsx";
+import {useEffect} from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 function App() {
+
+    useEffect(() => {
+        axios.get('https://gamerize.ltd.ua/api/Login/check')
+            .then(() => {
+                Cookies.set('auth', "true")
+            })
+            .catch(() => Cookies.set('auth', "false"))
+    }, [])
 
     const ProtectedAdminRoute = ({ element }) => {
         //TO DO admin check
@@ -53,10 +64,10 @@ function App() {
             </Route>
             <Route path="/admin" element={<ProtectedAdminRoute element={<AdminPage />} />}>
                 <Route index element={<Orders />} />
-                <Route path="/admin/orders" element={<Orders />} />
-                <Route path="/admin/products" element={<Products />} />
-                <Route path="/admin/questions" element={<Questions />} />
-                <Route path="/admin/edit" element={<Edit />} />
+                <Route path="orders" element={<Orders />} />
+                <Route path="products" element={<Products />} />
+                <Route path="questions" element={<Questions />} />
+                <Route path="edit" element={<Edit />} />
              </Route>
         </Routes>
     );

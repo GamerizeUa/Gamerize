@@ -2,15 +2,16 @@ import styles from "./Header.module.css";
 import {Link, useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {setVocativeCase} from "./vocativeCase.js";
+import axios from "axios";
 
 export const Header = () => {
     const location = useLocation();
     const [name, setName] = useState("");
 
     useEffect(() => {
-        // axios.get('https://gamerize.ltd.ua/api/Account/profile').then((res) => {
-        //     setName(res.data.name);
-        // })
+        axios.get('https://gamerize.ltd.ua/api/Account/profile').then((res) => {
+            setName(res.data.name);
+        })
     }, []);
 
     const setPageTitle = () => {
@@ -31,7 +32,7 @@ export const Header = () => {
     return (
         <header className={styles.header}>
             <div className={styles.header_leftPart}>
-                <Link to="/admin">
+                <Link to="/">
                     <p className={styles.header_logo}>Gamerise</p>
                 </Link>
                 <p className={styles.header_pageTitle}>{setPageTitle()}</p>
