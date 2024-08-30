@@ -7,9 +7,11 @@ import axios from "axios";
 export const Header = () => {
     const location = useLocation();
     const [name, setName] = useState("");
+    const [uploadedPhoto, setUploadedPhoto] = useState("");
 
     useEffect(() => {
         axios.get('https://gamerize.ltd.ua/api/Account/profile').then((res) => {
+            setUploadedPhoto(res.data?.profilePicture)
             setName(res.data.name);
         })
     }, []);
@@ -38,7 +40,9 @@ export const Header = () => {
                 <p className={styles.header_pageTitle}>{setPageTitle()}</p>
             </div>
             <div className={styles.header_rightPart}>
-                <div className={styles.header_photo}></div>
+                <div className={styles.header_photo}
+                     style={uploadedPhoto ? {backgroundImage: `url(${uploadedPhoto})`} : {backgroundImage: 'none'}}
+                ></div>
                 <p className={styles.header_name}>{name}</p>
             </div>
         </header>

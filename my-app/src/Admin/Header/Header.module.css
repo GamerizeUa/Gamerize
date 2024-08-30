@@ -41,8 +41,12 @@
 .header_photo{
     width: 48px;
     height: 48px;
-    background: #B1B2FF;
+    background-color: #B1B2FF;
     border-radius: 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 0.1px solid #B1B2FF;
 }
 
 .header_name{
