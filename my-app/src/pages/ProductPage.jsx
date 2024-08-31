@@ -4,7 +4,7 @@ import Product from '../components/product-page/Product.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 // import { selectProductById } from "../redux/selectors.js";
 import { addToHistory } from '../redux/viewsHistory.js';
-import { getProductById } from '../redux/homeCarouselProductsSlice.js';
+import { getProductById } from '../redux/productsSlice.js';
 
 const ProductPage = () => {
     const { productID } = useParams();
