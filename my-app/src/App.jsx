@@ -33,11 +33,11 @@ function App() {
     }, [])
 
     const ProtectedAdminRoute = ({ element }) => {
-        const { isAdmin, loading } = useCheckAdmin();
-
-        if (!isAdmin && !loading) {
-            return <Navigate to="/" />;
-        }
+        // const { isAdmin, loading } = useCheckAdmin();
+        //
+        // if (!isAdmin && !loading) {
+        //     return <Navigate to="/" />;
+        // }
 
         return element;
     };

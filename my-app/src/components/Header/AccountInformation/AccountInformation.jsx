@@ -11,19 +11,19 @@ const AccountInformation = ({setIsDisplayedLoginPopUp}) => {
   const {checkAuthentication} = useCheckAuth();
   const isAuthenticated = checkAuthentication();
   const { isAdmin} = useCheckAdmin();
-  const [isUserAdmin, setIsUserAdmin] = useState(false);
+  const [isUserAdmin, setIsUserAdmin] = useState(true); // change to false
 
-  useEffect(() => {
-    if(isAdmin){
-      setIsUserAdmin(true);
-    }
-  }, [isAdmin]);
-
-  useEffect(() => {
-    if(!isAuthenticated){
-      setIsUserAdmin(false);
-    }
-  }, [isAuthenticated]);
+  // useEffect(() => {
+  //   if(isAdmin){
+  //     setIsUserAdmin(true);
+  //   }
+  // }, [isAdmin]);
+  //
+  // useEffect(() => {
+  //   if(!isAuthenticated){
+  //     setIsUserAdmin(false);
+  //   }
+  // }, [isAuthenticated]);
 
   return (
     <div className={styles.accountLinksWrapper}>
