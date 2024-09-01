@@ -21,9 +21,9 @@ import {Edit} from "./Admin/EditPage/Edit.jsx";
 import {useEffect} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import useCheckAdmin from "./components/hooks/useCheckAdmin.js";
 
 function App() {
-
     useEffect(() => {
         axios.get('https://gamerize.ltd.ua/api/Login/check')
             .then(() => {
@@ -33,7 +33,11 @@ function App() {
     }, [])
 
     const ProtectedAdminRoute = ({ element }) => {
-        //TO DO admin check
+        const { isAdmin, loading } = useCheckAdmin();
+
+        if (!isAdmin && !loading) {
+            return <Navigate to="/" />;
+        }
 
         return element;
     };
