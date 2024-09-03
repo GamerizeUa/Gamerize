@@ -1,0 +1,121 @@
+.form-control__input {
+    inline-size: 100%;
+    color: #6a6363;
+
+    &:is(textarea) {
+        resize: none;
+    }
+
+    &:is(select) {
+        appearance: none;
+        background-image: url('../icons/chevron-down.svg');
+        background-repeat: no-repeat;
+        background-size: 1rem;
+        background-position: calc(100% - 1.142rem) 50%;
+    }
+
+    &[aria-invalid='true'] {
+        border-color: red;
+        color: red;
+    }
+}
+
+.form-control__input,
+.image-picker__container {
+    display: block;
+}
+
+.form-control__input,
+.tag-input {
+    padding: 0.714rem 1.142rem;
+    margin-block-start: 1rem;
+    border-radius: 8px;
+    border: 1px solid #dedada;
+    translate: border-color 250ms, color 250ms;
+}
+
+.form-control__error {
+    color: red;
+    margin-block-start: 1rem;
+}
+
+.tag-input__input {
+    flex-grow: 1;
+}
+
+.tag-input__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag-input__tag {
+    padding: 0.25rem;
+    background: #f6f6f6;
+    color: #888;
+    border-radius: 5px;
+    border: 0.5px solid #888;
+    font-size: 0.875rem;
+}
+
+.image-picker {
+    max-inline-size: 100%;
+    align-items: stretch;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    &:has(input[aria-invalid='true']) {
+        border-color: red;
+        color: red;
+    }
+}
+
+.image-picker__container {
+    position: relative;
+    min-width: 128px;
+    block-size: 128px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.image-picker__input {
+    position: absolute;
+    inset: 0 auto auto 0;
+    inline-size: 100%;
+    block-size: 100%;
+    opacity: 0;
+}
+
+.image-picker__placeholder {
+    block-size: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.image-picker__gallery {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+}
+
+.image-picker__item {
+    inline-size: 128px;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    border-radius: 8px;
+    transition: all 250ms;
+    padding: 0.5rem;
+    border: 1px solid #fafafa;
+    background: #fff;
+    cursor: pointer;
+
+    &:hover {
+        box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.075);
+    }
+}

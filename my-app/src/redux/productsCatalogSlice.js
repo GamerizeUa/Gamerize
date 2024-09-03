@@ -50,6 +50,38 @@ export const deleteProduct = createAsyncThunk(
     }
 );
 
+export const addProduct = createAsyncThunk(
+    'productsCatalog/add',
+    async ({ product }, { rejectWithValue }) => {
+        try {
+            await axios.post(
+                `https://gamerize.ltd.ua/api/Product/Create/`,
+                product
+            );
+
+            return product;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
+export const editProduct = createAsyncThunk(
+    'productsCatalog/edit',
+    async (updatedProduct, { rejectWithValue }) => {
+        try {
+            const res = await axios.patch(
+                `https://gamerize.ltd.ua/api/Product/Update`,
+                updatedProduct
+            );
+
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
 const initialState = {
     products: [],
     totalPages: 0,
@@ -120,6 +152,17 @@ export const productsCatalogSlice = createSlice({
                 state.products = state.products.filter(
                     (product) => product.id !== action.payload
                 );
+            })
+            .addCase(addProduct.fulfilled, (state, action) => {
+                state.loading = false;
+                state.products.push(action.payload);
+            })
+            .addCase(editProduct.fulfilled, (state, action) => {
+                state.loading = false;
+                const idToUpdate = state.product.index(
+                    (product) => product.id === action.payload.id
+                );
+                state.products[idToUpdate] = action.payload;
             })
             .addMatcher(
                 (action) => action.type.endsWith('/pending'),

@@ -1,17 +1,17 @@
-import styles from './products.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
+import { ProductFilters } from './Filter/ProductFilters';
+import { ProductHeader } from './Header/ProductHeader';
+import { ProductListing } from './ProductListing';
+import { Pagination } from '../Pagination/Pagination';
 import {
     fetchProducts,
     setPage,
     setFilters,
 } from '../../redux/productsCatalogSlice';
-import { Pagination } from '../Pagination/Pagination';
-import { ProductHeader } from './Header/ProductHeader';
-import { ProductListing } from './ProductListing';
 import { selectProductsByQuery, selectCategories } from '../../redux/selectors';
-import { ProductFilters } from './Filter/ProductFilters';
 import { fetchAllCategories } from '../../redux/categories/categoriesSlice';
+import styles from './assets/styles/products.module.css';
 
 const fetchData = (page, pageSize, filters) => async (dispatch) => {
     await Promise.all([

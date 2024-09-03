@@ -1,0 +1,33 @@
+.add-product__title {
+    font-family: 'Noto Sans', system-ui, sans-serif;
+    font-size: 2.285rem;
+    font-weight: 500;
+    color: #6566ac;
+    margin-block-end: 3.428rem;
+}
+
+.add-product__form {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: max-content;
+    gap: 1.428rem 1.142rem;
+    margin-block-end: 2.285rem;
+
+    & > button:last-child {
+        inline-size: max-content;
+        block-size: max-content;
+
+        @media screen and (width >= 1280px) {
+            grid-area: 4/1/5/2;
+        }
+    }
+
+    @media screen and (width >= 1280px) {
+        grid-template-columns: 1fr 0.5fr;
+        grid-auto-rows: 1fr;
+
+        > *:nth-child(1) {
+            grid-area: 1/1/4/2;
+        }
+    }
+}

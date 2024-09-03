@@ -1,8 +1,8 @@
 import { forwardRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { cn } from '../../../utils/classnames';
-import styles from './filter.module.css';
-import buttons from '../buttons.module.css';
+import styles from '../assets/styles/filter.module.css';
+import buttons from '../assets/styles/buttons.module.css';
 
 const defaultValues = { minPrice: 200, maxPrice: 1500, categories: [] };
 
