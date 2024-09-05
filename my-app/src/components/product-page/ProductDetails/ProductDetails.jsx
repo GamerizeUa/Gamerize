@@ -11,9 +11,10 @@ const getProductCharacteristics = ({
     minGameTimeMinutes,
     maxGameTimeMinutes,
     description,
-    category: { name: categoryName },
+    category,
     language: { name: languageName },
 }) => {
+    const categoryName = category? category.name: "Немає";
     const details = {
         characteristics: {
             playersQuantity: `${minPlayers}-${maxPlayers}`,

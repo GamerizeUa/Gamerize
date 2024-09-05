@@ -16,14 +16,32 @@ import ConfirmEmailPage from './components/LoginAndRegistration/ConfirmEmail/Con
 import { AdminPage } from './Admin/AdminPage.jsx';
 import { Orders } from './Admin/OrdersPage/Orders.jsx';
 import { Products } from './Admin/ProductsPage/Products.jsx';
-import { Questions } from './Admin/QuestionsPage/Questions.jsx';
-
 import { EditProduct } from './Admin/ProductsPage/Edit/EditProduct.jsx';
 import { AddProduct } from './Admin/ProductsPage/Add/AddProduct.jsx';
+import { Questions } from './Admin/QuestionsPage/Questions.jsx';
+import { Edit } from './Admin/EditPage/Edit.jsx';
+
+import { useEffect } from 'react';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import useCheckAdmin from './components/hooks/useCheckAdmin.js';
 
 function App() {
+    useEffect(() => {
+        axios
+            .get('https://gamerize.ltd.ua/api/Login/check')
+            .then(() => {
+                Cookies.set('auth', 'true');
+            })
+            .catch(() => Cookies.set('auth', 'false'));
+    }, []);
+
     const ProtectedAdminRoute = ({ element }) => {
-        //TO DO admin check
+        // const { isAdmin, loading } = useCheckAdmin();
+        //
+        // if (!isAdmin && !loading) {
+        //     return <Navigate to="/" />;
+        // }
 
         return element;
     };
@@ -57,14 +75,15 @@ function App() {
                 element={<ProtectedAdminRoute element={<AdminPage />} />}
             >
                 <Route index element={<Orders />} />
-                <Route path="/admin/orders" element={<Orders />} />
-                <Route path="/admin/products" element={<Products />} />
-                <Route path="/admin/products/add" element={<AddProduct />} />
+                <Route path="orders" element={<Orders />} />
+                <Route path="products" element={<Products />} />
+                <Route path="products/add" element={<AddProduct />} />
                 <Route
-                    path="/admin/products/edit/:productId"
+                    path="products/edit/:productId"
                     element={<EditProduct />}
                 />
-                <Route path="/admin/questions" element={<Questions />} />
+                <Route path="questions" element={<Questions />} />
+                <Route path="edit" element={<Edit />} />
             </Route>
         </Routes>
     );

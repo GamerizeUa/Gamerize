@@ -13,7 +13,7 @@ const initialState = {
     productsWithDiscount: [],
 };
 
-const carouselProductsSlice = createAppSlice({
+const productsSlice = createAppSlice({
     name: "homeCarouselProducts",
     initialState,
     reducers: (create) => ({
@@ -133,9 +133,9 @@ const carouselProductsSlice = createAppSlice({
 });
 
 export const {getPopularAsync, getWithDiscountAsync, getProductById, getRandomProduct, setProductStatus} =
-    carouselProductsSlice.actions;
+    productsSlice.actions;
 
-export const carouselProductsReducer = carouselProductsSlice.reducer;
+export const carouselProductsReducer = productsSlice.reducer;
 
 export const {selectPopularProducts, selectProductStatus, selectProductsWithDiscount} =
-    carouselProductsSlice.selectors;
+    productsSlice.selectors;

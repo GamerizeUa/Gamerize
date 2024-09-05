@@ -27,14 +27,6 @@ const Layout = () => {
   axios.defaults.withCredentials = true;
 
   useEffect(() => {
-    axios.get('https://gamerize.ltd.ua/api/Login/check')
-        .then(() => {
-          Cookies.set('auth', "true")
-        })
-        .catch(() => Cookies.set('auth', "false"))
-  }, [])
-
-  useEffect(() => {
     if (cartOpen || burgerMenuOpen) {
       document.body.classList.add("no-scroll");
     } else {

@@ -5,7 +5,7 @@ import image from "../../../assets/images/game_picker_game_photo.png";
 import {useDispatch, useSelector} from "react-redux";
 import {selectCategories} from "../../../redux/selectors";
 import {useNavigate} from "react-router-dom";
-import {getRandomProduct, setProductStatus} from "../../../redux/homeCarouselProductsSlice";
+import {getRandomProduct, setProductStatus} from "../../../redux/productsSlice.js";
 import {PopUp} from "../QuestionFormPopUp/popUp.jsx";
 
 export default function GamePicker() {

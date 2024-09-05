@@ -5,7 +5,7 @@ import { SelectionOfGames } from "../components/landing-page/SelectionOfGames/Se
 import { Banner } from "../components/landing-page/Banner/Banner.jsx";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPopularAsync, getWithDiscountAsync, selectPopularProducts } from "../redux/homeCarouselProductsSlice.js";
+import { getPopularAsync, getWithDiscountAsync, selectPopularProducts } from "../redux/productsSlice.js";
 
 const HomePage = () => {
     const dispatch = useDispatch();

@@ -22,7 +22,7 @@ import { languagesReducer } from "./categories/languagesSlice.js";
 import cartSlice from "./cartSlice.js";
 import discountReducer from "./discountSlice";
 import viewsHistorySlice from "./viewsHistory.js";
-import { carouselProductsReducer } from "./homeCarouselProductsSlice.js";
+import { carouselProductsReducer } from "./productsSlice.js";
 import { orderHistoryReducer } from "./orderHistorySlice.js";
 
 const persistConfig = {
