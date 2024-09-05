@@ -22,6 +22,7 @@ import {useEffect} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import useCheckAdmin from "./components/hooks/useCheckAdmin.js";
+import {QuestionAnswer} from "./Admin/QuestionsPage/QuestionAnswer/QuestionAnswer.jsx";
 
 function App() {
     useEffect(() => {
@@ -33,11 +34,11 @@ function App() {
     }, [])
 
     const ProtectedAdminRoute = ({ element }) => {
-        // const { isAdmin, loading } = useCheckAdmin();
-        //
-        // if (!isAdmin && !loading) {
-        //     return <Navigate to="/" />;
-        // }
+        const { isAdmin, loading } = useCheckAdmin();
+
+        if (!isAdmin && !loading) {
+            return <Navigate to="/" />;
+        }
 
         return element;
     };
@@ -71,6 +72,7 @@ function App() {
                 <Route path="orders" element={<Orders />} />
                 <Route path="products" element={<Products />} />
                 <Route path="questions" element={<Questions />} />
+                <Route path="questions/:id" element={<QuestionAnswer />} />
                 <Route path="edit" element={<Edit />} />
              </Route>
         </Routes>

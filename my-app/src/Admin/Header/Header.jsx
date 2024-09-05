@@ -2,27 +2,30 @@ import styles from "./Header.module.css";
 import {Link, useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {setVocativeCase} from "./vocativeCase.js";
-import axios from "axios";
+import {fetchProfileInfo} from "../../redux/profileSlice.js";
+import {useDispatch, useSelector} from "react-redux";
 
 export const Header = () => {
     const location = useLocation();
-    const [name, setName] = useState("");
     const [uploadedPhoto, setUploadedPhoto] = useState("");
+    const {profile} = useSelector(state => state.profile);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        axios.get('https://gamerize.ltd.ua/api/Account/profile').then((res) => {
-            setUploadedPhoto(res.data?.profilePicture)
-            setName(res.data.name);
-        })
+        setUploadedPhoto(profile.profilePicture)
+    }, [profile]);
+
+    useEffect(() => {
+        dispatch(fetchProfileInfo());
     }, []);
 
     const setPageTitle = () => {
         switch (location.pathname) {
             case('/admin'):
-                return `Привіт, ${setVocativeCase(name.split(" ")[0])}!`
-            case '/admin/products':
+                return `Привіт, ${setVocativeCase(profile.name.split(" ")[0])}!`
+            case (location.pathname.includes('/admin/products') && location.pathname):
                 return 'Продукти'
-            case '/admin/questions':
+            case (location.pathname.includes('/admin/questions') && location.pathname):
                 return 'Запитання'
             case '/admin/edit':
                 return 'Редагування'
@@ -43,7 +46,7 @@ export const Header = () => {
                 <div className={styles.header_photo}
                      style={uploadedPhoto ? {backgroundImage: `url(${uploadedPhoto})`} : {backgroundImage: 'none'}}
                 ></div>
-                <p className={styles.header_name}>{name}</p>
+                <p className={styles.header_name}>{profile.name}</p>
             </div>
         </header>
     )

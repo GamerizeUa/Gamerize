@@ -1,11 +1,11 @@
 import styles from './NavBar.module.css';
 import sprite from "../../assets/icons/sprite.svg";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Link, useLocation} from "react-router-dom";
 
 export const NavBar = () => {
     const location = useLocation();
-    const [activeTab, setActiveTab] = useState(location.pathname);
+    const [activeTab, setActiveTab] = useState('/admin');
     const tabs = {
         orders: {
             title: "Замовлення",
@@ -28,6 +28,18 @@ export const NavBar = () => {
             engTitle: 'edit'
         }
     }
+
+    useEffect(() => {
+        if (location.pathname.startsWith('/admin/questions')) {
+            setActiveTab('/admin/questions');
+        } else if (location.pathname.startsWith('/admin/products')) {
+            setActiveTab('/admin/products');
+        } else if (location.pathname.startsWith('/admin/edit')) {
+            setActiveTab('/admin/edit');
+        } else if (location.pathname === '/admin') {
+            setActiveTab('/admin');
+        }
+    }, []);
 
     const handleTabClick = (path) => {
         setActiveTab(path);
