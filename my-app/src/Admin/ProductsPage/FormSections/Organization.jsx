@@ -1,24 +1,15 @@
 import { useContext } from 'react';
-import { FormContext } from './Form';
-import { Select } from '../Input/Select';
+import { Select } from '../../../components/Input/Select';
 import styles from '../assets/styles/form.module.css';
+import { FormContext } from '../../../components/Form/Form';
 
 export const Organization = () => {
-    const { control, genres, themes, categories } = useContext(FormContext);
+    const { control, categories, genres, themes } = useContext(FormContext);
 
     return (
         <div className={styles['form__section']}>
             <h2 className={styles['form__title']}>Організація</h2>
             <div className={styles['form__column']}>
-                <Select
-                    control={control}
-                    name="Type"
-                    label="Тип"
-                    options={[
-                        { value: 'puzzle', name: 'Пазли' },
-                        { value: 'mind-games', name: 'Настільні ігри' },
-                    ]}
-                />
                 <Select
                     control={control}
                     name="CategoryId"

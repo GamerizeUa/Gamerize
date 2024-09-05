@@ -1,5 +1,5 @@
 import { useController } from 'react-hook-form';
-import styles from '../assets/styles/input.module.css';
+import styles from './input.module.css';
 
 const SelectOption = ({ value, name }) => {
     return <option value={value}>{name}</option>;
@@ -20,11 +20,11 @@ export const Select = ({ name, options, rules, control, label }) => {
                 className={styles['form-control__input']}
                 id={name}
             >
-                {options?.map((option, index) => (
+                {options?.map((option) => (
                     <SelectOption
                         value={option.value}
                         name={option.name}
-                        key={index}
+                        key={option.value}
                     />
                 ))}
             </select>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useController } from 'react-hook-form';
-import styles from '../assets/styles/input.module.css';
+import styles from './input.module.css';
 
 export const ImagePicker = ({ control, name, rules, children }) => {
     const {
@@ -19,10 +19,11 @@ export const ImagePicker = ({ control, name, rules, children }) => {
         fileReader.onload = ({ target: { result } }) => {
             const newGallery = [...gallery, result];
             setGallery(newGallery);
-            field.onChange(newGallery);
         };
 
         if (files.length === 0) return;
+
+        field.onChange([...files].concat(field.value));
 
         for (let file of files) {
             fileReader.readAsDataURL(file);
@@ -30,9 +31,9 @@ export const ImagePicker = ({ control, name, rules, children }) => {
     };
 
     const handleImageRemove = (index) => {
-        const newGallery = gallery.filter((image, id) => index !== id);
+        const newGallery = gallery.filter((_, id) => index !== id);
+        field.onChange(field.value.filter((_, id) => id !== index));
         setGallery(newGallery);
-        field.onChange(newGallery);
     };
 
     useEffect(() => {

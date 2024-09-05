@@ -13,13 +13,11 @@ const positiveNumber = yup
     .number('Значення цього поля має бути числом')
     .positive('Значення цього поля має бути більшим за 0');
 
-const requiredArray = yup.array().required('Це обов`язкове поле');
-
-export const scheme = yup.object({
+export const productSchema = yup.object({
     Name: requiredString,
     Price: requiredNumber,
     Description: requiredString,
-    NewImages: requiredArray,
+    NewImages: yup.array(),
     MinPlayers: yup
         .number('Значення цього поля має бути числом')
         .min(
@@ -27,7 +25,7 @@ export const scheme = yup.object({
             'Значення цього поля має бути дорівнювати або бути більшим за 1'
         )
         .required('Це обов`язкове поле'),
-    MaxPlayers: positiveNumber.required('Це обов`язкове поле'),
+    MaxPlayers: positiveNumber,
     MinAge: positiveNumber.required('Це обов`язкове поле'),
     MinGameTimeMinutes: yup
         .number('Значення цього поля має бути числом')
@@ -41,9 +39,9 @@ export const scheme = yup.object({
         .max(240, 'Значення цього поля має дорівнювати або бути меньшим за 240')
         .positive('Значення цього поля має бути більшим за 0')
         .required('Це обов`язкове поле'),
-    Language: requiredString,
-    CategoryId: requiredNumber,
-    ThemeId: requiredNumber,
-    GenreId: requiredNumber,
+    LanguageId: positiveNumber,
+    CategoryId: positiveNumber,
+    ThemeId: positiveNumber,
+    GenreId: positiveNumber,
     NewTags: yup.array(),
 });

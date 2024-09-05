@@ -5,7 +5,7 @@ import { getImagePath } from '../../../utils/getImagePath';
 import Edit from '../assets/icons/Edit.svg';
 import Delete from '../assets/icons/delete.svg';
 import styles from '../assets/styles/products.module.css';
-import buttons from '../assets/styles/buttons.module.css';
+import buttons from '../../../assets/styles/buttons.module.css';
 
 export const ProductExcerpt = ({ product }) => {
     const dispatch = useDispatch();

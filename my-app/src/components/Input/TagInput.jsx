@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useController } from 'react-hook-form';
-import styles from '../assets/styles/input.module.css';
+import styles from './input.module.css';
 
 export const TagInput = ({ name, rules, control, label, placeholder = '' }) => {
     const [tags, setTags] = useState([]);

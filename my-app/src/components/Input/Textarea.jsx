@@ -1,5 +1,5 @@
 import { useController } from 'react-hook-form';
-import styles from '../assets/styles/input.module.css';
+import styles from './input.module.css';
 
 export const Textarea = ({
     name,

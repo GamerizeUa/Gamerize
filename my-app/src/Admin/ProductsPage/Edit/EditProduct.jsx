@@ -1,4 +1,4 @@
-import { Form } from '../Form/Form';
+import { Form } from '../../../components/Form/Form';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Breadcrumbs } from '../../../components/ProductOverview/Breadcrumbs/Breadcrumbs';
@@ -16,6 +16,11 @@ import styles from '../assets/styles/add-product.module.css';
 import { fetchAllCategories } from '../../../redux/categories/categoriesSlice';
 import { useParams } from 'react-router-dom';
 import { editProduct } from '../../../redux/productsCatalogSlice';
+import { productSchema } from '../validators/productSchema';
+import { General } from '../FormSections/General';
+import { Organization } from '../FormSections/Organization';
+import { cn } from '../../../utils/classnames';
+import buttons from '../../../assets/styles/buttons.module.css';
 
 export const EditProduct = () => {
     const { productId } = useParams();
@@ -56,10 +61,7 @@ export const EditProduct = () => {
             <Breadcrumbs page={breadcrumbDetails} />
             <h1 className={styles['add-product__title']}>{product.name}</h1>
             <Form
-                genres={genres}
-                categories={categories}
-                themes={themes}
-                languages={languages}
+                contextProps={{ genres, categories, themes, languages }}
                 className={styles['add-product__form']}
                 cb={(data) => dispatch(editProduct({ id: productId, ...data }))}
                 defaultValues={{
@@ -71,14 +73,21 @@ export const EditProduct = () => {
                     MinAge: product.minAge,
                     MinGameTimeMinutes: product.minGameTimeMinutes,
                     MaxGameTimeMinutes: product.maxGameTimeMinutes,
-                    Language: product.language.id,
+                    LanguageId: product.language.id,
                     CategoryId: product.category.id,
                     ThemeId: product.theme.id,
                     GenreId: product.genre.id,
                 }}
+                validationSchema={productSchema}
             >
-                <Form.General />
-                <Form.Organization />
+                <General />
+                <Organization />
+                <button
+                    type="submit"
+                    className={cn(buttons['btn'], buttons['btn--primary'])}
+                >
+                    Зберегти
+                </button>
             </Form>
         </div>
     );

@@ -54,12 +54,17 @@ export const addProduct = createAsyncThunk(
     'productsCatalog/add',
     async ({ product }, { rejectWithValue }) => {
         try {
-            await axios.post(
+            const res = await axios.post(
                 `https://gamerize.ltd.ua/api/Product/Create/`,
-                product
+                product,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
             );
 
-            return product;
+            return res.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
         }
@@ -70,9 +75,14 @@ export const editProduct = createAsyncThunk(
     'productsCatalog/edit',
     async (updatedProduct, { rejectWithValue }) => {
         try {
-            const res = await axios.patch(
-                `https://gamerize.ltd.ua/api/Product/Update`,
-                updatedProduct
+            const res = await axios.put(
+                `https://gamerize.ltd.ua/api/Product/Update/${updatedProduct.id}`,
+                updatedProduct,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
             );
 
             return res.data;

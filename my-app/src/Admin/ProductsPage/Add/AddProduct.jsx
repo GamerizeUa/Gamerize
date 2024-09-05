@@ -1,4 +1,4 @@
-import { Form } from '../Form/Form';
+import { Form } from '../../../components/Form/Form';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Breadcrumbs } from '../../../components/ProductOverview/Breadcrumbs/Breadcrumbs';
@@ -15,6 +15,11 @@ import { dispatchMultipleActions } from '../../../utils/dispatchMultipleAtions';
 import styles from '../assets/styles/add-product.module.css';
 import { addProduct } from '../../../redux/productsCatalogSlice';
 import { fetchAllCategories } from '../../../redux/categories/categoriesSlice';
+import { productSchema } from '../validators/productSchema';
+import { General } from '../FormSections/General';
+import { Organization } from '../FormSections/Organization';
+import { cn } from '../../../utils/classnames';
+import buttons from '../../../assets/styles/buttons.module.css';
 
 export const AddProduct = () => {
     const dispatch = useDispatch();
@@ -23,7 +28,7 @@ export const AddProduct = () => {
     const themes = useSelector(selectThemes);
     const languages = useSelector(selectLanguages);
     const defaultValues = {
-        Language: 1,
+        LanguageId: 1,
         CategoryId: 21,
         GenreId: 15,
         ThemeId: 12,
@@ -54,16 +59,20 @@ export const AddProduct = () => {
             <Breadcrumbs page={breadcrumbDetails} />
             <h1 className={styles['add-product__title']}>Новий продукт</h1>
             <Form
-                genres={genres}
-                categories={categories}
-                themes={themes}
-                languages={languages}
+                contextProps={{ genres, categories, themes, languages }}
                 className={styles['add-product__form']}
                 cb={(product) => dispatch(addProduct({ product }))}
                 defaultValues={defaultValues}
+                validationSchema={productSchema}
             >
-                <Form.General />
-                <Form.Organization />
+                <General />
+                <Organization />
+                <button
+                    type="submit"
+                    className={cn(buttons['btn'], buttons['btn--primary'])}
+                >
+                    Зберегти
+                </button>
             </Form>
         </div>
     );

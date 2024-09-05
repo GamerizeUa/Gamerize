@@ -1,14 +1,14 @@
 import { useContext } from 'react';
-import { FormContext } from './Form';
-import { Input } from '../Input/Input';
-import { Textarea } from '../Input/Textarea';
-import { ImagePicker } from '../Input/ImagePicker';
-import { Select } from '../Input/Select';
-import { TagInput } from '../Input/TagInput';
+import { Input } from '../../../components/Input/Input';
+import { Textarea } from '../../../components/Input/Textarea';
+import { ImagePicker } from '../../../components/Input/ImagePicker';
+import { Select } from '../../../components/Input/Select';
+import { TagInput } from '../../../components/Input/TagInput';
 import { cn } from '../../../utils/classnames';
 import Image from '../assets/icons/Image.svg';
 import styles from '../assets/styles/form.module.css';
-import buttons from '../assets/styles/buttons.module.css';
+import buttons from '../../../assets/styles/buttons.module.css';
+import { FormContext } from '../../../components/Form/Form';
 
 export const General = () => {
     const { control, languages } = useContext(FormContext);
@@ -22,24 +22,12 @@ export const General = () => {
                     type="text"
                     name="Name"
                     label={'Назва'}
-                    rules={{
-                        required: {
-                            value: true,
-                            message: 'This field is required.',
-                        },
-                    }}
                 />
                 <Input
                     control={control}
                     type="number"
                     name="Price"
                     label={'Ціна'}
-                    rules={{
-                        required: {
-                            value: true,
-                            message: 'This field is required.',
-                        },
-                    }}
                 />
                 <button className={cn(buttons['btn'], buttons['btn--primary'])}>
                     Додати знижку
@@ -102,7 +90,7 @@ export const General = () => {
                         value: option.id,
                         name: option.name,
                     }))}
-                    name="Language"
+                    name="LanguageId"
                     label={'Мова'}
                 />
                 <TagInput

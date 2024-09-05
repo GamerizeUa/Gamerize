@@ -19,7 +19,7 @@ import { Products } from './Admin/ProductsPage/Products.jsx';
 import { EditProduct } from './Admin/ProductsPage/Edit/EditProduct.jsx';
 import { AddProduct } from './Admin/ProductsPage/Add/AddProduct.jsx';
 import { Questions } from './Admin/QuestionsPage/Questions.jsx';
-import { Edit } from './Admin/EditPage/Edit.jsx';
+// import { Edit } from './Admin/EditPage/Edit.jsx';
 
 import { useEffect } from 'react';
 import axios from 'axios';
@@ -83,7 +83,7 @@ function App() {
                     element={<EditProduct />}
                 />
                 <Route path="questions" element={<Questions />} />
-                <Route path="edit" element={<Edit />} />
+                {/* <Route path="edit" element={<Edit />} /> */}
             </Route>
         </Routes>
     );
