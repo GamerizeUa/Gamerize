@@ -3,28 +3,10 @@ import React from "react";
 import styles from "./QuestionItem.module.css";
 import {Link} from "react-router-dom";
 import axios from "axios";
+import {formatDate} from "../../../utils/formatDate.js";
 
 export const QuestionItem = ({question, getAllQuestions, setQuestionsToDelete, questionsToDelete}) => {
     const date = new Date(question.dateTime);
-    const today = new Date();
-    const isToday = date.toDateString() === today.toDateString();
-
-    const formatDate = (date) => {
-        const options = {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-        };
-
-        const hours = date.getHours().toString().padStart(2, '0');
-        const minutes = date.getMinutes().toString().padStart(2, '0');
-
-        if (isToday) {
-            return `${hours}:${minutes}`;
-        } else {
-            return date.toLocaleDateString('en-GB', options);
-        }
-    };
 
     const handleIconCheck = () => {
         axios.post(`https://gamerize.ltd.ua/api/Question/IsStarred/${question.id}`,
@@ -66,7 +48,7 @@ export const QuestionItem = ({question, getAllQuestions, setQuestionsToDelete, q
                     </div>
                 </div>
             </div>
-            <Link to='/' className={`${question.answer ? styles.question_read : ''}`}>
+            <Link to={`/admin/questions/${question.id}`} className={`${question.answer ? styles.question_read : ''}`}>
                 <p className={styles.question_name}>{question.userName}</p>
                 <div className={styles.question_rightPart}>
                     <p className={styles.question_text}>{question.text}</p>

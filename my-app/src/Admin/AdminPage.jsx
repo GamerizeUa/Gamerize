@@ -3,9 +3,11 @@ import React, {Suspense} from "react";
 import {Header} from "./Header/Header.jsx";
 import {NavBar} from "./NavBar/NavBar.jsx";
 import styles from "./AdminPage.module.css"
+import axios from "axios";
 
 
 export const AdminPage = () => {
+    axios.defaults.withCredentials = true;
 
     return (
         <div className={styles.wrapper}>

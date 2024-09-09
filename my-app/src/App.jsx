@@ -16,15 +16,15 @@ import ConfirmEmailPage from './components/LoginAndRegistration/ConfirmEmail/Con
 import { AdminPage } from './Admin/AdminPage.jsx';
 import { Orders } from './Admin/OrdersPage/Orders.jsx';
 import { Products } from './Admin/ProductsPage/Products.jsx';
+import { Questions } from './Admin/QuestionsPage/Questions.jsx';
 import { EditProduct } from './Admin/ProductsPage/Edit/EditProduct.jsx';
 import { AddProduct } from './Admin/ProductsPage/Add/AddProduct.jsx';
-import { Questions } from './Admin/QuestionsPage/Questions.jsx';
-// import { Edit } from './Admin/EditPage/Edit.jsx';
-
 import { useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import useCheckAdmin from './components/hooks/useCheckAdmin.js';
+import { QuestionAnswer } from './Admin/QuestionsPage/QuestionAnswer/QuestionAnswer.jsx';
+// import {Edit} from "./Admin/EditPage/Edit.jsx";
 
 function App() {
     useEffect(() => {
@@ -37,11 +37,11 @@ function App() {
     }, []);
 
     const ProtectedAdminRoute = ({ element }) => {
-        // const { isAdmin, loading } = useCheckAdmin();
-        //
-        // if (!isAdmin && !loading) {
-        //     return <Navigate to="/" />;
-        // }
+        const { isAdmin, loading } = useCheckAdmin();
+
+        if (!isAdmin && !loading) {
+            return <Navigate to="/" />;
+        }
 
         return element;
     };
@@ -83,6 +83,7 @@ function App() {
                     element={<EditProduct />}
                 />
                 <Route path="questions" element={<Questions />} />
+                <Route path="questions/:id" element={<QuestionAnswer />} />
                 {/* <Route path="edit" element={<Edit />} /> */}
             </Route>
         </Routes>
