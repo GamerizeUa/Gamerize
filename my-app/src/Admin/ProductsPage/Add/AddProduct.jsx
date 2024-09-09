@@ -12,7 +12,7 @@ import {
     selectThemes,
 } from '../../../redux/selectors';
 import { dispatchMultipleActions } from '../../../utils/dispatchMultipleAtions';
-import styles from '../assets/styles/add-product.module.css';
+import styles from '../assets/styles/products.module.css';
 import { addProduct } from '../../../redux/productsCatalogSlice';
 import { fetchAllCategories } from '../../../redux/categories/categoriesSlice';
 import { productSchema } from '../validators/productSchema';
@@ -55,12 +55,12 @@ export const AddProduct = () => {
     };
 
     return (
-        <div className={styles['add-product']}>
+        <div>
             <Breadcrumbs page={breadcrumbDetails} />
-            <h1 className={styles['add-product__title']}>Новий продукт</h1>
+            <h1 className={styles['products__title']}>Новий продукт</h1>
             <Form
                 contextProps={{ genres, categories, themes, languages }}
-                className={styles['add-product__form']}
+                className={styles['products__form']}
                 cb={(product) => dispatch(addProduct({ product }))}
                 defaultValues={defaultValues}
                 validationSchema={productSchema}

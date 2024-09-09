@@ -12,7 +12,7 @@ import {
     selectThemes,
 } from '../../../redux/selectors';
 import { dispatchMultipleActions } from '../../../utils/dispatchMultipleAtions';
-import styles from '../assets/styles/add-product.module.css';
+import styles from '../assets/styles/products.module.css';
 import { fetchAllCategories } from '../../../redux/categories/categoriesSlice';
 import { useParams } from 'react-router-dom';
 import {
@@ -62,32 +62,32 @@ export const EditProduct = () => {
     };
 
     return (
-        <div className={styles['add-product']}>
+        <div>
             <Breadcrumbs page={breadcrumbDetails} />
-            <h1 className={styles['add-product__title']}>{product.name}</h1>
+            <h1 className={styles['products__title']}>{product.name}</h1>
             <Form
                 contextProps={{ genres, categories, themes, languages }}
-                className={styles['add-product__form']}
+                className={styles['products__form']}
                 cb={(data) => dispatch(editProduct({ id: productID, ...data }))}
                 defaultValues={{
                     Name: product.name,
                     Price: product.price,
                     Description: product.description,
                     MinPlayers: product.minPlayers,
-                    MaxPlayers: product.maxPlayers,
+                    MaxPlayers: product?.maxPlayers,
                     MinAge: product.minAge,
                     MinGameTimeMinutes: product.minGameTimeMinutes,
                     MaxGameTimeMinutes: product.maxGameTimeMinutes,
-                    LanguageId: product.language.id,
-                    CategoryId: product.category.id,
-                    ThemeId: product.theme.id,
-                    GenreId: product.genre.id,
+                    LanguageId: product.language?.id,
+                    CategoryId: product.category?.id,
+                    ThemeId: product.theme?.id,
+                    GenreId: product.genre?.id,
                 }}
                 validationSchema={productSchema}
             >
                 <General />
                 <Organization />
-                <div className={styles['add-product__btn-group']}>
+                <div className={styles['products__btn-group']}>
                     <button
                         type="submit"
                         className={cn(buttons['btn'], buttons['btn--primary'])}
