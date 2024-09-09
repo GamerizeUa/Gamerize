@@ -13,7 +13,7 @@
     gap: 1.428rem 1.142rem;
     margin-block-end: 2.285rem;
 
-    & > button:last-child {
+    & > .add-product__btn-group:last-child {
         inline-size: max-content;
         block-size: max-content;
 
@@ -30,4 +30,10 @@
             grid-area: 1/1/4/2;
         }
     }
+}
+
+.add-product__btn-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }

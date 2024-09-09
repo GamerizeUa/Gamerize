@@ -15,18 +15,23 @@ import { dispatchMultipleActions } from '../../../utils/dispatchMultipleAtions';
 import styles from '../assets/styles/add-product.module.css';
 import { fetchAllCategories } from '../../../redux/categories/categoriesSlice';
 import { useParams } from 'react-router-dom';
-import { editProduct } from '../../../redux/productsCatalogSlice';
+import {
+    deleteProduct,
+    editProduct,
+} from '../../../redux/productsCatalogSlice';
 import { productSchema } from '../validators/productSchema';
 import { General } from '../FormSections/General';
 import { Organization } from '../FormSections/Organization';
 import { cn } from '../../../utils/classnames';
 import buttons from '../../../assets/styles/buttons.module.css';
+import { useNavigate } from 'react-router-dom';
 
 export const EditProduct = () => {
-    const { productId } = useParams();
+    const { productID } = useParams();
+    const navigate = useNavigate();
     const product = useSelector((state) =>
         state.productsCatalog.products.find(
-            (product) => product.id == productId
+            (product) => product.id == productID
         )
     );
     const dispatch = useDispatch();
@@ -63,7 +68,7 @@ export const EditProduct = () => {
             <Form
                 contextProps={{ genres, categories, themes, languages }}
                 className={styles['add-product__form']}
-                cb={(data) => dispatch(editProduct({ id: productId, ...data }))}
+                cb={(data) => dispatch(editProduct({ id: productID, ...data }))}
                 defaultValues={{
                     Name: product.name,
                     Price: product.price,
@@ -82,12 +87,23 @@ export const EditProduct = () => {
             >
                 <General />
                 <Organization />
-                <button
-                    type="submit"
-                    className={cn(buttons['btn'], buttons['btn--primary'])}
-                >
-                    Зберегти
-                </button>
+                <div className={styles['add-product__btn-group']}>
+                    <button
+                        type="submit"
+                        className={cn(buttons['btn'], buttons['btn--primary'])}
+                    >
+                        Зберегти
+                    </button>
+                    <button
+                        className={cn(buttons['btn'], buttons['btn--danger'])}
+                        onClick={() => {
+                            dispatch(deleteProduct({ productID }));
+                            navigate('/admin/products', { replace: true });
+                        }}
+                    >
+                        Видалити продукт
+                    </button>
+                </div>
             </Form>
         </div>
     );

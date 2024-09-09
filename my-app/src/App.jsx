@@ -79,7 +79,7 @@ function App() {
                 <Route path="products" element={<Products />} />
                 <Route path="products/add" element={<AddProduct />} />
                 <Route
-                    path="products/edit/:productId"
+                    path="products/edit/:productID"
                     element={<EditProduct />}
                 />
                 <Route path="questions" element={<Questions />} />

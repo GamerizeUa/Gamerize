@@ -21,7 +21,16 @@
 
 .btn--primary {
     background: #4d88ef;
-    color: white;
+    color: #fff;
+
+    &:hover,
+    &:focus {
+        filter: brightness(1.2);
+    }
+}
+.btn--danger {
+    background: #ff0000;
+    color: #fff;
 
     &:hover,
     &:focus {
