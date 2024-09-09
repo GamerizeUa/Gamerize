@@ -26,6 +26,10 @@
   margin-bottom: 20px;
 }
 
+.cartImageItem{
+  object-fit: contain;
+}
+
 .cartItemDescription {
   display: flex;
   flex-direction: column;
