@@ -8,10 +8,13 @@ import React, {useState} from "react";
 import useNoScroll from "../hooks/useNoScroll.js"
 import Lottie  from 'lottie-react';
 import mailNotSentAnimation from '../../assets/images/confirmEmail.json';
+import Cookies from "js-cookie";
+import {sendRequestWithLoading} from "../../utils/sendRequestWithLoading.js";
 
 export const Registration = ({setIsDisplayedRegistrationPopUp, setDisplayedLoginPopUp}) => {
     const [isErrorVisible, setIsErrorVisible] = useState(false);
     const [isConfirmMessage, setIsConfirmMessage] = useState(false);
+    const [loading, setLoading] = useState(false);
     useNoScroll(true);
 
     const schema = yup.object().shape({
@@ -44,11 +47,18 @@ export const Registration = ({setIsDisplayedRegistrationPopUp, setDisplayedLogin
     };
 
     const onSubmit = (data) => {
-        Axios.post('https://gamerize.ltd.ua/api/Register/register', data)
-            .then(() => {
-                setIsConfirmMessage(true)
-            })
-            .catch(() => setIsErrorVisible(true))
+        const link = 'https://gamerize.ltd.ua/api/Register/register'
+
+        const toDoInTimeout = () => {
+            setLoading(false)
+            setIsConfirmMessage(true)
+        }
+
+        const toDoInCatch = () => {
+            setIsErrorVisible(true)
+        }
+
+        sendRequestWithLoading(data,link,setLoading, toDoInTimeout, toDoInCatch)
     }
 
     return (
@@ -127,7 +137,9 @@ export const Registration = ({setIsDisplayedRegistrationPopUp, setDisplayedLogin
                                     <p className={styles.input_error}>{errors.confirmPassword?.message}</p>
                                 </div>
                                 <hr className={styles.popUp_registrationHr}/>
-                                <button type="submit">Зареєструватись</button>
+                                <button type="submit" className={loading && 'loadingButton'}>
+                                    {loading ? "Реєстрація..." : "Зареєструватись"}
+                                </button>
                                 {isErrorVisible &&
                                     <p className={styles.input_userError}>Користувач з такою е-поштою вже існує</p>}
                             </form>

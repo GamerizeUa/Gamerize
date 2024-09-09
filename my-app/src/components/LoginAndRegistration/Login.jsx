@@ -7,9 +7,11 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import Axios from "axios";
 import useNoScroll from "../hooks/useNoScroll.js";
 import Cookies from "js-cookie";
+import {sendRequestWithLoading} from "../../utils/sendRequestWithLoading.js";
 
 export const Login = ({setDisplayedLoginPopUp, setIsDisplayedRegistrationPopUp, setIsDisplayedEmailForm}) => {
     const [isErrorVisible, setIsErrorVisible] = useState(false);
+    const[loading, setLoading] = useState(false);
     useNoScroll(true);
 
     const schema = yup.object().shape({
@@ -24,14 +26,20 @@ export const Login = ({setDisplayedLoginPopUp, setIsDisplayedRegistrationPopUp, 
     });
 
     const onSubmit = (data) => {
-        Axios.post('https://gamerize.ltd.ua/api/Login/login', data)
-            .then((res) => {
-                Cookies.set('auth', "true")
-                closePopUp();
-            })
-            .catch(() => {
-                setIsErrorVisible(true)
-            })
+        const link = 'https://gamerize.ltd.ua/api/Login/login';
+
+        const toDoInTimeout = () => {
+            setLoading(false)
+            Cookies.set('auth', "true")
+            closePopUp();
+        }
+
+        const toDoInCatch = () => {
+            setIsErrorVisible(true)
+        }
+
+        sendRequestWithLoading(data,link,setLoading, toDoInTimeout, toDoInCatch)
+
     }
 
     const closePopupByClicking = (event) => {
@@ -81,7 +89,9 @@ export const Login = ({setDisplayedLoginPopUp, setIsDisplayedRegistrationPopUp, 
                                 </div>
                                 <p className={styles.input_error}>{errors.password?.message}</p>
                             </div>
-                            <button type="submit">Увійти</button>
+                            <button type="submit" className={loading && 'loadingButton'}>
+                                {loading ? "Вхід в акаунт..." : "Увійти"}
+                            </button>
                             {isErrorVisible && <p className={styles.input_userError}>
                                 Помилка входу. Перевірте правильність е-пошти та пароля.
                             </p>}
