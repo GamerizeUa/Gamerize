@@ -56,7 +56,7 @@ export const AddProduct = () => {
 
     return (
         <div>
-            <Breadcrumbs page={breadcrumbDetails} />
+            <Breadcrumbs page={breadcrumbDetails} isAdminPage={true}/>
             <h1 className={styles['products__title']}>Новий продукт</h1>
             <Form
                 contextProps={{ genres, categories, themes, languages }}
