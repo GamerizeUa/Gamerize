@@ -50,6 +50,48 @@ export const deleteProduct = createAsyncThunk(
     }
 );
 
+export const addProduct = createAsyncThunk(
+    'productsCatalog/add',
+    async ({ product }, { rejectWithValue }) => {
+        try {
+            const res = await axios.post(
+                `https://gamerize.ltd.ua/api/Product/Create/`,
+                product,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            );
+
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
+export const editProduct = createAsyncThunk(
+    'productsCatalog/edit',
+    async (updatedProduct, { rejectWithValue }) => {
+        try {
+            const res = await axios.put(
+                `https://gamerize.ltd.ua/api/Product/Update/${updatedProduct.id}`,
+                updatedProduct,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            );
+
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
 const initialState = {
     products: [],
     totalPages: 0,
@@ -120,6 +162,17 @@ export const productsCatalogSlice = createSlice({
                 state.products = state.products.filter(
                     (product) => product.id !== action.payload
                 );
+            })
+            .addCase(addProduct.fulfilled, (state, action) => {
+                state.loading = false;
+                state.products.push(action.payload);
+            })
+            .addCase(editProduct.fulfilled, (state, action) => {
+                state.loading = false;
+                const idToUpdate = state.product.index(
+                    (product) => product.id === action.payload.id
+                );
+                state.products[idToUpdate] = action.payload;
             })
             .addMatcher(
                 (action) => action.type.endsWith('/pending'),

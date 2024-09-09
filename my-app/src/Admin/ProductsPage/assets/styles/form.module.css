@@ -1,0 +1,34 @@
+.form__section {
+    padding: 2.857rem;
+    background: #fff;
+    border-radius: 8px;
+}
+
+.form__title {
+    font-family: 'Noto Sans', system-ui, sans-serif;
+    font-weight: 500;
+    color: #6566ac;
+    margin-block: 2.285rem;
+
+    &:first-child {
+        margin-block-start: 0;
+    }
+}
+
+.form__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+
+    > * {
+        flex-grow: 1;
+    }
+}
+
+.form__column {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+}

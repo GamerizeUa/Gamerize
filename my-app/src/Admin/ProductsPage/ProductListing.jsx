@@ -1,5 +1,5 @@
 import { ProductExcerpt } from './Excerpt/ProductExcerpt';
-import styles from './products.module.css';
+import styles from './assets/styles/products.module.css';
 
 export const ProductListing = ({ products, loading }) => {
     if (loading) return null;
