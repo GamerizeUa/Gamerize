@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useController } from 'react-hook-form';
-import styles from './input.module.css';
+import styles from './image-picker.module.css';
 
 export const ImagePicker = ({ control, name, rules, children }) => {
     const {
@@ -9,39 +9,36 @@ export const ImagePicker = ({ control, name, rules, children }) => {
     } = useController({ control, name, rules });
 
     const [gallery, setGallery] = useState([]);
-    const [pickerValue, setPickerValue] = useState('');
 
     const handleImageUpload = ({ target: { files } }) => {
-        setPickerValue(files);
+        if (!files.length) return;
+        const newFiles = Array.from(files);
 
-        const fileReader = new FileReader();
+        const newImages = newFiles.map((file) => URL.createObjectURL(file));
 
-        fileReader.onload = ({ target: { result } }) => {
-            const newGallery = [...gallery, result];
-            setGallery(newGallery);
-        };
-
-        if (files.length === 0) return;
-
-        field.onChange([...files].concat(field.value));
-
-        for (let file of files) {
-            fileReader.readAsDataURL(file);
-        }
+        field.onChange(newFiles);
+        setGallery(newImages);
     };
 
     const handleImageRemove = (index) => {
-        const newGallery = gallery.filter((_, id) => index !== id);
-        field.onChange(field.value.filter((_, id) => id !== index));
-        setGallery(newGallery);
+        const updatedUrls = field.value.filter((_, id) => id !== index);
+        const updatedGallery = gallery.filter((_, id) => id !== index);
+        URL.revokeObjectURL(field.value[index]);
+
+        field.onChange(updatedUrls);
+
+        setGallery(updatedGallery);
     };
 
     useEffect(() => {
         return () => {
-            setGallery([]);
-            setPickerValue('');
+            if (field.value) {
+                Object.values(field.value).forEach((url) =>
+                    URL.revokeObjectURL(url)
+                );
+            }
         };
-    }, []);
+    }, [field.value]);
 
     return (
         <div className={styles['image-picker']}>
@@ -49,7 +46,7 @@ export const ImagePicker = ({ control, name, rules, children }) => {
                 <input
                     type="file"
                     accept="image/*"
-                    defaultValue={pickerValue}
+                    multiple
                     onChange={handleImageUpload}
                     onBlur={field.onBlur}
                     aria-invalid={invalid}
@@ -59,14 +56,15 @@ export const ImagePicker = ({ control, name, rules, children }) => {
                     {children}
                 </div>
             </div>
+
             {gallery.length > 0 && (
                 <div className={styles['image-picker__gallery']}>
-                    {gallery.map((image, index) => (
+                    {gallery.map((url, index) => (
                         <img
-                            src={image}
-                            alt=""
-                            className={styles['image-picker__item']}
                             key={index}
+                            src={url}
+                            alt={`Preview ${index}`}
+                            className={styles['image-picker__item']}
                             onClick={() => handleImageRemove(index)}
                         />
                     ))}

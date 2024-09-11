@@ -1,5 +1,5 @@
 import { Form } from '../../../components/Form/Form';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Breadcrumbs } from '../../../components/ProductOverview/Breadcrumbs/Breadcrumbs';
 import { fetchAllGenres } from '../../../redux/categories/genresSlice';
@@ -25,6 +25,18 @@ import { Organization } from '../FormSections/Organization';
 import { cn } from '../../../utils/classnames';
 import buttons from '../../../assets/styles/buttons.module.css';
 import { useNavigate } from 'react-router-dom';
+import { productToFormData } from '../../../utils/converters';
+import axios from 'axios';
+
+const fetchTags = async () => {
+    try {
+        const res = await axios.get('https://gamerize.ltd.ua/api/Tag/GetAll');
+
+        return res.data;
+    } catch ({ response }) {
+        return response.data;
+    }
+};
 
 export const EditProduct = () => {
     const { productID } = useParams();
@@ -39,6 +51,7 @@ export const EditProduct = () => {
     const categories = useSelector(selectCategories);
     const themes = useSelector(selectThemes);
     const languages = useSelector(selectLanguages);
+    const [tags, setTags] = useState([]);
 
     useEffect(() => {
         dispatch(
@@ -52,6 +65,10 @@ export const EditProduct = () => {
                 []
             )
         );
+
+        fetchTags()
+            .then((newTags) => setTags(newTags))
+            .catch((e) => console.error(e));
     }, [dispatch]);
 
     if (!product) return null;
@@ -66,9 +83,16 @@ export const EditProduct = () => {
             <Breadcrumbs page={breadcrumbDetails} />
             <h1 className={styles['products__title']}>{product.name}</h1>
             <Form
-                contextProps={{ genres, categories, themes, languages }}
+                contextProps={{ genres, categories, themes, languages, tags }}
                 className={styles['products__form']}
-                cb={(data) => dispatch(editProduct({ id: productID, ...data }))}
+                cb={(data) =>
+                    dispatch(
+                        editProduct({
+                            id: productID,
+                            product: productToFormData(data),
+                        })
+                    )
+                }
                 defaultValues={{
                     Name: product.name,
                     Price: product.price,

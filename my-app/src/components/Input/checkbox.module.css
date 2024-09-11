@@ -1,0 +1,18 @@
+.checkbox {
+    transition: all 250ms;
+
+    &:has(input:checked) {
+        background: #4880ff;
+        color: #dedada;
+    }
+}
+
+.checkbox__input {
+    appearance: none;
+    outline: none;
+    padding: 0.714rem 1.142rem;
+    margin-block-start: 1rem;
+    border-radius: 8px;
+    border: 1px solid #dedada;
+    translate: border-color 250ms, color 250ms;
+}

@@ -73,11 +73,11 @@ export const addProduct = createAsyncThunk(
 
 export const editProduct = createAsyncThunk(
     'productsCatalog/edit',
-    async (updatedProduct, { rejectWithValue }) => {
+    async ({ id, product }, { rejectWithValue }) => {
         try {
             const res = await axios.put(
-                `https://gamerize.ltd.ua/api/Product/Update/${updatedProduct.id}`,
-                updatedProduct,
+                `https://gamerize.ltd.ua/api/Product/Update/${id}`,
+                product,
                 {
                     headers: {
                         'Content-Type': 'multipart/form-data',
@@ -169,10 +169,10 @@ export const productsCatalogSlice = createSlice({
             })
             .addCase(editProduct.fulfilled, (state, action) => {
                 state.loading = false;
-                const idToUpdate = state.product.index(
-                    (product) => product.id === action.payload.id
+                const index = state.products.findIndex(
+                    ({ id }) => id === action.payload.id
                 );
-                state.products[idToUpdate] = action.payload;
+                if (index !== -1) state.products[index] = action.payload;
             })
             .addMatcher(
                 (action) => action.type.endsWith('/pending'),
