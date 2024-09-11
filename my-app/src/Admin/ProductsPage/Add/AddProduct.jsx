@@ -1,5 +1,5 @@
 import { Form } from '../../../components/Form/Form';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Breadcrumbs } from '../../../components/ProductOverview/Breadcrumbs/Breadcrumbs';
 import { fetchAllGenres } from '../../../redux/categories/genresSlice';
@@ -20,6 +20,18 @@ import { General } from '../FormSections/General';
 import { Organization } from '../FormSections/Organization';
 import { cn } from '../../../utils/classnames';
 import buttons from '../../../assets/styles/buttons.module.css';
+import { productToFormData } from '../../../utils/converters';
+import axios from 'axios';
+
+const fetchTags = async () => {
+    try {
+        const res = await axios.get('https://gamerize.ltd.ua/api/Tag/GetAll');
+
+        return res.data;
+    } catch ({ response }) {
+        return response.data;
+    }
+};
 
 export const AddProduct = () => {
     const dispatch = useDispatch();
@@ -33,7 +45,9 @@ export const AddProduct = () => {
         GenreId: 15,
         ThemeId: 12,
         Type: 'puzzle',
+        NewTags: [],
     };
+    const [tags, setTags] = useState([]);
 
     useEffect(() => {
         dispatch(
@@ -47,6 +61,10 @@ export const AddProduct = () => {
                 []
             )
         );
+
+        fetchTags()
+            .then((newTags) => setTags(newTags))
+            .catch((e) => console.error(e));
     }, [dispatch]);
 
     const breadcrumbDetails = {
@@ -56,12 +74,16 @@ export const AddProduct = () => {
 
     return (
         <div>
-            <Breadcrumbs page={breadcrumbDetails} isAdminPage={true}/>
+            <Breadcrumbs page={breadcrumbDetails} isAdminPage={true} />
             <h1 className={styles['products__title']}>Новий продукт</h1>
             <Form
-                contextProps={{ genres, categories, themes, languages }}
+                contextProps={{ genres, categories, themes, languages, tags }}
                 className={styles['products__form']}
-                cb={(product) => dispatch(addProduct({ product }))}
+                cb={(product) =>
+                    dispatch(
+                        addProduct({ product: productToFormData(product) })
+                    )
+                }
                 defaultValues={defaultValues}
                 validationSchema={productSchema}
             >

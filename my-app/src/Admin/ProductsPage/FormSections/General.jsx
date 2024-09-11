@@ -3,7 +3,7 @@ import { Input } from '../../../components/Input/Input';
 import { Textarea } from '../../../components/Input/Textarea';
 import { ImagePicker } from '../../../components/Input/ImagePicker';
 import { Select } from '../../../components/Input/Select';
-import { TagInput } from '../../../components/Input/TagInput';
+import { Multiselect } from '../../../components/Input/Multiselect';
 import { cn } from '../../../utils/classnames';
 import Image from '../assets/icons/Image.svg';
 import styles from '../assets/styles/form.module.css';
@@ -11,7 +11,7 @@ import buttons from '../../../assets/styles/buttons.module.css';
 import { FormContext } from '../../../components/Form/Form';
 
 export const General = () => {
-    const { control, languages } = useContext(FormContext);
+    const { control, languages, tags } = useContext(FormContext);
 
     return (
         <div className={styles['form__section']}>
@@ -93,8 +93,12 @@ export const General = () => {
                     name="LanguageId"
                     label={'Мова'}
                 />
-                <TagInput
+                <Multiselect
                     control={control}
+                    options={tags.map((tag) => ({
+                        label: tag.name,
+                        value: tag.id,
+                    }))}
                     name="NewTags"
                     label={'Теги'}
                     id="tags-input"
