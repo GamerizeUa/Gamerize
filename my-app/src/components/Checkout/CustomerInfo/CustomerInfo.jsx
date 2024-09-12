@@ -8,7 +8,7 @@ export const CustomerInfo = ({ onSubmit, currentStep, setCurrentStep }) => {
   const schema = yup.object().shape({
     customerName: yup
       .string()
-      .matches(/^[A-Za-zА-Яа-я\s]+$/, "Введіть коректне ім'я")
+      .matches(/^[a-zA-Zа-яіА-ЯІ'\-]+\s[a-zA-Zа-яіА-ЯІ'\-]+$/i, "Введіть ім'я та прізвище")
       .required("Введіть ім'я"),
     customerPhone: yup
       .string()

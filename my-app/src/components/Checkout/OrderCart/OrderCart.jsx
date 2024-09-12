@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { selectCart } from "../../../redux/selectors";
+import {selectCart, selectGiftCard, selectPromoCode} from "../../../redux/selectors";
 import { OrderCartItem } from "./OrderCartItem";
 import { OrderCartInputs } from "./OrderCartInputs";
 import sprite from "../../../assets/icons/sprite.svg";
@@ -7,9 +7,11 @@ import styles from "./OrderCart.module.css";
 
 export const OrderCart = () => {
   const { isEmpty, productList, total } = useSelector(selectCart);
+  const promoCode = useSelector(selectPromoCode);
+  const giftCard = useSelector(selectGiftCard);
 
   return (
-    <div>
+    <div className={styles.orderCartContainer}>
       <div className={styles.orderCart}>
         <p className={styles.cartTitle}>Ваше замовлення</p>
         {isEmpty ? (
@@ -30,6 +32,24 @@ export const OrderCart = () => {
               <span>₴</span>
             </div>
           </div>
+          {promoCode && (
+              <div className={styles.priceElement}>
+                <p>Промокод:</p>
+                <div className={styles.inner}>
+                  <p>-200</p>
+                  <span>₴</span>
+              </div>
+              </div>
+          )}
+          {giftCard && (
+              <div className={styles.priceElement}>
+                <p>Подарункова карта:</p>
+                <div className={styles.inner}>
+                  <p>-200</p>
+                  <span>₴</span>
+                </div>
+              </div>
+          )}
           <div className={styles.priceElement}>
             <p>Доставка:</p>
             <p>Безкоштовно</p>
