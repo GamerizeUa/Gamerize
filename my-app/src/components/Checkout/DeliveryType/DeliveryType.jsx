@@ -5,10 +5,12 @@ import { AddressForm } from "./AddressForm";
 export const DeliveryType = ({ onSubmit, currentStep, setCurrentStep }) => {
   const [deliveryMethod, setDeliveryMethod] = useState("");
   const [addressData, setAddressData] = useState({});
+  const [isValid, setIsValid] = useState(false);
 
   const handleRadioClick = (method) => {
     setDeliveryMethod(method);
     document.getElementById(method).checked = true;
+    setIsValid(true)
   };
 
   const handleContinue = () => {
@@ -93,7 +95,7 @@ export const DeliveryType = ({ onSubmit, currentStep, setCurrentStep }) => {
       <button
         className={styles.orderBtn}
         onClick={handleContinue}
-        disabled={currentStep != 2}
+        disabled={!isValid || currentStep != 2}
       >
         Продовжити
       </button>
