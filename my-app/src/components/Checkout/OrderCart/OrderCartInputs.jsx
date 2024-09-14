@@ -54,24 +54,32 @@ export const OrderCartInputs = () => {
   return (
     <div className={styles.discountContainer}>
       {(isEditing && editingField === "promoCode") || promoCode ? (
-        <input
-          name="promoCode"
-          placeholder="Enter the promo code number"
-          value={promoCode}
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-          className={styles.discountInput}
-          maxLength={MAX_LENGTH}
-        />
+          <div>
+            <input
+                name="promoCode"
+                placeholder="Введіть промокод"
+                value={promoCode}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+                className={styles.discountInput}
+                maxLength={MAX_LENGTH}
+            />
+            {isEditing && (
+                <span className={styles.discountAdd}
+                      onClick={() => setIsEditing(false)}>
+              Додати
+            </span>
+            )}
+          </div>
       ) : (
-        <div
-          onClick={(event) => handleEditClick("promoCode", event)}
-          className={styles.discountItem}
-        >
-          <svg width={24} height={24}>
-            <use
-              href={sprite + "#icon-promo_code"}
-              stroke="#2B2B2B"
+          <div
+              onClick={(event) => handleEditClick("promoCode", event)}
+              className={styles.discountItem}
+          >
+            <svg width={24} height={24}>
+              <use
+                  href={sprite + "#icon-promo_code"}
+                  stroke="#2B2B2B"
               fill="#eef1ff"
             />
           </svg>
@@ -79,23 +87,31 @@ export const OrderCartInputs = () => {
         </div>
       )}
       {(isEditing && editingField === "giftCard") || giftCard ? (
-        <input
-          name="giftCard"
-          placeholder="Enter the gift card number"
-          value={giftCard}
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-          className={styles.discountInput}
-          maxLength={MAX_LENGTH}
-        />
+          <div>
+            <input
+                name="giftCard"
+                placeholder="Введіть номер подарункової карти"
+                value={giftCard}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+                className={styles.discountInput}
+                maxLength={MAX_LENGTH}
+            />
+            {isEditing && (
+                <span className={styles.discountAdd}
+                      onClick={() => setIsEditing(false)}>
+              Додати
+            </span>
+            )}
+          </div>
       ) : (
-        <div
-          onClick={(event) => handleEditClick("giftCard", event)}
-          className={styles.discountItem}
-        >
-          <svg width={24} height={24}>
-            <use href={sprite + "#icon-gift"} stroke="#2B2B2B" fill="#eef1ff" />
-          </svg>
+          <div
+              onClick={(event) => handleEditClick("giftCard", event)}
+              className={styles.discountItem}
+          >
+            <svg width={24} height={24}>
+              <use href={sprite + "#icon-gift"} stroke="#2B2B2B" fill="#eef1ff"/>
+            </svg>
           <p className={styles.discountText}>Подарункова карта</p>
         </div>
       )}

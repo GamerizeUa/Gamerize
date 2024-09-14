@@ -5,10 +5,12 @@ import { AddressForm } from "./AddressForm";
 export const DeliveryType = ({ onSubmit, currentStep, setCurrentStep }) => {
   const [deliveryMethod, setDeliveryMethod] = useState("");
   const [addressData, setAddressData] = useState({});
+  const [isValid, setIsValid] = useState(false);
 
   const handleRadioClick = (method) => {
     setDeliveryMethod(method);
     document.getElementById(method).checked = true;
+    setIsValid(true)
   };
 
   const handleContinue = () => {
@@ -35,27 +37,29 @@ export const DeliveryType = ({ onSubmit, currentStep, setCurrentStep }) => {
       >
         <div>
           <div className={styles.radioInputBox}>
+            <div className={styles.inputHeader}>
             <div className={styles.inputWrapper}>
-              <span className={styles.fakeInput} />
+              <span className={styles.fakeInput}/>
               <input
-                type="radio"
-                id="pickup"
-                value="pickup"
-                name="deliveryMethod"
-                className={styles.selectorInput}
-                onChange={() => setDeliveryMethod("pickup")}
+                  type="radio"
+                  id="pickup"
+                  value="pickup"
+                  name="deliveryMethod"
+                  className={styles.selectorInput}
+                  onChange={() => setDeliveryMethod("pickup")}
               />
             </div>
             <label htmlFor="pickup" className={styles.orderText}>
               Самовивіз
             </label>
           </div>
+            <p className={styles.orderText}>Безкоштовно</p>
+          </div>
           <p className={styles.details}>
-            Ви можете самостійно забрати ваше замовлення за адресою м. Київ,
+          Ви можете самостійно забрати ваше замовлення за адресою м. Київ,
             вул. Ярославська, 9. Самовивезення приймаємо з 11:00 – 22:00/Пн-Нд.
           </p>
         </div>
-        <p className={styles.orderText}>Безкоштовно</p>
       </div>
       <div className={styles.deliveryBlock}>
         <div
@@ -63,31 +67,35 @@ export const DeliveryType = ({ onSubmit, currentStep, setCurrentStep }) => {
           onClick={() => handleRadioClick("delivery")}
         >
           <div className={styles.radioInputBox}>
-            <div className={styles.inputWrapper}>
-              <span className={styles.fakeInput} />
-              <input
-                type="radio"
-                id="delivery"
-                value="delivery"
-                name="deliveryMethod"
-                className={styles.selectorInput}
-                onChange={() => setDeliveryMethod("delivery")}
-              />
+            <div className={styles.inputHeader}>
+              <div className={styles.inputWrapper}>
+                <span className={styles.fakeInput}/>
+                <input
+                    type="radio"
+                    id="delivery"
+                    value="delivery"
+                    name="deliveryMethod"
+                    className={styles.selectorInput}
+                    onChange={() => setDeliveryMethod("delivery")}
+                />
+              </div>
+              <label htmlFor="delivery" className={styles.orderText}>
+                Доставка
+              </label>
             </div>
-            <label htmlFor="delivery" className={styles.orderText}>
-              Доставка
-            </label>
           </div>
-          <p className={styles.orderText}>Безкоштовно</p>
+              <p className={styles.orderText}>Безкоштовно</p>
+
+
         </div>
-        {deliveryMethod === "delivery" && (
-          <AddressForm setAddressData={setAddressData} />
+          {deliveryMethod === "delivery" && (
+              <AddressForm setAddressData={setAddressData} />
         )}
       </div>
       <button
         className={styles.orderBtn}
         onClick={handleContinue}
-        disabled={currentStep != 2}
+        disabled={!isValid || currentStep != 2}
       >
         Продовжити
       </button>

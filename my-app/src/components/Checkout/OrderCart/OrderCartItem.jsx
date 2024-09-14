@@ -4,6 +4,7 @@ import { removeFromCart, updateCartProduct } from "../../../redux/cartSlice";
 import styles from "./OrderCart.module.css";
 import sprite from "../../../assets/icons/sprite.svg";
 import CrossIcon from "../../icons/CrossIcon";
+import {getImagePath} from "../../../utils/getImagePath.js";
 
 export const OrderCartItem = ({ id, name, price, photo, count }) => {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ export const OrderCartItem = ({ id, name, price, photo, count }) => {
 
   return (
     <li className={styles.cartListItem}>
-      <img src={photo} width="90" height="90" alt={name} />
+      <img src={getImagePath(photo?.path)} width="90" height="90" alt={name} className={styles.cartImageItem}/>
       <div className={styles.cartItemDescription}>
         <div className={styles.titleWrapper}>
           <p className={styles.cartProductTitle}>{name}</p>

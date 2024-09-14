@@ -1,14 +1,18 @@
+.orderCartContainer{
+  width: 100%;
+}
+
 .orderCart {
-  width: 451px;
+  width: 100%;
   padding: 32px 24px;
   background-color: var(--light-blue-gray);
 }
 
 .cartTitle {
-  padding-bottom: 10px;
+  padding-bottom: 16px;
   font-family: "Noto Sans";
-  font-size: 24px;
-  line-height: 130%;
+  font-size: 18px;
+  line-height: 20%;
   border-bottom: 1px solid #dee0e3;
 }
 
@@ -26,6 +30,12 @@
   margin-bottom: 20px;
 }
 
+.cartImageItem{
+  object-fit: contain;
+  min-width: 90px;
+  min-height: 90px;
+}
+
 .cartItemDescription {
   display: flex;
   flex-direction: column;
@@ -35,12 +45,13 @@
 
 .titleWrapper {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+  gap: 8px;
 }
 
 .cartProductTitle {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .removeBtn {
@@ -99,12 +110,28 @@
   line-height: 150%;
 }
 
+.discountText:hover{
+  color: #6566AC;
+}
+
 .discountInput {
-  width: 250px;
+  width: 75%;
   height: 30px;
   padding: 7px;
   border-radius: 10px;
   border: 1px solid var(--blue);
+}
+
+.discountAdd{
+  color: #6566AC;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.discountBtn:hover{
+  font-weight: 500;
 }
 
 .priceContainer {
@@ -137,6 +164,7 @@
   font-family: Inter;
   font-size: 20px;
 }
+
 .safeMark {
   display: flex;
   align-items: center;
@@ -153,4 +181,34 @@
   margin: 50px 0;
   font-size: 18px;
   text-align: center;
+}
+
+@media screen and (min-width: 744px){
+  .cartTitle{
+    font-size: 24px;
+  }
+
+  .cartProductTitle{
+    font-size: 20px;
+  }
+
+  .discountInput{
+    width: 250px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .orderCartContainer{
+    width: 35.23%;
+  }
+
+  .cartTitle{
+    padding-bottom: 10px;
+    font-size: 18px;
+    line-height: 130%;
+  }
+
+  .titleWrapper{
+    align-items: center;
+  }
 }

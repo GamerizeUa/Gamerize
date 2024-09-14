@@ -51,14 +51,6 @@ fieldset {
     }
 }
 
-.dialog__error {
-    font-family: 'Noto Sans', system-ui, sans-serif;
-    font-size: 0.875rem;
-    font-weight: 300;
-    margin-block-start: 0.5rem;
-    color: red;
-}
-
 .dialog__field:has(input[type='checkbox']:checked) {
     background: #4880ff;
     color: #dedada;

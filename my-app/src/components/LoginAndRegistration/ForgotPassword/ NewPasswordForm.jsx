@@ -7,6 +7,7 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import Axios from "axios";
 import {useLocation, useNavigate} from "react-router-dom";
 import useNoScroll from "../../hooks/useNoScroll.js";
+import {sendRequestWithLoading} from "../../../utils/sendRequestWithLoading.js";
 
 export const NewPasswordForm = ({setIsDisplayedNewPasswordForm}) => {
     const location = useLocation();
@@ -62,30 +63,25 @@ export const NewPasswordForm = ({setIsDisplayedNewPasswordForm}) => {
         setIsDisplayedNewPasswordForm(false);
     }
 
-    const onSubmit = async(data) => {
-        let success = false;
-        try {
-            if (emailParam) {
-                await Axios.post('https://gamerize.ltd.ua/api/Login/reset-password', data)
-                success = true;
-            } else {
-                await Axios.post('https://gamerize.ltd.ua/api/Account/change-password', data)
-                success = true;
-            }
-        } catch (err) {
-            setError(err.response.data);
-        } finally {
-            if (success) {
-                setLoading(true);
-                setTimeout(() => {
-                    setLoading(false);
-                    closePopUp();
-                    if(emailParam) navigate('/');
-                }, 1000);
-            } else {
-                setLoading(false);
-            }
+    const onSubmit = (data) => {
+        let link;
+        if (emailParam) {
+            link = 'https://gamerize.ltd.ua/api/Login/reset-password';
+        } else {
+            link = 'https://gamerize.ltd.ua/api/Account/change-password'
         }
+
+        const toDoInTimeout = () => {
+            setLoading(false);
+            closePopUp();
+            if(emailParam) navigate('/');
+        }
+
+        const toDoInCatch = (error) => {
+            setError(error);
+        }
+
+        sendRequestWithLoading(data,link,setLoading,toDoInTimeout, toDoInCatch)
     }
 
     return (

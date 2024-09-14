@@ -6,11 +6,14 @@ import Axios from 'axios';
 import styles from './PersonalAccount.module.css';
 import {NewPasswordForm} from "../../../components/LoginAndRegistration/ForgotPassword/ NewPasswordForm.jsx";
 import {UserPhoto} from "./UserPhoto.jsx";
+import {DeleteAccountPopUp} from "./DeleteAccountPopUp/DeleteAccountPopUp.jsx";
 
 export const PersonalAccount = () => {
     const [isDisplayedNewPasswordForm, setIsDisplayedNewPasswordForm] = useState(false);
+    const [isDisplayedDeleteAccount, setIsDisplayedDeleteAccount] = useState(false);
     const [photoFile, setPhotoFile] = useState(null);
     const [uploadedPhoto, setUploadedPhoto] = useState(null);
+    const [userId, setUserId] = useState(null);
     const nameRef = useRef(null);
     const buttonSubmitRef = useRef(null);
 
@@ -43,6 +46,7 @@ export const PersonalAccount = () => {
             .then((res) => {
                 reset(res.data)
                 setUploadedPhoto(res.data?.profilePicture)
+                setUserId(res.data.id)
                 if (nameRef.current && res.data) {
                     nameRef.current.textContent = res.data.name;
                 }
@@ -184,12 +188,18 @@ export const PersonalAccount = () => {
                                onClick={() => setIsDisplayedNewPasswordForm(true)}>
                                 Змінити пароль
                             </a>
+                            <a className={styles.account_changePasswordLink}
+                               onClick={() => setIsDisplayedDeleteAccount(true)}>
+                                Видалити акаунт
+                            </a>
                         </form>
                     </div>
                 </div>
             </div>
             {isDisplayedNewPasswordForm &&
                 <NewPasswordForm setIsDisplayedNewPasswordForm={setIsDisplayedNewPasswordForm}/>}
+            {isDisplayedDeleteAccount &&
+                <DeleteAccountPopUp setIsDisplayedDeleteAccount={setIsDisplayedDeleteAccount} userId={userId}/>}
         </section>
     )
 }

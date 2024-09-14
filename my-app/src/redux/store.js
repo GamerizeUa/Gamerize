@@ -25,6 +25,7 @@ import viewsHistorySlice from "./viewsHistory.js";
 import { carouselProductsReducer } from "./productsSlice.js";
 import { orderHistoryReducer } from "./orderHistorySlice.js";
 import {loginFormReducer} from "./loginFormSlice.js";
+import {profileReducer} from "./profileSlice.js";
 
 const persistConfig = {
   key: "root",
@@ -48,6 +49,7 @@ const rootReducer = combineReducers({
   discount: discountReducer,
   carouselProducts: carouselProductsReducer,
   orderHistory: orderHistoryReducer,
+  profile: profileReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

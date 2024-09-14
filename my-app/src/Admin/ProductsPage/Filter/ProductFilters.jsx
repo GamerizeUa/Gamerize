@@ -1,8 +1,9 @@
 import { forwardRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { cn } from '../../../utils/classnames';
-import styles from './filter.module.css';
-import buttons from '../buttons.module.css';
+import styles from '../assets/styles/filter.module.css';
+import buttons from '../../../assets/styles/buttons.module.css';
+import { Input } from '../../../components/Input/Input';
 
 const defaultValues = { minPrice: 200, maxPrice: 1500, categories: [] };
 
@@ -12,9 +13,9 @@ export const ProductFilters = forwardRef(function ProductFilters(
 ) {
     const {
         register,
+        control,
         reset,
         handleSubmit: passData,
-        formState: { errors },
     } = useForm({
         defaultValues,
     });
@@ -43,40 +44,18 @@ export const ProductFilters = forwardRef(function ProductFilters(
                     <fieldset>
                         <h2>Фільтрувати за ціною</h2>
                         <div className={styles['dialog__row']}>
-                            <label>
-                                Від
-                                <input
-                                    type="number"
-                                    className={styles['dialog__field']}
-                                    {...register('minPrice', {
-                                        required: {
-                                            value: true,
-                                            message: 'This field is required',
-                                        },
-                                    })}
-                                    aria-invalid={!!errors?.minPrice}
-                                />
-                                <p className={styles['dialog__error']}>
-                                    {errors?.minPrice?.message}
-                                </p>
-                            </label>
-                            <label>
-                                До
-                                <input
-                                    type="number"
-                                    className={styles['dialog__field']}
-                                    {...register('maxPrice', {
-                                        required: {
-                                            value: true,
-                                            message: 'This field is required',
-                                        },
-                                    })}
-                                    aria-invalid={!!errors?.maxPrice}
-                                />
-                                <p className={styles['dialog__error']}>
-                                    {errors?.maxPrice?.message}
-                                </p>
-                            </label>
+                            <Input
+                                control={control}
+                                type={'number'}
+                                name={'minPrice'}
+                                label={'Від'}
+                            />
+                            <Input
+                                control={control}
+                                type={'number'}
+                                name={'maxPrice'}
+                                label={'До'}
+                            />
                         </div>
                     </fieldset>
                     <fieldset>

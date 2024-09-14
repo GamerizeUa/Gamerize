@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { updateCartProduct, removeFromCart } from '../../redux/cartSlice';
 import { useState } from 'react';
 import CrossIcon from '../icons/CrossIcon';
+import { getImagePath } from '../../utils/getImagePath';
 
 export const CartExcerpt = ({ id, photo, name, price, count }) => {
     const dispatch = useDispatch();
@@ -29,7 +30,7 @@ export const CartExcerpt = ({ id, photo, name, price, count }) => {
     return (
         <article className={styles['cart__item']}>
             <img
-                src={photo}
+                src={getImagePath(photo.path)}
                 width="90"
                 height="90"
                 className={styles['cart__item-img']}

@@ -6,6 +6,8 @@ export const MetaTags = ({ product }) => {
 
     const { name, description, images } = product;
 
+    const imagePath = images && images.length > 0 ? getImagePath(images[0].path) : '';
+
     return (
         <Helmet>
             <meta property="og:type" content="website" />
@@ -15,7 +17,7 @@ export const MetaTags = ({ product }) => {
                 property="og:description"
                 content={description.substr(0, 100) + '...'}
             />
-            <meta property="og:image" content={getImagePath(images[0].path)} />
+            <meta property="og:image" content={imagePath}/>
         </Helmet>
     );
 };

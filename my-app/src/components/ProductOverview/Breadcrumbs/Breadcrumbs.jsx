@@ -2,11 +2,11 @@ import styles from './Breadcrumbs.module.css';
 import { Link } from 'react-router-dom';
 import ArrowIcon from '../icons/ArrowIcon.jsx';
 
-export const Breadcrumbs = ({ page }) => {
+export const Breadcrumbs = ({ page, isAdminPage }) => {
     if (!page) return null;
 
     const pageNames = ['Головна сторінка', ...page.name];
-    const links = ['/', ...page.link];
+    const links = [isAdminPage ? '/admin' : '/', ...page.link];
 
     return (
         <section className={styles.breadcrumbs}>

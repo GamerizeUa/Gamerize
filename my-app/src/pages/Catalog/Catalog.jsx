@@ -54,8 +54,10 @@ const Catalog = () => {
             await setIsReadyForResetting(true)
         }
 
-        setLocalStates();
-    }, []);
+        if (location.state) {
+            setLocalStates();
+        }
+    }, [location.state]);
 
     useEffect(() => {
         if(isReadyForResetting){

@@ -16,7 +16,9 @@ export const ProductOverview = () => {
     return (
         <section className={styles['product-overview']}>
             {product && <MetaTags product={product} />}
-            <ProductGallery breadcrumbsDetails={breadcrumbsDetails} />
+            {product.images.length > 0 && (
+                <ProductGallery breadcrumbsDetails={breadcrumbsDetails} />
+            )}
             <ProductMainInfo breadcrumbsDetails={breadcrumbsDetails} />
         </section>
     );

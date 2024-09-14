@@ -6,10 +6,12 @@ import styles from "./PaymentType.module.css";
 
 export const PaymentType = ({ onSubmit, currentStep, setCurrentStep }) => {
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [isValid, setIsValid] = useState(false);
 
   const handleRadioClick = (method) => {
     setPaymentMethod(method);
     document.getElementById(method).checked = true;
+    setIsValid(true)
   };
 
   const handleContinue = () => {
@@ -81,7 +83,7 @@ export const PaymentType = ({ onSubmit, currentStep, setCurrentStep }) => {
       <button
         onClick={handleContinue}
         className={styles.orderBtn}
-        disabled={currentStep != 3}
+        disabled={!isValid || currentStep != 3}
       >
         Продовжити
       </button>
