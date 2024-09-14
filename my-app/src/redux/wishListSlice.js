@@ -44,7 +44,6 @@ const wishListSlice = createAppSlice({
                         page, pageSize,
                     },
                 });
-                console.log(response.data);
                 return {
                     products: response.data.wishList.map(({product}) => product),
                     pagesAmount: response.data.totalPages,
@@ -71,9 +70,7 @@ const wishListSlice = createAppSlice({
         },
         removeAllFromWishList: create.asyncThunk(
             async (idList) => {
-                console.log(idList);
                 await axios.delete("/api/WishList/RemoveFromWishList", {data: idList})
-                    .catch((e) => console.log(e));
             },
             {
                 pending: (state) => {
@@ -91,19 +88,14 @@ const wishListSlice = createAppSlice({
         ),
         addToWishList: create.asyncThunk(
             async (id) => {
-                console.log(id);
-                const response = await axios.post("/api/WishList/AddProductInWishList",
+                await axios.post("/api/WishList/AddProductInWishList",
                     {"ProductId": id},
-                    // {
-                    //     ProductId: id,
-                    // }
                     {
                         headers: {
                             "Content-Type": "multipart/form-data"
                         }
                     }
                 );
-                console.log(response.data);
                 return {
                     id,
                 };
@@ -123,10 +115,9 @@ const wishListSlice = createAppSlice({
         ),
         removeOneFromWishList: create.asyncThunk(
             async (id) => {
-                console.log(id)
                 await axios.delete("/api/WishList/RemoveFromWishList", {
                     data: [id],
-                }).catch((e) => console.log(e));
+                });
                 return {
                     id,
                 };
@@ -136,13 +127,11 @@ const wishListSlice = createAppSlice({
                     state.statusOfWishing = "loading";
                 },
                 fulfilled: (state, action) => {
-                    console.warn("removed ", action.payload)
                     state.statusOfWishing = "ready";
                     state.productsIdList.splice(
                         state.productsIdList.findIndex((id) => id === action.payload.id),
                         1
                     );
-                    console.log(state);
                 },
                 rejected: (state) => {
                     state.statusOfWishing = "ready";

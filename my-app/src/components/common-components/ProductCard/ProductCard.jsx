@@ -8,7 +8,6 @@ import sprite from "../../../assets/icons/sprite.svg";
 import {addToCart, updateCartProduct} from "../../../redux/cartSlice";
 import {getImagePath} from "../../../utils/getImagePath";
 import useCheckAuth from "../../hooks/useCheckAuth.js";
-import React from "react";
 import {assignIsDisplayedLoginPopUp,} from "../../../redux/loginFormSlice.js";
 
 export default function ProductCard({
@@ -48,7 +47,6 @@ export default function ProductCard({
 
     const wishIconHandleOnClick = async () => {
         if (wishListAddRemoveStatus === "loading") {
-            console.log("fffff");
             return;
         }
         if (!isAuthenticated) {

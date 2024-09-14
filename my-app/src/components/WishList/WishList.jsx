@@ -33,7 +33,6 @@ function WishList() {
         });
     }, [page]);
     useEffect(() => {
-        console.log("requery");
         dispatch(getWishListProducts({page, pageSize}));
     }, [page, productsIds]);
 
