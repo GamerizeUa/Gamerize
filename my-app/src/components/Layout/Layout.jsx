@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, {Suspense, useEffect, useState} from "react";
 import Header from "../Header/Header";
 import {Outlet, useLocation} from "react-router-dom";
 import Footer from "../Footer/Footer";
@@ -12,86 +12,112 @@ import {Registration} from "../LoginAndRegistration/Registration.jsx";
 import {EmailForm} from "../LoginAndRegistration/ForgotPassword/EmailForm.jsx";
 import {NewPasswordForm} from "../LoginAndRegistration/ForgotPassword/ NewPasswordForm.jsx";
 import axios from "axios";
-import Cookies from 'js-cookie';
+import {useDispatch, useSelector} from "react-redux";
+import {
+    selectIsDisplayedEmailForm,
+    selectIsDisplayedLoginPopUp,
+    selectIsDisplayedRegistrationPopUp
+} from "../../redux/selectors.js";
+import {
+    assignIsDisplayedEmailForm,
+    assignIsDisplayedLoginPopUp,
+    assignIsDisplayedRegistrationPopUp
+} from "../../redux/loginFormSlice.js";
 
 const Layout = () => {
-  const [cartOpen, setCartOpen] = useState(false);
-  const [burgerMenuOpen, setBurgerMenuOpen] = useState(false);
-  const [isDisplayedLoginPopUp, setIsDisplayedLoginPopUp] = useState(false);
-  const [isDisplayedRegistrationPopUp, setIsDisplayedRegistrationPopUp] =
-      useState(false);
-  const [isDisplayedEmailForm, setIsDisplayedEmailForm] = useState(false);
-  const [isDisplayedNewPasswordForm, setIsDisplayedNewPasswordForm] = useState(false);
-  const location = useLocation();
-  const { state } = location;
-  axios.defaults.withCredentials = true;
-
-  useEffect(() => {
-    if (cartOpen || burgerMenuOpen) {
-      document.body.classList.add("no-scroll");
-    } else {
-      document.body.classList.remove("no-scroll");
-    }
-    return () => {
-      document.body.classList.remove("no-scroll");
+    const dispatch = useDispatch();
+    const [cartOpen, setCartOpen] = useState(false);
+    const [burgerMenuOpen, setBurgerMenuOpen] = useState(false);
+    const isDisplayedLoginPopUp = useSelector((state) => selectIsDisplayedLoginPopUp(state));
+    const isDisplayedRegistrationPopUp = useSelector((state) => selectIsDisplayedRegistrationPopUp(state));
+    const isDisplayedEmailForm = useSelector((state) => selectIsDisplayedEmailForm(state));
+    const setIsDisplayedLoginPopUp = (value) => {
+        dispatch(assignIsDisplayedLoginPopUp(value));
     };
-  }, [cartOpen, burgerMenuOpen]);
+    const setIsDisplayedRegistrationPopUp = (value) => {
+        dispatch(assignIsDisplayedRegistrationPopUp(value));
+    };
+    const setIsDisplayedEmailForm = (value) => {
+        dispatch(assignIsDisplayedEmailForm(value));
+    };
 
-  useEffect(() => {
-    location.pathname.includes('/reset-password')
-        ? setIsDisplayedNewPasswordForm(true) : setIsDisplayedNewPasswordForm(false);
-  }, []);
+    // const [isDisplayedLoginPopUp, setIsDisplayedLoginPopUp] = useState(false);
+    // const [isDisplayedRegistrationPopUp, setIsDisplayedRegistrationPopUp] =
+    //     useState(false);
+    // const [isDisplayedEmailForm, setIsDisplayedEmailForm] = useState(false);
 
-  function openCart() {
-    setCartOpen(true);
-  }
+    const [isDisplayedNewPasswordForm, setIsDisplayedNewPasswordForm] = useState(false);
+    const location = useLocation();
+    const {state} = location;
+    axios.defaults.withCredentials = true;
 
-  function cartClose() {
-    setCartOpen(false);
-  }
+    useEffect(() => {
+        if (cartOpen || burgerMenuOpen) {
+            document.body.classList.add("no-scroll");
+        } else {
+            document.body.classList.remove("no-scroll");
+        }
+        return () => {
+            document.body.classList.remove("no-scroll");
+        };
+    }, [cartOpen, burgerMenuOpen]);
 
-  function openBurgerMenu() {
-    setBurgerMenuOpen(true);
-  }
+    useEffect(() => {
+        location.pathname.includes("/reset-password")
+            ? setIsDisplayedNewPasswordForm(true) : setIsDisplayedNewPasswordForm(false);
+    }, []);
 
-  function burgerMenuClose() {
-    setBurgerMenuOpen(false);
-  }
+    function openCart() {
+        setCartOpen(true);
+    }
 
-  return (
-    <div className={styles.wrapper}>
-      <div className={styles.headerWrapper}>
-        <Header openCart={openCart} openBurgerMenu={openBurgerMenu}
-                setIsDisplayedLoginPopUp={setIsDisplayedLoginPopUp} />
-        <CategoryHeader />
-      </div>
-      {burgerMenuOpen && <BurgerMenu burgerMenuClose={burgerMenuClose}
-                                     setIsDisplayedLoginPopUp={setIsDisplayedLoginPopUp} />}
-      {cartOpen && <Cart cartClose={cartClose} />}
-      {isDisplayedLoginPopUp && !isDisplayedRegistrationPopUp && (
-          <Login setDisplayedLoginPopUp={setIsDisplayedLoginPopUp}
-                 setIsDisplayedRegistrationPopUp={setIsDisplayedRegistrationPopUp}
-                 setIsDisplayedEmailForm={setIsDisplayedEmailForm}/>
-      )}
-      {isDisplayedRegistrationPopUp && (
-          <Registration
-              setIsDisplayedRegistrationPopUp={setIsDisplayedRegistrationPopUp}
-              setDisplayedLoginPopUp={setIsDisplayedLoginPopUp}
-          />
-      )}
-      {isDisplayedEmailForm && <EmailForm setIsDisplayedEmailForm={setIsDisplayedEmailForm}
-                                          setDisplayedLoginPopUp={setIsDisplayedLoginPopUp}/>}
-      {state?.showPopup &&
-          <ConfirmEmailPopup setIsDisplayedLoginPopUp={setIsDisplayedLoginPopUp} />}
-      {isDisplayedNewPasswordForm && <NewPasswordForm setIsDisplayedNewPasswordForm={setIsDisplayedNewPasswordForm} />}
-      <main className={styles.container}>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Outlet />
-        </Suspense>
-      </main>
-      <Footer />
-    </div>
-  );
+    function cartClose() {
+        setCartOpen(false);
+    }
+
+    function openBurgerMenu() {
+        setBurgerMenuOpen(true);
+    }
+
+    function burgerMenuClose() {
+        setBurgerMenuOpen(false);
+    }
+
+    return (
+        <div className={styles.wrapper}>
+            <div className={styles.headerWrapper}>
+                <Header openCart={openCart} openBurgerMenu={openBurgerMenu}
+                        setIsDisplayedLoginPopUp={setIsDisplayedLoginPopUp}/>
+                <CategoryHeader/>
+            </div>
+            {burgerMenuOpen && <BurgerMenu burgerMenuClose={burgerMenuClose}
+                                           setIsDisplayedLoginPopUp={setIsDisplayedLoginPopUp}/>}
+            {cartOpen && <Cart cartClose={cartClose}/>}
+            {isDisplayedLoginPopUp && !isDisplayedRegistrationPopUp && (
+                <Login setDisplayedLoginPopUp={setIsDisplayedLoginPopUp}
+                       setIsDisplayedRegistrationPopUp={setIsDisplayedRegistrationPopUp}
+                       setIsDisplayedEmailForm={setIsDisplayedEmailForm}/>
+            )}
+            {isDisplayedRegistrationPopUp && (
+                <Registration
+                    setIsDisplayedRegistrationPopUp={setIsDisplayedRegistrationPopUp}
+                    setDisplayedLoginPopUp={setIsDisplayedLoginPopUp}
+                />
+            )}
+            {isDisplayedEmailForm && <EmailForm setIsDisplayedEmailForm={setIsDisplayedEmailForm}
+                                                setDisplayedLoginPopUp={setIsDisplayedLoginPopUp}/>}
+            {state?.showPopup &&
+                <ConfirmEmailPopup setIsDisplayedLoginPopUp={setIsDisplayedLoginPopUp}/>}
+            {isDisplayedNewPasswordForm &&
+                <NewPasswordForm setIsDisplayedNewPasswordForm={setIsDisplayedNewPasswordForm}/>}
+            <main className={styles.container}>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Outlet/>
+                </Suspense>
+            </main>
+            <Footer/>
+        </div>
+    );
 };
 
 export default Layout;

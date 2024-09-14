@@ -1,4 +1,4 @@
-import { createSelector } from '@reduxjs/toolkit';
+import {createSelector} from "@reduxjs/toolkit";
 
 export const selectCategories = (state) => state.categories.items;
 
@@ -14,24 +14,31 @@ export const selectLanguages = (state) => state.languages.items;
 
 export const selectWishListProductsIdList = (state) =>
     state.wishList.productsIdList;
-
+export const selectWishListAddRemoveStatus = (state) => state.wishList.statusOfWishing;
 export const selectWishListProductsList = (state) =>
     state.wishList.productsList;
-
+export const selectWishListPagesAmount = (state) =>
+    state.wishList.pagesAmount;
 export const selectCart = createSelector(
     (state) => state.cart,
-    (cart) => ({ ...cart })
+    (cart) => ({...cart})
 );
+export const selectIsDisplayedLoginPopUp = (state) =>
+    state.loginForm.isDisplayedLoginPopUp;
+export const selectIsDisplayedRegistrationPopUp = (state) =>
+    state.loginForm.isDisplayedRegistrationPopUp;
+export const selectIsDisplayedEmailForm = (state) =>
+    state.loginForm.isDisplayedEmailForm;
 
 export const selectIsInCart = createSelector(
     [selectCart, (state, productId) => productId],
-    ({ productList }, productId) =>
+    ({productList}, productId) =>
         productList.some((product) => product.id === productId)
 );
 
 export const selectCartProductsCount = createSelector(
     selectCart,
-    ({ productList }) =>
+    ({productList}) =>
         productList.reduce(
             (totalCount, product) => totalCount + product.count - 1,
             productList.length
@@ -48,7 +55,7 @@ export const selectGiftCard = (state) => state.discount.giftCard;
 export const selectViewsHistory = createSelector(
     [(state) => state.views, (state, productID) => productID],
     (views, productID) => {
-        const { history } = views;
+        const {history} = views;
 
         if (history.length === 0) return history;
 
@@ -67,7 +74,7 @@ export const selectProductsByQuery = createSelector(
         const lowerCaseQuery = query.toLowerCase();
 
         const filteredProducts = productsCatalog.products.filter(
-            ({ id, name }) => {
+            ({id, name}) => {
                 return (
                     id.toString().includes(query) ||
                     name.toLowerCase().includes(lowerCaseQuery)
@@ -75,7 +82,7 @@ export const selectProductsByQuery = createSelector(
             }
         );
 
-        return { ...productsCatalog, products: filteredProducts };
+        return {...productsCatalog, products: filteredProducts};
     }
 );
 export const ordersByUser = (state) => state.orderHistory.orders;

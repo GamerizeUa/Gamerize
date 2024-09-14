@@ -24,6 +24,7 @@ import discountReducer from "./discountSlice";
 import viewsHistorySlice from "./viewsHistory.js";
 import { carouselProductsReducer } from "./productsSlice.js";
 import { orderHistoryReducer } from "./orderHistorySlice.js";
+import {loginFormReducer} from "./loginFormSlice.js";
 
 const persistConfig = {
   key: "root",
@@ -41,6 +42,7 @@ const rootReducer = combineReducers({
   translationTab: translationTabReducer,
   productsCatalog: productsCatalogReducer,
   wishList: wishListReducer,
+  loginForm: loginFormReducer,
   cart: cartSlice,
   views: viewsHistorySlice,
   discount: discountReducer,

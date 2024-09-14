@@ -14,7 +14,7 @@ const initialState = {
 };
 
 const productsSlice = createAppSlice({
-    name: "homeCarouselProducts",
+    name: "products",
     initialState,
     reducers: (create) => ({
         getPopularAsync: create.asyncThunk(
