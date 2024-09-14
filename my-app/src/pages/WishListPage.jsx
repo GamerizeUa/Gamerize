@@ -3,14 +3,18 @@ import {NavigationTabs} from "../components/common-components/NavigationTabs/Nav
 import {useNavigate} from "react-router-dom";
 import useCheckAuth from "../components/hooks/useCheckAuth.js";
 import {useEffect} from "react";
+import {useDispatch} from "react-redux";
+import {assignIsDisplayedLoginPopUp} from "../redux/loginFormSlice.js";
 
-export default function WishListPage() {
+export default function WishListPage(){
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const {checkAuthentication} = useCheckAuth();
     const isAuthenticated = checkAuthentication();
     useEffect(() => {
         if (!isAuthenticated) {
             navigate("/");
+            dispatch(assignIsDisplayedLoginPopUp(true));
         }
     }, []);
     return (
