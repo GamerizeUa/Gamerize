@@ -29,12 +29,10 @@ export default function ProductCard({
                                         },
                                     }) {
     let discount = 0;
-    if (isDiscount) {
-        if (newPrice === 0) {
-            isDiscount = false;
-        } else {
-            discount = Math.floor((1 - newPrice / price) * 100);
-        }
+    console.log(price, newPrice);
+    if (newPrice) {
+        isDiscount = true;
+        discount = Math.floor((1 - newPrice / price) * 100);
     }
     const dispatch = useDispatch();
     const photo = images && images[0];
