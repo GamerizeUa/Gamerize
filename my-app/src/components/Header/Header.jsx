@@ -10,10 +10,10 @@ import { useSelector } from "react-redux";
 import { selectCartProductsCount } from "../../redux/selectors.js";
 import useCheckAuth from "../hooks/useCheckAuth.js";
 
-const Header = ({ openCart, openBurgerMenu, setIsDisplayedLoginPopUp }) => {
+const Header = ({ openCart, openBurgerMenu}) => {
   const [accountInformation, setAccountInformation] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const handleClickAccount = useClickAccount(setIsDisplayedLoginPopUp);
+  const handleClickAccount = useClickAccount();
   const cartProductsCount = useSelector(selectCartProductsCount);
   const {checkAuthentication} = useCheckAuth();
   const isAuthenticated = checkAuthentication();
@@ -115,9 +115,7 @@ const Header = ({ openCart, openBurgerMenu, setIsDisplayedLoginPopUp }) => {
                   </svg>
                 </Link>
                 {accountInformation && isAuthenticated && (
-                  <AccountInformation
-                    setIsDisplayedLoginPopUp={setIsDisplayedLoginPopUp}
-                  />
+                  <AccountInformation />
                 )}
               </li>
             )}

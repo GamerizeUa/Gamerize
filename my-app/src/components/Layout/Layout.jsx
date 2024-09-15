@@ -25,27 +25,11 @@ import {
 } from "../../redux/loginFormSlice.js";
 
 const Layout = () => {
-    const dispatch = useDispatch();
     const [cartOpen, setCartOpen] = useState(false);
     const [burgerMenuOpen, setBurgerMenuOpen] = useState(false);
     const isDisplayedLoginPopUp = useSelector((state) => selectIsDisplayedLoginPopUp(state));
     const isDisplayedRegistrationPopUp = useSelector((state) => selectIsDisplayedRegistrationPopUp(state));
     const isDisplayedEmailForm = useSelector((state) => selectIsDisplayedEmailForm(state));
-    const setIsDisplayedLoginPopUp = (value) => {
-        dispatch(assignIsDisplayedLoginPopUp(value));
-    };
-    const setIsDisplayedRegistrationPopUp = (value) => {
-        dispatch(assignIsDisplayedRegistrationPopUp(value));
-    };
-    const setIsDisplayedEmailForm = (value) => {
-        dispatch(assignIsDisplayedEmailForm(value));
-    };
-
-    // const [isDisplayedLoginPopUp, setIsDisplayedLoginPopUp] = useState(false);
-    // const [isDisplayedRegistrationPopUp, setIsDisplayedRegistrationPopUp] =
-    //     useState(false);
-    // const [isDisplayedEmailForm, setIsDisplayedEmailForm] = useState(false);
-
     const [isDisplayedNewPasswordForm, setIsDisplayedNewPasswordForm] = useState(false);
     const location = useLocation();
     const {state} = location;
@@ -86,28 +70,19 @@ const Layout = () => {
     return (
         <div className={styles.wrapper}>
             <div className={styles.headerWrapper}>
-                <Header openCart={openCart} openBurgerMenu={openBurgerMenu}
-                        setIsDisplayedLoginPopUp={setIsDisplayedLoginPopUp}/>
+                <Header openCart={openCart} openBurgerMenu={openBurgerMenu} />
                 <CategoryHeader/>
             </div>
-            {burgerMenuOpen && <BurgerMenu burgerMenuClose={burgerMenuClose}
-                                           setIsDisplayedLoginPopUp={setIsDisplayedLoginPopUp}/>}
+            {burgerMenuOpen && <BurgerMenu burgerMenuClose={burgerMenuClose} />}
             {cartOpen && <Cart cartClose={cartClose}/>}
             {isDisplayedLoginPopUp && !isDisplayedRegistrationPopUp && (
-                <Login setDisplayedLoginPopUp={setIsDisplayedLoginPopUp}
-                       setIsDisplayedRegistrationPopUp={setIsDisplayedRegistrationPopUp}
-                       setIsDisplayedEmailForm={setIsDisplayedEmailForm}/>
+                <Login />
             )}
             {isDisplayedRegistrationPopUp && (
-                <Registration
-                    setIsDisplayedRegistrationPopUp={setIsDisplayedRegistrationPopUp}
-                    setDisplayedLoginPopUp={setIsDisplayedLoginPopUp}
-                />
+                <Registration />
             )}
-            {isDisplayedEmailForm && <EmailForm setIsDisplayedEmailForm={setIsDisplayedEmailForm}
-                                                setDisplayedLoginPopUp={setIsDisplayedLoginPopUp}/>}
-            {state?.showPopup &&
-                <ConfirmEmailPopup setIsDisplayedLoginPopUp={setIsDisplayedLoginPopUp}/>}
+            {isDisplayedEmailForm && <EmailForm />}
+            {state?.showPopup && <ConfirmEmailPopup />}
             {isDisplayedNewPasswordForm &&
                 <NewPasswordForm setIsDisplayedNewPasswordForm={setIsDisplayedNewPasswordForm}/>}
             <main className={styles.container}>

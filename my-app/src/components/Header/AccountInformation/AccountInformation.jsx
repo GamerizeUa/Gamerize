@@ -7,7 +7,7 @@ import {useEffect, useState} from "react";
 import useCheckAuth from "../../hooks/useCheckAuth.js";
 import useCheckAdmin from "../../hooks/useCheckAdmin.js";
 
-const AccountInformation = ({setIsDisplayedLoginPopUp}) => {
+const AccountInformation = () => {
   const {checkAuthentication} = useCheckAuth();
   const isAuthenticated = checkAuthentication();
   const { isAdmin} = useCheckAdmin();
@@ -71,7 +71,7 @@ const AccountInformation = ({setIsDisplayedLoginPopUp}) => {
       </ul>
       <div className={styles.accountlogOut}>
         <Link className={styles.logOutLink}>
-          <Logout setIsDisplayedLoginPopUp={setIsDisplayedLoginPopUp}/>
+          <Logout />
         </Link>
       </div>
     </div>

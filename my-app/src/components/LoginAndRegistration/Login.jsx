@@ -10,8 +10,13 @@ import Cookies from "js-cookie";
 import {sendRequestWithLoading} from "../../utils/sendRequestWithLoading.js";
 import {getWishListProductsIds} from "../../redux/wishListSlice.js";
 import {useDispatch} from "react-redux";
+import {
+    assignIsDisplayedEmailForm,
+    assignIsDisplayedLoginPopUp,
+    assignIsDisplayedRegistrationPopUp
+} from "../../redux/loginFormSlice.js";
 
-export const Login = ({setDisplayedLoginPopUp, setIsDisplayedRegistrationPopUp, setIsDisplayedEmailForm}) => {
+export const Login = () => {
     const [isErrorVisible, setIsErrorVisible] = useState(false);
     const[loading, setLoading] = useState(false);
     const dispatch = useDispatch();
@@ -53,7 +58,7 @@ export const Login = ({setDisplayedLoginPopUp, setIsDisplayedRegistrationPopUp, 
     }
 
     const closePopUp = () => {
-        setDisplayedLoginPopUp(false);
+        dispatch(assignIsDisplayedLoginPopUp(false));
     };
 
     return (
@@ -99,11 +104,11 @@ export const Login = ({setDisplayedLoginPopUp, setIsDisplayedRegistrationPopUp, 
                             {isErrorVisible && <p className={styles.input_userError}>
                                 Помилка входу. Перевірте правильність е-пошти та пароля.
                             </p>}
-                            <a onClick={() => setIsDisplayedEmailForm(true)}>Забули пароль?</a>
+                            <a onClick={() => dispatch(assignIsDisplayedEmailForm(true))}>Забули пароль?</a>
                         </form>
                             <hr/>
                             <p className={styles.popUp_question}>Досі немає акаунту?</p>
-                            <button onClick={() => setIsDisplayedRegistrationPopUp(true)}>
+                            <button onClick={() => dispatch(assignIsDisplayedRegistrationPopUp(true))}>
                                 Зареєструватись
                             </button>
                     </div>

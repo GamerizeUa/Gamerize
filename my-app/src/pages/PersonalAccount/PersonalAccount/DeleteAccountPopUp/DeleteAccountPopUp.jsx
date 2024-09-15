@@ -3,9 +3,12 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import Cookies from "js-cookie";
 import handleLinkClick from "../../../../utils/ScrollToTop.js";
+import {assignIsDisplayedLoginPopUp} from "../../../../redux/loginFormSlice.js";
+import {useDispatch} from "react-redux";
 
 export const DeleteAccountPopUp = ({setIsDisplayedDeleteAccount, userId}) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const closePopUp = () => {
         setIsDisplayedDeleteAccount(false);
@@ -23,6 +26,7 @@ export const DeleteAccountPopUp = ({setIsDisplayedDeleteAccount, userId}) => {
                 closePopUp();
                 Cookies.set('auth', "false");
                 handleLinkClick(e);
+                dispatch(assignIsDisplayedLoginPopUp(true));
                 navigate('/');
             })
     }

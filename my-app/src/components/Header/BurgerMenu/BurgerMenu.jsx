@@ -18,8 +18,9 @@ import sprite from "../../../assets/icons/sprite.svg";
 import HeartIcon from "../../icons/HeartIcon";
 import styles from "./BurgerMenu.module.css";
 import {Logout} from "../../Logout/Logout.jsx";
+import {assignIsDisplayedLoginPopUp} from "../../../redux/loginFormSlice.js";
 
-const BurgerMenu = ({ burgerMenuClose, setIsDisplayedLoginPopUp }) => {
+const BurgerMenu = ({ burgerMenuClose}) => {
   const [isCategory, setIsCategory] = useState(false);
   const [isGenre, setIsGenre] = useState(false);
   const [isTheme, setIsTheme] = useState(false);
@@ -33,13 +34,10 @@ const BurgerMenu = ({ burgerMenuClose, setIsDisplayedLoginPopUp }) => {
     }
   };
 
-  const handleClickAccount = useClickAccount(
-      setIsDisplayedLoginPopUp,
-      burgerMenuClose
-  );
+  const handleClickAccount = useClickAccount(burgerMenuClose);
 
   const handleCloseBurgerMenu = () => {
-    setIsDisplayedLoginPopUp(false);
+    dispatch(assignIsDisplayedLoginPopUp(false));
     burgerMenuClose();
   };
 
@@ -328,7 +326,7 @@ const BurgerMenu = ({ burgerMenuClose, setIsDisplayedLoginPopUp }) => {
           </li>
         </ul>
         <div className={styles.logOutBloc}>
-          <Logout setIsDisplayedLoginPopUp={setIsDisplayedLoginPopUp}/>
+          <Logout />
         </div>
       </div>
     </div>
