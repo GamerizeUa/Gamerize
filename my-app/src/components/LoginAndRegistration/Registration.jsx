@@ -137,7 +137,7 @@ export const Registration = ({setIsDisplayedRegistrationPopUp, setDisplayedLogin
                                     <p className={styles.input_error}>{errors.confirmPassword?.message}</p>
                                 </div>
                                 <hr className={styles.popUp_registrationHr}/>
-                                <button type="submit" className={loading && 'loadingButton'}>
+                                <button type="submit" className={loading ? 'loadingButton' : ''}>
                                     {loading ? "Реєстрація..." : "Зареєструватись"}
                                 </button>
                                 {isErrorVisible &&

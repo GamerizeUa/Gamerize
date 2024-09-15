@@ -93,7 +93,7 @@ export const Login = ({setDisplayedLoginPopUp, setIsDisplayedRegistrationPopUp, 
                                 </div>
                                 <p className={styles.input_error}>{errors.password?.message}</p>
                             </div>
-                            <button type="submit" className={loading && 'loadingButton'}>
+                            <button type="submit" className={loading ? 'loadingButton' : ''}>
                                 {loading ? "Вхід в акаунт..." : "Увійти"}
                             </button>
                             {isErrorVisible && <p className={styles.input_userError}>
