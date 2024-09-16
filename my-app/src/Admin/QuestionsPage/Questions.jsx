@@ -2,59 +2,34 @@ import styles from './Questions.module.css'
 import sprite from "../../assets/icons/sprite.svg";
 import React, {useEffect, useState} from "react";
 import {QuestionItem} from "./QuestionItem/QuestionItem.jsx";
-import axios from "axios";
 import {Pagination} from "../Pagination/Pagination.jsx";
 import {InputSearch} from "./InputSearch.jsx";
+import {useDispatch, useSelector} from "react-redux";
+import {deleteQuestions, fetchQuestions, setCurrentPage} from "../../redux/questionsSlice.js";
 
 export const Questions = () => {
-    const [questionsState, setQuestionsState] = useState({
-        questions: [],
-        totalQuestions: null,
-        totalPages: null,
-        currentPage: 1,
-    });
+    const {questions, totalQuestions, totalPages, currentPage, loading} = useSelector(state => state.questions);
     const [questionsToDelete, setQuestionsToDelete] = useState([]);
     const [isTermSearched, setIsTermSearched] = useState(false);
     const questionsOnPage = 10;
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (!isTermSearched) {
             getAllQuestions();
         }
-    }, [questionsState.currentPage, isTermSearched])
+    }, [currentPage, isTermSearched])
 
     const getAllQuestions = () => {
-        axios.get("https://gamerize.ltd.ua/api/Question/GetAll",
-            {params: {page: questionsState.currentPage}})
-            .then((res) => {
-                setQuestionsState((prevState) => ({
-                    ...prevState,
-                    questions: res.data.questions,
-                    totalQuestions: res.data.totalMessages,
-                    totalPages: res.data.totalPages,
-                    currentPage: res.data.page,
-                }))
-            })
+        dispatch(fetchQuestions())
     }
 
-    const setCurrentPage = (page) => {
-        setQuestionsState((prevState) => ({
-            ...prevState,
-            currentPage: page
-        }))
-    }
+    const deleteQuestionsHandler = () => {
+        dispatch(deleteQuestions(questionsToDelete)).then(() => {
+            setQuestionsToDelete([]);
+            dispatch(fetchQuestions());
+        });
 
-    const deleteQuestions = () => {
-        axios.delete("https://gamerize.ltd.ua/api/Question/Questions/Delete", {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data: questionsToDelete
-        })
-            .then(() => {
-                getAllQuestions()
-                setQuestionsToDelete([])
-            })
     }
 
     return (
@@ -63,12 +38,10 @@ export const Questions = () => {
                 <div className={styles.questions_container}>
                     <div className={styles.questions_header}>
                         <InputSearch
-                            questionsState={questionsState}
-                            setQuestionsState={setQuestionsState}
                             setIsTermSearched={setIsTermSearched}
                         />
                         <div className={styles.questions_btn_trash}
-                             onClick={deleteQuestions}
+                             onClick={deleteQuestionsHandler}
                         >
                             <svg width="16" height="16">
                                 <use
@@ -79,7 +52,7 @@ export const Questions = () => {
                         </div>
                     </div>
                     <div className={styles.questions_content}>
-                        {questionsState.questions.map((question, i) => (
+                        {questions.map((question, i) => (
                             <QuestionItem
                                 question={question} key={i}
                                 getAllQuestions={getAllQuestions}
@@ -87,13 +60,19 @@ export const Questions = () => {
                                 questionsToDelete={questionsToDelete}
                             />
                         ))}
+                        {}
+                        {questions.length === 0 && loading
+                            && <p className={styles.questions_text}>Завантаження питань...</p>}
+                        {questions.length === 0 && !loading
+                            && <p className={styles.questions_text}>Запитань за запитом не знайдено!</p>
+                        }
                     </div>
                 </div>
             </div>
-            <Pagination totalItems={questionsState.totalQuestions}
-                        totalPages={questionsState.totalPages}
-                        currentPage={questionsState.currentPage}
-                        setCurrentPage={setCurrentPage}
+            <Pagination totalItems={totalQuestions}
+                        totalPages={totalPages}
+                        currentPage={currentPage}
+                        setCurrentPage={(nextPage) => dispatch(setCurrentPage(nextPage))}
                         itemsOnPage={questionsOnPage}
             />
         </>

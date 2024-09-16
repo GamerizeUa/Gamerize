@@ -1,32 +1,35 @@
 import styles from "./Questions.module.css";
 import sprite from "../../assets/icons/sprite.svg";
-import React, {useEffect, useState} from "react";
-import axios from "axios";
+import React, {useEffect, useRef, useState} from "react";
+import {fetchQuestions, fetchQuestionsBySearch} from "../../redux/questionsSlice.js";
+import {useDispatch, useSelector} from "react-redux";
+import {useClickOutside} from "../../components/hooks/useClickOutside.js";
 
-export const InputSearch = ({questionsState, setQuestionsState, setIsTermSearched}) => {
+export const InputSearch = ({setIsTermSearched}) => {
     const [searchTerm, setSearchTerm] = useState("");
+    const {currentPage} = useSelector(state => state.questions);
+    const inputRef = useRef();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         findBySearchTerm();
-    }, [questionsState.currentPage, searchTerm]);
+    }, [currentPage, searchTerm]);
 
     const findBySearchTerm = () => {
         if(searchTerm){
-            axios.get("https://gamerize.ltd.ua/api/Question/Questions/Search",
-                {params: {term: searchTerm, page: questionsState.currentPage}})
-                .then((res) => {
-                    setQuestionsState((prevState) => ({...prevState,
-                        questions: res.data.questions,
-                        totalQuestions: res.data.totalMessages,
-                        totalPages: res.data.totalPages,
-                        currentPage: res.data.currentPage,
-                    }))
-                    setIsTermSearched(true)
-                })
+            dispatch(fetchQuestionsBySearch(searchTerm))
+            setIsTermSearched(true)
         }else{
             setIsTermSearched(false)
         }
     }
+
+    const callbackOnClickOutside = () => {
+        dispatch(fetchQuestions())
+        inputRef.current.value = '';
+    }
+
+    useClickOutside(inputRef, callbackOnClickOutside);
 
     return (
         <div className={styles.questions_input}>
@@ -39,6 +42,7 @@ export const InputSearch = ({questionsState, setQuestionsState, setIsTermSearche
             <input
                 type="text"
                 placeholder="Пошук"
+                ref={inputRef}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
         </div>

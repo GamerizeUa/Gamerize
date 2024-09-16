@@ -1,16 +1,18 @@
-import { useEffect, useState } from "react";
+import {useRef, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {sendPromoCode, setPromoCode} from "../../../redux/discountSlice";
 import {selectPromoCode } from "../../../redux/selectors";
 import styles from "./OrderCart.module.css";
 import sprite from "../../../assets/icons/sprite.svg";
+import {useClickOutside} from "../../hooks/useClickOutside.js";
 
 export const OrderCartInputs = () => {
   const dispatch = useDispatch();
   const promoCode = useSelector(selectPromoCode);
   const {error} = useSelector((state) => state.discount);
   const [isEditing, setIsEditing] = useState(false);
-
+  const inputRef = useRef();
+  useClickOutside(inputRef, () => setIsEditing(false));
   const MAX_LENGTH = 20;
 
   const handleEditClick = (field, event) => {
@@ -37,22 +39,6 @@ export const OrderCartInputs = () => {
     dispatch(sendPromoCode())
   }
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      const target = event.target;
-      const isInput = target.tagName.toLowerCase() === "input";
-      if (!isInput) {
-        setIsEditing(false);
-      }
-    };
-
-    document.addEventListener("click", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
-
   return (
     <div className={styles.discountContainer}>
       {isEditing || promoCode ? (
@@ -62,6 +48,7 @@ export const OrderCartInputs = () => {
                 name="promoCode"
                 placeholder="Введіть промокод"
                 value={promoCode}
+                ref={inputRef}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
                 className={styles.discountInput}

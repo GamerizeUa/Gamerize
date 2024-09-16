@@ -1,9 +1,10 @@
 import styles from "./SearchInput.module.css";
 import sprite from "../../assets/icons/sprite.svg";
-import {useEffect, useRef, useState} from "react"
+import {useRef, useState} from "react"
 import {useNavigate} from "react-router-dom";
 import {ProductsMatch} from "./ProductsMatch/ProductsMatch.jsx";
 import axios from "axios";
+import {useClickOutside} from "../hooks/useClickOutside.js";
 
 export const SearchInput = () => {
     const [search, setSearch] = useState("");
@@ -36,25 +37,16 @@ export const SearchInput = () => {
 
     const handleKeyPress = (e) => {
         if (e.key === "Enter") {
-            console.log('EE');
             handleSearchClick();
         }
     }
 
-    useEffect(() => {
-        const handleClickOutside = (e) => {
-            if (inputContainerRef.current && !inputContainerRef.current.contains(e.target)){
-                setMatchesDisplayed(false);
-                inputRef.current.value = '';
-            }
-        };
+    const callbackOnClickOutside = () => {
+        setMatchesDisplayed(false);
+        inputRef.current.value = '';
+    }
 
-        document.addEventListener('mousedown', handleClickOutside);
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
+    useClickOutside(inputRef, callbackOnClickOutside);
 
   return (
     <div className={styles.inputWrapper} ref={inputContainerRef}>
