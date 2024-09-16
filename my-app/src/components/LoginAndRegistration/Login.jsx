@@ -8,10 +8,18 @@ import Axios from "axios";
 import useNoScroll from "../hooks/useNoScroll.js";
 import Cookies from "js-cookie";
 import {sendRequestWithLoading} from "../../utils/sendRequestWithLoading.js";
+import {getWishListProductsIds} from "../../redux/wishListSlice.js";
+import {useDispatch} from "react-redux";
+import {
+    assignIsDisplayedEmailForm,
+    assignIsDisplayedLoginPopUp,
+    assignIsDisplayedRegistrationPopUp
+} from "../../redux/loginFormSlice.js";
 
-export const Login = ({setDisplayedLoginPopUp, setIsDisplayedRegistrationPopUp, setIsDisplayedEmailForm}) => {
+export const Login = () => {
     const [isErrorVisible, setIsErrorVisible] = useState(false);
     const[loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
     useNoScroll(true);
 
     const schema = yup.object().shape({
@@ -31,6 +39,7 @@ export const Login = ({setDisplayedLoginPopUp, setIsDisplayedRegistrationPopUp, 
         const toDoInTimeout = () => {
             setLoading(false)
             Cookies.set('auth', "true")
+            dispatch(getWishListProductsIds());
             closePopUp();
         }
 
@@ -49,7 +58,7 @@ export const Login = ({setDisplayedLoginPopUp, setIsDisplayedRegistrationPopUp, 
     }
 
     const closePopUp = () => {
-        setDisplayedLoginPopUp(false);
+        dispatch(assignIsDisplayedLoginPopUp(false));
     };
 
     return (
@@ -89,17 +98,17 @@ export const Login = ({setDisplayedLoginPopUp, setIsDisplayedRegistrationPopUp, 
                                 </div>
                                 <p className={styles.input_error}>{errors.password?.message}</p>
                             </div>
-                            <button type="submit" className={loading && 'loadingButton'}>
+                            <button type="submit" className={loading ? 'loadingButton' : ''}>
                                 {loading ? "Вхід в акаунт..." : "Увійти"}
                             </button>
                             {isErrorVisible && <p className={styles.input_userError}>
                                 Помилка входу. Перевірте правильність е-пошти та пароля.
                             </p>}
-                            <a onClick={() => setIsDisplayedEmailForm(true)}>Забули пароль?</a>
+                            <a onClick={() => dispatch(assignIsDisplayedEmailForm(true))}>Забули пароль?</a>
                         </form>
                             <hr/>
                             <p className={styles.popUp_question}>Досі немає акаунту?</p>
-                            <button onClick={() => setIsDisplayedRegistrationPopUp(true)}>
+                            <button onClick={() => dispatch(assignIsDisplayedRegistrationPopUp(true))}>
                                 Зареєструватись
                             </button>
                     </div>

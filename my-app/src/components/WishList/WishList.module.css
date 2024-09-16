@@ -6,6 +6,11 @@
     background: var(--light-blue-gray);
     margin-top: 25px;
 }
+.empty_list_text {
+    font-size: 25px;
+    text-align: center;
+    color: var(--dark-purple);
+}
 .header {
     color: var(--black);
     /* H5 Medium 32px */

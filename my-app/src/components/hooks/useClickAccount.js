@@ -1,9 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import useCheckAuth from "./useCheckAuth.js";
+import {useDispatch} from "react-redux";
+import {assignIsDisplayedLoginPopUp} from "../../redux/loginFormSlice.js";
 
-const useClickAccount = (setIsDisplayedLoginPopUp, optionalCloseFunction) => {
+const useClickAccount = (optionalCloseFunction) => {
     const navigate = useNavigate();
     const {checkAuthentication} = useCheckAuth();
+    const dispatch = useDispatch();
 
     const closeBurger = () => {
         if (optionalCloseFunction && typeof optionalCloseFunction === 'function') {
@@ -16,10 +19,10 @@ const useClickAccount = (setIsDisplayedLoginPopUp, optionalCloseFunction) => {
         const isAuthenticated = checkAuthentication();
         if (isAuthenticated) {
             navigate('/personal-account');
-            setIsDisplayedLoginPopUp(false);
+            dispatch(assignIsDisplayedLoginPopUp(false));
             closeBurger();
         } else {
-            setIsDisplayedLoginPopUp(true);
+            dispatch(assignIsDisplayedLoginPopUp(true));
             closeBurger();
         }
     };

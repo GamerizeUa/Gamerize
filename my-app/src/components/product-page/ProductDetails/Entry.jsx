@@ -12,18 +12,18 @@ export const Entry = ({ title, body }) => {
         return translations[key] || key;
     };
 
-    if (title == 'equipment') {
-        return (
-            <div className={styles.entry}>
-                <p className={styles['entry__title']}>Компектація</p>
-                <ul className={styles['entry__body']}>
-                    {body.map((item, index) => (
-                        <li key={index}>{item}</li>
-                    ))}
-                </ul>
-            </div>
-        );
-    }
+    // if (title == 'equipment') {
+    //     return (
+    //         <div className={styles.entry}>
+    //             <p className={styles['entry__title']}>Компектація</p>
+    //             <ul className={styles['entry__body']}>
+    //                 {body.map((item, index) => (
+    //                     <li key={index}>{item}</li>
+    //                 ))}
+    //             </ul>
+    //         </div>
+    //     );
+    // }
 
     return (
         <div className={styles.entry} key={title}>

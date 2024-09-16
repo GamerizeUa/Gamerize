@@ -1,15 +1,23 @@
-import { useSelector } from "react-redux";
-import { selectCart } from "../../../redux/selectors";
+import {useDispatch, useSelector} from "react-redux";
+import {selectCart} from "../../../redux/selectors";
 import { OrderCartItem } from "./OrderCartItem";
 import { OrderCartInputs } from "./OrderCartInputs";
+import {sendPromoCode} from '../../../redux/discountSlice.js'
 import sprite from "../../../assets/icons/sprite.svg";
 import styles from "./OrderCart.module.css";
+import {useEffect, useState} from "react";
 
 export const OrderCart = () => {
   const { isEmpty, productList, total } = useSelector(selectCart);
+  const {discountValue} = useSelector((state) => state.discount);
+  const [finalPrice, setFinalPrice] = useState(0);
+
+  useEffect(() => {
+    setFinalPrice(() => total - (parseFloat((total * (discountValue / 100)).toFixed(1))));
+  }, [discountValue, total]);
 
   return (
-    <div>
+    <div className={styles.orderCartContainer}>
       <div className={styles.orderCart}>
         <p className={styles.cartTitle}>Ваше замовлення</p>
         {isEmpty ? (
@@ -30,6 +38,15 @@ export const OrderCart = () => {
               <span>₴</span>
             </div>
           </div>
+          {discountValue !== 0 && (
+              <div className={styles.priceElement}>
+                <p>Промокод:</p>
+                <div className={styles.inner}>
+                  <p>-{(total - finalPrice).toFixed(1)}</p>
+                  <span>₴</span>
+              </div>
+              </div>
+          )}
           <div className={styles.priceElement}>
             <p>Доставка:</p>
             <p>Безкоштовно</p>
@@ -38,7 +55,7 @@ export const OrderCart = () => {
         <div className={styles.totalPriceContainer}>
           <p>Загалом:</p>
           <div className={styles.inner}>
-            <p>{total}</p>
+            <p>{finalPrice}</p>
             <span>₴</span>
           </div>
         </div>

@@ -8,13 +8,15 @@ import React, {useState} from "react";
 import useNoScroll from "../hooks/useNoScroll.js"
 import Lottie  from 'lottie-react';
 import mailNotSentAnimation from '../../assets/images/confirmEmail.json';
-import Cookies from "js-cookie";
 import {sendRequestWithLoading} from "../../utils/sendRequestWithLoading.js";
+import {assignIsDisplayedLoginPopUp, assignIsDisplayedRegistrationPopUp} from "../../redux/loginFormSlice.js";
+import {useDispatch} from "react-redux";
 
-export const Registration = ({setIsDisplayedRegistrationPopUp, setDisplayedLoginPopUp}) => {
+export const Registration = () => {
     const [isErrorVisible, setIsErrorVisible] = useState(false);
     const [isConfirmMessage, setIsConfirmMessage] = useState(false);
     const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
     useNoScroll(true);
 
     const schema = yup.object().shape({
@@ -42,8 +44,8 @@ export const Registration = ({setIsDisplayedRegistrationPopUp, setDisplayedLogin
     }
 
     const closePopUp = () => {
-        setDisplayedLoginPopUp(false);
-        setIsDisplayedRegistrationPopUp(false);
+        dispatch(assignIsDisplayedLoginPopUp(false));
+        dispatch(assignIsDisplayedRegistrationPopUp(false));
     };
 
     const onSubmit = (data) => {
@@ -137,7 +139,7 @@ export const Registration = ({setIsDisplayedRegistrationPopUp, setDisplayedLogin
                                     <p className={styles.input_error}>{errors.confirmPassword?.message}</p>
                                 </div>
                                 <hr className={styles.popUp_registrationHr}/>
-                                <button type="submit" className={loading && 'loadingButton'}>
+                                <button type="submit" className={loading ? 'loadingButton' : ''}>
                                     {loading ? "Реєстрація..." : "Зареєструватись"}
                                 </button>
                                 {isErrorVisible &&

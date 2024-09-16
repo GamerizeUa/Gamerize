@@ -1,52 +1,76 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import PaginationButtons from "../common-components/PaginationButtons/PaginationButtons";
 import ProductCardList from "../common-components/ProductCardList/ProductCardList";
 import styles from "./WishList.module.css";
-import { selectWishListProductsList } from "../../redux/selectors";
-import { useDispatch, useSelector } from "react-redux";
-import { removeAllFromWishList } from "../../redux/wishListSlice";
+import {
+    selectWishListAddRemoveStatus,
+    selectWishListPagesAmount,
+    selectWishListProductsIdList,
+    selectWishListProductsList
+} from "../../redux/selectors";
+import {useDispatch, useSelector} from "react-redux";
+import {getWishListProducts, removeAllFromWishList} from "../../redux/wishListSlice";
 
 function WishList() {
-    const products = useSelector(selectWishListProductsList);
     const dispatch = useDispatch();
-    const pageLimit = 8;
-    const pagesAmount = Math.ceil(products.length / pageLimit); //todo : it should be taken from server
-    const [productsOffset, setProductsOffset] = useState(0); //! amount of skipped products to get needed can be replaced by page potentially
-    const productsPortion = products.slice(
-        productsOffset,
-        productsOffset + pageLimit
-    );
-    if (!productsPortion[0] && productsOffset !== 0)
-        setProductsOffset(productsOffset - pageLimit);
+    const products = useSelector(selectWishListProductsList);
+    const pagesAmount = useSelector(selectWishListPagesAmount);
+    const pageSize = 9;
+    const [page, setPage] = useState(1);
+    const productsIds = useSelector(selectWishListProductsIdList);
+    const isEmpty = productsIds.length === 0;
+    const wishListAddRemoveStatus = useSelector(selectWishListAddRemoveStatus);
 
     useEffect(() => {
-        // get new portion of products and dispatch products with products + new portion
-    }, [productsOffset]);
+        if (!isEmpty && products.length === 0) {
+            setPage(1);
+        }
+    }, [products]);
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 100,
+        });
+    }, [page]);
+    useEffect(() => {
+        dispatch(getWishListProducts({page, pageSize}));
+    }, [page, productsIds]);
 
     function changePage(newPage) {
-        setProductsOffset((newPage - 1) * pageLimit);
+        setPage(newPage);
     }
+
     function clearWishListOnClick() {
-        dispatch(removeAllFromWishList());
+        if (wishListAddRemoveStatus === "loading") {
+            return;
+        }
+        dispatch(removeAllFromWishList(productsIds));
     }
+
     return (
         <div className={"container"}>
             <div className={styles.header_container}>
                 <h2 className={styles.header}>Список бажань</h2>
             </div>
-            <div
+            {isEmpty || <div
                 onClick={clearWishListOnClick}
                 className={styles.clear_btn_container}
             >
                 <button className={styles.clear_btn}>Очистити</button>
-            </div>
+            </div>}
             <ProductCardList
-                productCardList={productsPortion}
+                productCardList={products}
                 isWishList={true}
             />
             <div className={styles.pagination_btns_container}>
+                {
+                    isEmpty && <p className={styles.empty_list_text}>
+                        Ваш список пустий
+                    </p>
+                }
                 <PaginationButtons
                     pagesAmount={pagesAmount}
+                    currentPage={page}
                     pageChangeFunc={changePage}
                 />
             </div>

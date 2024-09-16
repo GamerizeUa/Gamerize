@@ -4,8 +4,8 @@ import useClickAccount from "../hooks/useClickAccount.js";
 import useCheckAuth from "../hooks/useCheckAuth.js";
 import {useLogoutClient} from "../hooks/useLogoutClient.js";
 
-export const Logout = ({setIsDisplayedLoginPopUp}) => {
-    const handleClickAccount = useClickAccount(setIsDisplayedLoginPopUp);
+export const Logout = () => {
+    const handleClickAccount = useClickAccount();
     const {checkAuthentication} = useCheckAuth();
     const logoutClient = useLogoutClient();
     const isAuthenticated = checkAuthentication();

@@ -1,46 +1,48 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setPromoCode, setGiftCard } from "../../../redux/discountSlice";
-import { selectGiftCard, selectPromoCode } from "../../../redux/selectors";
+import {sendPromoCode, setPromoCode} from "../../../redux/discountSlice";
+import {selectPromoCode } from "../../../redux/selectors";
 import styles from "./OrderCart.module.css";
 import sprite from "../../../assets/icons/sprite.svg";
 
 export const OrderCartInputs = () => {
   const dispatch = useDispatch();
   const promoCode = useSelector(selectPromoCode);
-  const giftCard = useSelector(selectGiftCard);
+  const {error} = useSelector((state) => state.discount);
   const [isEditing, setIsEditing] = useState(false);
-  const [editingField, setEditingField] = useState(null);
 
   const MAX_LENGTH = 20;
 
   const handleEditClick = (field, event) => {
     event.stopPropagation();
     setIsEditing(true);
-    setEditingField(field);
   };
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
+    const {value}  = event.target;
+    setIsEditing(true);
     if (value.length <= MAX_LENGTH) {
-      if (name === "promoCode") dispatch(setPromoCode(value));
-      else if (name === "giftCard") dispatch(setGiftCard(value));
+      dispatch(setPromoCode(value));
     }
   };
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       setIsEditing(false);
-      console.log("Saved", editingField + ":", promoCode || giftCard);
+      getDiscount();
     }
   };
+
+  const getDiscount = () => {
+    dispatch(sendPromoCode())
+  }
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       const target = event.target;
       const isInput = target.tagName.toLowerCase() === "input";
       if (!isInput) {
-        setEditingField(null);
+        setIsEditing(false);
       }
     };
 
@@ -53,50 +55,43 @@ export const OrderCartInputs = () => {
 
   return (
     <div className={styles.discountContainer}>
-      {(isEditing && editingField === "promoCode") || promoCode ? (
-        <input
-          name="promoCode"
-          placeholder="Enter the promo code number"
-          value={promoCode}
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-          className={styles.discountInput}
-          maxLength={MAX_LENGTH}
-        />
+      {isEditing || promoCode ? (
+          <>
+          <div>
+            <input
+                name="promoCode"
+                placeholder="Введіть промокод"
+                value={promoCode}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+                className={styles.discountInput}
+                maxLength={MAX_LENGTH}
+            />
+            {isEditing && (
+                <span className={styles.discountAdd}
+                      onClick={() => {
+                        setIsEditing(false)
+                        getDiscount();
+                      }}>
+              Додати
+            </span>
+            )}
+          </div>
+          {error && <p className={styles.errorMessage}>{error}</p>}
+          </>
       ) : (
-        <div
-          onClick={(event) => handleEditClick("promoCode", event)}
-          className={styles.discountItem}
-        >
-          <svg width={24} height={24}>
-            <use
-              href={sprite + "#icon-promo_code"}
-              stroke="#2B2B2B"
+          <div
+              onClick={(event) => handleEditClick("promoCode", event)}
+              className={styles.discountItem}
+          >
+            <svg width={24} height={24}>
+              <use
+                  href={sprite + "#icon-promo_code"}
+                  stroke="#2B2B2B"
               fill="#eef1ff"
             />
           </svg>
           <p className={styles.discountText}>Ввести промокод</p>
-        </div>
-      )}
-      {(isEditing && editingField === "giftCard") || giftCard ? (
-        <input
-          name="giftCard"
-          placeholder="Enter the gift card number"
-          value={giftCard}
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-          className={styles.discountInput}
-          maxLength={MAX_LENGTH}
-        />
-      ) : (
-        <div
-          onClick={(event) => handleEditClick("giftCard", event)}
-          className={styles.discountItem}
-        >
-          <svg width={24} height={24}>
-            <use href={sprite + "#icon-gift"} stroke="#2B2B2B" fill="#eef1ff" />
-          </svg>
-          <p className={styles.discountText}>Подарункова карта</p>
         </div>
       )}
     </div>

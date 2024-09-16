@@ -22,18 +22,21 @@ import { AddProduct } from './Admin/ProductsPage/Add/AddProduct.jsx';
 import { useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import {useDispatch} from "react-redux";
 import useCheckAdmin from './components/hooks/useCheckAdmin.js';
 import { QuestionAnswer } from './Admin/QuestionsPage/QuestionAnswer/QuestionAnswer.jsx';
+import {getWishListProductsIds} from "./redux/wishListSlice.js";
 // import {Edit} from "./Admin/EditPage/Edit.jsx";
 
 function App() {
+    const dispatch = useDispatch();
     useEffect(() => {
-        axios
-            .get('https://gamerize.ltd.ua/api/Login/check')
+        axios.get("https://gamerize.ltd.ua/api/Login/check")
             .then(() => {
-                Cookies.set('auth', 'true');
+                Cookies.set("auth", "true");
+                dispatch(getWishListProductsIds());
             })
-            .catch(() => Cookies.set('auth', 'false'));
+            .catch(() => Cookies.set("auth", "false"));
     }, []);
 
     const ProtectedAdminRoute = ({ element }) => {

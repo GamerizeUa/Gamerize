@@ -49,7 +49,6 @@ export default function GamePicker() {
             playersAmount: playersAmount && [getMinMaxObjFromStr(playersAmount)],
         };
         const {payload: {product}} = await dispatch(getRandomProduct(filters));
-        console.log(product);
         if (product) {
             navigate(`catalog/${product.id}`, {
                 state: {

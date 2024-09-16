@@ -1,10 +1,12 @@
 import styles from "./ConfirmEmailPopup.module.css";
-import React, {useRef, useState} from "react";
-import useNoScroll from "../../hooks/useNoScroll.js";
+import React, {useRef} from "react";
+import {assignIsDisplayedLoginPopUp} from "../../../redux/loginFormSlice.js";
+import {useDispatch} from "react-redux";
 
 
-export const ConfirmEmailPopup = ({ setIsDisplayedLoginPopUp}) => {
+export const ConfirmEmailPopup = () => {
     const popUpRef = useRef(null);
+    const dispatch = useDispatch();
 
     const closePopupByClicking = (event) => {
         if (event.currentTarget === event.target) {
@@ -18,7 +20,7 @@ export const ConfirmEmailPopup = ({ setIsDisplayedLoginPopUp}) => {
 
     const openLoginPopUp = () => {
         closeConfirmEmailPop();
-        setIsDisplayedLoginPopUp(true);
+        dispatch(assignIsDisplayedLoginPopUp(true));
     }
 
     return (

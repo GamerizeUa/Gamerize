@@ -121,7 +121,9 @@ const Catalog = () => {
                                 <CatalogSorting setChosenDisplaying={setChosenDisplaying}/> :
                                 <CatalogMobileTabs setChosenDisplaying={setChosenDisplaying}/>
                             }
-                            {loading ? <p className={styles.catalog_empty}>Завантаження товарів ...</p> : ""}
+                            {loading && products.length === 0 ?
+                                <p className={styles.catalog_empty}>Завантаження товарів ...</p>
+                                : ""}
                             <div className={styles.catalog_products}>
                                 <ProductCardList productCardList={products}
                                                  confingarationObj={configurationObj}/>

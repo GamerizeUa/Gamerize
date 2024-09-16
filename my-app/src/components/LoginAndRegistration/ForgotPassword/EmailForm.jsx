@@ -1,17 +1,23 @@
 import sprite from "../../../assets/icons/sprite.svg"
 import stylesCommon from "../LoginAndRegistration.module.css"
 import styles from "./EmailForm.module.css";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Lottie from "lottie-react";
 import mailNotSentAnimation from "../../../assets/images/confirmEmail.json";
 import axios from "axios";
+import {useDispatch} from "react-redux";
+import {assignIsDisplayedEmailForm, assignIsDisplayedLoginPopUp} from "../../../redux/loginFormSlice.js";
 
-export const EmailForm = ({setIsDisplayedEmailForm, setDisplayedLoginPopUp}) => {
+export const EmailForm = () => {
     const [isConfirmMessage, setIsConfirmMessage] = useState(false);
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
-    setDisplayedLoginPopUp(false);
+    const dispatch = useDispatch();
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.[a-zA-Z]+$/i;
+
+    useEffect(() => {
+        dispatch(assignIsDisplayedLoginPopUp(false));
+    }, [])
 
     const handleChange = (e) => {
         const newEmail = e.target.value;
@@ -38,7 +44,7 @@ export const EmailForm = ({setIsDisplayedEmailForm, setDisplayedLoginPopUp}) => 
     }
 
     const closePopUp = () => {
-        setIsDisplayedEmailForm(false)
+        dispatch(assignIsDisplayedEmailForm(false));
     }
 
     return (

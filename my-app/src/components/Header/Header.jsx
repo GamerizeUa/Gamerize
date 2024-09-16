@@ -8,12 +8,15 @@ import useClickAccount from "../hooks/useClickAccount.js";
 import sprite from "../../assets/icons/sprite.svg";
 import { useSelector } from "react-redux";
 import { selectCartProductsCount } from "../../redux/selectors.js";
+import useCheckAuth from "../hooks/useCheckAuth.js";
 
-const Header = ({ openCart, openBurgerMenu, setIsDisplayedLoginPopUp }) => {
+const Header = ({ openCart, openBurgerMenu}) => {
   const [accountInformation, setAccountInformation] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const handleClickAccount = useClickAccount(setIsDisplayedLoginPopUp);
+  const handleClickAccount = useClickAccount();
   const cartProductsCount = useSelector(selectCartProductsCount);
+  const {checkAuthentication} = useCheckAuth();
+  const isAuthenticated = checkAuthentication();
 
   const handleChangedSize = () => {
     setWindowWidth(window.innerWidth);
@@ -111,10 +114,8 @@ const Header = ({ openCart, openBurgerMenu, setIsDisplayedLoginPopUp }) => {
                     />
                   </svg>
                 </Link>
-                {accountInformation && (
-                  <AccountInformation
-                    setIsDisplayedLoginPopUp={setIsDisplayedLoginPopUp}
-                  />
+                {accountInformation && isAuthenticated && (
+                  <AccountInformation />
                 )}
               </li>
             )}
