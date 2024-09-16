@@ -92,6 +92,25 @@ export const editProduct = createAsyncThunk(
     }
 );
 
+export const searchProduct = createAsyncThunk(
+    'productsCatalog/search',
+    async ({ searchTerm, page, pageSize }, { rejectWithValue }) => {
+        try {
+            const res = await axios.post(
+                `https://gamerize.ltd.ua/api/Product/SearchProduct`,
+                { searchTerm },
+                {
+                    params: { page, pageSize },
+                }
+            );
+
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
 const initialState = {
     products: [],
     totalPages: 0,
@@ -173,6 +192,11 @@ export const productsCatalogSlice = createSlice({
                     ({ id }) => id === action.payload.id
                 );
                 if (index !== -1) state.products[index] = action.payload;
+            })
+            .addCase(searchProduct.fulfilled, (state, action) => {
+                state.loading = false;
+                state.products = action.payload.products;
+                state.totalPages = action.payload.totalPages;
             })
             .addMatcher(
                 (action) => action.type.endsWith('/pending'),

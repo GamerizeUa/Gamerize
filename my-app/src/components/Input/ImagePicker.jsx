@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useController } from 'react-hook-form';
 import styles from './image-picker.module.css';
+import CrossIcon from '../icons/CrossIcon';
 
 export const ImagePicker = ({ control, name, rules, children }) => {
     const {
@@ -60,13 +61,22 @@ export const ImagePicker = ({ control, name, rules, children }) => {
             {gallery.length > 0 && (
                 <div className={styles['image-picker__gallery']}>
                     {gallery.map((url, index) => (
-                        <img
-                            key={index}
-                            src={url}
-                            alt={`Preview ${index}`}
+                        <div
                             className={styles['image-picker__item']}
-                            onClick={() => handleImageRemove(index)}
-                        />
+                            key={index}
+                        >
+                            <img
+                                src={url}
+                                alt={`Preview ${index}`}
+                                className={styles['image-picker__image']}
+                            />
+                            <button
+                                onClick={() => handleImageRemove(index)}
+                                className={styles['image-picker__btn']}
+                            >
+                                <CrossIcon />
+                            </button>
+                        </div>
                     ))}
                 </div>
             )}

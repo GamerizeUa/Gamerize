@@ -25,7 +25,10 @@ export const productSchema = yup.object({
             'Значення цього поля має бути дорівнювати або бути більшим за 1'
         )
         .required('Це обов`язкове поле'),
-    MaxPlayers: positiveNumber,
+    MaxPlayers: yup
+        .number('Значення цього поля має бути числом')
+        .min(2, 'Значення цього поля має дорівнювати або бути більшим за 2')
+        .required('Це обов`язкове поле'),
     MinAge: positiveNumber.required('Це обов`язкове поле'),
     MinGameTimeMinutes: yup
         .number('Значення цього поля має бути числом')

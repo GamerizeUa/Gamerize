@@ -2,7 +2,7 @@ import { ProductExcerpt } from './Excerpt/ProductExcerpt';
 import styles from './assets/styles/products.module.css';
 
 export const ProductListing = ({ products, loading }) => {
-    if (loading) return null;
+    if (loading || !products) return null;
 
     return (
         <table className={styles['products__table']}>
