@@ -46,17 +46,33 @@
 }
 
 .image-picker__item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid #fafafa;
+    padding: 0.5rem;
+}
+
+.image-picker__image {
     inline-size: 128px;
     aspect-ratio: 1 / 1;
     object-fit: contain;
-    border-radius: 8px;
     transition: all 250ms;
-    padding: 0.5rem;
-    border: 1px solid #fafafa;
     background: #fff;
     cursor: pointer;
+}
 
-    &:hover {
-        box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.075);
-    }
+.image-picker__btn {
+    visibility: hidden;
+    position: absolute;
+    inset: 50% 0 auto 0;
+    block-size: 100%;
+    transform: translateY(-50%);
+    transition: all 350ms;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.image-picker__item:hover > .image-picker__btn {
+    visibility: visible;
+    background: rgba(0, 0, 0, 0.5);
 }

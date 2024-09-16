@@ -8,8 +8,9 @@ import {
     fetchProducts,
     setPage,
     setFilters,
+    searchProduct,
 } from '../../redux/productsCatalogSlice';
-import { selectProductsByQuery, selectCategories } from '../../redux/selectors';
+import { selectProducts, selectCategories } from '../../redux/selectors';
 import { fetchAllCategories } from '../../redux/categories/categoriesSlice';
 import styles from './assets/styles/products.module.css';
 
@@ -27,16 +28,26 @@ const updateFilters = (newFilters) => async (dispatch) => {
 
 export const Products = () => {
     const [query, setQuery] = useState('');
+    const [debounceTimeout, setDebounceTimeout] = useState(null);
     const filterSelectorRef = useRef();
     const dispatch = useDispatch();
 
-    const { products, page, totalPages, pageSize, filters, loading } =
-        useSelector((state) => selectProductsByQuery(state, query));
+    let { products, page, totalPages, pageSize, filters, loading } =
+        useSelector(selectProducts);
     const categories = useSelector(selectCategories);
 
     const handleSearch = ({ target: { value } }) => {
         setQuery(value);
+
+        if (debounceTimeout) clearTimeout(debounceTimeout);
+
+        const timeout = setTimeout(() => {
+            dispatch(searchProduct({ searchTerm: value, page: 1, pageSize }));
+        }, 300);
+
+        setDebounceTimeout(timeout);
     };
+
     const handleShowFilters = () => {
         filterSelectorRef.current.showModal();
     };
