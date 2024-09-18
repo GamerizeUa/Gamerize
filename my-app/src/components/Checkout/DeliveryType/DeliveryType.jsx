@@ -1,14 +1,18 @@
 import { useState } from "react";
 import styles from "./DeliveryType.module.css";
 import { AddressForm } from "./AddressForm";
+import {useDispatch} from "react-redux";
+import {setField, setUserInfo} from "../../../redux/orderSlice.js";
 
-export const DeliveryType = ({ onSubmit, currentStep, setCurrentStep }) => {
-  const [deliveryMethod, setDeliveryMethod] = useState("");
-  const [addressData, setAddressData] = useState({});
+export const DeliveryType = ({currentStep, setCurrentStep }) => {
+  const [deliveryMethod, setDeliveryMethod] = useState(null);
+  const [addressData, setAddressData] = useState({address: "", city: ""});
   const [isValid, setIsValid] = useState(false);
+  const [error, setError] = useState('');
+  const dispatch = useDispatch();
 
-  const handleRadioClick = (method) => {
-    setDeliveryMethod(method);
+  const handleRadioClick = (deliveryId, method) => {
+    setDeliveryMethod(deliveryId);
     document.getElementById(method).checked = true;
     setIsValid(true)
   };
@@ -16,16 +20,18 @@ export const DeliveryType = ({ onSubmit, currentStep, setCurrentStep }) => {
   const handleContinue = () => {
     if (deliveryMethod) {
       if (
-        deliveryMethod === "delivery" &&
+        deliveryMethod === 2 &&
         (!addressData.city || !addressData.address)
       ) {
-        alert("Будь ласка, введіть адресу доставки");
+        setError('Заповніть усі поля доставки');
         return;
       }
-      onSubmit({ deliveryMethod, ...addressData });
+      dispatch(setField({field: 'deliveryMethodId', value: deliveryMethod}));
+      dispatch(setUserInfo({deliveryAddress: addressData.address, city: addressData.city}));
       setCurrentStep(currentStep + 1);
+      setError('');
     } else {
-      alert("Будь ласка, оберіть спосіб доставки");
+      setError('Оберіть метод доставки');
     }
   };
 
@@ -33,7 +39,7 @@ export const DeliveryType = ({ onSubmit, currentStep, setCurrentStep }) => {
     <div>
       <div
         className={styles.pickupBlock}
-        onClick={() => handleRadioClick("pickup")}
+        onClick={() => handleRadioClick(1, "pickup")}
       >
         <div>
           <div className={styles.radioInputBox}>
@@ -46,7 +52,7 @@ export const DeliveryType = ({ onSubmit, currentStep, setCurrentStep }) => {
                   value="pickup"
                   name="deliveryMethod"
                   className={styles.selectorInput}
-                  onChange={() => setDeliveryMethod("pickup")}
+                  onChange={() => setDeliveryMethod(1)}
               />
             </div>
             <label htmlFor="pickup" className={styles.orderText}>
@@ -64,7 +70,7 @@ export const DeliveryType = ({ onSubmit, currentStep, setCurrentStep }) => {
       <div className={styles.deliveryBlock}>
         <div
           className={styles.selectElement}
-          onClick={() => handleRadioClick("delivery")}
+          onClick={() => handleRadioClick(2, "delivery")}
         >
           <div className={styles.radioInputBox}>
             <div className={styles.inputHeader}>
@@ -76,7 +82,7 @@ export const DeliveryType = ({ onSubmit, currentStep, setCurrentStep }) => {
                     value="delivery"
                     name="deliveryMethod"
                     className={styles.selectorInput}
-                    onChange={() => setDeliveryMethod("delivery")}
+                    onChange={() => setDeliveryMethod(2)}
                 />
               </div>
               <label htmlFor="delivery" className={styles.orderText}>
@@ -88,14 +94,15 @@ export const DeliveryType = ({ onSubmit, currentStep, setCurrentStep }) => {
 
 
         </div>
-          {deliveryMethod === "delivery" && (
+          {deliveryMethod === 2 && (
               <AddressForm setAddressData={setAddressData} />
         )}
       </div>
+      <p className={styles.submitError}>{error}</p>
       <button
         className={styles.orderBtn}
         onClick={handleContinue}
-        disabled={!isValid || currentStep != 2}
+        disabled={!isValid || currentStep !== 2}
       >
         Продовжити
       </button>

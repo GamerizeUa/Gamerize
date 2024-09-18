@@ -5,6 +5,7 @@ const initialState = {
   promoCode: "",
   error: "",
   discountValue: 0,
+  discountId: 0,
   loading: true
 };
 
@@ -41,7 +42,8 @@ const discountSlice = createSlice({
     builder
         .addCase(sendPromoCode.fulfilled, (state, action) => {
           state.loading = false;
-          state.discountValue = action.payload;
+          state.discountValue = action.payload.discount;
+          state.discountId = action.payload.id;
         })
         .addMatcher(
             (action) => action.type.endsWith('/pending'),

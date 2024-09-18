@@ -3,8 +3,18 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import styles from "./DeliveryType.module.css";
 import { useEffect } from "react";
+import {useSelector} from "react-redux";
 
 export const AddressForm = ({ setAddressData }) => {
+  const {profile} = useSelector((state) => state.profile);
+
+  useEffect(() => {
+    reset({
+      city: profile.city,
+      address: profile.deliveryAddress,
+    });
+  }, [profile]);
+
   const schema = yup.object().shape({
     city: yup
       .string()
@@ -24,11 +34,7 @@ export const AddressForm = ({ setAddressData }) => {
       .required("Введіть адресу доставки"),
   });
 
-  const {
-    register,
-    formState: { errors },
-    watch,
-  } = useForm({
+  const {register, formState: { errors }, reset, watch} = useForm({
     resolver: yupResolver(schema),
     mode: "onChange",
   });

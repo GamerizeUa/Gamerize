@@ -121,7 +121,7 @@
   font-family: "Noto Sans";
   font-size: 14px;
   line-height: 150%;
-  color: #8e8e8e;
+  color: black;
 }
 
 .errorMessage {
@@ -129,6 +129,12 @@
   font-size: 12px;
   color: rgb(207, 17, 17);
   margin-top: -7px;
+}
+
+.submitError {
+  font-size: 14px;
+  color: red;
+  margin-bottom: 5px;
 }
 
 .errorInput {

@@ -27,8 +27,6 @@ export const Header = () => {
                 return 'Продукти'
             case (location.pathname.includes('/admin/questions') && location.pathname):
                 return 'Запитання'
-            case '/admin/edit':
-                return 'Редагування'
             default:
                 return 'Привіт'
         }

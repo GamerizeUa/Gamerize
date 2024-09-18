@@ -21,11 +21,6 @@ export const NavBar = () => {
             title: "Запитання",
             link: '/admin/questions',
             engTitle: 'questions'
-        },
-        edit: {
-            title: "Редагування",
-            link: '/admin/edit',
-            engTitle: 'edit'
         }
     }
 
@@ -34,8 +29,6 @@ export const NavBar = () => {
             setActiveTab('/admin/questions');
         } else if (location.pathname.startsWith('/admin/products')) {
             setActiveTab('/admin/products');
-        } else if (location.pathname.startsWith('/admin/edit')) {
-            setActiveTab('/admin/edit');
         } else if (location.pathname === '/admin') {
             setActiveTab('/admin');
         }

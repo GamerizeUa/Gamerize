@@ -3,8 +3,27 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import sprite from "../../../assets/icons/sprite.svg";
 import styles from "./CustomerInfo.module.css";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect} from "react";
+import {fetchProfileInfo} from "../../../redux/profileSlice.js";
+import {setUserInfo} from "../../../redux/orderSlice.js";
 
-export const CustomerInfo = ({ onSubmit, currentStep, setCurrentStep }) => {
+export const CustomerInfo = ({ currentStep, setCurrentStep }) => {
+  const {profile} = useSelector((state) => state.profile);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchProfileInfo());
+  }, []);
+
+  useEffect(() => {
+    reset({
+      customerName: profile.name,
+      customerPhone: profile.phoneNumber,
+      customerEmail: profile.email,
+    });
+  }, [profile]);
+
   const schema = yup.object().shape({
     customerName: yup
       .string()
@@ -23,17 +42,13 @@ export const CustomerInfo = ({ onSubmit, currentStep, setCurrentStep }) => {
       .required("Введіть електронну пошту"),
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm({
+  const {register, handleSubmit, formState: { errors, isValid }, reset} = useForm({
     resolver: yupResolver(schema),
     mode: "onChange",
   });
 
   const handleContinue = (data) => {
-    onSubmit(data);
+    dispatch(setUserInfo({name: data.customerName, email: data.customerEmail, phoneNumber: data.customerPhone}));
     setCurrentStep(currentStep + 1);
   };
 
@@ -41,7 +56,7 @@ export const CustomerInfo = ({ onSubmit, currentStep, setCurrentStep }) => {
     <div>
       <p className={styles.header}>1. Дані клієнта</p>
       <div className={styles.orderElement}>
-        <label htmlFor="customerName" className={styles.orderText}>
+        <label htmlFor="name" className={styles.orderText}>
           Ваше ім’я та прізвище
         </label>
         <div className={styles.inputBox}>
@@ -51,7 +66,6 @@ export const CustomerInfo = ({ onSubmit, currentStep, setCurrentStep }) => {
           <input
             type="text"
             placeholder="Ім’я"
-            id="customerName"
             className={`${styles.orderInput} ${
               errors.customerName && styles.errorInput
             }`}

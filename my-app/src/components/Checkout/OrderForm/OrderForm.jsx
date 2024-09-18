@@ -1,46 +1,28 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
 import { CustomerInfo } from "../CustomerInfo/CustomerInfo";
 import { DeliveryType } from "../DeliveryType/DeliveryType";
 import { PaymentType } from "../PaymentType/PaymentType";
 import {
   selectCart,
-  selectGiftCard,
   selectPromoCode,
 } from "../../../redux/selectors";
 import { clearCart } from "../../../redux/cartSlice";
 import { clearDiscounts } from "../../../redux/discountSlice";
 import { OrderModal } from "../OrderModal/OrderModal";
 import styles from "./OrderForm.module.css";
+import {setField, setProductItem} from "../../../redux/orderSlice.js";
 
 export const OrderForm = () => {
   const dispatch = useDispatch();
   const { productList, total } = useSelector(selectCart);
   const promoCode = useSelector(selectPromoCode);
-  const giftCard = useSelector(selectGiftCard);
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({});
   const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const schema = yup.object().shape({
-    comment: yup
-      .string()
-      .max(200, "Коментар повинен бути не більше 200 символів"),
-  });
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-    mode: "onChange",
-  });
+  const [commentText, setCommentText] = useState("");
+  const order = useSelector(state => state.order);
 
   const isSubmissionReady = () => {
     if (productList.length === 0) {
@@ -56,42 +38,52 @@ export const OrderForm = () => {
     return false;
   };
 
-  const onSubmit = (data) => {
-    // const customerId = customer.id ? customer.id : uuidv4();
-    const updatedFormData = {
-      ...formData,
-      ...data,
-      productList,
-      total,
-      promoCode,
-      giftCard,
-      // customerId,
-      status: "Замовлення оформлено",
-    };
-    setFormData(updatedFormData);
-    if (isReadyToSubmit) {
-      //Відправка даних на бек
-      console.log(updatedFormData);
-      dispatch(clearCart());
-      dispatch(clearDiscounts());
-      reset();
-      setCurrentStep("1");
-      setIsReadyToSubmit(false);
-      setIsModalOpen(true);
+  useEffect(() => {
+    productList.forEach(product => {
+      dispatch(setProductItem({
+        id: product.id,
+        count: product.count
+      }));
+    });
+    dispatch(setField({field: 'totalPrice', value: total}))
+  }, [productList]);
 
-      setTimeout(() => {
-        setIsModalOpen(false);
-      }, 3000);
-    }
+  const onSubmit = (e, data) => {
+    e.preventDefault();
+    dispatch(setField({field: "comment", value: commentText}));
+    // const updatedFormData = {
+    //   ...formData,
+    //   ...data,
+    //   productList,
+    //   total,
+    //   promoCode,
+    //   giftCard,
+    //   // customerId,
+    //   status: "Замовлення оформлено",
+    // };
+    // setFormData(updatedFormData);
+    // if (isReadyToSubmit) {
+    //   // //Відправка даних на бек
+    //   // console.log(updatedFormData);
+    //   // dispatch(clearCart());
+    //   // dispatch(clearDiscounts());
+    //   // reset();
+    //   // setCurrentStep("1");
+    //   // setIsReadyToSubmit(false);
+    //   // setIsModalOpen(true);
+    //
+    //   setTimeout(() => {
+    //     setIsModalOpen(false);
+    //   }, 3000);
+    // }
   };
 
   return (
     <>
       <div className={styles.orderContainer}>
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.orderForm}>
+        <form onSubmit={onSubmit} className={styles.orderForm}>
           {currentStep >= 1 && (
             <CustomerInfo
-              onSubmit={onSubmit}
               currentStep={currentStep}
               setCurrentStep={setCurrentStep}
             />
@@ -99,7 +91,6 @@ export const OrderForm = () => {
           <p className={styles.header}>2. Спосіб доставки</p>
           {currentStep >= 2 && (
             <DeliveryType
-              onSubmit={onSubmit}
               currentStep={currentStep}
               setCurrentStep={setCurrentStep}
             />
@@ -107,7 +98,6 @@ export const OrderForm = () => {
           <p className={styles.header}>3. Оплата</p>
           {currentStep >= 3 && (
             <PaymentType
-              onSubmit={onSubmit}
               currentStep={currentStep}
               setCurrentStep={setCurrentStep}
             />
@@ -129,15 +119,9 @@ export const OrderForm = () => {
                   id="comment"
                   placeholder="Коментар"
                   className={styles.textarea}
-                  {...register("comment")}
+                  onChange={(e) => setCommentText(e.target.value)}
+                  maxLength={200}
                 />
-              </div>
-              <div>
-                {errors?.comment && (
-                  <p className={styles.errorMessage}>
-                    {errors?.comment.message}
-                  </p>
-                )}
               </div>
               <button
                 className={styles.orderBtn}
