@@ -9,7 +9,7 @@ import useNoScroll from "../hooks/useNoScroll.js"
 import Lottie  from 'lottie-react';
 import mailNotSentAnimation from '../../assets/images/confirmEmail.json';
 import {sendRequestWithLoading} from "../../utils/sendRequestWithLoading.js";
-import {assignIsDisplayedLoginPopUp, assignIsDisplayedRegistrationPopUp} from "../../redux/loginFormSlice.js";
+import {assignIsDisplayedLoginPopUp, assignIsDisplayedRegistrationPopUp} from "../../redux/formsDisplaying.js";
 import {useDispatch} from "react-redux";
 
 export const Registration = () => {

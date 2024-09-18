@@ -3,15 +3,16 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import Cookies from "js-cookie";
 import handleLinkClick from "../../../../utils/ScrollToTop.js";
-import {assignIsDisplayedLoginPopUp} from "../../../../redux/loginFormSlice.js";
-import {useDispatch} from "react-redux";
+import {assignIsDisplayedDeleteAccountPopUp, assignIsDisplayedLoginPopUp} from "../../../../redux/formsDisplaying.js";
+import {useDispatch, useSelector} from "react-redux";
 
-export const DeleteAccountPopUp = ({setIsDisplayedDeleteAccount, userId}) => {
+export const DeleteAccountPopUp = () => {
+    const {profile} = useSelector(state => state.profile);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const closePopUp = () => {
-        setIsDisplayedDeleteAccount(false);
+        dispatch(assignIsDisplayedDeleteAccountPopUp(false));
     }
 
     const closePopupByClicking = (event) => {
@@ -21,7 +22,7 @@ export const DeleteAccountPopUp = ({setIsDisplayedDeleteAccount, userId}) => {
     }
 
     const deleteAccount = (e) => {
-        axios.delete(`https://gamerize.ltd.ua/api/Account/Delete/${userId}`)
+        axios.delete(`https://gamerize.ltd.ua/api/Account/Delete/${profile.id}`)
             .then(() => {
                 closePopUp();
                 Cookies.set('auth', "false");

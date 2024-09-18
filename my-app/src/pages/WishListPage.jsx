@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 import useCheckAuth from "../components/hooks/useCheckAuth.js";
 import {useEffect} from "react";
 import {useDispatch} from "react-redux";
-import {assignIsDisplayedLoginPopUp} from "../redux/loginFormSlice.js";
+import {assignIsDisplayedLoginPopUp} from "../redux/formsDisplaying.js";
 
 export default function WishListPage(){
     const dispatch = useDispatch();

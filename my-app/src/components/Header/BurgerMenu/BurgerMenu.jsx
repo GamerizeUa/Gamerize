@@ -18,7 +18,7 @@ import sprite from "../../../assets/icons/sprite.svg";
 import HeartIcon from "../../icons/HeartIcon";
 import styles from "./BurgerMenu.module.css";
 import {Logout} from "../../Logout/Logout.jsx";
-import {assignIsDisplayedLoginPopUp} from "../../../redux/loginFormSlice.js";
+import {assignIsDisplayedLoginPopUp} from "../../../redux/formsDisplaying.js";
 
 const BurgerMenu = ({ burgerMenuClose}) => {
   const [isCategory, setIsCategory] = useState(false);

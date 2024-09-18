@@ -24,11 +24,11 @@ export const selectCart = createSelector(
     (cart) => ({ ...cart })
 );
 export const selectIsDisplayedLoginPopUp = (state) =>
-    state.loginForm.isDisplayedLoginPopUp;
+    state.formsDisplaying.isDisplayedLoginPopUp;
 export const selectIsDisplayedRegistrationPopUp = (state) =>
-    state.loginForm.isDisplayedRegistrationPopUp;
+    state.formsDisplaying.isDisplayedRegistrationPopUp;
 export const selectIsDisplayedEmailForm = (state) =>
-    state.loginForm.isDisplayedEmailForm;
+    state.formsDisplaying.isDisplayedEmailForm;
 
 export const selectIsInCart = createSelector(
     [selectCart, (state, productId) => productId],

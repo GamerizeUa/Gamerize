@@ -1,8 +1,10 @@
 import styles from "./PersonalAccount.module.css";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
+import {useSelector} from "react-redux";
 
-export const UserPhoto = ({setPhotoFile, uploadedPhoto, setUploadedPhoto, nameRef}) => {
+export const UserPhoto = ({setPhotoFile, uploadedPhoto, setUploadedPhoto}) => {
     const [avatar, setAvatar] = useState(null);
+    const {profile} = useSelector(state => state.profile);
     const hiddenFileInput = useRef(null);
 
     const changeAvatar = () => {
@@ -47,7 +49,7 @@ export const UserPhoto = ({setPhotoFile, uploadedPhoto, setUploadedPhoto, nameRe
             <span className={styles.account_deletePhoto} onClick={deletePhoto}>
                                 Видалити фото
                             </span>
-            <p className={styles.account_name} ref={nameRef}></p>
+            <p className={styles.account_name}>{profile.name}</p>
         </div>
     )
 }

@@ -8,7 +8,7 @@ import sprite from "../../../assets/icons/sprite.svg";
 import {addToCart, updateCartProduct} from "../../../redux/cartSlice";
 import {getImagePath} from "../../../utils/getImagePath";
 import useCheckAuth from "../../hooks/useCheckAuth.js";
-import {assignIsDisplayedLoginPopUp,} from "../../../redux/loginFormSlice.js";
+import {assignIsDisplayedLoginPopUp,} from "../../../redux/formsDisplaying.js";
 
 export default function ProductCard({
                                         configurationObject: {isDiscount, isWishList} = {

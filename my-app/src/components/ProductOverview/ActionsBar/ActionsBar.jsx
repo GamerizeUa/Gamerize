@@ -6,7 +6,7 @@ import styles from "./ActionsBar.module.css";
 import {ProductContext} from "../../product-page/Product.jsx";
 import {useDispatch, useSelector} from "react-redux";
 import {selectWishListAddRemoveStatus, selectWishListProductsIdList} from "../../../redux/selectors.js";
-import {assignIsDisplayedLoginPopUp} from "../../../redux/loginFormSlice.js";
+import {assignIsDisplayedLoginPopUp} from "../../../redux/formsDisplaying.js";
 import {addToWishList, removeOneFromWishList} from "../../../redux/wishListSlice.js";
 import useCheckAuth from "../../hooks/useCheckAuth.js";
 

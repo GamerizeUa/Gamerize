@@ -14,7 +14,7 @@ import {
     assignIsDisplayedEmailForm,
     assignIsDisplayedLoginPopUp,
     assignIsDisplayedRegistrationPopUp
-} from "../../redux/loginFormSlice.js";
+} from "../../redux/formsDisplaying.js";
 
 export const Login = () => {
     const [isErrorVisible, setIsErrorVisible] = useState(false);

@@ -4,17 +4,19 @@ import React, {useEffect, useState} from "react";
 import * as yup from "yup";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
-import Axios from "axios";
 import {useLocation, useNavigate} from "react-router-dom";
 import useNoScroll from "../../hooks/useNoScroll.js";
 import {sendRequestWithLoading} from "../../../utils/sendRequestWithLoading.js";
+import {assignIsDisplayedNewPasswordForm} from "../../../redux/formsDisplaying.js";
+import {useDispatch} from "react-redux";
 
-export const NewPasswordForm = ({setIsDisplayedNewPasswordForm}) => {
+export const NewPasswordForm = () => {
     const location = useLocation();
     const [emailParam, setEmailParam] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     useNoScroll(true);
 
     useEffect(() => {
@@ -60,7 +62,7 @@ export const NewPasswordForm = ({setIsDisplayedNewPasswordForm}) => {
     }
 
     const closePopUp = () => {
-        setIsDisplayedNewPasswordForm(false);
+        dispatch(assignIsDisplayedNewPasswordForm(false));
     }
 
     const onSubmit = (data) => {

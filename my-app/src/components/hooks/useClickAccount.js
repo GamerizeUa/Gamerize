@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import useCheckAuth from "./useCheckAuth.js";
 import {useDispatch} from "react-redux";
-import {assignIsDisplayedLoginPopUp} from "../../redux/loginFormSlice.js";
+import {assignIsDisplayedLoginPopUp} from "../../redux/formsDisplaying.js";
 
 const useClickAccount = (optionalCloseFunction) => {
     const navigate = useNavigate();

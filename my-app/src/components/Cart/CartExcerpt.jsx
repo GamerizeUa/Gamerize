@@ -11,7 +11,7 @@ export const CartExcerpt = ({ id, photo, name, price, count }) => {
     const [countFieldValue, setCountFieldValue] = useState(count);
 
     const handleCountChange = (newCount) => {
-        setCountFieldValue(newCount <= 0 ? '' : newCount);
+        setCountFieldValue(newCount <= 0 ? dispatch(removeFromCart(id)) : newCount);
 
         if (isNaN(newCount) || newCount <= 0) return;
         dispatch(updateCartProduct({ id, modifier: newCount - count }));

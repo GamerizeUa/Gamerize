@@ -2,28 +2,27 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useForm} from "react-hook-form";
 import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
-import Axios from 'axios';
 import styles from './PersonalAccount.module.css';
 import {NewPasswordForm} from "../../../components/LoginAndRegistration/ForgotPassword/ NewPasswordForm.jsx";
 import {UserPhoto} from "./UserPhoto.jsx";
 import {DeleteAccountPopUp} from "./DeleteAccountPopUp/DeleteAccountPopUp.jsx";
+import {useDispatch, useSelector} from "react-redux";
+import {deleteUserPhoto, fetchProfileInfo, setUserPhoto, updateProfileInfo} from "../../../redux/profileSlice.js";
+import {assignIsDisplayedDeleteAccountPopUp, assignIsDisplayedNewPasswordForm} from "../../../redux/formsDisplaying.js";
 
 export const PersonalAccount = () => {
-    const [isDisplayedNewPasswordForm, setIsDisplayedNewPasswordForm] = useState(false);
-    const [isDisplayedDeleteAccount, setIsDisplayedDeleteAccount] = useState(false);
+    const {isDisplayedNewPasswordForm,
+        isDisplayedDeleteAccountPopUp} = useSelector(state => state.formsDisplaying);
+    const {profile} = useSelector(state => state.profile);
     const [photoFile, setPhotoFile] = useState(null);
     const [uploadedPhoto, setUploadedPhoto] = useState(null);
-    const [userId, setUserId] = useState(null);
-    const nameRef = useRef(null);
     const buttonSubmitRef = useRef(null);
+    const dispatch = useDispatch()
 
     const schema = yup.object().shape({
         name: yup.string().nullable(),
-        phoneNumber: yup.string().nullable().test(
-            'isValidPhoneNumber',
-            'Введіть коректний номер телефону (+380XXXXXXXXX)',
-            value => value === '' || /^\+380\d{9}$/.test(value)
-        ),
+        phoneNumber: yup.string().nullable()
+            .matches(/(^$|\+380\d{9}$)/, 'Введіть коректний номер телефону (+380XXXXXXXXX)'),
         email: yup.string().nullable()
             .matches(/^[a-zA-Z0-9._-]+@[a-zA-Z]+\.[a-zA-Z]+$/i, {
                 message: '"Введіть коректну е-пошту"',
@@ -42,47 +41,23 @@ export const PersonalAccount = () => {
     });
 
     useEffect(() => {
-        Axios.get('https://gamerize.ltd.ua/api/Account/profile')
-            .then((res) => {
-                reset(res.data)
-                setUploadedPhoto(res.data?.profilePicture)
-                setUserId(res.data.id)
-                if (nameRef.current && res.data) {
-                    nameRef.current.textContent = res.data.name;
-                }
-            })
-            .catch((err) => console.log(err))
+        reset(profile);
+        setUploadedPhoto(profile.profilePicture);
+    }, [profile])
+
+    useEffect(() => {
+        dispatch(fetchProfileInfo())
     }, []);
 
     const onSubmit = (data) => {
         if (photoFile) {
-            sendPhoto();
+            dispatch(setUserPhoto(photoFile)).then(() => showMessage())
         }
         if (!uploadedPhoto && data.profilePicture) {
             data.profilePicture = null;
-            deletePhotoOnServer();
+            dispatch(deleteUserPhoto())
         }
-        Axios.patch("https://gamerize.ltd.ua/api/Account/update-profile", data)
-            .then(() => showMessage())
-            .catch((err) => console.log(err))
-    }
-
-    const sendPhoto = () => {
-        const formData = new FormData();
-        formData.append('file', photoFile);
-        if (formData.has('file')) {
-            Axios.post('https://gamerize.ltd.ua/api/Account/profile/picture', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                }
-            }).then(() => showMessage()).catch((err) => console.log(err))
-        }
-    }
-
-    const deletePhotoOnServer = () => {
-        Axios.delete('https://gamerize.ltd.ua/api/Account/delete-photo')
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err))
+        dispatch(updateProfileInfo(data)).then(() => showMessage());
     }
 
     const showMessage = () => {
@@ -124,7 +99,6 @@ export const PersonalAccount = () => {
                         <UserPhoto setPhotoFile={setPhotoFile}
                                    uploadedPhoto={uploadedPhoto}
                                    setUploadedPhoto={setUploadedPhoto}
-                                   nameRef={nameRef}
                         />
                         <form className={styles.account_form} onSubmit={handleSubmit(onSubmit)}>
                             <div className={styles.account_inputContainer}>
@@ -185,21 +159,19 @@ export const PersonalAccount = () => {
                                 Зберегти зміни
                             </button>
                             <a className={styles.account_changePasswordLink}
-                               onClick={() => setIsDisplayedNewPasswordForm(true)}>
+                               onClick={() => dispatch(assignIsDisplayedNewPasswordForm(true))}>
                                 Змінити пароль
                             </a>
                             <a className={styles.account_changePasswordLink}
-                               onClick={() => setIsDisplayedDeleteAccount(true)}>
+                               onClick={() => dispatch(assignIsDisplayedDeleteAccountPopUp(true))}>
                                 Видалити акаунт
                             </a>
                         </form>
                     </div>
                 </div>
             </div>
-            {isDisplayedNewPasswordForm &&
-                <NewPasswordForm setIsDisplayedNewPasswordForm={setIsDisplayedNewPasswordForm}/>}
-            {isDisplayedDeleteAccount &&
-                <DeleteAccountPopUp setIsDisplayedDeleteAccount={setIsDisplayedDeleteAccount} userId={userId}/>}
+            {isDisplayedNewPasswordForm && <NewPasswordForm />}
+            {isDisplayedDeleteAccountPopUp && <DeleteAccountPopUp />}
         </section>
     )
 }

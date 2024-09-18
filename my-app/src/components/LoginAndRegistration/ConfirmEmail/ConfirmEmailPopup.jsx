@@ -1,6 +1,6 @@
 import styles from "./ConfirmEmailPopup.module.css";
 import React, {useRef} from "react";
-import {assignIsDisplayedLoginPopUp} from "../../../redux/loginFormSlice.js";
+import {assignIsDisplayedLoginPopUp} from "../../../redux/formsDisplaying.js";
 import {useDispatch} from "react-redux";
 
 

@@ -24,7 +24,7 @@ import discountReducer from "./discountSlice";
 import viewsHistorySlice from "./viewsHistory.js";
 import { carouselProductsReducer } from "./productsSlice.js";
 import { orderHistoryReducer } from "./orderHistorySlice.js";
-import {loginFormReducer} from "./loginFormSlice.js";
+import {formsDisplayingReducer} from "./formsDisplaying.js";
 import {profileReducer} from "./profileSlice.js";
 import questionsReducer from './questionsSlice.js'
 import orderSlice from "./orderSlice.js";
@@ -45,7 +45,7 @@ const rootReducer = combineReducers({
   translationTab: translationTabReducer,
   productsCatalog: productsCatalogReducer,
   wishList: wishListReducer,
-  loginForm: loginFormReducer,
+  formsDisplaying: formsDisplayingReducer,
   cart: cartSlice,
   views: viewsHistorySlice,
   discount: discountReducer,

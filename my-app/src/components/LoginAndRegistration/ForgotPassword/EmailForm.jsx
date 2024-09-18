@@ -6,7 +6,7 @@ import Lottie from "lottie-react";
 import mailNotSentAnimation from "../../../assets/images/confirmEmail.json";
 import axios from "axios";
 import {useDispatch} from "react-redux";
-import {assignIsDisplayedEmailForm, assignIsDisplayedLoginPopUp} from "../../../redux/loginFormSlice.js";
+import {assignIsDisplayedEmailForm, assignIsDisplayedLoginPopUp} from "../../../redux/formsDisplaying.js";
 
 export const EmailForm = () => {
     const [isConfirmMessage, setIsConfirmMessage] = useState(false);

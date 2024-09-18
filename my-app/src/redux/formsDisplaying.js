@@ -4,10 +4,12 @@ const initialState = {
     isDisplayedLoginPopUp: false,
     isDisplayedRegistrationPopUp: false,
     isDisplayedEmailForm: false,
+    isDisplayedNewPasswordForm: false,
+    isDisplayedDeleteAccountPopUp: false
 };
 
-const loginFormSlice = createAppSlice({
-    name: "loginForm",
+const formsDisplaying = createAppSlice({
+    name: "formsDisplaying",
     initialState,
     reducers: () => ({
         assignIsDisplayedLoginPopUp: (state, action) => {
@@ -19,12 +21,20 @@ const loginFormSlice = createAppSlice({
         assignIsDisplayedEmailForm: (state, action) => {
             state.isDisplayedEmailForm = action.payload;
         },
+        assignIsDisplayedNewPasswordForm: (state, action) => {
+            state.isDisplayedNewPasswordForm = action.payload
+        },
+        assignIsDisplayedDeleteAccountPopUp: (state, action) => {
+            state.isDisplayedDeleteAccountPopUp = action.payload;
+        }
     }),
 });
 
-export const loginFormReducer = loginFormSlice.reducer;
+export const formsDisplayingReducer = formsDisplaying.reducer;
 export const {
     assignIsDisplayedLoginPopUp,
     assignIsDisplayedRegistrationPopUp,
-    assignIsDisplayedEmailForm
-} = loginFormSlice.actions;
+    assignIsDisplayedEmailForm,
+    assignIsDisplayedNewPasswordForm,
+    assignIsDisplayedDeleteAccountPopUp
+} = formsDisplaying.actions;

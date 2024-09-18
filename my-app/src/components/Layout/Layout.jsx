@@ -22,7 +22,7 @@ import {
     assignIsDisplayedEmailForm,
     assignIsDisplayedLoginPopUp,
     assignIsDisplayedRegistrationPopUp
-} from "../../redux/loginFormSlice.js";
+} from "../../redux/formsDisplaying.js";
 
 const Layout = () => {
     const [cartOpen, setCartOpen] = useState(false);
