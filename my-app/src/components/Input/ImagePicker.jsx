@@ -17,8 +17,8 @@ export const ImagePicker = ({ control, name, rules, children }) => {
 
         const newImages = newFiles.map((file) => URL.createObjectURL(file));
 
-        field.onChange(newFiles);
-        setGallery(newImages);
+        field.onChange(field.value ? newFiles.concat(field.value) : newFiles);
+        setGallery((prev) => prev.concat(newImages));
     };
 
     const handleImageRemove = (index) => {
@@ -71,6 +71,7 @@ export const ImagePicker = ({ control, name, rules, children }) => {
                                 className={styles['image-picker__image']}
                             />
                             <button
+                                type="button"
                                 onClick={() => handleImageRemove(index)}
                                 className={styles['image-picker__btn']}
                             >

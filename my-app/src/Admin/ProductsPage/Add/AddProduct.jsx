@@ -22,6 +22,7 @@ import { cn } from '../../../utils/classnames';
 import buttons from '../../../assets/styles/buttons.module.css';
 import { productToFormData } from '../../../utils/converters';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const fetchTags = async () => {
     try {
@@ -48,6 +49,7 @@ export const AddProduct = () => {
         NewTags: [],
     };
     const [tags, setTags] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(
@@ -82,7 +84,7 @@ export const AddProduct = () => {
                 cb={(product) =>
                     dispatch(
                         addProduct({ product: productToFormData(product) })
-                    )
+                    ).then(() => navigate('/admin/products', { replace: true }))
                 }
                 defaultValues={defaultValues}
                 validationSchema={productSchema}

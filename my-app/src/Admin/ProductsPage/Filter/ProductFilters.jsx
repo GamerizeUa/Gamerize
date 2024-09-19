@@ -4,6 +4,7 @@ import { cn } from '../../../utils/classnames';
 import styles from '../assets/styles/filter.module.css';
 import buttons from '../../../assets/styles/buttons.module.css';
 import { Input } from '../../../components/Input/Input';
+import { handleOverlayClick } from '../../../utils/handlers';
 
 const defaultValues = { minPrice: 200, maxPrice: 1500, categories: [] };
 
@@ -38,7 +39,11 @@ export const ProductFilters = forwardRef(function ProductFilters(
     if (!categories) return null;
 
     return (
-        <dialog className={styles['dialog']} ref={ref}>
+        <dialog
+            className={styles['dialog']}
+            ref={ref}
+            onClick={(e) => handleOverlayClick(e, () => ref.current.close())}
+        >
             <form action="" onSubmit={passData(handleSubmit)}>
                 <div className={styles['dialog__container']}>
                     <fieldset>
