@@ -11,7 +11,9 @@ export const CartExcerpt = ({ id, photo, name, price, count }) => {
     const [countFieldValue, setCountFieldValue] = useState(count);
 
     const handleCountChange = (newCount) => {
-        setCountFieldValue(newCount <= 0 ? dispatch(removeFromCart(id)) : newCount);
+        setCountFieldValue(
+            newCount <= 0 ? dispatch(removeFromCart(id)) : newCount
+        );
 
         if (isNaN(newCount) || newCount <= 0) return;
         dispatch(updateCartProduct({ id, modifier: newCount - count }));
@@ -57,6 +59,7 @@ export const CartExcerpt = ({ id, photo, name, price, count }) => {
                         <button
                             onClick={() => handleCountChange(count - 1)}
                             className={styles['counter__btn']}
+                            disabled={count <= 1}
                         >
                             <svg width="9" height="9">
                                 <use href={sprite + '#icon-minus'}></use>
