@@ -91,7 +91,7 @@ export const EditProduct = () => {
                             id: productID,
                             product: productToFormData(data),
                         })
-                    )
+                    ).then(() => navigate('/admin/products', { replace: true }))
                 }
                 defaultValues={{
                     Name: product.name,
@@ -121,8 +121,9 @@ export const EditProduct = () => {
                     <button
                         className={cn(buttons['btn'], buttons['btn--danger'])}
                         onClick={() => {
-                            dispatch(deleteProduct({ productID }));
-                            navigate('/admin/products', { replace: true });
+                            dispatch(deleteProduct({ productID })).then(() =>
+                                navigate('/admin/products', { replace: true })
+                            );
                         }}
                     >
                         Видалити продукт

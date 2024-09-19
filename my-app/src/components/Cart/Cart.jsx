@@ -6,6 +6,7 @@ import { CartHeader } from './CartHeader';
 import { CartProductList } from './CartProductList';
 import { CartFooter } from './CartFooter';
 import { CartTotal } from './CartTotal';
+import { handleOverlayClick } from '../../utils/handlers';
 
 const Cart = ({
     cartClose,
@@ -16,14 +17,11 @@ const Cart = ({
 }) => {
     const { isEmpty, productList, total } = useSelector(selectCart);
 
-    const handleOverlayClick = ({ currentTarget, target }) => {
-        if (currentTarget === target) {
-            cartClose();
-        }
-    };
-
     return (
-        <div className={styles.backdrop} onClick={handleOverlayClick}>
+        <div
+            className={styles.backdrop}
+            onClick={(e) => handleOverlayClick(e, cartClose)}
+        >
             <article className={styles.cart}>
                 <Cart.Header onClose={cartClose} title={headerTitle} />
                 <section
