@@ -23,7 +23,7 @@ import {
     assignIsDisplayedLoginPopUp,
     assignIsDisplayedRegistrationPopUp,
 } from '@/redux/formsDisplaying.js';
-import {OrderModal} from "@/components/Checkout/OrderModal/OrderModal.jsx";
+import {OrderModal} from "@/pages/Checkout/OrderModal/OrderModal.jsx";
 
 const Layout = () => {
     const [cartOpen, setCartOpen] = useState(false);

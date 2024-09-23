@@ -1,15 +1,14 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
-import HomePage from './pages/HomePage';
+import HomePage from './pages/HomePage/HomePage.jsx';
 import Catalog from './pages/Catalog/Catalog.jsx';
-import ProductPage from './pages/ProductPage';
-import RegisterPage from './pages/RegisterPage';
-import PersonalAccountPage from './pages/PersonalAccount/PersonalAccountPage.jsx';
-import WishListPage from './pages/WishListPage.jsx';
+import ProductPage from './pages/ProductPage/ProductPage.jsx';
+import PersonalAccountLayout from './pages/PersonalAccount/PersonalAccountLayout.jsx';
+import WishListPage from './pages/WishList/WishListPage.jsx';
 import AboutUs from './pages/AboutUs/AboutUs';
 import NotFound from './pages/NotFound/NotFound';
-import OrderHistoryPage from './pages/OrderHistoryPage.jsx';
-import { Checkout } from './components/Checkout/Checkout.jsx';
+import OrderHistoryPage from './pages/OrderHistory/OrderHistoryPage.jsx';
+import { Checkout } from '@/pages/Checkout/Checkout.jsx';
 import OrderAndPay from './pages/OrderAndPay/OrderAndPay.jsx';
 import Return from './pages/Return/Return.jsx';
 import ConfirmEmailPage from './components/LoginAndRegistration/ConfirmEmail/ConfirmEmail.jsx';
@@ -54,10 +53,9 @@ function App() {
         <Routes>
             <Route path="/" element={<Layout />}>
                 <Route index element={<HomePage />} />
-                <Route path="/register" element={<RegisterPage />} />
                 <Route
                     path="/personal-account"
-                    element={<PersonalAccountPage />}
+                    element={<PersonalAccountLayout />}
                 />
                 <Route path="/catalog" element={<Catalog />} />
                 <Route
@@ -88,7 +86,6 @@ function App() {
                 />
                 <Route path="questions" element={<Questions />} />
                 <Route path="questions/:id" element={<QuestionAnswer />} />
-                {/* <Route path="edit" element={<Edit />} /> */}
             </Route>
         </Routes>
     );

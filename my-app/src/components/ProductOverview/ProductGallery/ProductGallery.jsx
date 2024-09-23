@@ -12,7 +12,7 @@ import { useResizeObserver } from '@/hooks/useResizeObserver';
 import { Slider } from './Slider.jsx';
 import { SliderControl } from './SliderControl.jsx';
 import { useMove } from '@/hooks/useMove';
-import { ProductContext } from '../../product-page/Product.jsx';
+import { ProductContext } from '@/pages/ProductPage/Product.jsx';
 import { getImagePath } from '@/utils/getImagePath';
 
 export const GalleryContext = createContext(null);

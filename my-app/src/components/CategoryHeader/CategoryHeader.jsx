@@ -5,7 +5,7 @@ import Categories from './Categories/Categories';
 import styles from './CategoryHeader.module.css';
 import Genres from './Genres/Genres';
 import Themes from './Themes/Themes';
-import { SearchInput } from '../SearchInput/SearchInput';
+import { SearchInput } from '@/components/Header/SearchInput/SearchInput';
 import Puzzles from './Puzzles/Puzzles';
 import MindGames from './MindGames/MindGames';
 import {

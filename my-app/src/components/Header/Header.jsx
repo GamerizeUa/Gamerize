@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './Header.module.css';
 import AccountInformation from './AccountInformation/AccountInformation.jsx';
-import { SearchInput } from '../SearchInput/SearchInput';
+import { SearchInput } from '@/components/Header/SearchInput/SearchInput';
 import { Logo } from '../Logo/Logo';
 import { Link } from 'react-router-dom';
 import useClickAccount from '@/hooks/useClickAccount.js';

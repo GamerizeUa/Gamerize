@@ -3,7 +3,7 @@ import ShareIcon from '@/assets/icons/ShareIcon.jsx';
 import HeartIcon from '@/assets/icons/HeartIcon.jsx';
 import { Share } from '../Share/Share.jsx';
 import styles from './ActionsBar.module.css';
-import { ProductContext } from '../../product-page/Product.jsx';
+import { ProductContext } from '@/pages/ProductPage/Product.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     selectWishListAddRemoveStatus,

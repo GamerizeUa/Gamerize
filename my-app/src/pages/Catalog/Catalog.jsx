@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Catalog.module.css';
-import { CatalogFilters } from '../../components/Catalog/CatalogFilters/CatalogFilters.jsx';
-import { CatalogSorting } from '../../components/Catalog/CatalogSorting/CatalogSorting.jsx';
-import PaginationButtons from '../../components/common-components/PaginationButtons/PaginationButtons.jsx';
+import { CatalogFilters } from '@/pages/Catalog/CatalogFilters/CatalogFilters.jsx';
+import { CatalogSorting } from '@/pages/Catalog/CatalogSorting/CatalogSorting.jsx';
+import PaginationButtons from '@/components/PaginationButtons/PaginationButtons.jsx';
 import { Breadcrumbs } from '../../components/ProductOverview/Breadcrumbs/Breadcrumbs.jsx';
 import {
     fetchProducts,
@@ -13,9 +13,9 @@ import {
     setSearchTerm,
 } from '../../redux/productsCatalogSlice.js';
 import { useDispatch, useSelector } from 'react-redux';
-import ProductCardList from '../../components/common-components/ProductCardList/ProductCardList.jsx';
+import ProductCardList from '@/components/ProductCardList/ProductCardList.jsx';
 import useWindowWidth from '../../hooks/useWindowWidth.js';
-import { CatalogMobileTabs } from '../../components/Catalog/CatalogMobileTabs/CatalogMobileTabs.jsx';
+import { CatalogMobileTabs } from '@/pages/Catalog/CatalogMobileTabs/CatalogMobileTabs.jsx';
 import { useLocation } from 'react-router-dom';
 
 const Catalog = () => {

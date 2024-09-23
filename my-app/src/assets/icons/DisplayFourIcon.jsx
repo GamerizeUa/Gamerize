@@ -1,4 +1,4 @@
-import styles from '@/components/Catalog/CatalogSorting/CatalogSorting.module.css';
+import styles from '@/pages/Catalog/CatalogSorting/CatalogSorting.module.css';
 
 export const DisplayFourIcon = ({ isActive, setIsActive }) => {
     const handleIconClick = () => {
