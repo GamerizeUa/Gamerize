@@ -1,10 +1,8 @@
 import styles from './LoginAndRegistration.module.css';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import sprite from '@/assets/icons/sprite.svg';
-import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import Axios from 'axios';
 import useNoScroll from '@/hooks/useNoScroll.js';
 import Cookies from 'js-cookie';
 import { sendRequestWithLoading } from '@/utils/sendRequestWithLoading.js';
@@ -15,6 +13,7 @@ import {
     assignIsDisplayedLoginPopUp,
     assignIsDisplayedRegistrationPopUp,
 } from '@/redux/formsDisplaying.js';
+import { loginSchema } from '@/validators/authSchema';
 
 export const Login = () => {
     const [isErrorVisible, setIsErrorVisible] = useState(false);
@@ -22,23 +21,12 @@ export const Login = () => {
     const dispatch = useDispatch();
     useNoScroll(true);
 
-    const schema = yup.object().shape({
-        email: yup
-            .string()
-            .required('Введіть е-пошту')
-            .matches(
-                /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.[a-zA-Z]+$/i,
-                'Введіть коректну е-пошту'
-            ),
-        password: yup.string().required('Введіть пароль'),
-    });
-
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm({
-        resolver: yupResolver(schema),
+        resolver: yupResolver(loginSchema),
         mode: 'onChange',
     });
 

@@ -1,10 +1,8 @@
 import styles from './LoginAndRegistration.module.css';
 import sprite from '@/assets/icons/sprite.svg';
 import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import Axios from 'axios';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import useNoScroll from '@/hooks/useNoScroll.js';
 import Lottie from 'lottie-react';
 import mailNotSentAnimation from '@/assets/images/confirmEmail.json';
@@ -14,6 +12,7 @@ import {
     assignIsDisplayedRegistrationPopUp,
 } from '@/redux/formsDisplaying.js';
 import { useDispatch } from 'react-redux';
+import { registerSchema } from '@/validators/authSchema';
 
 export const Registration = () => {
     const [isErrorVisible, setIsErrorVisible] = useState(false);
@@ -22,40 +21,12 @@ export const Registration = () => {
     const dispatch = useDispatch();
     useNoScroll(true);
 
-    const schema = yup.object().shape({
-        name: yup
-            .string()
-            .required("Введіть ім'я та прізвище")
-            .matches(
-                /^[a-zA-Zа-яіА-ЯІ'\-]+\s[a-zA-Zа-яіА-ЯІ'\-]+$/i,
-                "Введіть ім'я та прізвище"
-            ),
-        email: yup
-            .string()
-            .required('Введіть е-пошту')
-            .matches(
-                /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.[a-zA-Z]+$/i,
-                'Введіть коректну е-пошту'
-            ),
-        password: yup
-            .string()
-            .required('Введіть пароль')
-            .matches(
-                /^(?=.*\d)(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{6,}$/,
-                'Мінімум 6 символів, цифра, велика та мала літери, спецсимвол'
-            ),
-        confirmPassword: yup
-            .string()
-            .oneOf([yup.ref('password'), null], 'Паролі повинні співпадати')
-            .required('Повторіть пароль'),
-    });
-
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm({
-        resolver: yupResolver(schema),
+        resolver: yupResolver(registerSchema),
         mode: 'onChange',
     });
 

@@ -3,13 +3,13 @@ import { unwrapResult } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import axios from 'axios';
 import { ProductContext } from '../Product';
 import { addFeedback } from '@/redux/productsCatalogSlice';
 import useCheckAuth from '@/hooks/useCheckAuth';
 import StarIcon from '@/assets/icons/StarIcon';
 import styles from './FeedbackForm.module.css';
+import { feedbackSchema } from '@/validators/feedbackSchema';
 
 const getAccountInformation = async () => {
     const res = await axios.get('https://gamerize.ltd.ua/api/Account/profile', {
@@ -27,15 +27,6 @@ const FeedbackForm = () => {
     const isAuthenticated = checkAuthentication();
     const dispatch = useDispatch();
 
-    const schema = yup.object().shape({
-        text: yup
-            .string()
-            .min(3, 'Відгук має містити мінімум 3 символи')
-            .max(1500, 'Відгук має містити максимум 1500 символів')
-            .required('Введіть текст відгуку'),
-        rate: yup.number().required('Вкажіть рейтинг'),
-    });
-
     const {
         register,
         handleSubmit,
@@ -43,7 +34,7 @@ const FeedbackForm = () => {
         formState: { errors },
         reset,
     } = useForm({
-        resolver: yupResolver(schema),
+        resolver: yupResolver(feedbackSchema),
     });
 
     const onSubmit = async (data) => {

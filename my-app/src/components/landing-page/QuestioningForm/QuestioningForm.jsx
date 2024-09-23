@@ -1,7 +1,6 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { faEnvelope, faUser } from '@fortawesome/free-regular-svg-icons';
 import styles from './QuestioningForm.module.css';
@@ -9,6 +8,7 @@ import { Button } from '../Button/Button.jsx';
 import feedbackImage from '@/assets/images/feedback.svg';
 import Axios from 'axios';
 import { PopUp } from '../QuestionFormPopUp/popUp.jsx';
+import { questionSchema } from '@/validators/questionSchema';
 
 export const QuestioningForm = () => {
     const [isFocusedName, setFocusedName] = useState(false);
@@ -17,25 +17,13 @@ export const QuestioningForm = () => {
     const [isVisible, setIsVisible] = useState(false);
     const formRef = useRef();
 
-    const schema = yup.object().shape({
-        userName: yup.string().required("Введіть ім'я"),
-        email: yup
-            .string()
-            .required('Введіть е-пошту')
-            .matches(
-                /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.[a-zA-Z]+$/i,
-                'Введіть коректну е-пошту'
-            ),
-        text: yup.string().required('Введіть запитання'),
-    });
-
     const {
         register,
         handleSubmit,
         formState: { errors },
         reset,
     } = useForm({
-        resolver: yupResolver(schema),
+        resolver: yupResolver(questionSchema),
     });
 
     const handleFocus = (
