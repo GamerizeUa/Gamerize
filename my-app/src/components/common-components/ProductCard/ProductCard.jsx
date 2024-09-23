@@ -1,6 +1,6 @@
 import styles from './ProductCard.module.css';
 import { Link } from 'react-router-dom';
-import HeartIcon from '../../icons/HeartIcon';
+import HeartIcon from '@/assets/icons/HeartIcon';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     selectIsInCart,
@@ -103,10 +103,7 @@ export default function ProductCard({
                                     />
                                 </svg>
                             ) : (
-                                <HeartIcon
-                                    fill="#AAC4FF"
-                                    strokeColor="#AAC4FF"
-                                />
+                                <HeartIcon isFilled />
                             )
                         ) : (
                             <HeartIcon strokeColor="#AAC4FF" />

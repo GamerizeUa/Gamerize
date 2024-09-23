@@ -1,18 +1,19 @@
-import styles from "../CatalogSorting/CatalogSorting.module.css";
+import styles from '@/components/Catalog/CatalogSorting/CatalogSorting.module.css';
 
-export const DisplayFourIcon = ({isActive,setIsActive}) => {
+export const DisplayFourIcon = ({ isActive, setIsActive }) => {
     const handleIconClick = () => {
-        setIsActive({displayingThree: false, displayingFour: true})
+        setIsActive({ displayingThree: false, displayingFour: true });
     };
 
     return (
-        <svg xmlns="http://www.w3.org/2000/svg"
-             width="30"
-             height="30"
-             viewBox="0 0 30 30"
-             fill="none"
-             className={isActive ? styles.active : ''}
-             onClick={handleIconClick}
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="30"
+            viewBox="0 0 30 30"
+            fill="none"
+            className={isActive ? styles.active : ''}
+            onClick={handleIconClick}
         >
             <path
                 d="M6.875 25C6.35417 25 5.91146 24.8177 5.54688 24.4531C5.18229 24.0885 5 23.6458 5 23.125C5 22.6042
@@ -75,7 +76,8 @@ export const DisplayFourIcon = ({isActive,setIsActive}) => {
                 5.91146 21.7969 5.54688C22.1615 5.18229 22.6042 5 23.125 5C23.6458 5 24.0885 5.18229 24.4531
                 5.54688C24.8177 5.91146 25 6.35417 25 6.875C25 7.39583 24.8177 7.83854 24.4531 8.20312C24.0885 8.56771
                 23.6458 8.75 23.125 8.75Z"
-                fill="black"/>
+                fill="black"
+            />
         </svg>
-    )
-}
+    );
+};

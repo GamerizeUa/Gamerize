@@ -1,9 +1,9 @@
 import styles from './CatalogSorting.module.css';
-import ArrowIconGallery from '../../ProductOverview/icons/ArrowGalleryIcon.jsx';
+import ArrowIconGallery from '@/assets/icons/ArrowGalleryIcon.jsx';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { DisplayThreeIcon } from '../icons/DisplayThreeIcon.jsx';
-import { DisplayFourIcon } from '../icons/DisplayFourIcon.jsx';
+import { DisplayThreeIcon } from '@/assets/icons/DisplayThreeIcon.jsx';
+import { DisplayFourIcon } from '@/assets/icons/DisplayFourIcon.jsx';
 import useWindowWidth from '@/hooks/useWindowWidth.js';
 import { setSortOrder } from '@/redux/productsCatalogSlice.js';
 

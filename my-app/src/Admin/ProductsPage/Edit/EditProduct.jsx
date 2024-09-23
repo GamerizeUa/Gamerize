@@ -1,31 +1,28 @@
-import { Form } from '../../../components/Form/Form';
+import { Form } from '@/components/Form/Form';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Breadcrumbs } from '../../../components/ProductOverview/Breadcrumbs/Breadcrumbs';
-import { fetchAllGenres } from '../../../redux/categories/genresSlice';
-import { fetchAllThemes } from '../../../redux/categories/themesSlice';
-import { fetchAllLanguages } from '../../../redux/categories/languagesSlice';
+import { Breadcrumbs } from '@/components/ProductOverview/Breadcrumbs/Breadcrumbs';
+import { fetchAllGenres } from '@/redux/categories/genresSlice';
+import { fetchAllThemes } from '@/redux/categories/themesSlice';
+import { fetchAllLanguages } from '@/redux/categories/languagesSlice';
 import {
     selectCategories,
     selectGenres,
     selectLanguages,
     selectThemes,
-} from '../../../redux/selectors';
-import { dispatchMultipleActions } from '../../../utils/dispatchMultipleAtions';
-import styles from '../assets/styles/products.module.css';
-import { fetchAllCategories } from '../../../redux/categories/categoriesSlice';
+} from '@/redux/selectors';
+import { dispatchMultipleActions } from '@/utils/dispatchMultipleAtions';
+import styles from '../products.module.css';
+import { fetchAllCategories } from '@/redux/categories/categoriesSlice';
 import { useParams } from 'react-router-dom';
-import {
-    deleteProduct,
-    editProduct,
-} from '../../../redux/productsCatalogSlice';
+import { deleteProduct, editProduct } from '@/redux/productsCatalogSlice';
 import { productSchema } from '../validators/productSchema';
 import { General } from '../FormSections/General';
 import { Organization } from '../FormSections/Organization';
-import { cn } from '../../../utils/classnames';
-import buttons from '../../../assets/styles/buttons.module.css';
+import { cn } from '@/utils/classnames';
+import buttons from '@/assets/styles/buttons.module.css';
 import { useNavigate } from 'react-router-dom';
-import { productToFormData } from '../../../utils/converters';
+import { productToFormData } from '@/utils/converters';
 import axios from 'axios';
 
 const fetchTags = async () => {

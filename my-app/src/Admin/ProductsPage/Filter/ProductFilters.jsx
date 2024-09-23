@@ -1,10 +1,10 @@
 import { forwardRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { cn } from '../../../utils/classnames';
-import styles from '../assets/styles/filter.module.css';
-import buttons from '../../../assets/styles/buttons.module.css';
-import { Input } from '../../../components/Input/Input';
-import { handleOverlayClick } from '../../../utils/handlers';
+import { cn } from '@/utils/classnames';
+import styles from './filter.module.css';
+import buttons from '@/assets/styles/buttons.module.css';
+import { Input } from '@/components/Input/Input';
+import { handleOverlayClick } from '@/utils/handlers';
 
 const defaultValues = { minPrice: 200, maxPrice: 1500, categories: [] };
 

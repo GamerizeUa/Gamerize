@@ -3,7 +3,7 @@ import sprite from '@/assets/icons/sprite.svg';
 import { useDispatch } from 'react-redux';
 import { updateCartProduct, removeFromCart } from '@/redux/cartSlice';
 import { useState } from 'react';
-import CrossIcon from '../icons/CrossIcon';
+import CrossIcon from '@/assets/icons/CrossIcon';
 import { getImagePath } from '@/utils/getImagePath';
 
 export const CartExcerpt = ({ id, photo, name, price, count }) => {

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styles from './AccountInformation.module.css';
 import sprite from '@/assets/icons/sprite.svg';
-import HeartIcon from '../../icons/HeartIcon';
+import HeartIcon from '@/assets/icons/HeartIcon';
 import { Logout } from '../../Logout/Logout.jsx';
 import { useEffect, useState } from 'react';
 import useCheckAuth from '@/hooks/useCheckAuth.js';

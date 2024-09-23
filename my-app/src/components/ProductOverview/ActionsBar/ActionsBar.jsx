@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import ShareIcon from '../icons/ShareIcon.jsx';
-import HeartIcon from '../icons/HeartIcon.jsx';
+import ShareIcon from '@/assets/icons/ShareIcon.jsx';
+import HeartIcon from '@/assets/icons/HeartIcon.jsx';
 import { Share } from '../Share/Share.jsx';
 import styles from './ActionsBar.module.css';
 import { ProductContext } from '../../product-page/Product.jsx';

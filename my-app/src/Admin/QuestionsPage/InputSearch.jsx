@@ -1,5 +1,5 @@
 import styles from './Questions.module.css';
-import sprite from '../../assets/icons/sprite.svg';
+import sprite from '@/assets/icons/sprite.svg';
 import React, { useEffect, useRef, useState } from 'react';
 import {
     fetchQuestions,

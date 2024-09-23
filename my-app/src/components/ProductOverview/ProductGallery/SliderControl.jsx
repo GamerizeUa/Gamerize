@@ -1,6 +1,6 @@
 import { forwardRef, useContext } from 'react';
 import styles from './ProductGallery.module.css';
-import ArrowGalleryIcon from '../icons/ArrowGalleryIcon.jsx';
+import ArrowGalleryIcon from '@/assets/icons/ArrowGalleryIcon.jsx';
 import { useTouchHandlers } from '@/hooks/useTouchHandlers.jsx';
 import { GalleryContext } from './ProductGallery.jsx';
 

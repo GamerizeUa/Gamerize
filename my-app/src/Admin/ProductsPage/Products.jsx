@@ -9,10 +9,10 @@ import {
     setPage,
     setFilters,
     searchProduct,
-} from '../../redux/productsCatalogSlice';
-import { selectProducts, selectCategories } from '../../redux/selectors';
-import { fetchAllCategories } from '../../redux/categories/categoriesSlice';
-import styles from './assets/styles/products.module.css';
+} from '@/redux/productsCatalogSlice';
+import { selectProducts, selectCategories } from '@/redux/selectors';
+import { fetchAllCategories } from '@/redux/categories/categoriesSlice';
+import styles from './products.module.css';
 
 const fetchData = (page, pageSize, filters) => async (dispatch) => {
     await Promise.all([

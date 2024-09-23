@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import { cn } from '../../../utils/classnames';
-import sprite from '../../../assets/icons/sprite.svg';
-import Filter from '../assets/icons/Filter.svg';
-import styles from '../assets/styles/products.module.css';
-import buttons from '../../../assets/styles/buttons.module.css';
+import { cn } from '@/utils/classnames';
+import sprite from '@/assets/icons/sprite.svg';
+import Filter from '@/assets/icons/Filter.svg';
+import styles from '../products.module.css';
+import buttons from '@/assets/styles/buttons.module.css';
 
 export const ProductHeader = ({
     searchQuery,

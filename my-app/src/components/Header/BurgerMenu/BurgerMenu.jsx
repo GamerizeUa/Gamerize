@@ -15,7 +15,7 @@ import {
     selectThemes,
 } from '@/redux/selectors.js';
 import sprite from '@/assets/icons/sprite.svg';
-import HeartIcon from '../../icons/HeartIcon';
+import HeartIcon from '@/assets/icons/HeartIcon';
 import styles from './BurgerMenu.module.css';
 import { Logout } from '../../Logout/Logout.jsx';
 import { assignIsDisplayedLoginPopUp } from '@/redux/formsDisplaying.js';

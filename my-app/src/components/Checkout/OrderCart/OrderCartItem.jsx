@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { removeFromCart, updateCartProduct } from '@/redux/cartSlice';
 import styles from './OrderCart.module.css';
 import sprite from '@/assets/icons/sprite.svg';
-import CrossIcon from '../../icons/CrossIcon';
+import CrossIcon from '@/assets/icons/CrossIcon';
 import { getImagePath } from '@/utils/getImagePath.js';
 
 export const OrderCartItem = ({ id, name, price, photo, count }) => {

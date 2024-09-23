@@ -1,6 +1,6 @@
 import styles from './Breadcrumbs.module.css';
 import { Link } from 'react-router-dom';
-import ArrowIcon from '../icons/ArrowIcon.jsx';
+import ArrowIcon from '@/assets/icons/ArrowIcon.jsx';
 
 export const Breadcrumbs = ({ page, isAdminPage }) => {
     if (!page) return null;

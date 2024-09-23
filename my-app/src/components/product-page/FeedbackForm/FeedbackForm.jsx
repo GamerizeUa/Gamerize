@@ -8,7 +8,7 @@ import axios from 'axios';
 import { ProductContext } from '../Product';
 import { addFeedback } from '@/redux/productsCatalogSlice';
 import useCheckAuth from '@/hooks/useCheckAuth';
-import StarIcon from '../../icons/StarIcon';
+import StarIcon from '@/assets/icons/StarIcon';
 import styles from './FeedbackForm.module.css';
 
 const getAccountInformation = async () => {

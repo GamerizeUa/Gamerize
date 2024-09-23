@@ -1,5 +1,5 @@
 import styles from './Cart.module.css';
-import CrossIcon from '../icons/CrossIcon';
+import CrossIcon from '@/assets/icons/CrossIcon';
 
 export const CartHeader = ({ title, onClose }) => {
     return (

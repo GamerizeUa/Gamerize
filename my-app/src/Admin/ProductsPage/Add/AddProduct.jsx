@@ -1,26 +1,26 @@
-import { Form } from '../../../components/Form/Form';
+import { Form } from '@/components/Form/Form';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Breadcrumbs } from '../../../components/ProductOverview/Breadcrumbs/Breadcrumbs';
-import { fetchAllGenres } from '../../../redux/categories/genresSlice';
-import { fetchAllThemes } from '../../../redux/categories/themesSlice';
-import { fetchAllLanguages } from '../../../redux/categories/languagesSlice';
+import { Breadcrumbs } from '@/components/ProductOverview/Breadcrumbs/Breadcrumbs';
+import { fetchAllGenres } from '@/redux/categories/genresSlice';
+import { fetchAllThemes } from '@/redux/categories/themesSlice';
+import { fetchAllLanguages } from '@/redux/categories/languagesSlice';
 import {
     selectCategories,
     selectGenres,
     selectLanguages,
     selectThemes,
-} from '../../../redux/selectors';
-import { dispatchMultipleActions } from '../../../utils/dispatchMultipleAtions';
-import styles from '../assets/styles/products.module.css';
-import { addProduct } from '../../../redux/productsCatalogSlice';
-import { fetchAllCategories } from '../../../redux/categories/categoriesSlice';
+} from '@/redux/selectors';
+import { dispatchMultipleActions } from '@/utils/dispatchMultipleAtions';
+import styles from '../products.module.css';
+import { addProduct } from '@/redux/productsCatalogSlice';
+import { fetchAllCategories } from '@/redux/categories/categoriesSlice';
 import { productSchema } from '../validators/productSchema';
 import { General } from '../FormSections/General';
 import { Organization } from '../FormSections/Organization';
-import { cn } from '../../../utils/classnames';
-import buttons from '../../../assets/styles/buttons.module.css';
-import { productToFormData } from '../../../utils/converters';
+import { cn } from '@/utils/classnames';
+import buttons from '@/assets/styles/buttons.module.css';
+import { productToFormData } from '@/utils/converters';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
