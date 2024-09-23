@@ -1,5 +1,5 @@
 import styles from './Dropdown.module.css';
-import ArrowDownIcon from '../../icons/ArrowDownIcon';
+import ArrowDownIcon from '@/assets/icons/ArrowDownIcon';
 import { useState } from 'react';
 
 const Dropdown = ({ children, title }) => {

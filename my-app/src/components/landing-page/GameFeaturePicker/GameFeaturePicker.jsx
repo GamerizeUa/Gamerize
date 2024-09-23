@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import ArrowDownIcon from "../../icons/ArrowDownIcon";
-import ArrowUpIcon from "../../icons/ArrowUpIcon";
-import styles from "./GameFeaturePicker.module.css";
+import { useEffect, useState } from 'react';
+import ArrowDownIcon from '@/assets/icons/ArrowDownIcon';
+import ArrowUpIcon from '@/assets/icons/ArrowUpIcon';
+import styles from './GameFeaturePicker.module.css';
 
 export default function GameFeaturePicker({
     zIndex,
@@ -17,7 +17,7 @@ export default function GameFeaturePicker({
         setIsMenuActive(!isMenuActive);
     }
     function closeMenuOnclick(e) {
-        if (!e.target.closest("." + menuUniqueCSSClass)) {
+        if (!e.target.closest('.' + menuUniqueCSSClass)) {
             setIsMenuActive(false);
         }
     }
@@ -26,25 +26,25 @@ export default function GameFeaturePicker({
         setIsMenuActive(false);
     }
     useEffect(() => {
-        window.addEventListener("click", closeMenuOnclick, { capture: true });
+        window.addEventListener('click', closeMenuOnclick, { capture: true });
         return () =>
-            window.removeEventListener("click", closeMenuOnclick, {
+            window.removeEventListener('click', closeMenuOnclick, {
                 capture: true,
             });
     }, []);
     let featureName = checkedFeature;
-    if (checkedFeature && typeof checkedFeature !== "string") {
+    if (checkedFeature && typeof checkedFeature !== 'string') {
         featureName = checkedFeature.name;
     }
     return (
         <div className={styles.wrap}>
             <div
                 style={{ zIndex: zIndex }}
-                className={styles.container + " " + menuUniqueCSSClass}
+                className={styles.container + ' ' + menuUniqueCSSClass}
             >
                 <div onClick={toggleMenuOnClick} className={styles.header}>
                     <p className={styles.title}>
-                        {featureTitle + (featureName ? ": " + featureName : "")}
+                        {featureTitle + (featureName ? ': ' + featureName : '')}
                     </p>
                     <div className={styles.icon}>
                         {isMenuActive ? <ArrowUpIcon /> : <ArrowDownIcon />}
@@ -54,7 +54,9 @@ export default function GameFeaturePicker({
                     <div
                         className={styles.items_container}
                         style={{
-                            overflow: `${featureItems.length >= 5 ? "scroll" : "visible"}`,
+                            overflow: `${
+                                featureItems.length >= 5 ? 'scroll' : 'visible'
+                            }`,
                         }}
                     >
                         <div
@@ -68,7 +70,7 @@ export default function GameFeaturePicker({
                         </div>
                         {featureItems.map((item) => {
                             let name = item;
-                            if (typeof item !== "string") {
+                            if (typeof item !== 'string') {
                                 name = item.name;
                             }
                             function chooseItemOnclick(e) {

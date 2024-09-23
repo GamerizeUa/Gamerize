@@ -1,14 +1,14 @@
 import { useContext } from 'react';
-import { Input } from '../../../components/Input/Input';
-import { Textarea } from '../../../components/Input/Textarea';
-import { ImagePicker } from '../../../components/Input/ImagePicker';
-import { Select } from '../../../components/Input/Select';
-import { Multiselect } from '../../../components/Input/Multiselect';
-import { cn } from '../../../utils/classnames';
-import Image from '../assets/icons/Image.svg';
-import styles from '../assets/styles/form.module.css';
-import buttons from '../../../assets/styles/buttons.module.css';
-import { FormContext } from '../../../components/Form/Form';
+import { Input } from '@/components/Input/Input';
+import { Textarea } from '@/components/Input/Textarea';
+import { ImagePicker } from '@/components/Input/ImagePicker';
+import { Select } from '@/components/Input/Select';
+import { Multiselect } from '@/components/Input/Multiselect';
+import { cn } from '@/utils/classnames';
+import Image from '@/assets/icons/Image.svg';
+import styles from './form.module.css';
+import buttons from '@/assets/styles/buttons.module.css';
+import { FormContext } from '@/components/Form/Form';
 
 export const General = () => {
     const { control, languages, tags } = useContext(FormContext);

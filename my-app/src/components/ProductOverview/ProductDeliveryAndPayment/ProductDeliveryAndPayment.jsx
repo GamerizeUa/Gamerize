@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './ProductDeliveryAndPayment.module.css';
-import DeliveryIcon from '../icons/DeliveryIcon.jsx';
-import ReturnIcon from '../icons/ReturnIcon.jsx';
-import NonCashPaymentIcon from '../icons/NonCashPaymentIcon.jsx';
-import PostPaymentIcon from '../icons/PostPaymentIcon.jsx';
+import DeliveryIcon from '@/assets/icons/DeliveryIcon.jsx';
+import ReturnIcon from '@/assets/icons/ReturnIcon.jsx';
+import NonCashPaymentIcon from '@/assets/icons/NonCashPaymentIcon.jsx';
+import PostPaymentIcon from '@/assets/icons/PostPaymentIcon.jsx';
 import { InfoSection } from '../InfoSection/InfoSection';
 
 export const ProductDeliveryAndPayment = () => {

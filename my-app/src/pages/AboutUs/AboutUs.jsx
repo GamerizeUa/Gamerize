@@ -1,6 +1,6 @@
 import styles from './AboutUs.module.css';
-import imageAboutUs from '../../assets/images/about_us_photo.png';
-import sprite from '../../assets/icons/sprite.svg';
+import imageAboutUs from '@/assets/images/about_us_photo.png';
+import sprite from '@/assets/icons/sprite.svg';
 import { cn } from '../../utils/classnames';
 
 const ItemList = ({ isColumn, className, children }) => {

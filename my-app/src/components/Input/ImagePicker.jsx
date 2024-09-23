@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useController } from 'react-hook-form';
 import styles from './image-picker.module.css';
-import CrossIcon from '../icons/CrossIcon';
+import CrossIcon from '@/assets/icons/CrossIcon';
 
 export const ImagePicker = ({ control, name, rules, children }) => {
     const {

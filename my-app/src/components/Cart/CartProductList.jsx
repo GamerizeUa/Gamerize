@@ -1,5 +1,5 @@
 import styles from './Cart.module.css';
-import emptyCart from '../../assets/images/empty_cart.png';
+import emptyCart from '@/assets/images/empty_cart.png';
 
 export const CartProductList = ({ isEmpty, children, emptyMessage }) => {
     if (isEmpty) {

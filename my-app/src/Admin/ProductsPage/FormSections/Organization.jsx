@@ -1,7 +1,7 @@
 import { useContext } from 'react';
-import { Select } from '../../../components/Input/Select';
-import styles from '../assets/styles/form.module.css';
-import { FormContext } from '../../../components/Form/Form';
+import { Select } from '@/components/Input/Select';
+import styles from './form.module.css';
+import { FormContext } from '@/components/Form/Form';
 
 export const Organization = () => {
     const { control, categories, genres, themes } = useContext(FormContext);

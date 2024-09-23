@@ -3,10 +3,10 @@ import styles from './ProductMainInfo.module.css';
 import { Breadcrumbs } from '../Breadcrumbs/Breadcrumbs.jsx';
 import { ActionsBar } from '../ActionsBar/ActionsBar.jsx';
 import { ProductDeliveryAndPayment } from '../ProductDeliveryAndPayment/ProductDeliveryAndPayment.jsx';
-import CartIcon from '../icons/CartIcon.jsx';
+import CartIcon from '@/assets/icons/CartIcon.jsx';
 import { ProductContext } from '../../product-page/Product.jsx';
 import { useDispatch } from 'react-redux';
-import { addToCart } from '../../../redux/cartSlice.js';
+import { addToCart } from '@/redux/cartSlice.js';
 import { Link } from 'react-router-dom';
 
 export const ProductMainInfo = ({ breadcrumbsDetails }) => {

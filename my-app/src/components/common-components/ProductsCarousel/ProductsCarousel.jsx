@@ -1,8 +1,8 @@
-import { useEffect, useState, useRef } from "react";
-import styles from "./ProductsCarousel.module.css";
-import ProductCard from "../ProductCard/ProductCard";
-import ArrowLeftIcon from "../../icons/ArrowLeftIcon";
-import ArrowRightIcon from "../../icons/ArrowRightIcon";
+import { useEffect, useState, useRef } from 'react';
+import styles from './ProductsCarousel.module.css';
+import ProductCard from '../ProductCard/ProductCard';
+import ArrowLeftIcon from '@/assets/icons/ArrowLeftIcon';
+import ArrowRightIcon from '@/assets/icons/ArrowRightIcon';
 
 // This carousel is considered to work with 10 product cards in total. 4 of them are viewed at once in the desctop website, 3 on the tablet and 2 in mobile version.
 export default function ProductsCarousel({
@@ -31,7 +31,7 @@ export default function ProductsCarousel({
 
     useEffect(() => {
         setWindowWidth(document.documentElement.clientWidth);
-        window.addEventListener("resize", function () {
+        window.addEventListener('resize', function () {
             setWindowWidth(document.documentElement.clientWidth); // !! in future it can be proceeded, for example, in Layout for global redux state
         });
     }, []);
@@ -143,13 +143,13 @@ export default function ProductsCarousel({
             >
                 <h4 className={styles.title_container}>{carouselTitle}</h4>
                 <div
-                    className={styles.chevron + " " + styles.chevron_right}
+                    className={styles.chevron + ' ' + styles.chevron_right}
                     onClick={arrowRightOnclick}
                 >
                     <ArrowRightIcon />
                 </div>
                 <div
-                    className={styles.chevron + " " + styles.chevron_left}
+                    className={styles.chevron + ' ' + styles.chevron_left}
                     onClick={arrowLeftOnclick}
                 >
                     <ArrowLeftIcon />

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, forwardRef } from 'react';
-import CopyIcon from '../icons/CopyIcon.jsx';
+import CopyIcon from '@/assets/icons/CopyIcon.jsx';
 import styles from './Share.module.css';
 import {
     FacebookShareButton,

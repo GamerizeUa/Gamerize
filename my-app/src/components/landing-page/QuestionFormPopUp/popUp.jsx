@@ -1,12 +1,12 @@
-import React from "react";
-import styles from "./popUp.module.css";
-import useNoScroll from "../../hooks/useNoScroll.js";
+import React from 'react';
+import styles from './popUp.module.css';
+import useNoScroll from '@/hooks/useNoScroll.js';
 
 export const PopUp = ({
-                          changeVisibility,
-                          title = "Дякуємо за запитання!",
-                          info = "Очікуйте на повідомлення від менеджера для вирішення вашого запиту!"
-                      }) => {
+    changeVisibility,
+    title = 'Дякуємо за запитання!',
+    info = 'Очікуйте на повідомлення від менеджера для вирішення вашого запиту!',
+}) => {
     useNoScroll(true);
 
     const closePopupByClicking = (event) => {
@@ -20,7 +20,10 @@ export const PopUp = ({
             <div className={styles.popUp}>
                 <div className={styles.popUp_container}>
                     <div className={styles.popUp_crossContainer}>
-                        <div className={styles.popUp_cross} onClick={changeVisibility}></div>
+                        <div
+                            className={styles.popUp_cross}
+                            onClick={changeVisibility}
+                        ></div>
                     </div>
                     <p className={styles.popUp_title}>{title}</p>
                     <p className={styles.popUp_description}>{info}</p>

@@ -1,9 +1,9 @@
-import StarIcon from "../../icons/StarIcon";
-import styles from "./RateStars.module.css";
+import StarIcon from '@/assets/icons/StarIcon';
+import styles from './RateStars.module.css';
 
 export default function RateStars({
     filledStarsAmount = 5,
-    color = "#84A9FC",
+    color = '#84A9FC',
 }) {
     return (
         <div className={styles.container}>

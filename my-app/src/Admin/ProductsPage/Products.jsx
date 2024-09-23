@@ -9,17 +9,9 @@ import {
     setPage,
     setFilters,
     searchProduct,
-} from '../../redux/productsCatalogSlice';
-import { selectProducts, selectCategories } from '../../redux/selectors';
-import { fetchAllCategories } from '../../redux/categories/categoriesSlice';
-import styles from './assets/styles/products.module.css';
-
-const fetchData = (page, pageSize, filters) => async (dispatch) => {
-    await Promise.all([
-        dispatch(fetchProducts({ page, pageSize, filters })),
-        dispatch(fetchAllCategories()),
-    ]);
-};
+} from '@/redux/productsCatalogSlice';
+import { selectProducts, selectCategories } from '@/redux/selectors';
+import styles from './products.module.css';
 
 const updateFilters = (newFilters) => async (dispatch) => {
     dispatch(setFilters(newFilters));
@@ -53,7 +45,7 @@ export const Products = () => {
     };
 
     useEffect(() => {
-        dispatch(fetchData(page, pageSize, filters));
+        dispatch(fetchProducts(page, pageSize, filters));
     }, [dispatch, page, pageSize, filters]);
 
     return (

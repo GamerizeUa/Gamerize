@@ -6,9 +6,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axios from 'axios';
 import { ProductContext } from '../Product';
-import { addFeedback } from '../../../redux/productsCatalogSlice';
-import useCheckAuth from '../../hooks/useCheckAuth';
-import StarIcon from '../../icons/StarIcon';
+import { addFeedback } from '@/redux/productsCatalogSlice';
+import useCheckAuth from '@/hooks/useCheckAuth';
+import StarIcon from '@/assets/icons/StarIcon';
 import styles from './FeedbackForm.module.css';
 
 const getAccountInformation = async () => {

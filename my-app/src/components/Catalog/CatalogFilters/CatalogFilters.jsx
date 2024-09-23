@@ -1,5 +1,5 @@
 import styles from './CatalogFilters.module.css';
-import React, { useEffect, useState,  } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DropdownFilters } from './DropdownFilters.jsx';
 import {
@@ -9,11 +9,11 @@ import {
     selectPuzzles,
     selectMindGames,
     selectLanguages,
-} from '../../../redux/selectors.js';
+} from '@/redux/selectors.js';
 import { useLocation } from 'react-router-dom';
-import { setFilters } from '../../../redux/productsCatalogSlice.js';
-import handleLinkClick from '../../../utils/ScrollToTop.js';
-import useWindowWidth from "../../hooks/useWindowWidth.js";
+import { setFilters } from '@/redux/productsCatalogSlice.js';
+import handleLinkClick from '@/utils/ScrollToTop.js';
+import useWindowWidth from '@/hooks/useWindowWidth.js';
 
 export const CatalogFilters = ({ openFiltersFunc }) => {
     const age = ['3 - 6', '6 - 9', '9 - 12', '12 - 18', '18+'];
@@ -24,14 +24,14 @@ export const CatalogFilters = ({ openFiltersFunc }) => {
     const [selectedThemes, setSelectedThemes] = useState([]);
     const [selectedPuzzles, setSelectedPuzzles] = useState([]);
     const [selectedMindGames, setSelectedMindGames] = useState([]);
-    const [priceRange, setPriceRange] = useState([{min: 0, max: 0}]);
+    const [priceRange, setPriceRange] = useState([{ min: 0, max: 0 }]);
     const [selectedAges, setSelectedAges] = useState([]);
     const [selectedPlayersAmount, setSelectedPlayersAmount] = useState([]);
     const [selectedGameTimes, setSelectedGameTimes] = useState([]);
     const [selectedLanguages, setSelectedLanguages] = useState([]);
     const [isReadyForResetting, setIsReadyForResetting] = useState(false);
     const windowWidth = useWindowWidth();
-    const {filters} = useSelector((state) => state.productsCatalog);
+    const { filters } = useSelector((state) => state.productsCatalog);
     const dispatch = useDispatch();
     const categories = useSelector(selectCategories);
     const genres = useSelector(selectGenres);
@@ -43,41 +43,55 @@ export const CatalogFilters = ({ openFiltersFunc }) => {
 
     const handlePriceInputChange = (event, type) => {
         const value = event.target.value.replace(/[^0-9]/g, '');
-        setPriceRange((prevRange) => [{
-            ...prevRange[0],
-            [type]: value ? parseInt(value, 10) : 0,
-        }]);
+        setPriceRange((prevRange) => [
+            {
+                ...prevRange[0],
+                [type]: value ? parseInt(value, 10) : 0,
+            },
+        ]);
     };
 
     useEffect(() => {
         if (isReadyForResetting) {
             getSelectedFilters();
-            setIsReadyForResetting(!isReadyForResetting)
+            setIsReadyForResetting(!isReadyForResetting);
         }
-    }, [isReadyForResetting])
+    }, [isReadyForResetting]);
 
     const processState = (stateObject) => {
         if (stateObject) {
-            Object.keys(stateObject).forEach(key => {
+            Object.keys(stateObject).forEach((key) => {
                 const setterFunction = getSetterFunction(key);
                 if (setterFunction && stateObject[key]) {
-                    setterFunction(prevState =>
-                        [...prevState, ...(Array.isArray(stateObject[key])
-                            ? stateObject[key].map(item => {
-                                if (typeof item === 'object' && item !== null) {
-                                    return item;
-                                }
-                                return item && Number(item);
-                            }).filter(item => item !== null && item !== '' && item !== undefined)
-                            : [stateObject[key]])]);
-                    setterFunction(prevState => [...new Set(prevState)]);
+                    setterFunction((prevState) => [
+                        ...prevState,
+                        ...(Array.isArray(stateObject[key])
+                            ? stateObject[key]
+                                  .map((item) => {
+                                      if (
+                                          typeof item === 'object' &&
+                                          item !== null
+                                      ) {
+                                          return item;
+                                      }
+                                      return item && Number(item);
+                                  })
+                                  .filter(
+                                      (item) =>
+                                          item !== null &&
+                                          item !== '' &&
+                                          item !== undefined
+                                  )
+                            : [stateObject[key]]),
+                    ]);
+                    setterFunction((prevState) => [...new Set(prevState)]);
                 }
             });
         }
     };
 
     useEffect(() => {
-        if(windowWidth < 1280){
+        if (windowWidth < 1280) {
             processState(filters);
             setIsReadyForResetting(true);
         }
@@ -98,7 +112,7 @@ export const CatalogFilters = ({ openFiltersFunc }) => {
                 return setSelectedGenres;
             case 'themes':
                 return setSelectedThemes;
-            case 'puzzles' :
+            case 'puzzles':
                 return setSelectedPuzzles;
             case 'mindGames':
                 return setSelectedMindGames;
@@ -126,7 +140,7 @@ export const CatalogFilters = ({ openFiltersFunc }) => {
             gameTime: selectedGameTimes,
             languages: selectedLanguages,
         };
-        dispatch(setFilters(filters))
+        dispatch(setFilters(filters));
     };
 
     const handleResetFilters = () => {
@@ -135,7 +149,7 @@ export const CatalogFilters = ({ openFiltersFunc }) => {
         setSelectedThemes([]);
         setSelectedPuzzles([]);
         setSelectedMindGames([]);
-        setPriceRange([{min: 0, max: 0}])
+        setPriceRange([{ min: 0, max: 0 }]);
         setSelectedAges([]);
         setSelectedPlayersAmount([]);
         setSelectedGameTimes([]);
@@ -148,37 +162,42 @@ export const CatalogFilters = ({ openFiltersFunc }) => {
         inputsText.forEach((element) => {
             element.value = '';
         });
-        setIsReadyForResetting(true)
+        setIsReadyForResetting(true);
     };
 
     return (
         <div className={styles.filters}>
             <p className={styles.filters_title}>Фільтри</p>
-            <DropdownFilters title={"Категорія"}
-                             categories={categories}
-                             selectedCategories={selectedCategories}
-                             setSelectedCategories={setSelectedCategories}>
-            </DropdownFilters>
-            <DropdownFilters title={"Жанри"}
-                             categories={genres}
-                             selectedCategories={selectedGenres}
-                             setSelectedCategories={setSelectedGenres}>
-            </DropdownFilters>
-            <DropdownFilters title={"Тематика"}
-                             categories={themes}
-                             selectedCategories={selectedThemes}
-                             setSelectedCategories={setSelectedThemes}>
-            </DropdownFilters>
-            <DropdownFilters title={"Пазли"}
-                             categories={puzzles}
-                             selectedCategories={selectedPuzzles}
-                             setSelectedCategories={setSelectedPuzzles}>
-            </DropdownFilters>
-            <DropdownFilters title={"Головоломки"}
-                             categories={mindGames}
-                             selectedCategories={selectedMindGames}
-                             setSelectedCategories={setSelectedMindGames}>
-            </DropdownFilters>
+            <DropdownFilters
+                title={'Категорія'}
+                categories={categories}
+                selectedCategories={selectedCategories}
+                setSelectedCategories={setSelectedCategories}
+            ></DropdownFilters>
+            <DropdownFilters
+                title={'Жанри'}
+                categories={genres}
+                selectedCategories={selectedGenres}
+                setSelectedCategories={setSelectedGenres}
+            ></DropdownFilters>
+            <DropdownFilters
+                title={'Тематика'}
+                categories={themes}
+                selectedCategories={selectedThemes}
+                setSelectedCategories={setSelectedThemes}
+            ></DropdownFilters>
+            <DropdownFilters
+                title={'Пазли'}
+                categories={puzzles}
+                selectedCategories={selectedPuzzles}
+                setSelectedCategories={setSelectedPuzzles}
+            ></DropdownFilters>
+            <DropdownFilters
+                title={'Головоломки'}
+                categories={mindGames}
+                selectedCategories={selectedMindGames}
+                setSelectedCategories={setSelectedMindGames}
+            ></DropdownFilters>
             <div className={styles.filters_price}>
                 <div className={styles.filters_subtitle}>
                     <p className={styles.filters_subtitle}>Ціна</p>
@@ -187,9 +206,12 @@ export const CatalogFilters = ({ openFiltersFunc }) => {
                     <div className={styles.price_edge}>
                         <p className={styles.price_text}>від</p>
                         <div className={styles.price_amount}>
-                            <input type="text"
-                                   placeholder="500"
-                                   onChange={(e) => handlePriceInputChange(e, 'min')}
+                            <input
+                                type="text"
+                                placeholder="500"
+                                onChange={(e) =>
+                                    handlePriceInputChange(e, 'min')
+                                }
                             />
                             <span>₴</span>
                         </div>
@@ -197,47 +219,62 @@ export const CatalogFilters = ({ openFiltersFunc }) => {
                     <div className={styles.price_edge}>
                         <p className={styles.price_text}>до</p>
                         <div className={styles.price_amount}>
-                            <input type="text"
-                                   placeholder="6000"
-                                   onChange={(e) => handlePriceInputChange(e, 'max')}/>
+                            <input
+                                type="text"
+                                placeholder="6000"
+                                onChange={(e) =>
+                                    handlePriceInputChange(e, 'max')
+                                }
+                            />
                             <span>₴</span>
                         </div>
                     </div>
                 </div>
             </div>
-            <DropdownFilters title={"Вік"}
-                             categories={age}
-                             selectedCategories={selectedAges}
-                             setSelectedCategories={setSelectedAges}>
-            </DropdownFilters>
-            <DropdownFilters title={"Кількість гравців"}
-                             categories={players}
-                             selectedCategories={selectedPlayersAmount}
-                             setSelectedCategories={setSelectedPlayersAmount}>
-            </DropdownFilters>
-            <DropdownFilters title={"Час гри"}
-                             categories={timeGame}
-                             selectedCategories={selectedGameTimes}
-                             setSelectedCategories={setSelectedGameTimes}>
-            </DropdownFilters>
-            <DropdownFilters title={"Мова"}
-                             categories={languages}
-                             selectedCategories={selectedLanguages}
-                             setSelectedCategories={setSelectedLanguages}>
-            </DropdownFilters>
+            <DropdownFilters
+                title={'Вік'}
+                categories={age}
+                selectedCategories={selectedAges}
+                setSelectedCategories={setSelectedAges}
+            ></DropdownFilters>
+            <DropdownFilters
+                title={'Кількість гравців'}
+                categories={players}
+                selectedCategories={selectedPlayersAmount}
+                setSelectedCategories={setSelectedPlayersAmount}
+            ></DropdownFilters>
+            <DropdownFilters
+                title={'Час гри'}
+                categories={timeGame}
+                selectedCategories={selectedGameTimes}
+                setSelectedCategories={setSelectedGameTimes}
+            ></DropdownFilters>
+            <DropdownFilters
+                title={'Мова'}
+                categories={languages}
+                selectedCategories={selectedLanguages}
+                setSelectedCategories={setSelectedLanguages}
+            ></DropdownFilters>
             <div className={styles.filters_buttons} onClick={handleLinkClick}>
-                <button className={styles.button_apply} type="submit" onClick={() => {
-                    getSelectedFilters()
-                    if(openFiltersFunc){
-                        openFiltersFunc(false)
-                }}}>
+                <button
+                    className={styles.button_apply}
+                    type="submit"
+                    onClick={() => {
+                        getSelectedFilters();
+                        if (openFiltersFunc) {
+                            openFiltersFunc(false);
+                        }
+                    }}
+                >
                     Застосувати
                 </button>
-                <button className={styles.button_reset} onClick={
-                    () => {
-                        handleResetFilters()
+                <button
+                    className={styles.button_reset}
+                    onClick={() => {
+                        handleResetFilters();
                     }}
-                >Скинути фільтри
+                >
+                    Скинути фільтри
                 </button>
             </div>
         </div>
