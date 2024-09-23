@@ -37,7 +37,7 @@ export const OrderForm = () => {
 
         if (currentStep === 4) {
             try {
-                await dispatch(createNewOrder()).unwrap();
+                await dispatch(createNewOrder());
 
                 dispatch(clearCart());
                 dispatch(clearDiscounts());

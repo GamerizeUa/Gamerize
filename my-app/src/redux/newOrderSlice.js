@@ -24,8 +24,8 @@ const initialState = {
         deliveryAddress: ''
     },
     comment: '',
-    paymentMethodId: '',
-    deliveryMethodId: '',
+    paymentMethodId: 0,
+    deliveryMethodId: 0,
     totalPrice: 0,
     totalDiscount: 0,
     discountCouponId: 0,
