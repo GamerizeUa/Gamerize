@@ -1,4 +1,4 @@
-import RateStars from '../RateStars/RateStars';
+import RateStars from '../RateStars/RateStars.jsx';
 import React from 'react';
 import styles from './ProductDetailedRateString.module.css';
 

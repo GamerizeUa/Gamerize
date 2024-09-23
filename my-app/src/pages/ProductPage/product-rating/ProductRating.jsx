@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { ProductContext } from '../Product.jsx';
 import RateStars from '../RateStars/RateStars.jsx';
-import ProductDetailedRateString from './ProductDetailedRateString.js';
+import ProductDetailedRateString from './ProductDetailedRateString.jsx';
 import styles from './ProductRating.module.css';
 
 const getRatingFromFeedbacks = (feedbacks) => {
