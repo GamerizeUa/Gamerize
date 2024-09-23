@@ -5,7 +5,7 @@ import styles from './CustomerInfo.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchProfileInfo } from '@/redux/profileSlice.js';
-import { setUserInfo } from '@/redux/orderSlice.js';
+import { setUserInfo } from '@/redux/newOrderSlice.js';
 import { customerSchema } from '@/validators/customerSchema';
 
 export const CustomerInfo = ({ currentStep, setCurrentStep }) => {

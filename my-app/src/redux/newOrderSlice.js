@@ -1,9 +1,22 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import axios from "axios";
+
+export const createNewOrder = createAsyncThunk(
+    "newOrder/createNewOrder",
+    async (_, thunkAPI) => {
+        try {
+            const state = thunkAPI.getState();
+            await axios.post("https://gamerize.ltd.ua/api/Order/Create", state.order);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+)
 
 const initialState = {
-    productsIds : [],
+    productIds : [],
     quantity: [],
-    user: {
+    unregisteredUser: {
         name: '',
         email: '',
         phoneNumber: '',
@@ -18,8 +31,8 @@ const initialState = {
     discountCouponId: 0,
 }
 
-const orderSlice = createSlice({
-    name: "order",
+const newOrderSlice = createSlice({
+    name: "newOrder",
     initialState,
     reducers: {
         setField: (state, action) => {
@@ -27,16 +40,16 @@ const orderSlice = createSlice({
             state[field] = value;
         },
         setUserInfo: (state, action) => {
-            Object.assign(state.user, action.payload);
+            Object.assign(state.unregisteredUser, action.payload);
         },
         setProductItem: (state, action) => {
             const { id, count } = action.payload;
-            const productIndex = state.productsIds.indexOf(id);
+            const productIndex = state.productIds.indexOf(id);
 
             if (productIndex !== -1) {
                 state.quantity[productIndex] = count;
             } else {
-                state.productsIds.push(id);
+                state.productIds.push(id);
                 state.quantity.push(count);
             }
         },
@@ -50,6 +63,6 @@ const orderSlice = createSlice({
 export const {setField, setUserInfo,
     setProductItem,
     setDiscountInfo} =
-    orderSlice.actions;
+    newOrderSlice.actions;
 
-export default orderSlice.reducer;
+export default newOrderSlice.reducer;

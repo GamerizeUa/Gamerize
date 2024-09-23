@@ -4,7 +4,7 @@ import mastercard from '@/assets/images/Mastercard.png';
 import sprite from '@/assets/icons/sprite.svg';
 import styles from './PaymentType.module.css';
 import { useDispatch } from 'react-redux';
-import { setField } from '@/redux/orderSlice.js';
+import { setField } from '@/redux/newOrderSlice.js';
 
 export const PaymentType = ({ currentStep, setCurrentStep }) => {
     const [paymentMethod, setPaymentMethod] = useState(null);

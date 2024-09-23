@@ -5,7 +5,7 @@ import { OrderCartInputs } from './OrderCartInputs';
 import sprite from '@/assets/icons/sprite.svg';
 import styles from './OrderCart.module.css';
 import { useEffect, useState } from 'react';
-import { setDiscountInfo } from '@/redux/orderSlice.js';
+import { setDiscountInfo } from '@/redux/newOrderSlice.js';
 
 export const OrderCart = () => {
     const { isEmpty, productList, total } = useSelector(selectCart);

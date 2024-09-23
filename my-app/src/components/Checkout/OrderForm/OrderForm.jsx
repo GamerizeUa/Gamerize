@@ -3,37 +3,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CustomerInfo } from '../CustomerInfo/CustomerInfo';
 import { DeliveryType } from '../DeliveryType/DeliveryType';
 import { PaymentType } from '../PaymentType/PaymentType';
-import { selectCart, selectPromoCode } from '@/redux/selectors';
+import { selectCart} from '@/redux/selectors';
 import { clearCart } from '@/redux/cartSlice';
 import { clearDiscounts } from '@/redux/discountSlice';
-import { OrderModal } from '../OrderModal/OrderModal';
 import styles from './OrderForm.module.css';
-import { setField, setProductItem } from '@/redux/orderSlice.js';
+import {createNewOrder, setField, setProductItem} from '@/redux/newOrderSlice.js';
+import {useNavigate} from "react-router-dom";
+import {assignIsDisplayedSuccessfulOrderPopUp} from "@/redux/formsDisplaying.js";
 
 export const OrderForm = () => {
     const dispatch = useDispatch();
     const { productList, total } = useSelector(selectCart);
-    const promoCode = useSelector(selectPromoCode);
     const [currentStep, setCurrentStep] = useState(1);
-    const [formData, setFormData] = useState({});
-    const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [commentText, setCommentText] = useState('');
-    const order = useSelector((state) => state.order);
-
-    const isSubmissionReady = () => {
-        if (productList.length === 0) {
-            alert(
-                'Ваш кошик порожній. Будь ласка, додайте товари перед відправкою замовлення.'
-            );
-            return false;
-        }
-        if (currentStep === 4) {
-            setIsReadyToSubmit(true);
-            return true;
-        }
-        return false;
-    };
+    const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         productList.forEach((product) => {
@@ -47,34 +31,23 @@ export const OrderForm = () => {
         dispatch(setField({ field: 'totalPrice', value: total }));
     }, [productList]);
 
-    const onSubmit = (e, data) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
-        dispatch(setField({ field: 'comment', value: commentText }));
-        // const updatedFormData = {
-        //   ...formData,
-        //   ...data,
-        //   productList,
-        //   total,
-        //   promoCode,
-        //   giftCard,
-        //   // customerId,
-        //   status: "Замовлення оформлено",
-        // };
-        // setFormData(updatedFormData);
-        // if (isReadyToSubmit) {
-        //   // //Відправка даних на бек
-        //   // console.log(updatedFormData);
-        //   // dispatch(clearCart());
-        //   // dispatch(clearDiscounts());
-        //   // reset();
-        //   // setCurrentStep("1");
-        //   // setIsReadyToSubmit(false);
-        //   // setIsModalOpen(true);
-        //
-        //   setTimeout(() => {
-        //     setIsModalOpen(false);
-        //   }, 3000);
-        // }
+        await dispatch(setField({ field: 'comment', value: commentText }));
+
+        if (currentStep === 4) {
+            try {
+                await dispatch(createNewOrder()).unwrap();
+
+                dispatch(clearCart());
+                dispatch(clearDiscounts());
+                dispatch(assignIsDisplayedSuccessfulOrderPopUp(true));
+                navigate('/');
+            } catch (error) {
+                setErrorMessage('Виникла помилка під час створення замовлення');
+            }
+
+        }
     };
 
     return (
@@ -127,10 +100,12 @@ export const OrderForm = () => {
                                     maxLength={200}
                                 />
                             </div>
+                            {productList.length === 0 && <p className={styles.submitError}>Ваш кошик порожній</p>}
+                            {errorMessage && <p className={styles.submitError}>{errorMessage}</p>}
                             <button
                                 className={styles.orderBtn}
                                 type="submit"
-                                onClick={isSubmissionReady}
+                                disabled={productList.length === 0}
                             >
                                 Оформити замовлення
                             </button>
@@ -138,7 +113,6 @@ export const OrderForm = () => {
                     )}
                 </form>
             </div>
-            {isModalOpen && <OrderModal />}
         </>
     );
 };

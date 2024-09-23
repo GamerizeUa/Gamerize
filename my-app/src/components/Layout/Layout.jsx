@@ -23,6 +23,7 @@ import {
     assignIsDisplayedLoginPopUp,
     assignIsDisplayedRegistrationPopUp,
 } from '@/redux/formsDisplaying.js';
+import {OrderModal} from "@/components/Checkout/OrderModal/OrderModal.jsx";
 
 const Layout = () => {
     const [cartOpen, setCartOpen] = useState(false);
@@ -38,6 +39,7 @@ const Layout = () => {
     );
     const [isDisplayedNewPasswordForm, setIsDisplayedNewPasswordForm] =
         useState(false);
+    const {isDisplayedSuccessfulOrderPopUp} = useSelector(state => state.formsDisplaying)
     const location = useLocation();
     const { state } = location;
     axios.defaults.withCredentials = true;
@@ -96,6 +98,7 @@ const Layout = () => {
                     }
                 />
             )}
+            {isDisplayedSuccessfulOrderPopUp && <OrderModal />}
             <main className={styles.container}>
                 <Suspense fallback={<div>Loading...</div>}>
                     <Outlet />

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styles from './DeliveryType.module.css';
 import { AddressForm } from './AddressForm';
 import { useDispatch } from 'react-redux';
-import { setField, setUserInfo } from '@/redux/orderSlice.js';
+import { setField, setUserInfo } from '@/redux/newOrderSlice.js';
 
 export const DeliveryType = ({ currentStep, setCurrentStep }) => {
     const [deliveryMethod, setDeliveryMethod] = useState(null);
