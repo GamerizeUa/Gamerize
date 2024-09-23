@@ -6,7 +6,7 @@ import { ProductDeliveryAndPayment } from '../ProductDeliveryAndPayment/ProductD
 import CartIcon from '../icons/CartIcon.jsx';
 import { ProductContext } from '../../product-page/Product.jsx';
 import { useDispatch } from 'react-redux';
-import { addToCart } from '../../../redux/cartSlice.js';
+import { addToCart } from '@/redux/cartSlice.js';
 import { Link } from 'react-router-dom';
 
 export const ProductMainInfo = ({ breadcrumbsDetails }) => {

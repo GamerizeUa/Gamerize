@@ -1,13 +1,13 @@
-import {useContext} from "react";
-import {ProductContext} from "../Product";
-import {useFeedbackPagination} from "../../../hooks/useFeedbacksPagination";
-import PaginationButtons from "../../common-components/PaginationButtons/PaginationButtons";
-import Feedback from "../Feedback/Feedback";
-import styles from "./FeedbackList.module.css";
+import { useContext } from 'react';
+import { ProductContext } from '../Product';
+import { useFeedbackPagination } from '@/hooks/useFeedbacksPagination';
+import PaginationButtons from '../../common-components/PaginationButtons/PaginationButtons';
+import Feedback from '../Feedback/Feedback';
+import styles from './FeedbackList.module.css';
 
 export default function FeedbackList() {
     const feedbacksPerPage = 3;
-    const {feedbacks: reviews} = useContext(ProductContext);
+    const { feedbacks: reviews } = useContext(ProductContext);
     const {
         currentFeedbacks: currentReviews,
         totalPages: pagesAmount,
@@ -25,10 +25,10 @@ export default function FeedbackList() {
                             index !== feedbacksPerPage - 1 &&
                             index !== currentReviews.length - 1
                                 ? styles.feedback_border
-                                : ""
+                                : ''
                         }
                     >
-                        <Feedback feedback={review}/>
+                        <Feedback feedback={review} />
                     </div>
                 );
             })}

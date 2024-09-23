@@ -1,7 +1,7 @@
 import { forwardRef, useContext } from 'react';
 import styles from './ProductGallery.module.css';
 import ArrowGalleryIcon from '../icons/ArrowGalleryIcon.jsx';
-import { useTouchHandlers } from '../../../hooks/useTouchHandlers.jsx';
+import { useTouchHandlers } from '@/hooks/useTouchHandlers.jsx';
 import { GalleryContext } from './ProductGallery.jsx';
 
 export const SliderControl = forwardRef(function SliderControl(

@@ -1,10 +1,10 @@
 import styles from './Cart.module.css';
-import sprite from '../../assets/icons/sprite.svg';
+import sprite from '@/assets/icons/sprite.svg';
 import { useDispatch } from 'react-redux';
-import { updateCartProduct, removeFromCart } from '../../redux/cartSlice';
+import { updateCartProduct, removeFromCart } from '@/redux/cartSlice';
 import { useState } from 'react';
 import CrossIcon from '../icons/CrossIcon';
-import { getImagePath } from '../../utils/getImagePath';
+import { getImagePath } from '@/utils/getImagePath';
 
 export const CartExcerpt = ({ id, photo, name, price, count }) => {
     const dispatch = useDispatch();
@@ -32,7 +32,7 @@ export const CartExcerpt = ({ id, photo, name, price, count }) => {
     return (
         <article className={styles['cart__item']}>
             <img
-                src={getImagePath(photo.path)}
+                src={getImagePath(photo?.path)}
                 width="90"
                 height="90"
                 className={styles['cart__item-img']}

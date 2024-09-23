@@ -1,11 +1,11 @@
-import {NavigationTabs} from "../../components/common-components/NavigationTabs/NavigationTabs.jsx";
-import {PersonalAccount} from "./PersonalAccount/PersonalAccount.jsx";
-import useCheckAuth from "../../components/hooks/useCheckAuth.js";
-import {useEffect} from "react";
-import {useNavigate} from "react-router-dom";
+import { NavigationTabs } from '../../components/common-components/NavigationTabs/NavigationTabs.jsx';
+import { PersonalAccount } from './PersonalAccount/PersonalAccount.jsx';
+import useCheckAuth from '../../hooks/useCheckAuth.js';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function PersonalAccountPage() {
-    const {checkAuthentication} = useCheckAuth();
+    const { checkAuthentication } = useCheckAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -13,12 +13,12 @@ export default function PersonalAccountPage() {
         if (!isAuthenticated) {
             navigate('/');
         }
-    }, [])
+    }, []);
 
     return (
         <div>
-            <NavigationTabs/>
-            <PersonalAccount/>
+            <NavigationTabs />
+            <PersonalAccount />
         </div>
     );
 }

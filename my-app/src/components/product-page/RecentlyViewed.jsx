@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { selectViewsHistory } from '../../redux/selectors';
+import { selectViewsHistory } from '@/redux/selectors';
 import ProductsCarousel from '../common-components/ProductsCarousel/ProductsCarousel';
 import { useContext } from 'react';
 import { ProductContext } from './Product';

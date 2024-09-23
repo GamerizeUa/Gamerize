@@ -1,12 +1,12 @@
-import styles from './Cart.module.css';
 import { useSelector } from 'react-redux';
-import { selectCart } from '../../redux/selectors';
-import { CartExcerpt } from './CartExcerpt';
+import { handleOverlayClick } from '@/utils/handlers';
+import { selectCart } from '@/redux/selectors';
 import { CartHeader } from './CartHeader';
 import { CartProductList } from './CartProductList';
-import { CartFooter } from './CartFooter';
+import { CartExcerpt } from './CartExcerpt';
 import { CartTotal } from './CartTotal';
-import { handleOverlayClick } from '../../utils/handlers';
+import { CartFooter } from './CartFooter';
+import styles from './Cart.module.css';
 
 const Cart = ({
     cartClose,

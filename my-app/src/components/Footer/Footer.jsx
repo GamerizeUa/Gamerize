@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { Logo } from '../Logo/Logo';
-import sprite from '../../assets/icons/sprite.svg';
+import sprite from '@/assets/icons/sprite.svg';
 import styles from './Footer.module.css';
-import handleLinkClick from '../../utils/ScrollToTop';
+import handleLinkClick from '@/utils/ScrollToTop';
 
 const Footer = () => {
     return (
