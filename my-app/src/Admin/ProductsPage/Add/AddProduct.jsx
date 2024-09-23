@@ -15,7 +15,7 @@ import { dispatchMultipleActions } from '@/utils/dispatchMultipleAtions';
 import styles from '../products.module.css';
 import { addProduct } from '@/redux/productsCatalogSlice';
 import { fetchAllCategories } from '@/redux/categories/categoriesSlice';
-import { productSchema } from '../validators/productSchema';
+import { productSchema } from '@/validators/productSchema';
 import { General } from '../FormSections/General';
 import { Organization } from '../FormSections/Organization';
 import { cn } from '@/utils/classnames';

@@ -16,7 +16,7 @@ import styles from '../products.module.css';
 import { fetchAllCategories } from '@/redux/categories/categoriesSlice';
 import { useParams } from 'react-router-dom';
 import { deleteProduct, editProduct } from '@/redux/productsCatalogSlice';
-import { productSchema } from '../validators/productSchema';
+import { productSchema } from '@/validators/productSchema';
 import { General } from '../FormSections/General';
 import { Organization } from '../FormSections/Organization';
 import { cn } from '@/utils/classnames';
