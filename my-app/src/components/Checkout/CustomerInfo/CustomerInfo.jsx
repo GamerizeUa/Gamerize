@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import sprite from '@/assets/icons/sprite.svg';
 import styles from './CustomerInfo.module.css';
@@ -7,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchProfileInfo } from '@/redux/profileSlice.js';
 import { setUserInfo } from '@/redux/orderSlice.js';
+import { customerSchema } from '@/validators/customerSchema';
 
 export const CustomerInfo = ({ currentStep, setCurrentStep }) => {
     const { profile } = useSelector((state) => state.profile);
@@ -24,34 +24,13 @@ export const CustomerInfo = ({ currentStep, setCurrentStep }) => {
         });
     }, [profile]);
 
-    const schema = yup.object().shape({
-        customerName: yup
-            .string()
-            .matches(
-                /^[a-zA-Zа-яіА-ЯІ'\-]+\s[a-zA-Zа-яіА-ЯІ'\-]+$/i,
-                "Введіть ім'я та прізвище"
-            )
-            .required("Введіть ім'я"),
-        customerPhone: yup
-            .string()
-            .matches(
-                /^\+380\d{9}$/,
-                'Введіть коректний номер телефону (+380XXXXXXXXX)'
-            )
-            .required('Введіть номер телефону'),
-        customerEmail: yup
-            .string()
-            .email('Введіть коректну електронну пошту')
-            .required('Введіть електронну пошту'),
-    });
-
     const {
         register,
         handleSubmit,
         formState: { errors, isValid },
         reset,
     } = useForm({
-        resolver: yupResolver(schema),
+        resolver: yupResolver(customerSchema),
         mode: 'onChange',
     });
 

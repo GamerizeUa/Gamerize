@@ -1,7 +1,6 @@
 import styles from '../LoginAndRegistration.module.css';
 import sprite from '@/assets/icons/sprite.svg';
-import React, { useEffect, useState } from 'react';
-import * as yup from 'yup';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -9,6 +8,7 @@ import useNoScroll from '@/hooks/useNoScroll.js';
 import { sendRequestWithLoading } from '@/utils/sendRequestWithLoading.js';
 import { assignIsDisplayedNewPasswordForm } from '@/redux/formsDisplaying.js';
 import { useDispatch } from 'react-redux';
+import { newPasswordSchema } from '@/validators/authSchema';
 
 export const NewPasswordForm = () => {
     const location = useLocation();
@@ -24,67 +24,12 @@ export const NewPasswordForm = () => {
         setEmailParam(params.get('email'));
     }, []);
 
-    const schema = emailParam
-        ? yup.object().shape({
-              email: yup
-                  .string()
-                  .required('Введіть е-пошту')
-                  .matches(
-                      /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.[a-zA-Z]+$/i,
-                      'Введіть коректну е-пошту'
-                  ),
-              password: yup
-                  .string()
-                  .required('Введіть пароль')
-                  .matches(
-                      /^(?=.*\d)(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{6,}$/,
-                      'Мінімум 6 символів, цифра, велика та мала літери, спецсимвол'
-                  ),
-              repeatPassword: yup
-                  .string()
-                  .oneOf(
-                      [yup.ref('password'), null],
-                      'Паролі повинні співпадати'
-                  )
-                  .required('Повторіть пароль'),
-          })
-        : yup.object().shape({
-              newPassword: yup
-                  .string()
-                  .required('Введіть пароль')
-                  .matches(
-                      /^(?=.*\d)(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{6,}$/,
-                      'Мінімум 6 символів, цифра, велика та мала літери, спецсимвол'
-                  )
-                  .test(
-                      'passwords-differ',
-                      'Новий пароль збігається зі старим',
-                      function (value) {
-                          return value !== this.parent.password;
-                      }
-                  ),
-              password: yup
-                  .string()
-                  .required('Введіть пароль')
-                  .matches(
-                      /^(?=.*\d)(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{6,}$/,
-                      'Мінімум 6 символів, цифра, велика та мала літери, спецсимвол'
-                  ),
-              repeatNewPassword: yup
-                  .string()
-                  .oneOf(
-                      [yup.ref('newPassword'), null],
-                      'Паролі повинні співпадати'
-                  )
-                  .required('Повторіть пароль'),
-          });
-
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm({
-        resolver: yupResolver(schema),
+        resolver: yupResolver(newPasswordSchema(emailParam)),
         mode: 'onChange',
     });
 
