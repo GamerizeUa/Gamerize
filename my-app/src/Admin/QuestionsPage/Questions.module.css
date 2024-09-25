@@ -25,7 +25,7 @@
     width: 332px;
     height: 40px;
     padding: 10px 10px 10px 17px;
-    box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
+    box-shadow: rgba(0, 0, 0, 0.05) 0 0 0 1px;
 }
 
 .questions_input input{

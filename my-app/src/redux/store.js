@@ -28,6 +28,7 @@ import {formsDisplayingReducer} from "./formsDisplaying.js";
 import {profileReducer} from "./profileSlice.js";
 import questionsReducer from './questionsSlice.js'
 import newOrderSlice from "./newOrderSlice.js";
+import ordersReducer from "./ordersSlice.js"
 
 const persistConfig = {
   key: "root",
@@ -53,7 +54,8 @@ const rootReducer = combineReducers({
   orderHistory: orderHistoryReducer,
   profile: profileReducer,
   questions: questionsReducer,
-  newOrder: newOrderSlice
+  newOrder: newOrderSlice,
+  orders: ordersReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
