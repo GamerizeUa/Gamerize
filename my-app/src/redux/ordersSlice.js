@@ -17,13 +17,27 @@ export const fetchOrders = createAsyncThunk(
     }
 )
 
+export const fetchOrdersByStatus = createAsyncThunk(
+    "orders/fetchOrdersByStatus",
+    async (statusId, thunkAPI) => {
+        try {
+            const response = await axios.get("https://gamerize.ltd.ua/api/Order/GetByStatusAllOrders",
+                {params: {statusId}});
+            return response.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+)
+
 const initialState = {
     orders: [],
     totalOrders: null,
     totalPages: null,
     currentPage: 1,
     loading: false,
-    error: null
+    error: null,
+    statusId: 0
 }
 
 const ordersSlice = createSlice({
@@ -37,6 +51,13 @@ const ordersSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchOrders.fulfilled, (state, action) => {
+                state.loading = false;
+                state.orders = action.payload.orders;
+                state.totalOrders = action.payload.totalOrders;
+                state.totalPages = action.payload.totalPages;
+                state.currentPage = action.payload.page;
+            })
+            .addCase(fetchOrdersByStatus.fulfilled, (state, action) => {
                 state.loading = false;
                 state.orders = action.payload.orders;
                 state.totalOrders = action.payload.totalOrders;

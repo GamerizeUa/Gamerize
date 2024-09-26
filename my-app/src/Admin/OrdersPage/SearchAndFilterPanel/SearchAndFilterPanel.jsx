@@ -29,14 +29,12 @@ export const SearchAndFilterPanel = () => {
     }
 
     const callbackOnClickOutside = () => {
-        if(isDisplayedCalendar){
-            setIsDisplayedCalendar(false);
-        }
+        setIsDisplayedCalendar(false);
     };
 
     useClickOutside(calendarRef, callbackOnClickOutside);
 
-    return(
+    return (
         <div className={styles.panel}>
             <div className={styles.panel_input}>
                 <svg width="16" height="16">
@@ -49,15 +47,22 @@ export const SearchAndFilterPanel = () => {
                     // onChange={(e) => setSearchTerm(e.target.value)}
                 />
             </div>
-            <div className={styles.panel_date}>
+            <div className={styles.panel_date} ref={calendarRef}>
                 <div className={styles.panel_chosenDates} onClick={displayCalendar}>
                     <svg width="18" height="20">
                         <use href={sprite + '#icon-admin-calendar'} fill="none"></use>
                     </svg>
-                    {chosenDates && <p>{chosenDates[0]} <span>—</span> {chosenDates[1]}</p>}
+                    {chosenDates && (
+                        <p>
+                            {chosenDates[0]}
+                            {chosenDates[0] !== chosenDates[1] && (
+                                <> <span>—</span> {chosenDates[1]}</>
+                            )}
+                        </p>
+                    )}
                 </div>
                 {isDisplayedCalendar &&
-                    <div ref={calendarRef}>
+                    <div>
                         <Calendar locale={'UK'}
                                   className={styles.react_calendar}
                                   onChange={setCalendarValues}

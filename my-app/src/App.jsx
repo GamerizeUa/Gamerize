@@ -25,6 +25,7 @@ import { useDispatch } from 'react-redux';
 import useCheckAdmin from './hooks/useCheckAdmin.js';
 import { QuestionAnswer } from './Admin/QuestionsPage/QuestionAnswer/QuestionAnswer.jsx';
 import { getWishListProductsIds } from './redux/wishListSlice.js';
+import {SingleOrderPage} from "@/Admin/OrdersPage/SingleOrderPage/SingleOrderPage.jsx";
 
 function App() {
     const dispatch = useDispatch();
@@ -78,6 +79,7 @@ function App() {
             >
                 <Route index element={<Orders />} />
                 <Route path="orders" element={<Orders />} />
+                <Route path="orders/:id" element={<SingleOrderPage />} />
                 <Route path="products" element={<Products />} />
                 <Route path="products/add" element={<AddProduct />} />
                 <Route

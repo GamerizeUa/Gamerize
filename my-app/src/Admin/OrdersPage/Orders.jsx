@@ -9,7 +9,7 @@ import {SearchAndFilterPanel} from "@/Admin/OrdersPage/SearchAndFilterPanel/Sear
 
 export const Orders = () => {
     const {totalOrders, totalPages, currentPage, loading} = useSelector((state) => state.orders);
-    const ordersOnPage = 9;
+    const ordersOnPage = 10;
     const dispatch = useDispatch();
 
     useEffect(() => {

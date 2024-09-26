@@ -6,7 +6,7 @@ export const createNewOrder = createAsyncThunk(
     async (_, thunkAPI) => {
         try {
             const state = thunkAPI.getState();
-            await axios.post("https://gamerize.ltd.ua/api/Order/Create", state.order);
+            await axios.post("https://gamerize.ltd.ua/api/Order/Create", state.newOrder);
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message);
         }
@@ -14,16 +14,16 @@ export const createNewOrder = createAsyncThunk(
 )
 
 const initialState = {
-    productIds : [],
+    productId : [],
     quantity: [],
     unregisteredUser: {
-        name: '',
-        email: '',
-        phoneNumber: '',
-        city: '',
-        deliveryAddress: ''
+        name: "",
+        email: "",
+        phoneNumber: "",
+        city: "",
+        deliveryAddress: ""
     },
-    comment: '',
+    comment: "",
     paymentMethodId: 0,
     deliveryMethodId: 0,
     totalPrice: 0,
@@ -44,12 +44,12 @@ const newOrderSlice = createSlice({
         },
         setProductItem: (state, action) => {
             const { id, count } = action.payload;
-            const productIndex = state.productIds.indexOf(id);
+            const productIndex = state.productId.indexOf(id);
 
             if (productIndex !== -1) {
                 state.quantity[productIndex] = count;
             } else {
-                state.productIds.push(id);
+                state.productId.push(id);
                 state.quantity.push(count);
             }
         },
