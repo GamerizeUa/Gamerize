@@ -48,7 +48,7 @@ export const OrderCart = () => {
                     </div>
                     {discountValue !== 0 && (
                         <div className={styles.priceElement}>
-                            <p>Промокод:</p>
+                            <p>Знижка {discountValue}%:</p>
                             <div className={styles.inner}>
                                 <p>-{discountAmount}</p>
                                 <span>₴</span>
