@@ -41,22 +41,22 @@ export const OrderItems = ({productsIds, quantity, discount, total}) => {
                 </tbody>
             </table>
             <div>
-                {discount && (
+                {discount !== 0 && (
                     <>
                         <div className={styles.singleOrderPage_details}>
                             <p>Сума</p>
-                            <p>{total}₴</p>
+                            <p>{total} ₴</p>
                         </div>
                         <div className={styles.singleOrderPage_details}>
                             <p>Знижка</p>
-                            <p>-{discount}₴</p>
+                            <p>-{discount} ₴</p>
                         </div>
                     </>
                 )}
                 <div className={styles.singleOrderPage_details}>
                     <p><b>Підсумок</b></p>
                     <p><b>
-                        {discount ? total - discount : total}₴
+                        {discount ? total - discount : total} ₴
                     </b></p>
                 </div>
             </div>

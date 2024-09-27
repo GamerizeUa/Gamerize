@@ -1,5 +1,4 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-
 import axios from "axios";
 
 export const fetchOrders = createAsyncThunk(
@@ -21,8 +20,10 @@ export const fetchOrdersByStatus = createAsyncThunk(
     "orders/fetchOrdersByStatus",
     async (statusId, thunkAPI) => {
         try {
+            const state = thunkAPI.getState();
+            const page = state.orders.currentPage;
             const response = await axios.get("https://gamerize.ltd.ua/api/Order/GetByStatusAllOrders",
-                {params: {statusId}});
+                {params: {statusId, page}});
             return response.data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message);
@@ -47,6 +48,9 @@ const ordersSlice = createSlice({
         setCurrentPage: (state, action) => {
             state.currentPage = action.payload;
         },
+        setStatusId: (state, action) => {
+            state.statusId = action.payload;
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -80,6 +84,6 @@ const ordersSlice = createSlice({
     }
 })
 
-export const { setCurrentPage} = ordersSlice.actions;
+export const { setCurrentPage, setStatusId} = ordersSlice.actions;
 
 export default ordersSlice.reducer;

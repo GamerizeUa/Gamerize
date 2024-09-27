@@ -1,10 +1,8 @@
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
-import {fetchOrders} from "@/redux/ordersSlice.js";
+import {useSelector} from "react-redux";
 import styles from "./OrdersTable.module.css";
 import {formatDate} from "@/utils/formatDate.js";
 import {StatusField} from "@/Admin/OrdersPage/OrdersTable/StatusField/StatusField.jsx";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 export const OrdersTable = () => {
     const {orders} = useSelector((state) => state.orders);
@@ -36,7 +34,7 @@ export const OrdersTable = () => {
                     {}
                     <td>{formatDate(new Date(order.createdAt))}</td>
                     <td>{order.paymentMethod.paymentMethodName}</td>
-                    <StatusField status={{id: 1, name: "Очікується"}}/>
+                    <StatusField status={order.status}/>
                 </tr>
             ))}
             </tbody>
