@@ -31,6 +31,36 @@ export const fetchOrdersByStatus = createAsyncThunk(
     }
 )
 
+export const fetchOrdersByFilter = createAsyncThunk(
+    "orders/fetchOrdersByFilter",
+    async (searchTerm = '', thunkAPI) => {
+        try {
+            const { orders: { statusId, startDate, endDate } } = thunkAPI.getState();
+
+            const params = {
+                ...(searchTerm && { searchTerm }),
+                ...(statusId !== 0 && { statusId }),
+                ...(startDate && { startDate }),
+                ...(endDate && { endDate })
+            };
+
+            const response = await axios.get("https://gamerize.ltd.ua/api/Order/GetOrdersWithPagination",
+                {params});
+            return response.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+)
+
+const handleFulfilled = (state, action) => {
+    state.loading = false;
+    state.orders = action.payload.orders;
+    state.totalOrders = action.payload.totalOrders;
+    state.totalPages = action.payload.totalPages;
+    state.currentPage = action.payload.page;
+};
+
 const initialState = {
     orders: [],
     totalOrders: null,
@@ -38,7 +68,9 @@ const initialState = {
     currentPage: 1,
     loading: false,
     error: null,
-    statusId: 0
+    statusId: 0,
+    startDate: null,
+    endDate: null,
 }
 
 const ordersSlice = createSlice({
@@ -50,24 +82,17 @@ const ordersSlice = createSlice({
         },
         setStatusId: (state, action) => {
             state.statusId = action.payload;
+        },
+        setDates: (state, action) => {
+            state.startDate = action.payload.startDate;
+            state.endDate = action.payload.endDate;
         }
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchOrders.fulfilled, (state, action) => {
-                state.loading = false;
-                state.orders = action.payload.orders;
-                state.totalOrders = action.payload.totalOrders;
-                state.totalPages = action.payload.totalPages;
-                state.currentPage = action.payload.page;
-            })
-            .addCase(fetchOrdersByStatus.fulfilled, (state, action) => {
-                state.loading = false;
-                state.orders = action.payload.orders;
-                state.totalOrders = action.payload.totalOrders;
-                state.totalPages = action.payload.totalPages;
-                state.currentPage = action.payload.page;
-            })
+            .addCase(fetchOrders.fulfilled, handleFulfilled)
+            .addCase(fetchOrdersByStatus.fulfilled, handleFulfilled)
+            .addCase(fetchOrdersByFilter.fulfilled, handleFulfilled)
             .addMatcher(
                 (action) => action.type.endsWith('/pending'),
                 (state) => {
@@ -77,6 +102,7 @@ const ordersSlice = createSlice({
             .addMatcher(
                 (action) => action.type.endsWith('/rejected'),
                 (state, action) => {
+                    state.orders = [];
                     state.loading = false;
                     state.error = action.payload;
                 }
@@ -84,6 +110,6 @@ const ordersSlice = createSlice({
     }
 })
 
-export const { setCurrentPage, setStatusId} = ordersSlice.actions;
+export const { setCurrentPage, setStatusId, setDates} = ordersSlice.actions;
 
 export default ordersSlice.reducer;

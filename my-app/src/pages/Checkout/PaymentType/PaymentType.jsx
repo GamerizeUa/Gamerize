@@ -33,7 +33,7 @@ export const PaymentType = ({ currentStep, setCurrentStep }) => {
         <div>
             <div
                 className={styles.selectElement}
-                onClick={() => handleRadioClick(1, 'cod')}
+                onClick={() => handleRadioClick(2, 'cod')}
             >
                 <div>
                     <div className={styles.radioInputBox}>
@@ -44,7 +44,7 @@ export const PaymentType = ({ currentStep, setCurrentStep }) => {
                                 id="cod"
                                 value="cod"
                                 name="payment"
-                                onChange={() => setPaymentMethod(1)}
+                                onChange={() => setPaymentMethod(2)}
                                 className={styles.selectorInput}
                             />
                         </div>
@@ -63,7 +63,7 @@ export const PaymentType = ({ currentStep, setCurrentStep }) => {
             </div>
             <div
                 className={styles.selectElement}
-                onClick={() => handleRadioClick(2, 'electronic')}
+                onClick={() => handleRadioClick(1, 'electronic')}
             >
                 <div className={styles.radioInputBox}>
                     <div className={styles.inputWrapper}>
@@ -73,7 +73,7 @@ export const PaymentType = ({ currentStep, setCurrentStep }) => {
                             id="electronic"
                             value="electronic"
                             name="payment"
-                            onChange={() => setPaymentMethod(2)}
+                            onChange={() => setPaymentMethod(1)}
                             className={styles.selectorInput}
                         />
                     </div>
