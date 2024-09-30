@@ -47,7 +47,7 @@ export const SingleOrderPage = () => {
                             <p>Статус замовлення</p>
                             <p>{order.status?.status}</p>
                         </div>
-                        <OrderStatus status={order.status?.status}/>
+                        <OrderStatus status={order.status?.status} getOrderDetails={getOrderDetails}/>
                     </div>
                     <div className={styles.singleOrderPage_detailsGroup}>
                         <p className={styles.singleOrderPage_title}>Інформація про адресу доставки </p>

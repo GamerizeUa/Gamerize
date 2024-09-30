@@ -53,6 +53,19 @@ export const fetchOrdersByFilter = createAsyncThunk(
     }
 )
 
+export const updateOrderStatus = createAsyncThunk(
+    "orders/updateOrderStatus",
+    async({orderId, newStatusId}, thunkAPI) => {
+        try{
+            await axios.put("https://gamerize.ltd.ua/api/Order/UpdateStatus", null,
+                {params: {orderId, newStatusId}})
+        }catch (error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+
+    }
+)
+
 const handleFulfilled = (state, action) => {
     state.loading = false;
     state.orders = action.payload.orders;
@@ -93,6 +106,9 @@ const ordersSlice = createSlice({
             .addCase(fetchOrders.fulfilled, handleFulfilled)
             .addCase(fetchOrdersByStatus.fulfilled, handleFulfilled)
             .addCase(fetchOrdersByFilter.fulfilled, handleFulfilled)
+            .addCase(updateOrderStatus.fulfilled, (state) => {
+                state.loading = false;
+            })
             .addMatcher(
                 (action) => action.type.endsWith('/pending'),
                 (state) => {

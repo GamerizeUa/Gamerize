@@ -1,24 +1,17 @@
 import styles from "@/Admin/OrdersPage/SingleOrderPage/SingleOrderPage.module.css";
 import ArrowIconGallery from "@/assets/icons/ArrowGalleryIcon.jsx";
 import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useParams} from "react-router-dom";
+import {updateOrderStatus} from "@/redux/ordersSlice.js";
 
-export const OrderStatus = ({status}) => {
+export const OrderStatus = ({status, getOrderDetails}) => {
+    const {id} = useParams();
     const [isSortingVisible, setIsSortingVisible] = useState(false);
+    const [isMessageVisible, setIsMessageVisible] = useState(false);
     const [chosenOption, setChosenOption] = useState('');
-    const statuses = [
-        {
-            statusId: 1,
-            name: 'Очікується'
-        },
-        {
-            statusId: 2,
-            name: 'Відправлено'
-        },
-        {
-            statusId: 3,
-            name: 'Доставлено'
-        }
-    ]
+    const {statusesOrder} = useSelector((state) => state.statusesOrder);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         setChosenOption(status);
@@ -29,8 +22,18 @@ export const OrderStatus = ({status}) => {
     };
 
     const handleOptionClick = (status) => {
-        setChosenOption(status.name);
+        setChosenOption(status.status);
         setIsSortingVisible(false);
+        if(status.status !== chosenOption){
+            dispatch(updateOrderStatus({orderId: id, newStatusId: status.id})).unwrap()
+                .then(() => {
+                    setIsMessageVisible(true);
+                    getOrderDetails();
+                    setTimeout(() => {
+                        setIsMessageVisible(false);
+                    }, 3000);
+                });
+        }
     };
 
     return(
@@ -51,13 +54,20 @@ export const OrderStatus = ({status}) => {
             </div>
             {isSortingVisible && (
                 <div className={styles.singleOrderPage_statusOptions}>
-                    {statuses.map((status, index) => (
+                    {statusesOrder
+                        .filter((status) => status.id !== 0)
+                        .map((status, index) => (
                         <p onClick={() => handleOptionClick(status)} key={index}>
-                            {status.name}
+                            {status.status}
                         </p>
                     ))}
                 </div>
             )}
+            {isMessageVisible &&
+                <p className={styles.singleOrderPage_text} style={{color: '#6566AC'}}>
+                    Статус замовлення змінено!
+                </p>
+            }
         </div>
     )
 }
