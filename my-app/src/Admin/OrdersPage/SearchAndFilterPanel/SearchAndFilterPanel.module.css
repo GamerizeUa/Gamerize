@@ -3,7 +3,6 @@
     justify-content: space-between;
     gap: 16px;
     padding: 33px 18px 45px 18px;
-
 }
 
 .panel_input{
@@ -64,5 +63,7 @@
     position: absolute;
     left: -305px;
     top: 0;
-    user-select: none
+    user-select: none;
+    overflow: hidden;
+    padding: 10px;
 }

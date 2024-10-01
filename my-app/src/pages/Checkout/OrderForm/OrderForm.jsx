@@ -17,6 +17,7 @@ export const OrderForm = () => {
     const [currentStep, setCurrentStep] = useState(1);
     const [commentText, setCommentText] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const order = useSelector(state => state.newOrder);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -37,6 +38,7 @@ export const OrderForm = () => {
 
         if (currentStep === 4) {
             try {
+                console.log(order)
                 await dispatch(createNewOrder());
 
                 dispatch(clearCart());

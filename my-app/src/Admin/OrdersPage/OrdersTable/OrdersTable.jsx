@@ -1,12 +1,16 @@
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
-import {fetchOrders} from "@/redux/ordersSlice.js";
+import {useSelector} from "react-redux";
 import styles from "./OrdersTable.module.css";
 import {formatDate} from "@/utils/formatDate.js";
 import {StatusField} from "@/Admin/OrdersPage/OrdersTable/StatusField/StatusField.jsx";
+import {useNavigate} from "react-router-dom";
 
 export const OrdersTable = () => {
     const {orders} = useSelector((state) => state.orders);
+    const navigate = useNavigate();
+
+    const handleRowClick = (orderId) => {
+        navigate(`/admin/orders/${orderId}`);
+    }
 
     return (
         <table className={styles.table_orders}>
@@ -21,13 +25,16 @@ export const OrdersTable = () => {
             </thead>
             <tbody>
             {orders?.map((order, index) => (
-                <tr key={index} className={styles.row_order}>
+                <tr key={index}
+                    className={styles.row_order}
+                    onClick={() => handleRowClick(order.id)}
+                >
                     <td>{order.id}</td>
                     <td>{order.unregisteredUser?.name}</td>
                     {}
                     <td>{formatDate(new Date(order.createdAt))}</td>
-                    <td>Ааааааааааа</td>
-                    <StatusField status={{id: 1, name: "Очікується"}}/>
+                    <td>{order.paymentMethod.paymentMethodName}</td>
+                    <StatusField status={order.status}/>
                 </tr>
             ))}
             </tbody>
