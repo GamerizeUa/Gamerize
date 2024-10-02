@@ -6,7 +6,7 @@ import { useState } from 'react';
 import CrossIcon from '@/assets/icons/CrossIcon';
 import { getImagePath } from '@/utils/getImagePath';
 
-export const CartExcerpt = ({ id, photo, name, price, count }) => {
+export const CartExcerpt = ({ id, images, name, price, count }) => {
     const dispatch = useDispatch();
     const [countFieldValue, setCountFieldValue] = useState(count);
 
@@ -32,7 +32,7 @@ export const CartExcerpt = ({ id, photo, name, price, count }) => {
     return (
         <article className={styles['cart__item']}>
             <img
-                src={getImagePath(photo?.path)}
+                src={images ? getImagePath(images[0].path) : ''}
                 width="90"
                 height="90"
                 className={styles['cart__item-img']}
