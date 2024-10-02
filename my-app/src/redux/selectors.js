@@ -67,4 +67,4 @@ export const selectViewsHistory = createSelector(
 );
 
 export const selectProducts = (state) => state.productsCatalog;
-export const ordersByUser = (state) => state.orderHistory.orders;
+export const selectOrdersByUser = (state) => state.orderHistory;
