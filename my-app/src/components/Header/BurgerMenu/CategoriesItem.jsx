@@ -6,7 +6,7 @@ import {assignIsDisplayedBurgerMenu} from "@/redux/formsDisplaying.js";
 import {useDispatch} from "react-redux";
 
 
-export const CategoriesItem = ({categories, title}) => {
+export const CategoriesItem = ({categories, title, stateName}) => {
     const [isCategory, setIsCategory] = useState(false);
     const dispatch = useDispatch();
 
@@ -44,7 +44,7 @@ export const CategoriesItem = ({categories, title}) => {
                                 <Link
                                     to="/catalog"
                                     state={{
-                                        categories: category.name,
+                                        [stateName]: [category.id],
                                     }}
                                     className={styles.categoryListLink}
                                     onClick={() => closeModal()}

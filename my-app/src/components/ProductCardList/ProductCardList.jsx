@@ -1,27 +1,22 @@
-import { useEffect, useState } from "react";
 import styles from "./ProductCardList.module.css";
 import ProductCard from "@/components/ProductCard/ProductCard.jsx";
+import useWindowWidth from "@/hooks/useWindowWidth.js";
+import {defaultProductCardConfig} from "@/configs/productCardConfig.js";
 
 function ProductCardList({
-    confingarationObj: {
+    confingarationObj = defaultProductCardConfig,
+    productCardList = [],
+    isWishList = false,
+}) {
+    const {
         oneLineDesktopCardsAmount,
         oneLineTabletCardsAmount,
         oneLineMobileCardsAmount,
         columnGapDesktopPercent,
         columnGapTabletPercent,
         columnGapMobilePercent,
-    } = {
-        oneLineDesktopCardsAmount: 4,
-        oneLineTabletCardsAmount: 3,
-        oneLineMobileCardsAmount: 2,
-        columnGapDesktopPercent: 1.8,
-        columnGapTabletPercent: 3.7,
-        columnGapMobilePercent: 5.5,
-    },
-    productCardList = [],
-    isWishList = false,
-}) {
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    } = confingarationObj;
+    const windowWidth = useWindowWidth();
     const oneLineCardsAmount =
         windowWidth < 744
             ? oneLineMobileCardsAmount
@@ -38,17 +33,6 @@ function ProductCardList({
     const cardPercentWidth =
         (100 - columnGapPercent * (oneLineCardsAmount - 1)) /
         oneLineCardsAmount;
-
-    const handleChangedSize = () => {
-        setWindowWidth(window.innerWidth);
-    };
-
-    useEffect(() => {
-        window.addEventListener("resize", handleChangedSize);
-        return () => {
-            window.removeEventListener("resize", handleChangedSize);
-        };
-    }, []);
 
     return (
         <div

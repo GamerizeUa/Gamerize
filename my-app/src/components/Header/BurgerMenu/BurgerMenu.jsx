@@ -112,11 +112,11 @@ const BurgerMenu = () => {
                     </li>
                 </ul>
                 <ul className={styles.burgerMenuList}>
-                    <CategoriesItem categories={categories} title={'Настільні ігри'} />
-                    <CategoriesItem categories={genres} title={'Жанри'} />
-                    <CategoriesItem categories={themes} title={'Тематика'} />
-                    <CategoriesItem categories={puzzles} title={'Пазли'} />
-                    <CategoriesItem categories={mindGames} title={'Головоломки'} />
+                    <CategoriesItem categories={categories} title={'Настільні ігри'} stateName={'categories'} />
+                    <CategoriesItem categories={genres} title={'Жанри'} stateName={'genres'}/>
+                    <CategoriesItem categories={themes} title={'Тематика'} stateName={'themes'} />
+                    <CategoriesItem categories={puzzles} title={'Пазли'} stateName={'puzzles'}/>
+                    <CategoriesItem categories={mindGames} title={'Головоломки'} stateName={'mindGames'}/>
                 </ul>
                 <ul className={styles.menuInfoList}>
                     <li className={styles.menuInfoListItem}>
