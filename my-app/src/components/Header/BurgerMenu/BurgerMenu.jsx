@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import useClickAccount from '@/hooks/useClickAccount.js';
@@ -20,13 +20,9 @@ import styles from './BurgerMenu.module.css';
 import { Logout } from '../../Logout/Logout.jsx';
 import {assignIsDisplayedBurgerMenu, assignIsDisplayedLoginPopUp} from '@/redux/formsDisplaying.js';
 import useNoScroll from "@/hooks/useNoScroll.js";
+import {CategoriesItem} from "@/components/Header/BurgerMenu/CategoriesItem.jsx";
 
 const BurgerMenu = () => {
-    const [isCategory, setIsCategory] = useState(false);
-    const [isGenre, setIsGenre] = useState(false);
-    const [isTheme, setIsTheme] = useState(false);
-    const [isPuzzle, setIsPuzzle] = useState(false);
-    const [isMindGames, setIsMindGames] = useState(false);
     const dispatch = useDispatch();
     useNoScroll(true);
 
@@ -45,10 +41,6 @@ const BurgerMenu = () => {
     const handleCloseBurgerMenu = () => {
         dispatch(assignIsDisplayedLoginPopUp(false));
         burgerMenuClose();
-    };
-
-    const toggleClick = (setter) => {
-        setter((prevState) => !prevState);
     };
 
     useEffect(() => {
@@ -120,205 +112,13 @@ const BurgerMenu = () => {
                     </li>
                 </ul>
                 <ul className={styles.burgerMenuList}>
-                    <li
-                        className={styles.burgerMenuListItem}
-                        onClick={() => toggleClick(setIsCategory)}
-                    >
-                        <p>Настільні ігри</p>
-                        <svg width="24" height="24">
-                            <use
-                                href={
-                                    isCategory
-                                        ? sprite + `#icon-chevron-up`
-                                        : sprite + `#icon-chevron-right`
-                                }
-                                fill="white"
-                                stroke="#AAC4FF"
-                            ></use>
-                        </svg>
-                    </li>
-                    <li>
-                        {isCategory && (
-                            <ul className={styles.categoryList}>
-                                {categories.map((category) => (
-                                    <li
-                                        key={category.id}
-                                        className={styles.categoryListItem}
-                                    >
-                                        <Link
-                                            to="/catalog"
-                                            state={{
-                                                categories: category.name,
-                                            }}
-                                            className={styles.categoryListLink}
-                                            onClick={() => burgerMenuClose()}
-                                        >
-                                            <p>{category.name}</p>
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </li>
-                    <li
-                        className={styles.burgerMenuListItem}
-                        onClick={() => toggleClick(setIsGenre)}
-                    >
-                        <p>Жанри</p>
-                        <svg width="24" height="24">
-                            <use
-                                href={
-                                    isGenre
-                                        ? sprite + `#icon-chevron-up`
-                                        : sprite + `#icon-chevron-right`
-                                }
-                                fill="white"
-                                stroke="#AAC4FF"
-                            ></use>
-                        </svg>
-                    </li>
-                    <li>
-                        {isGenre && (
-                            <ul className={styles.categoryList}>
-                                {genres.map((genre) => (
-                                    <li
-                                        key={genre.id}
-                                        className={styles.categoryListItem}
-                                    >
-                                        <Link
-                                            to="/catalog"
-                                            state={{ genres: genre.name }}
-                                            className={styles.categoryListLink}
-                                            onClick={() => burgerMenuClose()}
-                                        >
-                                            <p>{genre.name}</p>
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </li>
-                    <li
-                        className={styles.burgerMenuListItem}
-                        onClick={() => toggleClick(setIsTheme)}
-                    >
-                        <p>Тематика</p>
-                        <svg width="24" height="24">
-                            <use
-                                href={
-                                    isTheme
-                                        ? sprite + `#icon-chevron-up`
-                                        : sprite + `#icon-chevron-right`
-                                }
-                                fill="white"
-                                stroke="#AAC4FF"
-                            ></use>
-                        </svg>
-                    </li>
-                    <li>
-                        {isTheme && (
-                            <ul className={styles.categoryList}>
-                                {themes.map((theme) => (
-                                    <li
-                                        key={theme.id}
-                                        className={styles.categoryListItem}
-                                    >
-                                        <Link
-                                            to="/catalog"
-                                            state={{ themes: theme.name }}
-                                            className={styles.categoryListLink}
-                                            onClick={() => burgerMenuClose()}
-                                        >
-                                            <p>{theme.name}</p>
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </li>
-                    <li
-                        className={styles.burgerMenuListItem}
-                        onClick={() => toggleClick(setIsPuzzle)}
-                    >
-                        <p>Пазли</p>
-                        <svg width="24" height="24">
-                            <use
-                                href={
-                                    isPuzzle
-                                        ? sprite + `#icon-chevron-up`
-                                        : sprite + `#icon-chevron-right`
-                                }
-                                fill="white"
-                                stroke="#AAC4FF"
-                            ></use>
-                        </svg>
-                    </li>
-                    <li>
-                        {isPuzzle && (
-                            <ul className={styles.categoryList}>
-                                {puzzles.map((puzzle) => (
-                                    <li
-                                        key={puzzle.id}
-                                        className={styles.categoryListItem}
-                                    >
-                                        <Link
-                                            to="/catalog"
-                                            state={{ puzzles: puzzle.name }}
-                                            className={styles.categoryListLink}
-                                            onClick={() => burgerMenuClose()}
-                                        >
-                                            <p>{puzzle.name}</p>
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </li>
-                    <li
-                        className={styles.burgerMenuListItem}
-                        onClick={() => toggleClick(setIsMindGames)}
-                    >
-                        <p>Головоломки</p>
-                        <svg width="24" height="24">
-                            <use
-                                href={
-                                    isMindGames
-                                        ? sprite + `#icon-chevron-up`
-                                        : sprite + `#icon-chevron-right`
-                                }
-                                fill="white"
-                                stroke="#AAC4FF"
-                            ></use>
-                        </svg>
-                    </li>
-                    <li>
-                        {isMindGames && (
-                            <ul className={styles.categoryList}>
-                                {mindGames.map((game) => (
-                                    <li
-                                        key={game.id}
-                                        className={styles.categoryListItem}
-                                    >
-                                        <Link
-                                            to="/catalog"
-                                            state={{ mindGames: game.name }}
-                                            className={styles.categoryListLink}
-                                            onClick={() => burgerMenuClose()}
-                                        >
-                                            <p>{game.name}</p>
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </li>
+                    <CategoriesItem categories={categories} title={'Настільні ігри'} />
+                    <CategoriesItem categories={genres} title={'Жанри'} />
+                    <CategoriesItem categories={themes} title={'Тематика'} />
+                    <CategoriesItem categories={puzzles} title={'Пазли'} />
+                    <CategoriesItem categories={mindGames} title={'Головоломки'} />
                 </ul>
                 <ul className={styles.menuInfoList}>
-                    <li className={styles.menuInfoListItem}>
-                        <Link className={styles.menuInfoListLink}>
-                            Контактна інформація
-                        </Link>
-                    </li>
                     <li className={styles.menuInfoListItem}>
                         <Link
                             className={styles.menuInfoListLink}
