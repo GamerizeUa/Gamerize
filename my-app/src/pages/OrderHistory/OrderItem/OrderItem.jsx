@@ -1,8 +1,8 @@
-import styles from './OrderItem.module.css';
-
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { OrderProductPreview } from './OrderProductPreview';
+import { OrderDetails } from '../OrderDetails.jsx';
+import styles from './OrderItem.module.css';
 
 const getStatus = (status, deliveryDate) => {
     let verboseStatus;
@@ -51,8 +51,17 @@ const fetchProducts = async (identifiers) => {
     }
 };
 
-const OrderItem = ({ status: { status }, closedAt, productId, totalPrice }) => {
+const OrderItem = (props) => {
+    const {
+        status: { status },
+        closedAt,
+        productId,
+        totalPrice,
+    } = props;
     const [products, setProducts] = useState([]);
+    const dialogRef = useRef(null);
+
+    const handleOpen = () => dialogRef.current.showModal();
 
     useEffect(() => {
         fetchProducts(productId).then((data) => {
@@ -63,26 +72,35 @@ const OrderItem = ({ status: { status }, closedAt, productId, totalPrice }) => {
     if (!products || products.length === 0) return null;
 
     return (
-        <li className={`${styles.orderItem} ${getStatusBasedStyles(status)}`}>
-            <p
-                className={`${styles.statusText} ${getStatusBasedStyles(
+        <>
+            <li
+                className={`${styles.orderItem} ${getStatusBasedStyles(
                     status
                 )}`}
             >
-                {getStatus(status, closedAt)}
-            </p>
-            <ul className={styles.productList}>
-                {products.map((product) => (
-                    <OrderProductPreview {...product} key={product.id} />
-                ))}
-            </ul>
+                <p
+                    className={`${styles.statusText} ${getStatusBasedStyles(
+                        status
+                    )}`}
+                >
+                    {getStatus(status, closedAt)}
+                </p>
+                <ul className={styles.productList}>
+                    {products.map((product) => (
+                        <OrderProductPreview {...product} key={product.id} />
+                    ))}
+                </ul>
 
-            <p className={styles.orderSum}>Сума замовлення: {totalPrice} ₴</p>
+                <p className={styles.orderSum}>
+                    Сума замовлення: {totalPrice} ₴
+                </p>
 
-            <button className={styles.orderDetailsBtn}>
-                Деталі замовлення
-            </button>
-        </li>
+                <button className={styles.orderDetailsBtn} onClick={handleOpen}>
+                    Деталі замовлення
+                </button>
+            </li>
+            <OrderDetails order={props} products={products} ref={dialogRef} />
+        </>
     );
 };
 
