@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import useClickAccount from '@/hooks/useClickAccount.js';
@@ -18,15 +18,21 @@ import sprite from '@/assets/icons/sprite.svg';
 import HeartIcon from '@/assets/icons/HeartIcon';
 import styles from './BurgerMenu.module.css';
 import { Logout } from '../../Logout/Logout.jsx';
-import { assignIsDisplayedLoginPopUp } from '@/redux/formsDisplaying.js';
+import {assignIsDisplayedBurgerMenu, assignIsDisplayedLoginPopUp} from '@/redux/formsDisplaying.js';
+import useNoScroll from "@/hooks/useNoScroll.js";
 
-const BurgerMenu = ({ burgerMenuClose }) => {
+const BurgerMenu = () => {
     const [isCategory, setIsCategory] = useState(false);
     const [isGenre, setIsGenre] = useState(false);
     const [isTheme, setIsTheme] = useState(false);
     const [isPuzzle, setIsPuzzle] = useState(false);
     const [isMindGames, setIsMindGames] = useState(false);
     const dispatch = useDispatch();
+    useNoScroll(true);
+
+    const burgerMenuClose = () => {
+        dispatch(assignIsDisplayedBurgerMenu(false))
+    }
 
     const handleOverlayClick = (event) => {
         if (event.currentTarget === event.target) {

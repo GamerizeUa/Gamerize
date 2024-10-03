@@ -6,28 +6,20 @@ import { Logo } from '../Logo/Logo';
 import { Link } from 'react-router-dom';
 import useClickAccount from '@/hooks/useClickAccount.js';
 import sprite from '@/assets/icons/sprite.svg';
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { selectCartProductsCount } from '@/redux/selectors.js';
 import useCheckAuth from '@/hooks/useCheckAuth.js';
+import {assignIsDisplayedBurgerMenu, assignIsDisplayedCart} from "@/redux/formsDisplaying.js";
+import useWindowWidth from "@/hooks/useWindowWidth.js";
 
-const Header = ({ openCart, openBurgerMenu }) => {
+const Header = () => {
     const [accountInformation, setAccountInformation] = useState(false);
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const handleClickAccount = useClickAccount();
     const cartProductsCount = useSelector(selectCartProductsCount);
     const { checkAuthentication } = useCheckAuth();
     const isAuthenticated = checkAuthentication();
-
-    const handleChangedSize = () => {
-        setWindowWidth(window.innerWidth);
-    };
-
-    useEffect(() => {
-        window.addEventListener('resize', handleChangedSize);
-        return () => {
-            window.removeEventListener('resize', handleChangedSize);
-        };
-    }, []);
+    const dispatch = useDispatch();
+    const windowWidth = useWindowWidth();
 
     return (
         <section className={styles.headerSection}>
@@ -37,7 +29,7 @@ const Header = ({ openCart, openBurgerMenu }) => {
                         <div
                             className={styles.burgerMenu}
                             onClick={() => {
-                                openBurgerMenu();
+                                dispatch(assignIsDisplayedBurgerMenu(true))
                             }}
                         >
                             <svg width={24} height={24}>
@@ -71,7 +63,7 @@ const Header = ({ openCart, openBurgerMenu }) => {
                         )}
                         <li
                             onClick={() => {
-                                openCart();
+                                dispatch(assignIsDisplayedCart(true))
                             }}
                         >
                             <button

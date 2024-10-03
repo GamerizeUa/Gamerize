@@ -7,6 +7,8 @@ const initialState = {
     isDisplayedNewPasswordForm: false,
     isDisplayedDeleteAccountPopUp: false,
     isDisplayedSuccessfulOrderPopUp: false,
+    isDisplayedCart: false,
+    isDisplayedBurgerMenu: false
 };
 
 const formsDisplaying = createAppSlice({
@@ -30,6 +32,12 @@ const formsDisplaying = createAppSlice({
         },
         assignIsDisplayedSuccessfulOrderPopUp: (state, action) => {
             state.isDisplayedSuccessfulOrderPopUp = action.payload;
+        },
+        assignIsDisplayedCart: (state, action) => {
+            state.isDisplayedCart = action.payload;
+        },
+        assignIsDisplayedBurgerMenu: (state, action) => {
+            state.isDisplayedBurgerMenu = action.payload;
         }
     }),
 });
@@ -41,5 +49,7 @@ export const {
     assignIsDisplayedEmailForm,
     assignIsDisplayedNewPasswordForm,
     assignIsDisplayedDeleteAccountPopUp,
-    assignIsDisplayedSuccessfulOrderPopUp
+    assignIsDisplayedSuccessfulOrderPopUp,
+    assignIsDisplayedCart,
+    assignIsDisplayedBurgerMenu
 } = formsDisplaying.actions;
