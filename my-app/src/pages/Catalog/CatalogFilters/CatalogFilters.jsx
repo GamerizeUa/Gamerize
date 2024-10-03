@@ -14,6 +14,7 @@ import { useLocation } from 'react-router-dom';
 import { setFilters } from '@/redux/productsCatalogSlice.js';
 import handleLinkClick from '@/utils/ScrollToTop.js';
 import useWindowWidth from '@/hooks/useWindowWidth.js';
+import {PriceFilter} from "@/pages/Catalog/CatalogFilters/PriceFilter.jsx";
 
 export const CatalogFilters = ({ openFiltersFunc }) => {
     const age = ['3 - 6', '6 - 9', '9 - 12', '12 - 18', '18+'];
@@ -40,16 +41,6 @@ export const CatalogFilters = ({ openFiltersFunc }) => {
     const mindGames = useSelector(selectMindGames);
     const languages = useSelector(selectLanguages);
     const location = useLocation();
-
-    const handlePriceInputChange = (event, type) => {
-        const value = event.target.value.replace(/[^0-9]/g, '');
-        setPriceRange((prevRange) => [
-            {
-                ...prevRange[0],
-                [type]: value ? parseInt(value, 10) : 0,
-            },
-        ]);
-    };
 
     useEffect(() => {
         if (isReadyForResetting) {
@@ -198,39 +189,7 @@ export const CatalogFilters = ({ openFiltersFunc }) => {
                 selectedCategories={selectedMindGames}
                 setSelectedCategories={setSelectedMindGames}
             ></DropdownFilters>
-            <div className={styles.filters_price}>
-                <div className={styles.filters_subtitle}>
-                    <p className={styles.filters_subtitle}>Ціна</p>
-                </div>
-                <div className={styles.price_edges}>
-                    <div className={styles.price_edge}>
-                        <p className={styles.price_text}>від</p>
-                        <div className={styles.price_amount}>
-                            <input
-                                type="text"
-                                placeholder="500"
-                                onChange={(e) =>
-                                    handlePriceInputChange(e, 'min')
-                                }
-                            />
-                            <span>₴</span>
-                        </div>
-                    </div>
-                    <div className={styles.price_edge}>
-                        <p className={styles.price_text}>до</p>
-                        <div className={styles.price_amount}>
-                            <input
-                                type="text"
-                                placeholder="6000"
-                                onChange={(e) =>
-                                    handlePriceInputChange(e, 'max')
-                                }
-                            />
-                            <span>₴</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <PriceFilter setPriceRange={setPriceRange}/>
             <DropdownFilters
                 title={'Вік'}
                 categories={age}

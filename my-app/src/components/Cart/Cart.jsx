@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { handleOverlayClick } from '@/utils/handlers';
 import { selectCart } from '@/redux/selectors';
 import { CartHeader } from './CartHeader';
@@ -7,15 +7,22 @@ import { CartExcerpt } from './CartExcerpt';
 import { CartTotal } from './CartTotal';
 import { CartFooter } from './CartFooter';
 import styles from './Cart.module.css';
+import useNoScroll from "@/hooks/useNoScroll.js";
+import {assignIsDisplayedCart} from "@/redux/formsDisplaying.js";
 
 const Cart = ({
-    cartClose,
     headerTitle = 'Кошик',
     emptyMessage = 'Ваш кошик порожній',
     totalLabel = 'Сума:',
     btnLabel = 'Замовити',
 }) => {
     const { isEmpty, productList, total } = useSelector(selectCart);
+    useNoScroll(true);
+    const dispatch = useDispatch();
+
+    const cartClose = () => {
+        dispatch(assignIsDisplayedCart(false));
+    }
 
     return (
         <div

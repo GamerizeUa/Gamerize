@@ -32,9 +32,11 @@ function WishList() {
 
     useEffect(() => {
         window.scrollTo({
-            top: 100,
+            top: 0,
+            behavior: "smooth"
         });
     }, [page]);
+
     useEffect(() => {
         dispatch(getWishListProducts({ page, pageSize }));
     }, [page, productsIds]);

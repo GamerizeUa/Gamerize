@@ -24,7 +24,7 @@ export const CatalogSorting = ({ setChosenDisplaying }) => {
     };
 
     useEffect(() => {
-        setChosenDisplaying((prevConfig) => ({ ...prevConfig, ...isActive }));
+        isActive.displayingThree ? setChosenDisplaying(false) : setChosenDisplaying(true)
     }, [isActive]);
 
     const handleClickSorting = () => {

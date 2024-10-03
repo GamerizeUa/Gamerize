@@ -12,22 +12,15 @@ import { Registration } from '../LoginAndRegistration/Registration.jsx';
 import { EmailForm } from '../LoginAndRegistration/ForgotPassword/EmailForm.jsx';
 import { NewPasswordForm } from '../LoginAndRegistration/ForgotPassword/ NewPasswordForm.jsx';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
     selectIsDisplayedEmailForm,
     selectIsDisplayedLoginPopUp,
     selectIsDisplayedRegistrationPopUp,
 } from '@/redux/selectors.js';
-import {
-    assignIsDisplayedEmailForm,
-    assignIsDisplayedLoginPopUp,
-    assignIsDisplayedRegistrationPopUp,
-} from '@/redux/formsDisplaying.js';
 import {OrderModal} from "@/pages/Checkout/OrderModal/OrderModal.jsx";
 
 const Layout = () => {
-    const [cartOpen, setCartOpen] = useState(false);
-    const [burgerMenuOpen, setBurgerMenuOpen] = useState(false);
     const isDisplayedLoginPopUp = useSelector((state) =>
         selectIsDisplayedLoginPopUp(state)
     );
@@ -39,21 +32,14 @@ const Layout = () => {
     );
     const [isDisplayedNewPasswordForm, setIsDisplayedNewPasswordForm] =
         useState(false);
-    const {isDisplayedSuccessfulOrderPopUp} = useSelector(state => state.formsDisplaying)
+    const {isDisplayedSuccessfulOrderPopUp,
+        isDisplayedCart,
+        isDisplayedBurgerMenu
+    }
+        = useSelector(state => state.formsDisplaying)
     const location = useLocation();
     const { state } = location;
     axios.defaults.withCredentials = true;
-
-    useEffect(() => {
-        if (cartOpen || burgerMenuOpen) {
-            document.body.classList.add('no-scroll');
-        } else {
-            document.body.classList.remove('no-scroll');
-        }
-        return () => {
-            document.body.classList.remove('no-scroll');
-        };
-    }, [cartOpen, burgerMenuOpen]);
 
     useEffect(() => {
         location.pathname.includes('/reset-password')
@@ -61,30 +47,14 @@ const Layout = () => {
             : setIsDisplayedNewPasswordForm(false);
     }, []);
 
-    function openCart() {
-        setCartOpen(true);
-    }
-
-    function cartClose() {
-        setCartOpen(false);
-    }
-
-    function openBurgerMenu() {
-        setBurgerMenuOpen(true);
-    }
-
-    function burgerMenuClose() {
-        setBurgerMenuOpen(false);
-    }
-
     return (
         <div className={styles.wrapper}>
             <div className={styles.headerWrapper}>
-                <Header openCart={openCart} openBurgerMenu={openBurgerMenu} />
+                <Header />
                 <CategoryHeader />
             </div>
-            {burgerMenuOpen && <BurgerMenu burgerMenuClose={burgerMenuClose} />}
-            {cartOpen && <Cart cartClose={cartClose} />}
+            {isDisplayedBurgerMenu && <BurgerMenu />}
+            {isDisplayedCart && <Cart />}
             {isDisplayedLoginPopUp && !isDisplayedRegistrationPopUp && (
                 <Login />
             )}

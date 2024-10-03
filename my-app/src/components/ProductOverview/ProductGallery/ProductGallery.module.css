@@ -115,7 +115,8 @@
     overflow: hidden;
 
     @media screen and (width >= 1280px) {
-        justify-content: space-evenly;
+        justify-content: flex-start;
+        gap: 15px;
     }
 }
 
