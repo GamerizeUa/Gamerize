@@ -37,7 +37,6 @@ const Catalog = () => {
             } else {
                 await dispatch(setFilters(location.state));
             }
-            console.log('AAAA')
             await setIsReadyForResetting(true);
         };
 
