@@ -31,9 +31,11 @@ export default function ProductsCarousel({
 
     useEffect(() => {
         setWindowWidth(document.documentElement.clientWidth);
-        window.addEventListener('resize', function () {
+        function handleResize () {
             setWindowWidth(document.documentElement.clientWidth); // !! in future it can be proceeded, for example, in Layout for global redux state
-        });
+        }
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
     }, []);
 
     // There are carousel motion functions,when arrow buttons are clicked, below
