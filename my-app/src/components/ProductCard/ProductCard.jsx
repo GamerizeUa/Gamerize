@@ -1,41 +1,39 @@
-import styles from './ProductCard.module.css';
-import { Link } from 'react-router-dom';
-import HeartIcon from '@/assets/icons/HeartIcon.jsx';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-    selectIsInCart,
-    selectWishListAddRemoveStatus,
-    selectWishListProductsIdList,
-} from '@/redux/selectors.js';
-import { addToWishList, removeOneFromWishList } from '@/redux/wishListSlice.js';
-import sprite from '@/assets/icons/sprite.svg';
-import { addToCart, updateCartProduct } from '@/redux/cartSlice.js';
-import { getImagePath } from '@/utils/getImagePath.js';
-import useCheckAuth from '@/hooks/useCheckAuth.js';
-import { assignIsDisplayedLoginPopUp } from '@/redux/formsDisplaying.js';
+import styles from "./ProductCard.module.css";
+import {Link} from "react-router-dom";
+import HeartIcon from "@/assets/icons/HeartIcon.jsx";
+import {useDispatch, useSelector} from "react-redux";
+import {selectIsInCart, selectWishListAddRemoveStatus, selectWishListProductsIdList,} from "@/redux/selectors.js";
+import {addToWishList, removeOneFromWishList} from "@/redux/wishListSlice.js";
+import sprite from "@/assets/icons/sprite.svg";
+import {addToCart, updateCartProduct} from "@/redux/cartSlice.js";
+import {getImagePath} from "@/utils/getImagePath.js";
+import useCheckAuth from "@/hooks/useCheckAuth.js";
+import {assignIsDisplayedLoginPopUp} from "@/redux/formsDisplaying.js";
 
 export default function ProductCard({
-    configurationObject: { isDiscount, isWishList } = {
-        isDiscount: false,
-        isWishList: false,
-    },
-    product: {
-        id,
-        name,
-        minPlayers,
-        maxPlayers,
-        minAge,
-        price,
-        newPrice,
-        minGameTimeMinutes,
-        maxGameTimeMinutes,
-        images,
-    },
-}) {
-    let discount = 0;
-    if (newPrice) {
+                                        configurationObject: {isDiscount, isWishList} = {
+                                            isDiscount: false,
+                                            isWishList: false,
+                                        },
+                                        product: {
+                                            id,
+                                            name,
+                                            minPlayers,
+                                            maxPlayers,
+                                            minAge,
+                                            price,
+                                            minGameTimeMinutes,
+                                            maxGameTimeMinutes,
+                                            images,
+                                            discounts
+                                        },
+                                    }) {
+    let discount = discounts[0]?.currentDiscount;
+    let newPrice = 0;
+    if (discount) {
         isDiscount = true;
-        discount = Math.floor((1 - newPrice / price) * 100);
+        newPrice = price * (1 - discount);
+        discount *= 100;
     }
     const dispatch = useDispatch();
     const photo = images && images[0];
@@ -43,11 +41,11 @@ export default function ProductCard({
     const isWished = wishListProductsIdList.includes(id);
     const wishListAddRemoveStatus = useSelector(selectWishListAddRemoveStatus);
     const isInCart = useSelector((state) => selectIsInCart(state, id));
-    const { checkAuthentication } = useCheckAuth();
+    const {checkAuthentication} = useCheckAuth();
     const isAuthenticated = checkAuthentication();
 
     const wishIconHandleOnClick = async () => {
-        if (wishListAddRemoveStatus === 'loading') {
+        if (wishListAddRemoveStatus === "loading") {
             return;
         }
         if (!isAuthenticated) {
@@ -63,10 +61,10 @@ export default function ProductCard({
         }
     };
     const handleAddToCart = () => {
-        dispatch(addToCart({ id, name, price, photo, count: 1 }));
+        dispatch(addToCart({id, name, price, photo, count: 1}));
     };
     const handleUpdateCount = () => {
-        dispatch(updateCartProduct({ id, modifier: 1 }));
+        dispatch(updateCartProduct({id, modifier: 1}));
     };
 
     return (
@@ -83,7 +81,7 @@ export default function ProductCard({
                                 viewBox="0 0 57 55"
                                 fill="none"
                             >
-                                <use href={sprite + '#icon-discount'}></use>
+                                <use href={sprite + "#icon-discount"}></use>
                             </svg>
                             <p>{`-${discount}%`}</p>
                         </div>
@@ -98,15 +96,15 @@ export default function ProductCard({
                             isWishList ? (
                                 <svg>
                                     <use
-                                        href={sprite + '#icon-cross'}
+                                        href={sprite + "#icon-cross"}
                                         stroke="black"
                                     />
                                 </svg>
                             ) : (
-                                <HeartIcon isFilled />
+                                <HeartIcon isFilled/>
                             )
                         ) : (
-                            <HeartIcon strokeColor="#AAC4FF" />
+                            <HeartIcon strokeColor="#AAC4FF"/>
                         )}
                     </div>
                 </div>
@@ -135,11 +133,11 @@ export default function ProductCard({
                 <div className={styles.prices}>
                     {isDiscount && (
                         <p
-                            className={styles.price + ' ' + styles.old_price}
+                            className={styles.price + " " + styles.old_price}
                         >{`${price}₴`}</p>
                     )}
                     <p
-                        className={styles.price + ' ' + styles.current_price}
+                        className={styles.price + " " + styles.current_price}
                     >{`${isDiscount ? newPrice : price}₴`}</p>
                 </div>
 
