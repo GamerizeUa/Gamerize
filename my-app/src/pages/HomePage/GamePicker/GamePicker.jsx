@@ -26,10 +26,12 @@ export default function GamePicker() {
 
     useEffect(() => {
         setWindowWidth(document.documentElement.clientWidth);
-        window.addEventListener('resize', function () {
+        function handleResize() {
             setWindowWidth(document.documentElement.clientWidth); // !! in future it can be proceeded, for example, in Layout for global redux state
-        });
-        dispatch(setProductStatus('undefined'));
+        }
+        window.addEventListener("resize", handleResize);
+        dispatch(setProductStatus("undefined"));
+        return () => window.removeEventListener("resize", handleResize);
     }, []);
 
     const getMinMaxObjFromStr = (str) => {
