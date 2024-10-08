@@ -2,11 +2,17 @@ import styles from './OrderItem.module.css';
 import { Link } from 'react-router-dom';
 import { getImagePath } from '@/utils/getImagePath';
 
-export const OrderProductPreview = ({ id, images, name, price }) => {
+export const OrderProductPreview = ({ id, photo, images, name, price }) => {
     return (
         <li className={styles.productListItem}>
             <img
-                src={images ? getImagePath(images[0]?.path) : ''}
+                src={
+                    photo
+                        ? getImagePath(photo.path)
+                        : images
+                        ? getImagePath(images[0].path)
+                        : ''
+                }
                 className={styles.productListImg}
             />
             <div className={styles.productDescription}>
