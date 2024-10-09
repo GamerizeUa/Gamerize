@@ -82,6 +82,7 @@
     }
     .title {
         font-size: 24px;
+        font-family: "Noto Sans";
     }
     .overall_rate {
         height: 98px;
