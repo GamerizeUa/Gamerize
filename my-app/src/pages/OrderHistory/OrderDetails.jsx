@@ -44,6 +44,12 @@ export const OrderDetails = forwardRef(function OrderDetails(props, ref) {
     const { order, products } = props;
     const handleClose = () => ref.current.close();
 
+    const {
+        unregisteredUser: { city, deliveryAddress },
+        paymentMethod,
+        deliveryMethod,
+    } = order || {};
+
     return (
         <dialog
             className={styles['order-details']}
@@ -67,12 +73,16 @@ export const OrderDetails = forwardRef(function OrderDetails(props, ref) {
             <footer className={styles['order-details__footer']}>
                 <FooterArticle
                     title="Доставка"
-                    subTitle={order.deliveryMethod.deliveryMethodName}
-                    text={`${order.unregisteredUser.city} | ${order.unregisteredUser.deliveryAddress}`}
+                    subTitle={deliveryMethod.deliveryMethodName}
+                    text={
+                        city && deliveryAddress
+                            ? `${city} | ${deliveryAddress}`
+                            : ''
+                    }
                 />
                 <FooterArticle
                     title="Оплата"
-                    subTitle={order.paymentMethod.paymentMethodName}
+                    subTitle={paymentMethod.paymentMethodName}
                 />
             </footer>
         </dialog>
