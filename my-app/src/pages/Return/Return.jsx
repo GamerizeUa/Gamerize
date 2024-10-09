@@ -14,11 +14,11 @@ export default function Return() {
                 />
                 <div>
                     <p className={styles['return-policy__text']}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliquaLorem ipsum dolor sit amet, consectetur
-                        adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.
+                        Ми прагнемо, щоб кожен покупець був задоволений своїм
+                        замовленням у нашому онлайн-магазині настільних ігор.
+                        Якщо з будь-якої причини ви не задоволені покупкою, у
+                        вас є можливість повернути товар протягом 14 днів з
+                        моменту його отримання.
                     </p>
                     <article
                         className={cn(
@@ -28,9 +28,9 @@ export default function Return() {
                     >
                         <h3 className={styles['note__title']}>ВАЖЛИВО:</h3>
                         <p className={styles['note__body']}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqu{' '}
+                            Товар повинен бути в оригінальній упаковці, без
+                            слідів використання, збережені всі елементи та
+                            комплектуючі.
                         </p>
                     </article>
                     <section className={styles['return-policy__terms']}>
@@ -38,18 +38,14 @@ export default function Return() {
                             Часові рамки повернення
                         </h3>
                         <p className={styles['return-policy__text']}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliquaLorem ipsum dolor sit amet,
-                            consectetur adipiscing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore magna aliqua.
+                            Для оформлення повернення необхідно пред’явити чек
+                            або інший документ, що підтверджує покупку. Якщо
+                            товар не відповідає товарним вимогам, ми залишаємо
+                            за собою право відмовити у поверненні.
                         </p>
                         <p className={styles['return-policy__text']}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliquaLorem ipsum dolor sit amet,
-                            consectetur adipiscing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore magna aliqua.
+                            Після отримання поверненого товару, повернення
+                            коштів буде здійснено протягом 7 робочих днів.
                         </p>
                     </section>
                     <section className={styles['return-policy__terms']}>
@@ -57,18 +53,28 @@ export default function Return() {
                             Обмін або повернення коштів
                         </h3>
                         <p className={styles['return-policy__text']}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliquaLorem ipsum dolor sit amet,
-                            consectetur adipiscing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore magna.
+                            Ми завжди прагнемо забезпечити найкращий сервіс для
+                            наших клієнтів. Якщо ви виявили дефект у товарі або
+                            з якоїсь причини хочете його повернути, ми
+                            пропонуємо два варіанти: обмін або повернення
+                            коштів. Ви можете обміняти товар на аналогічний або
+                            інший товар, якщо він доступний на складі. Обмін
+                            можливий протягом 14 днів з моменту отримання
+                            покупки, за умови, що товар не був у використанні та
+                            збережені всі комплектуючі.
                         </p>
                         <p className={styles['return-policy__text']}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliquaLorem ipsum dolor sit amet,
-                            consectetur adipiscing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore magna aliqua.
+                            Якщо ви бажаєте повернути товар, ми повернемо вам
+                            повну вартість покупки після отримання та перевірки
+                            товару. Для початку процесу обміну або повернення
+                            зв'яжіться з нашою службою підтримки, вказавши номер
+                            замовлення та деталі проблеми.
+                        </p>
+                        <p className={styles['return-policy__text']}>
+                            Повернення коштів здійснюється протягом 7 робочих
+                            днів після підтвердження, що товар відповідає умовам
+                            повернення (не був у використанні, збережена
+                            оригінальна упаковка, всі елементи на місці).
                         </p>
                     </section>
                     <section>
