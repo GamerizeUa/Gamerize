@@ -21,7 +21,7 @@ export const Header = () => {
 
     const setPageTitle = () => {
         switch (location.pathname) {
-            case('/admin'):
+            case(location.pathname.includes('/admin') && location.pathname):
                 return `Привіт, ${setVocativeCase(profile.name.split(" ")[0])}!`
             case (location.pathname.includes('/admin/products') && location.pathname):
                 return 'Продукти'
