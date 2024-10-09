@@ -10,8 +10,14 @@ export const OrderModal = () => {
         dispatch(assignIsDisplayedSuccessfulOrderPopUp(false))
     }
 
+    const handleBackdropClick = (event) => {
+        if (event.currentTarget === event.target) {
+            closeModal();
+        }
+    }
+
     return (
-        <div className={styles.backdrop}>
+        <div className={styles.backdrop} onClick={handleBackdropClick}>
             <div className={styles.orderModalContent}>
                 <svg className={styles.orderModalBtn} onClick={closeModal}>
                     <use href={sprite + '#icon-cross'} stroke="currentColor" />

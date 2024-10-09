@@ -48,6 +48,7 @@
   font-family: "Noto Sans";
   font-size: 14px;
   line-height: 150%;
+  resize: none;
 }
 
 .orderBtn {
