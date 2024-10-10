@@ -35,7 +35,11 @@ const Catalog = () => {
             if (location.state.searchTerm) {
                 await dispatch(setSearchTerm(location.state.searchTerm));
             } else {
-                await dispatch(setFilters(location.state));
+                for (const key of Object.keys(location.state)) {
+                    if (location.state[key]) {
+                        await dispatch(setFilters({ [key]: location.state[key] }));
+                    }
+                }
             }
             await setIsReadyForResetting(true);
         };

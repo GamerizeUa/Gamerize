@@ -32,7 +32,7 @@ export default function ProductCard({
     let newPrice = 0;
     if (discount) {
         isDiscount = true;
-        newPrice = price * (1 - discount);
+        newPrice = (price * (1 - discount)).toFixed(0);
         discount *= 100;
     }
     const dispatch = useDispatch();
@@ -112,6 +112,7 @@ export default function ProductCard({
                     <img
                         src={getImagePath(images[0]?.path)}
                         alt={`product ${name} # ${id}`}
+                        loading="lazy"
                     />
                 </div>
                 <div className={styles.features_bar}>

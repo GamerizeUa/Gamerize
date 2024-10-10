@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { DisplayThreeIcon } from '@/assets/icons/DisplayThreeIcon.jsx';
 import { DisplayFourIcon } from '@/assets/icons/DisplayFourIcon.jsx';
 import useWindowWidth from '@/hooks/useWindowWidth.js';
-import { setSortOrder } from '@/redux/productsCatalogSlice.js';
+import {setPageSize, setSortOrder} from '@/redux/productsCatalogSlice.js';
 
 export const CatalogSorting = ({ setChosenDisplaying }) => {
     const [isSortingVisible, setIsSortingVisible] = useState(false);
@@ -24,7 +24,13 @@ export const CatalogSorting = ({ setChosenDisplaying }) => {
     };
 
     useEffect(() => {
-        isActive.displayingThree ? setChosenDisplaying(false) : setChosenDisplaying(true)
+        if(isActive.displayingThree){
+            setChosenDisplaying(false)
+            dispatch(setPageSize(12))
+        }else{
+            setChosenDisplaying(true)
+            dispatch(setPageSize(20))
+        }
     }, [isActive]);
 
     const handleClickSorting = () => {

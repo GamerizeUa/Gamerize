@@ -1,13 +1,13 @@
 import styles from './CatalogFilters.module.css';
 import ArrowIconGallery from '@/assets/icons/ArrowGalleryIcon.jsx';
 import React, { useEffect, useState } from 'react';
-import CheckIcon from '@/assets/icons/CheckIcon.jsx';
+import {FilterOption} from "@/pages/Catalog/CatalogFilters/FilterOption.jsx";
 
 export const DropdownFilters = ({
     title,
     categories,
     selectedCategories,
-    setSelectedCategories,
+    updateSelectedCategories,
 }) => {
     const [isCategoryVisible, setIsCategoryVisible] = useState(false);
 
@@ -26,23 +26,22 @@ export const DropdownFilters = ({
         setIsCategoryVisible(!isCategoryVisible);
     };
 
-    const handleCheckBoxChange = (arrayFunc, itemId, item) => {
+    const handleCheckBoxChange = (itemId, item) => {
         if (itemId) {
-            arrayFunc((prevItems) =>
-                prevItems.includes(itemId)
-                    ? prevItems.filter((i) => i !== itemId)
-                    : [...prevItems, itemId]
-            );
+            const result =  selectedCategories.includes(itemId)
+                ? selectedCategories.filter((i) => i !== itemId)
+                : [...selectedCategories, itemId];
+            updateSelectedCategories((result))
+
         } else {
             if (item.includes('-')) {
                 const newRange = separateRange(item);
-                setSelectedCategories((prevRanges) =>
-                    deleteOrAddCategory(prevRanges, newRange)
-                );
+                const result = deleteOrAddCategory(selectedCategories, newRange)
+                updateSelectedCategories((result))
             } else {
                 const extractedNumber = Number(item.match(/\d+/g));
-                setSelectedCategories((prevRanges) =>
-                    deleteOrAddCategory(prevRanges, extractedNumber)
+                const result = deleteOrAddCategory(selectedCategories, extractedNumber)
+                updateSelectedCategories((result)
                 );
             }
         }
@@ -80,32 +79,7 @@ export const DropdownFilters = ({
         return { min: categoryMin, max: categoryMax };
     };
 
-    const isCategorySelected = (selectedCategories, category) => {
-        if (
-            selectedCategories &&
-            selectedCategories.some((item) => typeof item === 'number')
-        ) {
-            return selectedCategories.includes(category.id || category);
-        }
 
-        if (
-            selectedCategories &&
-            selectedCategories.some((item) => typeof item === 'object')
-        ) {
-            if (category.includes('-')) {
-                const range = separateRange(category);
-                return selectedCategories.some(
-                    (item) => item.min === range.min && item.max === range.max
-                );
-            } else {
-                const extractedNumber = Number(category.match(/\d+/g));
-                return selectedCategories.some(
-                    (item) => item.min === extractedNumber && item.max === 0
-                );
-            }
-        }
-        return false;
-    };
 
     return (
         <div className={styles.filters_categories}>
@@ -122,37 +96,15 @@ export const DropdownFilters = ({
             {isCategoryVisible && (
                 <div className={styles.category_options}>
                     {categories.map((category, index) => (
-                        <label
-                            className={`${styles.category_option} 
-                        ${
-                            isCategorySelected(selectedCategories, category)
-                                ? styles.category_checkedLabel
-                                : ''
-                        }`}
-                            key={index}
-                        >
-                            {category.name || category}
-                            <input
-                                type="checkbox"
-                                className={`${styles.option_checkbox} 
-                        ${
-                            isCategorySelected(selectedCategories, category)
-                                ? styles.option_checkedOption
-                                : ''
-                        }`}
-                                onChange={() =>
-                                    handleCheckBoxChange(
-                                        setSelectedCategories,
-                                        category.id,
-                                        category.name ? '' : category
-                                    )
-                                }
+                        <div key={index}>
+                            <FilterOption
+                                category={category}
+                                selectedCategories={selectedCategories}
+                                separateRange={separateRange}
+                                clickCheckbox={handleCheckBoxChange}
+                                title={title}
                             />
-                            <span className={styles.option_checkmark}>
-                                <CheckIcon />
-                            </span>
-                            {title === 'Час гри' && <span>хв</span>}
-                        </label>
+                        </div>
                     ))}
                 </div>
             )}

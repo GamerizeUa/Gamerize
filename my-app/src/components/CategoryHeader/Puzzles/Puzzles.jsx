@@ -15,7 +15,7 @@ const Puzzles = ({ puzzles, checkIconExistence, iconExists, toLowerText }) => {
                     <li key={puzzle.id} className={styles.puzzlesListItem}>
                         <Link
                             to="/catalog"
-                            state={{ puzzles: puzzle.id }}
+                            state={{ puzzles: [puzzle.id] }}
                             className={styles.puzzlesListLink}
                         >
                             <div className={styles.puzzlesIcon}>

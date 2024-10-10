@@ -15,7 +15,7 @@ const Themes = ({ themes, checkIconExistence, iconExists, toLowerText }) => {
                     <li key={theme.id} className={styles.themesListItem}>
                         <Link
                             to="/catalog"
-                            state={{ themes: theme.id }}
+                            state={{ themes: [theme.id] }}
                             className={styles.themesListLink}
                         >
                             <div className={styles.themesIcon}>

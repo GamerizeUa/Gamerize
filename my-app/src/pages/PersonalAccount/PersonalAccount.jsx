@@ -1,14 +1,15 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useForm} from "react-hook-form";
-import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 import styles from './PersonalAccount.module.css';
 import {NewPasswordForm} from "../../components/LoginAndRegistration/ForgotPassword/ NewPasswordForm.jsx";
 import {UserPhoto} from "./UserPhoto.jsx";
 import {DeleteAccountPopUp} from "@/pages/PersonalAccount/DeleteAccountPopUp/DeleteAccountPopUp.jsx";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteUserPhoto, fetchProfileInfo, setUserPhoto, updateProfileInfo} from "../../redux/profileSlice.js";
-import {assignIsDisplayedDeleteAccountPopUp, assignIsDisplayedNewPasswordForm} from "../../redux/formsDisplaying.js";
+import {deleteUserPhoto, fetchProfileInfo, setUserPhoto, updateProfileInfo} from "@/redux/profileSlice.js";
+import {assignIsDisplayedDeleteAccountPopUp, assignIsDisplayedNewPasswordForm} from "@/redux/formsDisplaying.js";
+import useScrollToTop from "@/hooks/useScrollToTop.js";
+import {profileSchema} from "@/validators/profileSchema.js";
 
 export const PersonalAccount = () => {
     const {isDisplayedNewPasswordForm,
@@ -17,27 +18,11 @@ export const PersonalAccount = () => {
     const [photoFile, setPhotoFile] = useState(null);
     const [uploadedPhoto, setUploadedPhoto] = useState(null);
     const buttonSubmitRef = useRef(null);
-    const dispatch = useDispatch()
-
-    const schema = yup.object().shape({
-        name: yup.string().nullable(),
-        phoneNumber: yup.string().nullable()
-            .matches(/(^$|\+380\d{9}$)/, 'Введіть коректний номер телефону (+380XXXXXXXXX)'),
-        email: yup.string().nullable()
-            .matches(/^[a-zA-Z0-9._-]+@[a-zA-Z]+\.[a-zA-Z]+$/i, {
-                message: '"Введіть коректну е-пошту"',
-                excludeEmptyString: true,
-            }),
-        city: yup.string().nullable().matches(/^[А-яа-я]+$/i, {message: "Введіть місто кирилицею"}),
-        deliveryAddress: yup.string().nullable()
-            .matches(/(?=.*[A-Za-zА-Яа-я])(?=.*\d)[A-Za-zА-Яа-я\d]/, {
-                message: 'Адреса повинна мати назву вулиці та номер будинку',
-                excludeEmptyString: true,
-            })
-    });
+    const dispatch = useDispatch();
+    useScrollToTop();
 
     const {register, handleSubmit, formState: {errors}, clearErrors, reset} = useForm({
-        resolver: yupResolver(schema)
+        resolver: yupResolver(profileSchema)
     });
 
     useEffect(() => {
