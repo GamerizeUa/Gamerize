@@ -8,12 +8,12 @@ import {
 import styles from './ProductGallery.module.css';
 import { Breadcrumbs } from '../Breadcrumbs/Breadcrumbs.jsx';
 import { ActionsBar } from '../ActionsBar/ActionsBar.jsx';
-import { useResizeObserver } from '@/hooks/useResizeObserver';
+import { useResizeObserver } from '@/hooks/useResizeObserver.js';
 import { Slider } from './Slider.jsx';
 import { SliderControl } from './SliderControl.jsx';
-import { useMove } from '@/hooks/useMove';
+import { useMove } from '@/hooks/useMove.js';
 import { ProductContext } from '@/pages/ProductPage/Product.jsx';
-import { getImagePath } from '@/utils/getImagePath';
+import { getImagePath } from '@/utils/getImagePath.js';
 
 export const GalleryContext = createContext(null);
 

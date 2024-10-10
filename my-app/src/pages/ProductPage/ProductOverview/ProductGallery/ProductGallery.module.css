@@ -5,7 +5,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    gap: 44px;
+    gap: 24px;
 
     @media screen and (width >= 1280px) {
         align-items: flex-start;
@@ -27,7 +27,7 @@
 }
 
 .product-gallery__container {
-    width: 67.18%;
+    width: 67.18vw;
     min-width: 215px;
     min-height: 250px;
     max-width: 443px;
@@ -37,7 +37,7 @@
     background-size: contain;
 
     @media screen and (width >= 744px) {
-        width: 59.54%;
+        width: 59.54vw;
         min-width: 443px;
         min-height: 523px;
         max-width: 455px;
@@ -46,7 +46,7 @@
     }
 
     @media screen and (width >= 1280px) {
-        width: 35.54%;
+        width: 35.54vw;
         min-width: 455px;
         min-height: 540px;
         max-width: 587px;
@@ -55,7 +55,7 @@
     }
 
     @media screen and (width >= 1440px) {
-        width: 40.76%;
+        width: 40.76vw;
         min-width: 587px;
         min-height: 690px;
         max-width: 587px;
@@ -69,7 +69,7 @@
 }
 
 .product-gallery__image {
-    width: 67.18%;
+    width: 67.18vw;
     height: 78.12%;
     min-width: 215px;
     min-height: 250px;
@@ -80,7 +80,7 @@
     cursor: pointer;
 
     @media screen and (width >= 744px) {
-        width: 59.54%;
+        width: 59.54vw;
         height: 70.02%;
         min-width: 443px;
         min-height: 521px;
@@ -89,7 +89,7 @@
     }
 
     @media screen and (width >= 1280px) {
-        width: 35.54%;
+        width: 35.54vw;
         height: 42.18%;
         min-width: 455px;
         min-height: 540px;
@@ -98,7 +98,7 @@
     }
 
     @media screen and (width >= 1440px) {
-        width: 40.76%;
+        width: 40.76vw;
         height: 47.98%;
         min-width: 587px;
         min-height: 690px;
@@ -169,15 +169,13 @@
 }
 
 .product-gallery__thumbnail {
-    max-width: 100%;
     cursor: pointer;
-    height: 20.62%;
     min-width: 60px;
     min-height: 66px;
     object-fit: contain;
 
     @media screen and (width >= 744px) {
-        height: 15.45%;
+        height: 15.45vw;
         min-width: 115px;
         min-height: 115px;
         max-width: 150px;
@@ -185,7 +183,7 @@
     }
 
     @media screen and (width >= 1280px) {
-        height: 7.1%;
+        height: 7.1vw;
         min-width: 88px;
         min-height: 91px;
         max-width: 115px;
@@ -193,7 +191,7 @@
     }
 
     @media screen and (width >= 1440px) {
-        height: 7.98%;
+        height: 7.98vw;
         min-width: 115px;
         min-height: 115px;
         max-width: 115px;

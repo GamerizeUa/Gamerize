@@ -9,6 +9,9 @@ export const useMove = ({
     rightEdgeGallery,
 }) => {
     const moveLeftGallery = (slidesToMove = 1) => {
+        console.log(slides)
+        console.log(state.currentGallerySlide - slidesToMove)
+
         if (slides <= state.currentGallerySlide - slidesToMove) {
             setState((prev) => ({
                 ...prev,

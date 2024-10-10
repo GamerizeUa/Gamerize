@@ -22,7 +22,9 @@ export const useTouchHandlers = (
 
     const handleEnd = (e) => {
         const touchDiff = initPoints.initTouch - e.changedTouches[0].clientX;
-        touchDiff > 0 ? moveRight() : moveLeft();
+        if(touchDiff !== 0){
+            touchDiff > 0 ? moveRight() : moveLeft();
+        }
     };
 
     return { handleStart, handleMove, handleEnd };

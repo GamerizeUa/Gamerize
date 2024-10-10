@@ -5,7 +5,7 @@ import styles from "./SingleOrderPage.module.css";
 import {OrderItems} from "@/Admin/OrdersPage/SingleOrderPage/OrderItems.jsx";
 import {CustomerDetails} from "@/Admin/OrdersPage/SingleOrderPage/CustomerDetails.jsx";
 import {formatDate} from "@/utils/formatDate.js";
-import {Breadcrumbs} from "@/components/ProductOverview/Breadcrumbs/Breadcrumbs.jsx";
+import {Breadcrumbs} from "@/pages/ProductPage/ProductOverview/Breadcrumbs/Breadcrumbs.jsx";
 import {OrderStatus} from "@/Admin/OrdersPage/SingleOrderPage/OrderStatus.jsx";
 
 export const SingleOrderPage = () => {

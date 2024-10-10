@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "@/components/ProductOverview/ProductMainInfo/ProductMainInfo.module.css";
+import styles from "@/pages/ProductPage/ProductOverview/ProductMainInfo/ProductMainInfo.module.css";
 const CoinsHandIcon = () => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg"
