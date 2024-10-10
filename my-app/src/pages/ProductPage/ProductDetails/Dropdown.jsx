@@ -1,5 +1,6 @@
 import styles from './Dropdown.module.css';
 import ArrowDownIcon from '@/assets/icons/ArrowDownIcon.jsx';
+import { cn } from '@/utils/classnames';
 import { useState } from 'react';
 
 const Dropdown = ({ children, title }) => {
@@ -27,7 +28,21 @@ const Dropdown = ({ children, title }) => {
                     <ArrowDownIcon />
                 </button>
             </header>
-            <div className={styles['dropdown__item']}>{children}</div>
+            <div
+                className={
+                    isVisible
+                        ? cn(
+                              styles['dropdown__item'],
+                              styles['dropdown__item--expanded']
+                          )
+                        : cn(
+                              styles['dropdown__item'],
+                              styles['dropdown__item--collapsed']
+                          )
+                }
+            >
+                {children}
+            </div>
         </article>
     );
 };
