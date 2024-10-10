@@ -5,8 +5,17 @@ import { updateCartProduct, removeFromCart } from '@/redux/cartSlice';
 import { useState } from 'react';
 import CrossIcon from '@/assets/icons/CrossIcon';
 import { getImagePath } from '@/utils/getImagePath';
+import { calculateTotalDiscount } from '@/utils/discounts';
 
-export const CartExcerpt = ({ id, photo, images, name, price, count }) => {
+export const CartExcerpt = ({
+    id,
+    photo,
+    images,
+    name,
+    price,
+    discounts,
+    count,
+}) => {
     const dispatch = useDispatch();
     const [countFieldValue, setCountFieldValue] = useState(count);
 
@@ -90,7 +99,7 @@ export const CartExcerpt = ({ id, photo, images, name, price, count }) => {
                         </button>
                     </div>
                     <p className={styles['cart__item-price']}>
-                        {price * count} ₴
+                        {calculateTotalDiscount(price * count, discounts)} ₴
                     </p>
                 </section>
             </section>

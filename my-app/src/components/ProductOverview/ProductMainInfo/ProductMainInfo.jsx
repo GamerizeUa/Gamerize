@@ -8,13 +8,16 @@ import { ProductContext } from '@/pages/ProductPage/Product.jsx';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '@/redux/cartSlice.js';
 import { Link } from 'react-router-dom';
+import { calculateTotalDiscount } from '@/utils/discounts';
 
 export const ProductMainInfo = ({ breadcrumbsDetails }) => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const dispatch = useDispatch();
     const product = useContext(ProductContext);
 
-    const handleAddToCart = () => dispatch(addToCart(product));
+    const handleAddToCart = () => {
+        dispatch(addToCart(product));
+    };
     const handleResize = () => {
         setWindowWidth(window.innerWidth);
     };
@@ -41,12 +44,28 @@ export const ProductMainInfo = ({ breadcrumbsDetails }) => {
 
             <section className={styles['product-info__body']}>
                 <div className={styles['product-info__pricing']}>
-                    <p className={styles['product-info__discount-price']}>
-                        {product.price}₴
-                    </p>
-                    {/* <p className={styles['product-info__price']}>
+                    {product.discounts.length > 0 ? (
+                        <>
+                            <p
+                                className={
+                                    styles['product-info__discount-price']
+                                }
+                            >
+                                {calculateTotalDiscount(
+                                    product.price,
+                                    product.discounts
+                                )}
+                                ₴
+                            </p>
+                            <p className={styles['product-info__price']}>
+                                {product.price}₴
+                            </p>
+                        </>
+                    ) : (
+                        <p className={styles['product-info__discount-price']}>
                             {product.price}₴
-                        </p> */}
+                        </p>
+                    )}
                 </div>
                 <p className={styles['product-info__description']}>
                     {product.description}
