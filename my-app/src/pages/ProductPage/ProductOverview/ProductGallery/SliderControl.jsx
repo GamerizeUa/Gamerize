@@ -26,12 +26,16 @@ export const SliderControl = forwardRef(function SliderControl(
         moveRight
     );
 
+    const showArrows = images.length >= 5;
+
     return (
         <div className={styles['product-gallery__control']}>
-            <ArrowGalleryIcon
-                classArrow={styles['product-gallery__arrow']}
-                funcOnClick={() => moveLeft(1)}
-            />
+            {showArrows && (
+                <ArrowGalleryIcon
+                    classArrow={styles['product-gallery__arrow']}
+                    funcOnClick={() => moveLeft(1)}
+                />
+            )}
             <div className={styles['product-gallery__control-container']}>
                 <div
                     className={styles['product-gallery__thumbnails']}
@@ -62,11 +66,13 @@ export const SliderControl = forwardRef(function SliderControl(
                     ))}
                 </div>
             </div>
-            <ArrowGalleryIcon
-                classArrow={styles['product-gallery__arrow']}
-                funcOnClick={() => moveRight(1)}
-                style={{ transform: 'rotate(180deg)' }}
-            />
+            {showArrows && (
+                <ArrowGalleryIcon
+                    classArrow={styles['product-gallery__arrow']}
+                    funcOnClick={() => moveRight(1)}
+                    style={{ transform: 'rotate(180deg)' }}
+                />
+            )}
         </div>
     );
 });
