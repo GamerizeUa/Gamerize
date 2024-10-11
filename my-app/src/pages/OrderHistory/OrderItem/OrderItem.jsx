@@ -3,41 +3,7 @@ import { useEffect, useState, useRef } from 'react';
 import { OrderProductPreview } from './OrderProductPreview';
 import { OrderDetails } from '../OrderDetails.jsx';
 import styles from './OrderItem.module.css';
-
-const getStatus = (status, deliveryDate) => {
-    let verboseStatus;
-
-    switch (status) {
-        case 'Отримані':
-            verboseStatus = `Доставлено ${deliveryDate}`;
-            break;
-        case 'Відмінені':
-            verboseStatus = 'Відмінено';
-            break;
-        default:
-            verboseStatus = 'У процесі';
-            break;
-    }
-
-    return verboseStatus;
-};
-
-const getStatusBasedStyles = (status) => {
-    let cls;
-
-    switch (status) {
-        case 'Отримані':
-            cls = styles['delivered'];
-            break;
-        case 'Відмінені':
-            cls = styles['canceled'];
-            break;
-        default:
-            cls = styles['in-process'];
-            break;
-    }
-    return cls;
-};
+import {formatDate} from "@/utils/formatDate.js";
 
 const fetchProducts = async (identifiers) => {
     try {
@@ -53,7 +19,7 @@ const fetchProducts = async (identifiers) => {
 
 const OrderItem = (props) => {
     const {
-        status: { status },
+        status,
         closedAt,
         productId,
         totalPrice,
@@ -74,16 +40,13 @@ const OrderItem = (props) => {
     return (
         <>
             <li
-                className={`${styles.orderItem} ${getStatusBasedStyles(
-                    status
-                )}`}
+                className={`${styles.orderItem} ${styles[`statusText${status.id}`]}`}
             >
                 <p
-                    className={`${styles.statusText} ${getStatusBasedStyles(
-                        status
-                    )}`}
+                    className={`${styles.statusText} ${styles[`statusText${status.id}`]}`}
                 >
-                    {getStatus(status, closedAt)}
+                    {status.status + ' '}
+                    {status.id === 4 && formatDate(new Date(closedAt))}
                 </p>
                 <ul className={styles.productList}>
                     {products.map((product) => (

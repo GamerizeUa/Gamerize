@@ -17,11 +17,12 @@ export const OrderForm = () => {
     const [currentStep, setCurrentStep] = useState(1);
     const [commentText, setCommentText] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const order = useSelector(state => state.newOrder);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        productList.forEach((product) => {
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        await dispatch(setField({ field: 'comment', value: commentText }));
+        await productList.forEach((product) => {
             dispatch(
                 setProductItem({
                     id: product.id,
@@ -29,16 +30,10 @@ export const OrderForm = () => {
                 })
             );
         });
-        dispatch(setField({ field: 'totalPrice', value: total }));
-    }, [productList]);
-
-    const onSubmit = async (e) => {
-        e.preventDefault();
-        await dispatch(setField({ field: 'comment', value: commentText }));
+        await dispatch(setField({ field: 'totalPrice', value: total }));
 
         if (currentStep === 4) {
             try {
-                console.log(order)
                 await dispatch(createNewOrder());
 
                 dispatch(clearCart());
