@@ -4,19 +4,63 @@ import { useNavigate } from 'react-router-dom';
 import { OrderCounter } from './OrderCounter';
 import { OrderList } from './OrderList';
 import { OrderFilter } from './OrderFilter';
-import { selectOrdersByUser } from '@/redux/selectors.js';
+import { selectOrdersByUserAndStatus } from '@/redux/selectors.js';
 import { Message } from '@/components/Message/Message.jsx';
 import { fetchOrdersByUserId } from '@/redux/orderHistorySlice.js';
 import { getAccountInformation } from '@/utils/account';
 import styles from './OrderHistory.module.css';
 
-const OrderHistoryContainer = ({ children }) => {
+const OrderHistoryContainer = ({ filter, setFilter, children }) => {
     return (
         <div className={`${styles.pageWrapper} container`}>
             <h1 className={styles.title}>Історія замовлень</h1>
-            {children}
+            <div className={styles.orderWrapper}>
+                <OrderFilter filter={filter} setFilter={setFilter} />
+
+                {children}
+            </div>
         </div>
     );
+};
+
+const getStatusByFilterValue = (filterValue) => {
+    let statusValue;
+
+    switch (filterValue) {
+        case 'Всі замовлення':
+            statusValue = 'Усі';
+            break;
+        case 'Отримані':
+            statusValue = 'Відправлено';
+            break;
+        case 'Відмінені':
+            statusValue = 'Відмінено';
+            break;
+        default:
+            break;
+    }
+
+    return statusValue;
+};
+
+const getMessageForEmptyOrders = (filterValue) => {
+    switch (filterValue) {
+        case 'Отримані':
+            return {
+                title: 'Немає завершених замовлень',
+                subtitle: 'Ви ще не завершили жодного замовлення.',
+            };
+        case 'Відмінені':
+            return {
+                title: 'Немає скасованих замовлень',
+                subtitle: 'Ви не скасували жодного замовлення.',
+            };
+        default:
+            return {
+                title: 'Немає замовлень',
+                subtitle: 'Ви ще не зробили жодного замовлення.',
+            };
+    }
 };
 
 const OrderHistory = () => {
@@ -26,13 +70,8 @@ const OrderHistory = () => {
     const navigate = useNavigate();
 
     const { orders, isLoading, error } = useSelector((state) =>
-        selectOrdersByUser(state, userId)
+        selectOrdersByUserAndStatus(state, getStatusByFilterValue(filter))
     );
-
-    const visibleOrders =
-        filter === 'Всі замовлення'
-            ? orders
-            : orders.filter((order) => order.status === filter);
 
     useEffect(() => {
         getAccountInformation().then((user) => setUserId(user.id));
@@ -44,7 +83,7 @@ const OrderHistory = () => {
 
     if (isLoading)
         return (
-            <OrderHistoryContainer>
+            <OrderHistoryContainer filter={filter} setFilter={setFilter}>
                 <Message
                     title={'Завантаження...'}
                     subtitle={
@@ -55,9 +94,15 @@ const OrderHistory = () => {
                 />
             </OrderHistoryContainer>
         );
+    else if (orders.length === 0)
+        return (
+            <OrderHistoryContainer filter={filter} setFilter={setFilter}>
+                <Message {...getMessageForEmptyOrders(filter)} />
+            </OrderHistoryContainer>
+        );
     else if (error)
         return (
-            <OrderHistoryContainer>
+            <OrderHistoryContainer filter={filter} setFilter={setFilter}>
                 <Message
                     title={'Щось пішло не так'}
                     subtitle={error ? error : 'Не вдалося завантажити контент.'}
@@ -68,12 +113,9 @@ const OrderHistory = () => {
         );
 
     return (
-        <OrderHistoryContainer>
-            <div className={styles.orderWrapper}>
-                <OrderFilter filter={filter} setFilter={setFilter} />
-                <OrderCounter ordersCount={visibleOrders.length} />
-                <OrderList orders={visibleOrders} />
-            </div>
+        <OrderHistoryContainer filter={filter} setFilter={setFilter}>
+            <OrderCounter ordersCount={orders.length} />
+            <OrderList orders={orders} />
         </OrderHistoryContainer>
     );
 };

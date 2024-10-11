@@ -5,11 +5,11 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
 import { ProductContext } from '../Product.jsx';
-import { addFeedback } from '@/redux/productsCatalogSlice.js';
 import useCheckAuth from '@/hooks/useCheckAuth.js';
 import StarIcon from '@/assets/icons/StarIcon.jsx';
 import styles from './FeedbackForm.module.css';
 import { feedbackSchema } from '@/validators/feedbackSchema.js';
+import { addFeedback } from '@/redux/productsSlice.js';
 
 const getAccountInformation = async () => {
     const res = await axios.get('https://gamerize.ltd.ua/api/Account/profile', {

@@ -57,12 +57,17 @@ export const OrderDetails = forwardRef(function OrderDetails(props, ref) {
             ref={ref}
         >
             <header className={styles['order-details__header']}>
-                <button
-                    className={styles['order-details__btn-close']}
-                    onClick={handleClose}
-                >
-                    <span className={styles['btn-close__cross']} />
-                </button>
+                <div className={styles['order-details__headline']}>
+                    <h1 className={styles['order-details__title']}>
+                        Деталі замовлення
+                    </h1>
+                    <button
+                        className={styles['order-details__btn-close']}
+                        onClick={handleClose}
+                    >
+                        <span className={styles['btn-close__cross']} />
+                    </button>
+                </div>
                 <PaymentsSection order={order} />
             </header>
             <main className={styles['order-details__products']}>
