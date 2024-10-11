@@ -4,7 +4,7 @@ import DeliveryIcon from '@/assets/icons/DeliveryIcon.jsx';
 import ReturnIcon from '@/assets/icons/ReturnIcon.jsx';
 import NonCashPaymentIcon from '@/assets/icons/NonCashPaymentIcon.jsx';
 import PostPaymentIcon from '@/assets/icons/PostPaymentIcon.jsx';
-import { InfoSection } from '../InfoSection/InfoSection';
+import { InfoSection } from '../InfoSection/InfoSection.jsx';
 
 export const ProductDeliveryAndPayment = () => {
     const [activeTab, setActiveTab] = useState({ id: 1, translation: 0 });

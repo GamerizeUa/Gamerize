@@ -1,6 +1,6 @@
 import { forwardRef, useContext } from 'react';
 import styles from './ProductGallery.module.css';
-import { useTouchHandlers } from '@/hooks/useTouchHandlers';
+import { useTouchHandlers } from '@/hooks/useTouchHandlers.js';
 import { GalleryContext } from './ProductGallery.jsx';
 
 export const Slider = forwardRef(function Slider(

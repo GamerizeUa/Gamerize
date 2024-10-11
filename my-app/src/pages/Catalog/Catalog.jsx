@@ -3,7 +3,7 @@ import styles from './Catalog.module.css';
 import { CatalogFilters } from '@/pages/Catalog/CatalogFilters/CatalogFilters.jsx';
 import { CatalogSorting } from '@/pages/Catalog/CatalogSorting/CatalogSorting.jsx';
 import PaginationButtons from '@/components/PaginationButtons/PaginationButtons.jsx';
-import { Breadcrumbs } from '../../components/ProductOverview/Breadcrumbs/Breadcrumbs.jsx';
+import { Breadcrumbs } from '@/pages/ProductPage/ProductOverview/Breadcrumbs/Breadcrumbs.jsx';
 import {
     fetchProducts,
     resetFilters,

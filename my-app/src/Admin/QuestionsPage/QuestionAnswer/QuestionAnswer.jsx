@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { formatDate } from '@/utils/formatDate.js';
 import { useSelector } from 'react-redux';
-import { Breadcrumbs } from '@/components/ProductOverview/Breadcrumbs/Breadcrumbs.jsx';
+import { Breadcrumbs } from '@/pages/ProductPage/ProductOverview/Breadcrumbs/Breadcrumbs.jsx';
 
 export const QuestionAnswer = () => {
     const { id } = useParams();

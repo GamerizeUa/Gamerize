@@ -1,7 +1,7 @@
 import { Form } from '@/components/Form/Form';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Breadcrumbs } from '@/components/ProductOverview/Breadcrumbs/Breadcrumbs';
+import { Breadcrumbs } from '@/pages/ProductPage/ProductOverview/Breadcrumbs/Breadcrumbs';
 import { fetchAllGenres } from '@/redux/categories/genresSlice';
 import { fetchAllThemes } from '@/redux/categories/themesSlice';
 import { fetchAllLanguages } from '@/redux/categories/languagesSlice';

@@ -1,4 +1,4 @@
-import styles from '@/components/ProductOverview/ActionsBar/ActionsBar.module.css';
+import styles from '@/pages/ProductPage/ProductOverview/ActionsBar/ActionsBar.module.css';
 
 const ShareIcon = () => {
     return (

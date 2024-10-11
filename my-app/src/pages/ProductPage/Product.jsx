@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { ProductOverview } from '../../components/ProductOverview/ProductOverview.jsx';
+import { ProductOverview } from '@/pages/ProductPage/ProductOverview/ProductOverview.jsx';
 import ProductDetails from './ProductDetails/ProductDetails.jsx';
 import FeedbackForm from './FeedbackForm/FeedbackForm.jsx';
 import FeedbackList from './FeedbackList/FeedbackList.jsx';
