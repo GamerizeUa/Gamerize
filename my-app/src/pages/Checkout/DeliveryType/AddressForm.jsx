@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { addressSchema } from '@/validators/addressSchema.js';
 
-export const AddressForm = ({ setAddressData }) => {
+export const AddressForm = ({ setAddressData, currentStep }) => {
     const { profile } = useSelector((state) => state.profile);
 
     useEffect(() => {
@@ -46,6 +46,7 @@ export const AddressForm = ({ setAddressData }) => {
                         errors.city && styles.errorInput
                     }`}
                     placeholder="Місто"
+                    disabled={currentStep !== 2}
                     {...register('city')}
                 />
                 {errors?.city && (
@@ -59,6 +60,7 @@ export const AddressForm = ({ setAddressData }) => {
                 <input
                     id="address"
                     type="text"
+                    disabled={currentStep !== 2}
                     className={`${styles.addressInput} ${
                         errors.address && styles.errorInput
                     }`}

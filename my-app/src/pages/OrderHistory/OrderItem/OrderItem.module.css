@@ -28,19 +28,16 @@
     }
 }
 
-.statusText.canceled::before,
-.canceled {
-    border-color: #b53232a8;
+.statusText.statusText1::before, .statusText1{
+    border-color: #FFA756;;
 }
 
-.statusText.delivered::before,
-.delivered {
-    border-color: #d2daff;
+.statusText.statusText3::before, .statusText3{
+    border-color: #6226EF;
 }
 
-.statusText.in-process::before,
-.in-process {
-    border-color: #b1b2ff;
+.statusText.statusText4::before, .statusText4{
+    border-color: #00B69B;
 }
 
 .productList {

@@ -58,6 +58,7 @@ export const DeliveryType = ({ currentStep, setCurrentStep }) => {
                                     id="pickup"
                                     value="pickup"
                                     name="deliveryMethod"
+                                    disabled={currentStep !== 2}
                                     className={styles.selectorInput}
                                     onChange={() => setDeliveryMethod(1)}
                                 />
@@ -92,6 +93,7 @@ export const DeliveryType = ({ currentStep, setCurrentStep }) => {
                                     id="delivery"
                                     value="delivery"
                                     name="deliveryMethod"
+                                    disabled={currentStep !== 2}
                                     className={styles.selectorInput}
                                     onChange={() => setDeliveryMethod(2)}
                                 />
@@ -107,7 +109,7 @@ export const DeliveryType = ({ currentStep, setCurrentStep }) => {
                     <p className={styles.orderText}>Безкоштовно</p>
                 </div>
                 {deliveryMethod === 2 && (
-                    <AddressForm setAddressData={setAddressData} />
+                    <AddressForm setAddressData={setAddressData} currentStep={currentStep}/>
                 )}
             </div>
             <p className={styles.submitError}>{error}</p>

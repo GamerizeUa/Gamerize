@@ -44,6 +44,7 @@ export const PaymentType = ({ currentStep, setCurrentStep }) => {
                                 id="cod"
                                 value="cod"
                                 name="payment"
+                                disabled={currentStep !== 3}
                                 onChange={() => setPaymentMethod(2)}
                                 className={styles.selectorInput}
                             />
@@ -73,6 +74,7 @@ export const PaymentType = ({ currentStep, setCurrentStep }) => {
                             id="electronic"
                             value="electronic"
                             name="payment"
+                            disabled={currentStep !== 3}
                             onChange={() => setPaymentMethod(1)}
                             className={styles.selectorInput}
                         />

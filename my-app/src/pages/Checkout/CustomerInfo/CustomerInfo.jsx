@@ -66,6 +66,7 @@ export const CustomerInfo = ({ currentStep, setCurrentStep }) => {
                         className={`${styles.orderInput} ${
                             errors.customerName && styles.errorInput
                         }`}
+                        disabled={currentStep !== 1}
                         {...register('customerName')}
                     />
                 </div>
@@ -94,6 +95,7 @@ export const CustomerInfo = ({ currentStep, setCurrentStep }) => {
                         placeholder="+380"
                         id="customerPhone"
                         defaultValue="+380"
+                        disabled={currentStep !== 1}
                         className={`${styles.orderInput} ${
                             errors.customerPhone && styles.errorInput
                         }`}
@@ -119,6 +121,7 @@ export const CustomerInfo = ({ currentStep, setCurrentStep }) => {
                     <input
                         type="email"
                         id="customerEmail"
+                        disabled={currentStep !== 1}
                         className={`${styles.orderInput} ${
                             errors.customerEmail && styles.errorInput
                         }`}
