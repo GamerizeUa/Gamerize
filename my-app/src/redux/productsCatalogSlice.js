@@ -19,22 +19,6 @@ export const fetchProducts = createAsyncThunk(
     }
 );
 
-export const addFeedback = createAsyncThunk(
-    'productsCatalog/addFeedback',
-    async (feedback, { rejectWithValue }) => {
-        try {
-            await axios.post(
-                'https://gamerize.ltd.ua/api/Feedback/Create',
-                feedback
-            );
-
-            return feedback;
-        } catch (error) {
-            return rejectWithValue(error.response.data);
-        }
-    }
-);
-
 export const deleteProduct = createAsyncThunk(
     'productsCatalog/delete',
     async ({ productID }, { rejectWithValue }) => {
@@ -163,18 +147,10 @@ export const productsCatalogSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-
             .addCase(fetchProducts.fulfilled, (state, action) => {
                 state.loading = false;
                 state.products = action.payload.products;
                 state.totalPages = action.payload.totalPages;
-            })
-            .addCase(addFeedback.fulfilled, (state, action) => {
-                state.loading = false;
-                const productToUpdate = state.products.find(
-                    (product) => product.id == action.payload.productId
-                );
-                productToUpdate.feedbacks.push(action.payload);
             })
             .addCase(deleteProduct.fulfilled, (state, action) => {
                 state.loading = false;

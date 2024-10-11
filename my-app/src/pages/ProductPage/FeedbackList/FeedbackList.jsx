@@ -20,7 +20,7 @@ export default function FeedbackList() {
             {currentReviews.map((review, index) => {
                 return (
                     <div
-                        key={review.id}
+                        key={index}
                         className={
                             index !== feedbacksPerPage - 1 &&
                             index !== currentReviews.length - 1
