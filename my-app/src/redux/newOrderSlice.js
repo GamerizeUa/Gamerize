@@ -56,13 +56,15 @@ const newOrderSlice = createSlice({
         setDiscountInfo: (state, action) => {
             state.totalDiscount = action.payload.discountAmount;
             state.discountCouponId = action.payload.discountId;
-        }
+        },
+        clearNewOrder: () => initialState
     }
 })
 
 export const {setField, setUserInfo,
     setProductItem,
-    setDiscountInfo} =
+    setDiscountInfo,
+    clearNewOrder} =
     newOrderSlice.actions;
 
 export default newOrderSlice.reducer;

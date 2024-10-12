@@ -8,7 +8,7 @@ import { clearCart } from '@/redux/cartSlice.js';
 import { clearDiscounts } from '@/redux/discountSlice.js';
 import styles from './OrderForm.module.css';
 import {createNewOrder, setField, setProductItem} from '@/redux/newOrderSlice.js';
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {assignIsDisplayedSuccessfulOrderPopUp} from "@/redux/formsDisplaying.js";
 
 export const OrderForm = () => {
@@ -17,26 +17,31 @@ export const OrderForm = () => {
     const [currentStep, setCurrentStep] = useState(1);
     const [commentText, setCommentText] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const order = useSelector(state => state.newOrder);
     const navigate = useNavigate();
+    const location = useLocation();
 
     const onSubmit = async (e) => {
         e.preventDefault();
         await dispatch(setField({ field: 'comment', value: commentText }));
-        await productList.forEach((product) => {
-            dispatch(
-                setProductItem({
-                    id: product.id,
-                    count: product.count,
-                })
-            );
-        });
-        await dispatch(setField({ field: 'totalPrice', value: total }));
+
+        if(!location.state){
+            await productList.forEach((product) => {
+                dispatch(
+                    setProductItem({
+                        id: product.id,
+                        count: product.count,
+                    })
+                );
+            });
+            await dispatch(setField({ field: 'totalPrice', value: total }));
+        }
 
         if (currentStep === 4) {
             try {
                 await dispatch(createNewOrder());
 
-                dispatch(clearCart());
+                !location.state && dispatch(clearCart());
                 dispatch(clearDiscounts());
                 dispatch(assignIsDisplayedSuccessfulOrderPopUp(true));
                 navigate('/');

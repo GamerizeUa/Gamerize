@@ -36,6 +36,8 @@ const discountSlice = createSlice({
     },
     clearDiscounts: (state) => {
       state.promoCode = "";
+      state.discountValue = 0;
+      state.discountId =  0;
     },
   },
   extraReducers: (builder) => {

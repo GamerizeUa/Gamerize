@@ -12,11 +12,16 @@ import { calculateTotalDiscount } from '@/utils/discounts';
 
 export const ProductMainInfo = ({ breadcrumbsDetails }) => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [isMessageVisible, setIsMessageVisible] = useState(false);
     const dispatch = useDispatch();
     const product = useContext(ProductContext);
 
     const handleAddToCart = () => {
         dispatch(addToCart(product));
+        setIsMessageVisible(true);
+        setTimeout(() => {
+            setIsMessageVisible(false);
+        }, 3000);
     };
     const handleResize = () => {
         setWindowWidth(window.innerWidth);
@@ -78,23 +83,32 @@ export const ProductMainInfo = ({ breadcrumbsDetails }) => {
                             styles['product-info__btn--secondary']
                         }
                         to="/checkout"
+                        state={{
+                            productName: product.name,
+                            productPrice: product.price,
+                            productScu: product.id,
+                            productImage: product.images[0]
+                        }}
                     >
                         Купити в 1 клік
                     </Link>
-                    <button
-                        className={
-                            styles['product-info__btn'] +
-                            ' ' +
-                            styles['product-info__btn--primary']
-                        }
-                        onClick={handleAddToCart}
-                    >
-                        <CartIcon />
-                        Додати в кошик
-                    </button>
+                    <div className={styles['product-info__btn-buy']}>
+                        <button
+                            className={
+                                styles['product-info__btn'] +
+                                ' ' +
+                                styles['product-info__btn--primary']
+                            }
+                            onClick={handleAddToCart}
+                        >
+                            <CartIcon/>
+                            Додати в кошик
+                        </button>
+                        {isMessageVisible &&<p>Додано в кошик!</p>}
+                    </div>
                 </div>
             </section>
-            <ProductDeliveryAndPayment />
+            <ProductDeliveryAndPayment/>
         </section>
     );
 };

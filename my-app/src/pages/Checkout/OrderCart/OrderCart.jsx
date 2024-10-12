@@ -5,24 +5,49 @@ import { OrderCartInputs } from './OrderCartInputs.jsx';
 import sprite from '@/assets/icons/sprite.svg';
 import styles from './OrderCart.module.css';
 import { useEffect, useState } from 'react';
-import { setDiscountInfo } from '@/redux/newOrderSlice.js';
+import {setDiscountInfo, setField, setProductItem} from '@/redux/newOrderSlice.js';
+import {useLocation} from "react-router-dom";
+import {clearDiscounts} from "@/redux/discountSlice.js";
 
 export const OrderCart = () => {
     const { isEmpty, productList, total } = useSelector(selectCart);
+    const [discountAmount, setDiscountAmount] = useState(0);
+    const [oneProductQuantity, setOneProductQuantity] = useState(1);
+    const [oneProductTotalPrice, setOneProductTotalPrice] = useState(0);
     const { discountValue, discountId } = useSelector(
         (state) => state.discount
     );
-    const [discountAmount, setDiscountAmount] = useState(0);
     const dispatch = useDispatch();
+    const location = useLocation();
 
     useEffect(() => {
         setDiscountAmount(
-            parseFloat((total * (discountValue / 100)).toFixed(1))
+            location.state
+                ? parseFloat((oneProductTotalPrice * (discountValue / 100)).toFixed(1))
+                : parseFloat((total * (discountValue / 100)).toFixed(1))
         );
         if (discountAmount > 0) {
             dispatch(setDiscountInfo({ discountAmount, discountId }));
         }
-    }, [discountValue, total, discountAmount]);
+    }, [discountValue, total, discountAmount, oneProductTotalPrice]);
+
+    useEffect(() => {
+        if(location.state){
+            setOneProductTotalPrice( location.state.productPrice * oneProductQuantity);
+            dispatch(
+                setProductItem({
+                    id: location.state.productScu,
+                    count: oneProductQuantity,
+                })
+            );
+        }
+    }, [oneProductQuantity]);
+
+    useEffect(() => {
+        if(location.state){
+            dispatch(setField({ field: 'totalPrice', value: oneProductTotalPrice }));
+        }
+    }, [oneProductTotalPrice]);
 
     return (
         <div className={styles.orderCartContainer}>
@@ -32,9 +57,20 @@ export const OrderCart = () => {
                     <p className={styles.emptyCartText}>Ваш кошик порожній</p>
                 ) : (
                     <ul className={styles.cartList}>
-                        {productList.map((product) => (
-                            <OrderCartItem key={product.id} {...product} />
-                        ))}
+                        {location.state ? (
+                            <OrderCartItem
+                                id={location.state.productScu}
+                                name={location.state.productName}
+                                price={location.state.productPrice}
+                                photo={location.state.productImage}
+                                count={oneProductQuantity}
+                                setOneProductQuantity={setOneProductQuantity}
+                            />
+                        ): (
+                            productList.map((product) => (
+                                    <OrderCartItem key={product.id} {...product} />
+                                ))
+                        )}
                     </ul>
                 )}
                 <OrderCartInputs />
@@ -42,7 +78,11 @@ export const OrderCart = () => {
                     <div className={styles.priceElement}>
                         <p>Сума:</p>
                         <div className={styles.inner}>
-                            <p>{total}</p>
+                            {location.state ? (
+                                <p>{oneProductTotalPrice}</p>
+                            ) : (
+                                <p>{total}</p>
+                            )}
                             <span>₴</span>
                         </div>
                     </div>
@@ -63,7 +103,9 @@ export const OrderCart = () => {
                 <div className={styles.totalPriceContainer}>
                     <p>Загалом:</p>
                     <div className={styles.inner}>
-                        <p>{total - discountAmount}</p>
+                        <p>{location.state
+                            ? oneProductTotalPrice - discountAmount
+                            : total - discountAmount}</p>
                         <span>₴</span>
                     </div>
                 </div>
