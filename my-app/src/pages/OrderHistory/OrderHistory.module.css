@@ -51,7 +51,7 @@
     position: absolute;
     top: 40px;
     width: 204px;
-    height: 130px;
+    height: max-content;
     background-color: var(--white);
     padding: 20px 16px;
     border-radius: 4px;

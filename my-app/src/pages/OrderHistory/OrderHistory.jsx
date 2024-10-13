@@ -6,9 +6,10 @@ import { OrderList } from './OrderList';
 import { OrderFilter } from './OrderFilter';
 import { selectOrdersByUserAndStatus } from '@/redux/selectors.js';
 import { Message } from '@/components/Message/Message.jsx';
-import { fetchOrdersByUserId } from '@/redux/orderHistorySlice.js';
+import { changePage, fetchOrdersByUserId } from '@/redux/orderHistorySlice.js';
 import { getAccountInformation } from '@/utils/account';
 import styles from './OrderHistory.module.css';
+import { Pagination } from '@/Admin/Pagination/Pagination';
 
 const OrderHistoryContainer = ({ filter, setFilter, children }) => {
     return (
@@ -30,11 +31,14 @@ const getStatusByFilterValue = (filterValue) => {
         case 'Всі замовлення':
             statusValue = 'Усі';
             break;
-        case 'Отримані':
-            statusValue = 'Відправлено';
+        case 'Очікуються':
+            statusValue = 'Очікується';
             break;
-        case 'Відмінені':
-            statusValue = 'Відмінено';
+        case 'Доставлені':
+            statusValue = 'Доставлено';
+            break;
+        case 'Відправлені':
+            statusValue = 'Відправлено';
             break;
         default:
             break;
@@ -45,15 +49,20 @@ const getStatusByFilterValue = (filterValue) => {
 
 const getMessageForEmptyOrders = (filterValue) => {
     switch (filterValue) {
-        case 'Отримані':
+        case 'Доставлені':
             return {
-                title: 'Немає завершених замовлень',
-                subtitle: 'Ви ще не завершили жодного замовлення.',
+                title: 'Немає доставлених замовлень',
+                subtitle: 'Ми ще не доставили вам жодного замовлення.',
             };
-        case 'Відмінені':
+        case 'Відправлені':
             return {
-                title: 'Немає скасованих замовлень',
-                subtitle: 'Ви не скасували жодного замовлення.',
+                title: 'Немає відправлених замовлень',
+                subtitle: 'Ми ще не відправили вам жодного замовлення.',
+            };
+        case 'Очікуються':
+            return {
+                title: 'Немає очікуваних замовлень',
+                subtitle: 'Жодне замовлення ще не очікується на відправку.',
             };
         default:
             return {
@@ -69,17 +78,26 @@ const OrderHistory = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { orders, isLoading, error } = useSelector((state) =>
-        selectOrdersByUserAndStatus(state, getStatusByFilterValue(filter))
-    );
+    const ordersPerPage = 3;
+
+    const { orders, totalPages, page, totalOrders, isLoading, error } =
+        useSelector((state) =>
+            selectOrdersByUserAndStatus(state, getStatusByFilterValue(filter))
+        );
 
     useEffect(() => {
         getAccountInformation().then((user) => setUserId(user.id));
     }, []);
 
     useEffect(() => {
-        dispatch(fetchOrdersByUserId(userId));
-    }, [userId, dispatch]);
+        dispatch(
+            fetchOrdersByUserId({
+                id: userId,
+                page,
+                totalOrder: ordersPerPage,
+            })
+        );
+    }, [userId, dispatch, page]);
 
     if (isLoading)
         return (
@@ -114,8 +132,15 @@ const OrderHistory = () => {
 
     return (
         <OrderHistoryContainer filter={filter} setFilter={setFilter}>
-            <OrderCounter ordersCount={orders.length} />
+            <OrderCounter ordersCount={totalOrders} />
             <OrderList orders={orders} />
+            <Pagination
+                totalItems={ordersPerPage * totalPages}
+                totalPages={totalPages}
+                currentPage={page}
+                setCurrentPage={(newPage) => dispatch(changePage(newPage))}
+                itemsOnPage={ordersPerPage}
+            />
         </OrderHistoryContainer>
     );
 };
