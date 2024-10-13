@@ -62,7 +62,7 @@ export const OrderCart = () => {
                                 id={location.state.productScu}
                                 name={location.state.productName}
                                 price={location.state.productPrice}
-                                photo={location.state.productImage}
+                                images={location.state.productImage}
                                 count={oneProductQuantity}
                                 setOneProductQuantity={setOneProductQuantity}
                             />

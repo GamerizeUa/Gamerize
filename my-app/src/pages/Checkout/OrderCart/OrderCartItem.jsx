@@ -7,7 +7,7 @@ import CrossIcon from '@/assets/icons/CrossIcon.jsx';
 import { getImagePath } from '@/utils/getImagePath.js';
 import {useLocation} from "react-router-dom";
 
-export const OrderCartItem = ({ id, name, price, photo, count, setOneProductQuantity}) => {
+export const OrderCartItem = ({ id, name, price, photo, images, count, setOneProductQuantity}) => {
     const dispatch = useDispatch();
     const [countFieldValue, setCountFieldValue] = useState(count);
     const location = useLocation();
@@ -35,7 +35,13 @@ export const OrderCartItem = ({ id, name, price, photo, count, setOneProductQuan
     return (
         <li className={styles.cartListItem}>
             <img
-                src={getImagePath(photo?.path)}
+                src={
+                    photo
+                        ? getImagePath(photo.path)
+                        : images && images[0]
+                            ? getImagePath(images[0].path)
+                            : ''
+                }
                 width="90"
                 height="90"
                 alt={name}

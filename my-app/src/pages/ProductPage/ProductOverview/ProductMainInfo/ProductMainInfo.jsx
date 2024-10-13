@@ -87,7 +87,7 @@ export const ProductMainInfo = ({ breadcrumbsDetails }) => {
                             productName: product.name,
                             productPrice: product.price,
                             productScu: product.id,
-                            productImage: product.images[0]
+                            productImage: product.images
                         }}
                     >
                         Купити в 1 клік
