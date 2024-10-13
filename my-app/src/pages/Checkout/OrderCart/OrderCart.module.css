@@ -11,7 +11,7 @@
 .cartTitle {
   padding-bottom: 16px;
   font-family: "Noto Sans";
-  font-size: 18px;
+  font-size: 16px;
   line-height: 20%;
   border-bottom: 1px solid #dee0e3;
 }
@@ -32,8 +32,8 @@
 
 .cartImageItem{
   object-fit: contain;
-  min-width: 90px;
-  min-height: 90px;
+  min-width: 80px;
+  min-height: 80px;
 }
 
 .cartItemDescription {
@@ -191,6 +191,11 @@
 @media screen and (min-width: 744px){
   .cartTitle{
     font-size: 24px;
+  }
+
+  .cartImageItem{
+    min-width: 90px;
+    min-height: 90px;
   }
 
   .cartProductTitle{

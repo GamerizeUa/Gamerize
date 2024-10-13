@@ -5,13 +5,21 @@ import styles from './OrderCart.module.css';
 import sprite from '@/assets/icons/sprite.svg';
 import CrossIcon from '@/assets/icons/CrossIcon.jsx';
 import { getImagePath } from '@/utils/getImagePath.js';
+import {useLocation} from "react-router-dom";
 
-export const OrderCartItem = ({ id, name, price, photo, count }) => {
+export const OrderCartItem = ({ id, name, price, photo, images, count, setOneProductQuantity}) => {
     const dispatch = useDispatch();
     const [countFieldValue, setCountFieldValue] = useState(count);
+    const location = useLocation();
 
     const handleCountChange = (newCount) => {
         if (isNaN(newCount) || newCount <= 0) return;
+
+        if(location.state){
+            setCountFieldValue(newCount)
+            setOneProductQuantity(newCount)
+            return;
+        }
 
         setCountFieldValue(
             newCount <= 0 ? dispatch(removeFromCart(id)) : newCount
@@ -27,7 +35,13 @@ export const OrderCartItem = ({ id, name, price, photo, count }) => {
     return (
         <li className={styles.cartListItem}>
             <img
-                src={getImagePath(photo?.path)}
+                src={
+                    photo
+                        ? getImagePath(photo.path)
+                        : images && images[0]
+                            ? getImagePath(images[0].path)
+                            : ''
+                }
                 width="90"
                 height="90"
                 alt={name}
@@ -47,7 +61,7 @@ export const OrderCartItem = ({ id, name, price, photo, count }) => {
                 <div className={styles.cartCounterWrapper}>
                     <div className={styles.cartProductCounter}>
                         <div
-                            onClick={() => handleCountChange(count - 1)}
+                            onClick={() => handleCountChange(location.state ? countFieldValue - 1 : count - 1)}
                             className={styles.cartCounter}
                         >
                             <svg width="9" height="9">
@@ -57,7 +71,7 @@ export const OrderCartItem = ({ id, name, price, photo, count }) => {
                         <p>{countFieldValue}</p>
                         <div
                             className={styles.cartCounter}
-                            onClick={() => handleCountChange(count + 1)}
+                            onClick={() => handleCountChange(location.state ? countFieldValue + 1 : count + 1)}
                         >
                             <svg width="9" height="9">
                                 <use href={sprite + '#icon-plus'}></use>
@@ -66,7 +80,7 @@ export const OrderCartItem = ({ id, name, price, photo, count }) => {
                     </div>
                     <div className={styles.cartProductPriceWrapper}>
                         <p className={styles.cartProductPrice}>
-                            {price * count}
+                            {location.state ? countFieldValue * price : price * count}
                         </p>
                         <span>₴</span>
                     </div>
