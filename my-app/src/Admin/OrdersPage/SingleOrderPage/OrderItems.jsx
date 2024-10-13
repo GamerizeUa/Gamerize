@@ -1,6 +1,7 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
 import styles from "@/Admin/OrdersPage/SingleOrderPage/SingleOrderPage.module.css";
+import {calculateTotalDiscount} from "@/utils/discounts.js";
 
 export const OrderItems = ({productsIds, quantity, discount, total}) => {
     const [productsItems, setProductsItems] = useState([]);
@@ -34,8 +35,8 @@ export const OrderItems = ({productsIds, quantity, discount, total}) => {
                     <tr key={index}>
                         <td>{product.id}</td>
                         <td>{product.name}</td>
-                        <td>{quantity[index]}</td>
-                        <td>{product.price}</td>
+                        <td>{quantity[index]}x</td>
+                        <td>{calculateTotalDiscount(product.price, product.discounts)}</td>
                     </tr>
                 ))}
                 </tbody>

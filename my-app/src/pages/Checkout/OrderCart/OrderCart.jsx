@@ -7,7 +7,6 @@ import styles from './OrderCart.module.css';
 import { useEffect, useState } from 'react';
 import {setDiscountInfo, setField, setProductItem} from '@/redux/newOrderSlice.js';
 import {useLocation} from "react-router-dom";
-import {clearDiscounts} from "@/redux/discountSlice.js";
 
 export const OrderCart = () => {
     const { isEmpty, productList, total } = useSelector(selectCart);
@@ -53,7 +52,7 @@ export const OrderCart = () => {
         <div className={styles.orderCartContainer}>
             <div className={styles.orderCart}>
                 <p className={styles.cartTitle}>Ваше замовлення</p>
-                {isEmpty ? (
+                {isEmpty && !location.state ? (
                     <p className={styles.emptyCartText}>Ваш кошик порожній</p>
                 ) : (
                     <ul className={styles.cartList}>

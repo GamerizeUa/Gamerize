@@ -99,6 +99,13 @@ const OrderHistory = () => {
         );
     }, [userId, dispatch, page]);
 
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+    }, [page]);
+
     if (isLoading)
         return (
             <OrderHistoryContainer filter={filter} setFilter={setFilter}>
@@ -135,7 +142,7 @@ const OrderHistory = () => {
             <OrderCounter ordersCount={totalOrders} />
             <OrderList orders={orders} />
             <Pagination
-                totalItems={ordersPerPage * totalPages}
+                totalItems={totalOrders}
                 totalPages={totalPages}
                 currentPage={page}
                 setCurrentPage={(newPage) => dispatch(changePage(newPage))}

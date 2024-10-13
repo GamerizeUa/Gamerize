@@ -18,11 +18,7 @@ const cartSlice = createSlice({
                 const newProduct = { ...action.payload, count: 1 };
 
                 state.isEmpty = false;
-                state.total += calculateTotalDiscount(
-                    newProduct.price,
-                    newProduct.discounts
-                );
-
+                state.total += action.payload.price;
                 state.productList.push(newProduct);
             }
         },
@@ -30,9 +26,7 @@ const cartSlice = createSlice({
             const product = state.productList.find(
                 (product) => product.id === action.payload
             );
-            state.total -=
-                calculateTotalDiscount(product.price, product.discounts) *
-                product.count;
+            state.total -= product.price * product.count;
             state.productList = state.productList.filter(
                 (product) => product.id !== action.payload
             );
@@ -46,9 +40,7 @@ const cartSlice = createSlice({
 
             if (product) {
                 product.count += modifier;
-                state.total +=
-                    calculateTotalDiscount(product.price, product.discounts) *
-                    modifier;
+                state.total += product.price * modifier;
             }
         },
         clearCart: (state) => {

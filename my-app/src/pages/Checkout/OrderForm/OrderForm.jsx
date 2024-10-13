@@ -102,12 +102,14 @@ export const OrderForm = () => {
                                     maxLength={200}
                                 />
                             </div>
-                            {productList.length === 0 && <p className={styles.submitError}>Ваш кошик порожній</p>}
+                            {productList.length === 0 && !location.state &&
+                                <p className={styles.submitError}>Ваш кошик порожній</p>
+                            }
                             {errorMessage && <p className={styles.submitError}>{errorMessage}</p>}
                             <button
                                 className={styles.orderBtn}
                                 type="submit"
-                                disabled={productList.length === 0}
+                                disabled={productList.length === 0 && !location.state}
                             >
                                 Оформити замовлення
                             </button>

@@ -53,7 +53,9 @@ const AccountInformation = () => {
                 <li className={styles.accountListItem}>
                     <Link to="/wish-list" className={styles.accountLink}>
                         <div>
-                            <HeartIcon strokeColor="#AAC4FF" />
+                            <svg width="24" height="24">
+                                <use href={sprite + '#icon-heart'} fill="none"></use>
+                            </svg>
                         </div>
                         <p className={styles.accountLinkText}>Список бажань</p>
                     </Link>

@@ -1,8 +1,9 @@
 import styles from './OrderItem.module.css';
 import { Link } from 'react-router-dom';
 import { getImagePath } from '@/utils/getImagePath';
+import {calculateTotalDiscount} from "@/utils/discounts.js";
 
-export const OrderProductPreview = ({ id, photo, images, name, price }) => {
+export const OrderProductPreview = ({ id, photo, images, name, price, discounts }) => {
     return (
         <li className={styles.productListItem}>
             <img
@@ -19,7 +20,7 @@ export const OrderProductPreview = ({ id, photo, images, name, price }) => {
                 <Link to={`/catalog/${id}`} className={styles.productName}>
                     {name}
                 </Link>
-                <p className={styles.productPrice}>Ціна: {price} ₴</p>
+                <p className={styles.productPrice}>Ціна: {calculateTotalDiscount(price, discounts)} ₴</p>
                 <p className={styles.productArticle}>Артикул: {id}</p>
             </div>
         </li>

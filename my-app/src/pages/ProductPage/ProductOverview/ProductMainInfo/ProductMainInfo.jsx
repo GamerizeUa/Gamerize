@@ -17,7 +17,8 @@ export const ProductMainInfo = ({ breadcrumbsDetails }) => {
     const product = useContext(ProductContext);
 
     const handleAddToCart = () => {
-        dispatch(addToCart(product));
+        const newPrice = (calculateTotalDiscount(product.price, product.discounts));
+        dispatch(addToCart({...product, price: newPrice}));
         setIsMessageVisible(true);
         setTimeout(() => {
             setIsMessageVisible(false);
@@ -85,7 +86,10 @@ export const ProductMainInfo = ({ breadcrumbsDetails }) => {
                         to="/checkout"
                         state={{
                             productName: product.name,
-                            productPrice: product.price,
+                            productPrice: calculateTotalDiscount(
+                                product.price,
+                                product.discounts
+                            ),
                             productScu: product.id,
                             productImage: product.images
                         }}

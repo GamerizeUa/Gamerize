@@ -9,6 +9,7 @@ import {addToCart, updateCartProduct} from "@/redux/cartSlice.js";
 import {getImagePath} from "@/utils/getImagePath.js";
 import useCheckAuth from "@/hooks/useCheckAuth.js";
 import {assignIsDisplayedLoginPopUp} from "@/redux/formsDisplaying.js";
+import {calculateTotalDiscount} from "@/utils/discounts.js";
 
 export default function ProductCard({
                                         configurationObject: {isDiscount, isWishList} = {
@@ -32,7 +33,7 @@ export default function ProductCard({
     let newPrice = 0;
     if (discount) {
         isDiscount = true;
-        newPrice = (price * (1 - discount)).toFixed(0);
+        newPrice = Number((price * (1 - discount)).toFixed(0));
         discount *= 100;
     }
     const dispatch = useDispatch();
@@ -60,8 +61,15 @@ export default function ProductCard({
                 : dispatch(addToWishList(id));
         }
     };
+
     const handleAddToCart = () => {
-        dispatch(addToCart({id, name, price, photo, count: 1}));
+        dispatch(addToCart({
+            id,
+            name,
+            price: calculateTotalDiscount(price, discounts),
+            photo,
+            count: 1
+        }));
     };
     const handleUpdateCount = () => {
         dispatch(updateCartProduct({id, modifier: 1}));

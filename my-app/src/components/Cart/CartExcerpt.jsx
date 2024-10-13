@@ -99,7 +99,7 @@ export const CartExcerpt = ({
                         </button>
                     </div>
                     <p className={styles['cart__item-price']}>
-                        {calculateTotalDiscount(price * count, discounts)} ₴
+                        {price * count} ₴
                     </p>
                 </section>
             </section>
