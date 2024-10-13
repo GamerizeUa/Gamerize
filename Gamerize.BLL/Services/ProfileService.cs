@@ -221,6 +221,23 @@ namespace Gamerize.BLL.Services
                 throw new ServerErrorException(ex.Message, ex);
             }
         }
+
+        public async Task<IsAdminUserDTO> GetIsAdminAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            var isAdmin = new IsAdminUserDTO
+            {
+                IsAdmin = user.IsAdmin,
+            };
+
+            return isAdmin;
+        }
         #region Supporting methods
         private string ExceptionMessage(object? value = null) =>
             value switch

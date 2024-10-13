@@ -58,6 +58,27 @@ public class AccountController : ControllerBase
         return Ok(userProfileData);
     }
 
+    [HttpGet("IsAdmin")]
+    [Authorize]
+    public async Task<IActionResult> GetIsAdmin()
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userId == null)
+        {
+            _logger.LogInformation("User not authenticated");
+            return BadRequest("User not authenticated");
+        }
+
+        var isAdmin = await _profileService.GetIsAdminAsync(userId);
+        if (isAdmin == null)
+        {
+            _logger.LogInformation($"Not found");
+            return NotFound();
+        }
+
+        return Ok(isAdmin);
+    }
+
     [HttpPatch("update-profile")]
     [Authorize]
     public async Task<IActionResult> UpdateUserProfile([FromBody] ProfileDTO profileUpdate)

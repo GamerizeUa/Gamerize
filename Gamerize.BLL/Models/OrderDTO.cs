@@ -12,7 +12,8 @@ namespace Gamerize.BLL.Models
         public string? Comment { get; set; }
         [Required]
         public decimal TotalPrice { get; set; }
-
+        [Required]
+        public double TotalDiscount { get; set; }
         [Required]
         public int OrderStatusId { get; set; }
         public int? DiscountCouponId { get; set; }
@@ -21,11 +22,14 @@ namespace Gamerize.BLL.Models
         [Required]
         public int PaymentMethodId { get; set; }
 
-        public virtual DeliveryMethodDTO DeliveryMethod { get; set; }
-        public virtual PaymentMethodDTO PaymentMethod { get; set; }
-        public virtual DiscountCouponDTO? DiscountCoupon { get; set; }
-        public virtual UnregisteredUserDTO? User { get; set; }
-        public virtual StatusDTO Status { get; set; }
-        public virtual ICollection<OrderItemDTO> OrderItems { get; set; }
+        public List<int> ProductId { get; set; } = new List<int>();
+        public List<int> Quantity { get; set; } = new List<int>();
+
+        public int? UnregisteredUserId { get; set; }
+        public virtual UnregisteredUserDTO UnregisteredUser { get; set; }
+
+        public virtual StatusDTO? Status { get; set; }
+        public virtual DeliveryMethodDTO? DeliveryMethod { get; set; }
+        public virtual PaymentMethodDTO? PaymentMethod { get; set; }
     }
 }

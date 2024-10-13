@@ -30,6 +30,29 @@ namespace Gamerize.BLL.Services
             _mapper = mapper;
         }
 
+        public async Task<ICollection<ProductFullDTO>> GetProductsByIds(List<int> productIds)
+        {
+            if (productIds == null || !productIds.Any())
+                throw new ArgumentException("Product IDs cannot be null or empty.");
+
+            var productDTOs = new List<ProductFullDTO>();
+
+            foreach (var productId in productIds)
+            {
+                var result = await GetByIdAsync(productId);
+
+                if (result is not null)
+                {
+                    var productWithRating = (dynamic)result;
+                    var productDTO = productWithRating.Product;
+
+                    productDTOs.Add(productDTO);
+                }
+            }
+
+            return productDTOs;
+        }
+
         public async Task<ProductFullDTO> CreateAsync(ProductNewDTO newEntity)
         {
             try
@@ -90,6 +113,8 @@ namespace Gamerize.BLL.Services
                     .Include(x => x.Genre)
                     .Include(x => x.Theme)
                     .Include(x => x.Feedbacks)
+                    .Include(x => x.MindGames)
+                    .Include(x => x.Puzzle)
                     .Include(x => x.Tags)
                     .Include(x => x.Images)
                     .Include(x => x.Ratings)
@@ -158,6 +183,8 @@ namespace Gamerize.BLL.Services
                     .Include(x => x.Genre)
                     .Include(x => x.Theme)
                     .Include(x => x.Feedbacks)
+                    .Include(x => x.MindGames)
+                    .Include(x => x.Puzzle)
                     .Include(x => x.Tags)
                     .Include(x => x.Images)
                     .Include(x => x.Ratings)
@@ -221,6 +248,8 @@ namespace Gamerize.BLL.Services
                     .Include(x => x.Genre)
                     .Include(x => x.Theme)
                     .Include(x => x.Feedbacks)
+                    .Include(x => x.MindGames)
+                    .Include(x => x.Puzzle)
                     .Include(x => x.Tags)
                     .Include(x => x.Images)
                     .Include(x => x.Ratings)
@@ -268,6 +297,8 @@ namespace Gamerize.BLL.Services
                     .Include(x => x.Theme)
                     .Include(x => x.Feedbacks)
                     .Include(x => x.Tags)
+                    .Include(x => x.MindGames)
+                    .Include(x => x.Puzzle)
                     .Include(x => x.Images)
                     .Include(x => x.Ratings)
                     .Include(x => x.Discounts)
@@ -306,6 +337,8 @@ namespace Gamerize.BLL.Services
                     .Include(x => x.Genre)
                     .Include(x => x.Theme)
                     .Include(x => x.Feedbacks)
+                    .Include(x => x.MindGames)
+                    .Include(x => x.Puzzle)
                     .Include(x => x.Tags)
                     .Include(x => x.Images)
                     .Include(x => x.Ratings)
@@ -344,6 +377,8 @@ namespace Gamerize.BLL.Services
                     .Include(x => x.Genre)
                     .Include(x => x.Theme)
                     .Include(x => x.Feedbacks)
+                    .Include(x => x.MindGames)
+                    .Include(x => x.Puzzle)
                     .Include(x => x.Tags)
                     .Include(x => x.Images)
                     .Include(x => x.Ratings)
@@ -445,6 +480,8 @@ namespace Gamerize.BLL.Services
                                     .Include(x => x.Genre)
                                     .Include(x => x.Theme)
                                     .Include(x => x.Feedbacks)
+                                    .Include(x => x.MindGames)
+                                    .Include(x => x.Puzzle)
                                     .Include(x => x.Tags)
                                     .Include(x => x.Images)
                                     .Include(x => x.Ratings)
@@ -508,6 +545,8 @@ namespace Gamerize.BLL.Services
                 .Include(x => x.Genre)
                 .Include(x => x.Theme)
                 .Include(x => x.Feedbacks)
+                .Include(x => x.MindGames)
+                .Include(x => x.Puzzle)
                 .Include(x => x.Tags)
                 .Include(x => x.Images)
                 .Include(x => x.Ratings)

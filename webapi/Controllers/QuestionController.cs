@@ -218,12 +218,14 @@ namespace webapi.Controllers
         {
             try
             {
-                var (results, totalPages) = await _questionService.SearchAsync(term, totalQuestions, page);
+                var (results, totalPages, currentPage, totalMessages) = await _questionService.SearchAsync(term, totalQuestions, page);
 
                 var result = new
                 {
                     Questions = results,
-                    TotalPages = totalPages
+                    TotalPages = totalPages,
+                    CurrentPage = page,
+                    TotalMessages = totalMessages
                 };
 
                 return Ok(result);

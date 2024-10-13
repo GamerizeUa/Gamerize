@@ -1,7 +1,7 @@
 ﻿using Gamerize.BLL.Models;
-using Gamerize.BLL.Services;
 using Gamerize.Common.Extensions.Exceptions;
 using Microsoft.AspNetCore.Mvc;
+using SendGrid.Helpers.Errors.Model;
 
 namespace webapi.Controllers
 {
@@ -9,9 +9,9 @@ namespace webapi.Controllers
 	[ApiController]
 	public class DiscountCouponController : ControllerBase
 	{
-		private readonly DiscountCouponService _service;
+		private readonly Gamerize.BLL.Services.DiscountCouponService _service;
 
-		public DiscountCouponController(DiscountCouponService service) => _service = service;
+		public DiscountCouponController(Gamerize.BLL.Services.DiscountCouponService service) => _service = service;
 
 		[HttpGet("GetAll")]
 		public async Task<ActionResult<ICollection<DiscountCouponDTO>>> Get()
@@ -106,6 +106,31 @@ namespace webapi.Controllers
 				return StatusCode(500, ex.Message);
 			}
 		}
-	}
+
+        [HttpGet("discount")]
+        public async Task<IActionResult> GetDiscountByPromoCode([FromQuery] string promoCode)
+        {
+            try
+            {
+                var (discount, id) = await _service.GetDiscountByPromoCodeAsync(promoCode);
+
+				var result = new
+				{
+					Discount = discount,
+					Id = id
+				};
+
+                return Ok(result);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+    }
 }
 

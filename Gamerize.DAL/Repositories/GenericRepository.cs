@@ -1,5 +1,4 @@
 ﻿using Gamerize.DAL.Contexts;
-using Gamerize.DAL.Entities.Admin;
 using Gamerize.DAL.Entities.Shop;
 using Gamerize.DAL.Repositories.Interfaces;
 using Gamerize.DAL.Specifications;
@@ -120,28 +119,5 @@ namespace Gamerize.DAL.Repositories
         {
             return await _context.Set<Question>().Include(q => q.Answer).ToListAsync();
         }
-
-        public async Task LoadRelatedEntities(Order order)
-        {
-            await _context.Entry(order).Reference(o => o.DeliveryMethod).LoadAsync();
-            await _context.Entry(order).Reference(o => o.PaymentMethod).LoadAsync();
-            await _context.Entry(order).Reference(o => o.DiscountCoupon).LoadAsync();
-            await _context.Entry(order).Reference(o => o.Status).LoadAsync();
-
-            foreach (var item in order.OrderItems)
-            {
-                await _context.Entry(item).Reference(i => i.Product).LoadAsync();
-                await _context.Entry(item.Product).Reference(p => p.Language).LoadAsync();
-                await _context.Entry(item.Product).Reference(p => p.Category).LoadAsync();
-                await _context.Entry(item.Product).Reference(p => p.Genre).LoadAsync();
-                await _context.Entry(item.Product).Reference(p => p.Theme).LoadAsync();
-                await _context.Entry(item.Product).Reference(p => p.Puzzle).LoadAsync();
-                await _context.Entry(item.Product).Reference(p => p.MindGames).LoadAsync();
-                await _context.Entry(item.Product).Collection(p => p.Feedbacks).LoadAsync();
-                await _context.Entry(item.Product).Collection(p => p.Tags).LoadAsync();
-                await _context.Entry(item.Product).Collection(p => p.Images).LoadAsync();
-            }
-        }
-
     }
 }

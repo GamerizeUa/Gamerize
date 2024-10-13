@@ -28,43 +28,48 @@ namespace Gamerize.BLL.Services
             _userManager = userManager;
         }
 
-        public async Task<WishListDTO> AddProductInWishList(WishListDTO wishListDTO)
+        public async Task<WishListSimpleDTO> AddProductInWishList(string UserId, WishListSimpleDTO wishListDTO)
         {
             try
             {
-                var user = await _userManager.FindByIdAsync(wishListDTO.UserId.ToString());
+                var user = await _userManager.FindByIdAsync(UserId);
                 if (user == null)
                 {
-                    throw new Exception("User not found");
+                    throw new UserNotFoundException("User not found.");
                 }
 
                 var productExists = await _productRepository.GetByIdAsync(wishListDTO.ProductId);
                 if (productExists == null)
                 {
-                    throw new InvalidOperationException("Product not found in the database.");
+                    throw new ProductNotFoundException("Product not found in the database.");
                 }
 
-                var existingProductInWishList = await _repository.
-                    FindAsync(wl => wl.UserId == wishListDTO.UserId && wl.ProductId == wishListDTO.ProductId);
+                int userIdInt = Convert.ToInt32(UserId); 
+                var existingProductInWishList = await _repository
+                    .FindAsync(wl => wl.UserId == userIdInt && wl.ProductId == wishListDTO.ProductId);
                 if (existingProductInWishList.Any())
                 {
-                    throw new InvalidOperationException("Product is already in the wishlist.");
+                    throw new DuplicateItemException("Product is already in the wishlist.");
                 }
 
                 var wishList = new WishList
                 {
-                    UserId = wishListDTO.UserId,
+                    UserId = userIdInt,
                     ProductId = wishListDTO.ProductId,
                 };
 
                 await _repository.AddAsync(wishList);
                 await _unitOfWork.SaveChangesAsync();
 
-                return _mapper.Map<WishListDTO>(wishList);
+                return _mapper.Map<WishListSimpleDTO>(wishList);
             }
-            catch (InvalidOperationException ex)
+            catch (ProductNotFoundException ex)
             {
-                throw new DuplicateItemException("Product is already in the wishlist.", ex);
+                throw new InvalidOperationException("Product not found in the wishlist.", ex);
+            }
+            catch (DuplicateItemException ex)
+            {
+                throw new InvalidOperationException("Product is already in the wishlist.", ex);
             }
             catch (DbUpdateException ex)
             {
@@ -72,11 +77,11 @@ namespace Gamerize.BLL.Services
             }
         }
 
-        public async Task<(IEnumerable<WishListDTO> Items, int TotalPages)> GetAllItemsFromWishList(int userId, int page, int pageSize)
+        public async Task<(IEnumerable<WishListDTO> Items, int TotalPages, int CurrentPage)> GetAllItemsFromWishList(string userId, int page, int pageSize)
         {
             try
             {
-                var user = await _userManager.FindByIdAsync(userId.ToString());
+                var user = await _userManager.FindByIdAsync(userId);
                 if (user == null)
                 {
                     throw new Exception("User not found");
@@ -84,7 +89,7 @@ namespace Gamerize.BLL.Services
 
                 var wishListItemsQuery = _repository
                     .Get()
-                    .Where(wl => wl.UserId == userId)
+                    .Where(wl => wl.UserId == Convert.ToInt32(userId))
                     .Include(wl => wl.Product)
                     .Include(wl => wl.Product.Language)
                     .Include(wl => wl.Product.Category)
@@ -106,7 +111,7 @@ namespace Gamerize.BLL.Services
 
                 var mappedWishList = _mapper.Map<IEnumerable<WishListDTO>>(pagedWishList);
 
-                return (mappedWishList, totalPages);
+                return (mappedWishList, totalPages, page);
             }
             catch (DbUpdateException ex)
             {
@@ -150,5 +155,33 @@ namespace Gamerize.BLL.Services
             }
         }
 
+        public async Task<List<WishListSimpleDTO>> GetOnlyProductIdFromWishList(string userId)
+        {
+            try
+            {
+                var user = await _userManager.FindByIdAsync(userId);
+                if (user == null)
+                {
+                    throw new Exception("User not found");
+                }
+
+                var productIds = await _repository
+                                        .Get() 
+                                        .Where(w => w.UserId == Convert.ToInt32(userId))
+                                        .Select(w => new WishListSimpleDTO
+                                        {
+                                            ProductId = w.ProductId
+                                        })
+                                        .ToListAsync();
+
+                var mapedOnlyProductId = _mapper.Map<List<WishListSimpleDTO>>(productIds);
+
+                return mapedOnlyProductId;
+            }
+            catch (DbUpdateException ex) 
+            {
+                throw new ServerErrorException("Error occured while accessing the database", ex);
+            }
+        }
     }
 }

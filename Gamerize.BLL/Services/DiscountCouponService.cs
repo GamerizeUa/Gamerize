@@ -5,6 +5,7 @@ using Gamerize.DAL.Entities.Shop;
 using Gamerize.DAL.Repositories.Interfaces;
 using Gamerize.DAL.UnitOfWork.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using SendGrid.Helpers.Errors.Model;
 
 namespace Gamerize.BLL.Services
 {
@@ -106,6 +107,26 @@ namespace Gamerize.BLL.Services
                 throw new ServerErrorException(ex.Message, ex);
             }
         }
+
+        public async Task<(double, int)> GetDiscountByPromoCodeAsync(string promoCode)
+        {
+            try
+            {
+                var coupon = await _repository.Get().FirstOrDefaultAsync(c => c.Code == promoCode);
+
+                if (coupon == null || coupon.ActiveTo < DateTime.Now)
+                {
+                    throw new NotFoundException($"Промокод {promoCode} не знайдено або він недійсний.");
+                }
+
+                return (coupon.Discount, coupon.Id);
+            }
+            catch (Exception ex)
+            {
+                throw new ServerErrorException(ex.Message, ex);
+            }
+        }
+
 
         private string ExceptionMessage(object? value = null) =>
             value switch

@@ -28,11 +28,10 @@ namespace Gamerize.DAL.Contexts
 		#endregion
 		#region AdminDatas
 		public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
-		public virtual DbSet<OrderItem> OrderItems { get; set; }
 		public virtual DbSet<Order> Orders { get; set; }
 		public virtual DbSet<DeliveryMethod> DeliveryMethods { get; set; }
 		public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
 		#endregion
 		public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options) { }
-	}
+    }
 }

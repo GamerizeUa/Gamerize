@@ -2,8 +2,6 @@
 using Gamerize.BLL.Models;
 using Gamerize.Common.Extensions.Exceptions;
 using Gamerize.DAL.Entities.Admin;
-using Gamerize.DAL.Entities.Shop;
-using Gamerize.DAL.Migrations;
 using Gamerize.DAL.Repositories.Interfaces;
 using Gamerize.DAL.UnitOfWork.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -17,69 +15,44 @@ namespace Gamerize.BLL.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<Order> _repository;
         private readonly IRepository<OrderStatus> _orderStatusRepository;
-        private readonly IRepository<OrderItem> _orderItemRepository;
-        private readonly IRepository<User> _userRepository;
-        private readonly IRepository<DiscountCoupon> _couponRepository;
-        private readonly IRepository<Product> _productRepository;
+        private readonly IRepository<UnregisteredUser> _unregisterUserRepository;
         private readonly IMapper _mapper;
         private readonly UserManager<DAL.Entities.Admin.User> _userManager;
         private readonly IEmailSender _emailSender;
 
-        public OrderService(IUnitOfWork unitOfWork, IRepository<Order> repository, IRepository<User> userRepository, 
-            IRepository<DiscountCoupon> couponRepository, IRepository<Product> productRepository, IMapper mapper, 
-            IRepository<OrderItem> orderItemRepository, UserManager<User> userManager, IEmailSender emailSender, IRepository<OrderStatus> orderStatusRepository)
+        public OrderService(IUnitOfWork unitOfWork, IRepository<Order> repository, IMapper mapper, IRepository<UnregisteredUser> unregisterUserRepository,
+            UserManager<User> userManager, IEmailSender emailSender, IRepository<OrderStatus> orderStatusRepository)
         {
             _unitOfWork = unitOfWork;
             _repository = repository;
-            _userRepository = userRepository;
-            _couponRepository = couponRepository;
-            _productRepository = productRepository;
             _mapper = mapper;
-            _orderItemRepository = orderItemRepository;
             _userManager = userManager;
             _emailSender = emailSender;
             _orderStatusRepository = orderStatusRepository;
+            _unregisterUserRepository = unregisterUserRepository;
         }
 
-        public async Task<ICollection<OrderDTO>> GetOrders()
+        public async Task<(ICollection<OrderDTO>, int totalPages, int CurrentPage, int totalOrders)> GetOrders(int totalOrders, int page)
         {
             try
             {
                 var orders = await _repository.Get()
-                    .Include(x => x.User)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Language)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Category)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Genre)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Theme)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Puzzle)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.MindGames)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Tags)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Feedbacks)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Images)
-                    .Include(x => x.Status)
-                    .Include(x => x.PaymentMethod)
-                    .Include(x => x.DeliveryMethod)
+                    .Include(o => o.UnregisteredUser)
+                    .Include(o => o.Status)
+                    .Include(o => o.DeliveryMethod)
+                    .Include(o => o.PaymentMethod)
+                    .OrderByDescending(o => o.CreatedAt)
                     .ToListAsync();
 
-                return _mapper.Map<ICollection<OrderDTO>>(orders);
+                var totalCount = orders.Count;
+                var totalPages = (int)Math.Ceiling((double)totalCount / totalOrders);
+
+                var paginatedOrders = orders
+                    .Skip((page - 1) * totalOrders)
+                    .Take(totalOrders)
+                    .ToList();
+
+                return (_mapper.Map<ICollection<OrderDTO>>(paginatedOrders), totalPages, page, totalCount);
             }
             catch (DbUpdateException ex)
             {
@@ -92,43 +65,16 @@ namespace Gamerize.BLL.Services
             try
             {
                 var order = await _repository.Get()
-                    .Where(o => o.Id == id)
-                    .Include(o => o.User)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Language)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Category)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Genre)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Theme)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Puzzle)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.MindGames)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Tags)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Feedbacks)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Images)
+                    .Include(o => o.UnregisteredUser)
                     .Include(o => o.Status)
-                    .Include(x => x.PaymentMethod)
-                    .Include(x => x.DeliveryMethod)
-                    .FirstOrDefaultAsync();
+                    .Include(o => o.DeliveryMethod)
+                    .Include(o => o.PaymentMethod)
+                    .OrderByDescending(o => o.CreatedAt)
+                    .FirstOrDefaultAsync(o => o.Id == id);
 
                 if (order == null)
                 {
-                    throw new InvalidIdException(ExceptionMessage(id));
+                    throw new InvalidIdException($"Order with ID {id} not found.");
                 }
 
                 return _mapper.Map<OrderDTO>(order);
@@ -139,58 +85,53 @@ namespace Gamerize.BLL.Services
             }
         }
 
-        public async Task<ICollection<OrderDTO>> GetByUserIdAsync(int userId)
+        public async Task<(ICollection<OrderDTO>, int totalPages, int currentPage, int totalOrders)> GetByUserIdAsync(int? statusId, int userId, int totalOrders, int page)
         {
             try
             {
                 var user = await _userManager.FindByIdAsync(userId.ToString());
-
                 if (user == null)
                 {
-                    throw new Exception("User not found");
+                    throw new InvalidIdException($"User with ID {userId} not found.");
                 }
 
+                // Отримуємо всі замовлення користувача
                 var orders = await _repository.Get()
                     .Where(o => o.UserId == userId)
-                    .Include(x => x.User)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Language)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Category)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Genre)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Theme)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Puzzle)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.MindGames)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Tags)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Feedbacks)
-                    .Include(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.Images)
-                    .Include(x => x.Status)
-                    .Include(x => x.PaymentMethod)
-                    .Include(x => x.DeliveryMethod)
-                    .ToListAsync();
+                    .Include(o => o.UnregisteredUser)
+                    .Include(o => o.Status)
+                    .Include(o => o.DeliveryMethod)
+                    .Include(o => o.PaymentMethod)
+                    .ToListAsync();  // Витягуємо всі дані
 
-                if (orders == null || !orders.Any())
+                if (orders.Count == 0)
                 {
-                    throw new Exception("User has no orders");
+                    throw new Exception("User has no orders.");
                 }
 
-                return _mapper.Map<ICollection<OrderDTO>>(orders);
+                // Фільтруємо за статусом
+                if (statusId.HasValue)
+                {
+                    if (statusId == 1 || statusId == 3 || statusId == 4)
+                    {
+                        orders = orders.Where(o => o.OrderStatusId == statusId.Value).ToList();
+                    }
+                }
+
+                // Сортуємо за датою створення
+                orders = orders.OrderByDescending(o => o.CreatedAt).ToList();
+
+                // Підраховуємо кількість сторінок
+                var totalCount = orders.Count;
+                var totalPages = (int)Math.Ceiling((double)totalCount / totalOrders);
+
+                // Пагінація
+                var paginatedOrders = orders
+                    .Skip((page - 1) * totalOrders)
+                    .Take(totalOrders)
+                    .ToList();
+
+                return (_mapper.Map<ICollection<OrderDTO>>(paginatedOrders), totalPages, page, totalCount);
             }
             catch (DbUpdateException ex)
             {
@@ -202,96 +143,52 @@ namespace Gamerize.BLL.Services
         {
             try
             {
-                UnregisteredUserDTO userDTO = null;
-                if (createOrderDTO.UserId.HasValue && createOrderDTO.UserId.Value != 0)
+                ValidateUnregisteredUser(createOrderDTO.UnregisteredUser, createOrderDTO.DeliveryMethodId);
+
+                var unregisteredUserEntity = new UnregisteredUser
                 {
-                    var user = await _userManager.FindByIdAsync(createOrderDTO.UserId.Value.ToString());
-                    if (user != null)
-                    {
-                        userDTO = new UnregisteredUserDTO
-                        {
-                            Name = user.Name,
-                            PhoneNumber = user.PhoneNumber,
-                            City = user.City,
-                            DeliveryAddress = user.DeliveryAddress,
-                            Email = user.Email
-                        };
-                    }
-                }
-                else
-                {
-                    userDTO = createOrderDTO.User ?? throw new Exception("User information is required for unregistered users.");
-                }
+                    Name = createOrderDTO.UnregisteredUser.Name,
+                    PhoneNumber = createOrderDTO.UnregisteredUser.PhoneNumber,
+                    City = createOrderDTO.UnregisteredUser.City,
+                    DeliveryAddress = createOrderDTO.UnregisteredUser.DeliveryAddress,
+                    Email = createOrderDTO.UnregisteredUser.Email
+                };
+
+                await _unregisterUserRepository.AddAsync(unregisteredUserEntity);
+                await _unitOfWork.SaveChangesAsync();
 
                 var order = new Order
                 {
-                    UserId = createOrderDTO.UserId.HasValue && createOrderDTO.UserId.Value != 0 ? createOrderDTO.UserId : null,
+                    UserId = createOrderDTO.UserId,
                     DeliveryMethodId = createOrderDTO.DeliveryMethodId,
                     PaymentMethodId = createOrderDTO.PaymentMethodId,
                     Comment = createOrderDTO.Comment,
-                    TotalPrice = 0,
-                    CreatedAt = createOrderDTO.CreatedAt,
+                    TotalPrice = createOrderDTO.TotalPrice,
+                    TotalDiscount = createOrderDTO.TotalDiscount,
+                    CreatedAt = DateTime.UtcNow.ToLocalTime(),
                     OrderStatusId = 1,
-                    DiscountCouponId = createOrderDTO.DiscountCouponId.HasValue && createOrderDTO.DiscountCouponId.Value != 0 ? createOrderDTO.DiscountCouponId : null
+                    ProductId = createOrderDTO.ProductId,
+                    Quantity = createOrderDTO.Quantity,
+                    DiscountCouponId = createOrderDTO.DiscountCouponId,
+                    UnregisteredUserId = unregisteredUserEntity.Id
                 };
 
                 await _repository.AddAsync(order);
                 await _unitOfWork.SaveChangesAsync();
 
-                order.OrderItems = new List<OrderItem>();
-                decimal totalPrice = 0;
+                var orderWithUser = await _repository.Get()
+                    .Include(o => o.UnregisteredUser)
+                    .Include(o => o.Status)
+                    .Include(o => o.DeliveryMethod)
+                    .Include(o => o.PaymentMethod)
+                    .FirstOrDefaultAsync(o => o.Id == order.Id);
 
-                foreach (var item in createOrderDTO.OrderItems)
+                if (orderWithUser == null)
                 {
-                    var product = await _productRepository.GetByIdAsync(item.ProductId);
-                    if (product == null)
-                    {
-                        throw new Exception($"Product with ID {item.ProductId} not found.");
-                    }
-
-                    var orderItem = new OrderItem
-                    {
-                        OrderId = order.Id,
-                        ProductId = item.ProductId,
-                        Quantity = item.Quantity,
-                        UnitPrice = product.Price
-                    };
-
-                    totalPrice += orderItem.UnitPrice * orderItem.Quantity;
-                    await _orderItemRepository.AddAsync(orderItem);
-                    order.OrderItems.Add(orderItem);
+                    throw new Exception("Order was not created successfully.");
                 }
 
-                if (createOrderDTO.DiscountCouponId.HasValue)
-                {
-                    var discountCoupon = await _couponRepository.GetByIdAsync(createOrderDTO.DiscountCouponId.Value);
-                    if (discountCoupon != null)
-                    {
-                        if (discountCoupon.ActiveFrom <= DateTime.Now && (!discountCoupon.ActiveTo.HasValue || discountCoupon.ActiveTo.Value >= DateTime.Now))
-                        {
-                            var discountAmount = totalPrice * (decimal)discountCoupon.Discount / 100;
-                            totalPrice -= discountAmount;
-                        }
-                        else
-                        {
-                            throw new Exception("The discount coupon has expired or is not yet active.");
-                        }
-                    }
-                }
-
-                order.TotalPrice = totalPrice;
-                await _unitOfWork.SaveChangesAsync();
-
-                await _repository.LoadRelatedEntities(order);
-
-                var orderDTO = _mapper.Map<OrderDTO>(order);
-                orderDTO.User = userDTO;
-
-                orderDTO.OrderItems = orderDTO.OrderItems.GroupBy(item => item.Id)
-                                                         .Select(group => group.First())
-                                                         .ToList();
-
-                return orderDTO;
+                return _mapper.Map<OrderDTO>(orderWithUser);
             }
             catch (DbUpdateException ex)
             {
@@ -304,13 +201,48 @@ namespace Gamerize.BLL.Services
             }
         }
 
+        private void ValidateUnregisteredUser(UnregisteredUserDTO unregisteredUser, int deliveryMethodId)
+        {
+            if (unregisteredUser == null)
+            {
+                throw new Exception("User information is required.");
+            }
+
+            if (deliveryMethodId == 2)
+            {
+                if (string.IsNullOrEmpty(unregisteredUser.Name) ||
+                    string.IsNullOrEmpty(unregisteredUser.PhoneNumber) ||
+                    string.IsNullOrEmpty(unregisteredUser.City) ||
+                    string.IsNullOrEmpty(unregisteredUser.DeliveryAddress) ||
+                    string.IsNullOrEmpty(unregisteredUser.Email))
+                {
+                    throw new Exception("All fields for unregistered user must be filled for this delivery method.");
+                }
+            }
+            else if (deliveryMethodId == 1)
+            {
+                if (string.IsNullOrEmpty(unregisteredUser.Name) ||
+                    string.IsNullOrEmpty(unregisteredUser.PhoneNumber) ||
+                    string.IsNullOrEmpty(unregisteredUser.Email))
+                {
+                    throw new Exception("Name, PhoneNumber, and Email must be filled for this delivery method.");
+                }
+            }
+            else
+            {
+                throw new Exception("Invalid delivery method.");
+            }
+        }
+
         public async Task UpdateOrderStatusAsync(int orderId, int newStatusId)
         {
             try
             {
                 var order = await _repository.Get()
-                    .Include(o => o.User)   
+                    .Include(o => o.UnregisteredUser)
                     .Include(o => o.Status)
+                    .Include(o => o.DeliveryMethod)
+                    .Include(o => o.PaymentMethod)
                     .FirstOrDefaultAsync(o => o.Id == orderId);
 
                 if (order == null)
@@ -318,25 +250,40 @@ namespace Gamerize.BLL.Services
                     throw new Exception($"Order with ID {orderId} not found.");
                 }
 
-                var orderDTO = _mapper.Map<OrderDTO>(order);
-                
-                if (order.OrderStatusId == newStatusId)
+                var currentStatusId = order.OrderStatusId;
+
+                if (currentStatusId == newStatusId)
                 {
                     throw new Exception("The new status must be different from the current status.");
                 }
 
+                var currentStatus = await _orderStatusRepository.GetByIdAsync(currentStatusId);
+                var newStatus = await _orderStatusRepository.GetByIdAsync(newStatusId);
+
                 order.OrderStatusId = newStatusId;
-                var newStatus = await _orderStatusRepository.GetByIdAsync(order.OrderStatusId);
+
+                if (newStatusId == 3)
+                {
+                    order.UpdatedAd = DateTime.UtcNow.ToLocalTime();
+                }
+
+                if (newStatusId == 4)
+                {
+                    order.ClosedAt = DateTime.UtcNow.ToLocalTime();
+                }
 
                 await _unitOfWork.SaveChangesAsync();
+
+                var orderDTO = _mapper.Map<OrderDTO>(order);
+
                 await _emailSender.SendEmailAsync(
-                    orderDTO.User.Email,
+                    orderDTO.UnregisteredUser.Email,
                     "Зміна статусу замовлення",
-                    $"Вітаємо, шановний {orderDTO.User.Name}! Хочемо повідомити, що статус вашого замовлення успішно змінено!<br/><br/>" +
+                    $"Вітаємо, шановний Клієнт! Хочемо повідомити, що статус вашого замовлення успішно змінено!<br/><br/>" +
                     $"Тепер ваш статус замовлення:<br/>" +
                     $"<strong>{newStatus.Status}</strong><br/><br/>" +
                     $"Попередній статус замовлення:<br/>" +
-                    $"<strong>{orderDTO.Status.Status}</strong>"
+                    $"<strong>{currentStatus.Status}</strong>"
                 );
             }
             catch (DbUpdateException ex)
@@ -350,12 +297,163 @@ namespace Gamerize.BLL.Services
             }
         }
 
-        private string ExceptionMessage(object? value = null) =>
-            value switch
+        public async Task<(ICollection<OrderDTO>, int totalPages, int CurrentPage, int totalOrders)> GetByStatusAllOrders(int statusId, int totalOrders, int page)
+        {
+            try
             {
-                int idt when value is int => $"Замовлення з id: {idt} ще/вже не існує!",
-                string namet when value is string => $"Замовлення з назвою {namet} вже існує",
-                _ => "Something has gone wrong"
-            };
-    }
+                var orders = await _repository.Get()
+                    .Where(x => x.OrderStatusId == statusId)
+                    .Include(o => o.UnregisteredUser)
+                    .Include(o => o.Status)
+                    .Include(o => o.DeliveryMethod)
+                    .Include(o => o.PaymentMethod)
+                    .OrderByDescending(o => o.CreatedAt)
+                    .ToListAsync();
+
+                if (!orders.Any())
+                {
+                    throw new Exception($"No orders found for status ID {statusId}.");
+                }
+
+                var totalCount = orders.Count;
+                var totalPages = (int)Math.Ceiling((double)totalCount / totalOrders);
+
+                var paginatedOrders = orders
+                    .Skip((page - 1) * totalOrders)
+                    .Take(totalOrders)
+                    .ToList();
+
+                return (_mapper.Map<ICollection<OrderDTO>>(paginatedOrders), totalPages, page, totalCount);
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new ServerErrorException(ex.Message, ex);
+            }
+        }
+
+        public async Task<(ICollection<OrderDTO>, int totalPages, int currentPage, int totalOrders)> SearchOrdersAsync(
+    string? searchTerm = null, int totalOrders = 10, int page = 1, int? statusId = null)
+        {
+            try
+            {
+                var query = _repository.Get().AsQueryable();
+
+                if (!string.IsNullOrWhiteSpace(searchTerm))
+                {
+                    if (Int32.TryParse(searchTerm, out var orderId))
+                    {
+                        query = query.Where(o => o.Id == orderId);
+                    }
+                    else
+                    {
+                        query = query.Where(o => o.UnregisteredUser.Name.Contains(searchTerm) ||
+                                                 (o.UnregisteredUser != null && o.UnregisteredUser.Name.Contains(searchTerm)));
+                    }
+                }
+
+                if (statusId.HasValue)
+                {
+                    query = query.Where(o => o.OrderStatusId == statusId.Value);
+                }
+
+                var totalCount = await query.CountAsync();
+
+                if (totalCount == 0)
+                {
+                    throw new Exception("No orders found matching the criteria.");
+                }
+
+                var totalPages = (int)Math.Ceiling((double)totalCount / totalOrders);
+
+                var paginatedOrders = await query
+                    .Skip((page - 1) * totalOrders)
+                    .Take(totalOrders)
+                    .Include(o => o.UnregisteredUser)
+                    .Include(o => o.Status)
+                    .Include(o => o.DeliveryMethod)
+                    .Include(o => o.PaymentMethod)
+                    .OrderByDescending(o => o.CreatedAt)
+                    .ToListAsync();
+
+                return (_mapper.Map<ICollection<OrderDTO>>(paginatedOrders), totalPages, page, totalCount);
+            }
+            catch (Exception ex)
+            {
+                throw new ServerErrorException($"An unexpected error occurred: {ex.Message}", ex);
+            }
+        }
+
+        public async Task<(ICollection<OrderDTO>, int totalPages, int currentPage, int totalOrders)> GetOrdersWithPaginationAndSearchAsync(
+    int totalOrders, int page, bool isDescending = true, DateTime? startDate = null, DateTime? endDate = null,
+    int? statusId = null, string? searchTerm = null)
+        {
+            try
+            {
+                var query = _repository.Get().AsQueryable();
+
+                if (startDate.HasValue && endDate.HasValue)
+                {
+                    var start = startDate.Value.Date;
+                    var end = endDate.Value.Date.AddDays(1).AddTicks(-1);
+                    query = query.Where(o => o.CreatedAt >= start && o.CreatedAt <= end);
+                }
+
+                if (statusId.HasValue)
+                {
+                    query = query.Where(o => o.OrderStatusId == statusId.Value);
+                }
+
+                if (!string.IsNullOrWhiteSpace(searchTerm))
+                {
+                    if (Int32.TryParse(searchTerm, out var orderId))
+                    {
+                        query = query.Where(o => o.Id == orderId);
+                    }
+                    else
+                    {
+                        query = query.Where(o => o.UnregisteredUser.Name.Contains(searchTerm) ||
+                                                 (o.UnregisteredUser != null && o.UnregisteredUser.Name.Contains(searchTerm)));
+                    }
+                }
+
+                query = isDescending ? query.OrderByDescending(o => o.CreatedAt) : query.OrderBy(o => o.CreatedAt);
+
+                var totalCount = await query.CountAsync();
+                var totalPages = (int)Math.Ceiling((double)totalCount / totalOrders);
+
+                var paginatedOrders = await query
+                    .Skip((page - 1) * totalOrders)
+                    .Take(totalOrders)
+                    .Include(o => o.UnregisteredUser)
+                    .Include(o => o.Status)
+                    .Include(o => o.DeliveryMethod)
+                    .Include(o => o.PaymentMethod)
+                    .OrderByDescending(o => o.CreatedAt)
+                    .ToListAsync();
+
+                if (!paginatedOrders.Any())
+                {
+                    throw new Exception("No orders found.");
+                }
+
+                return (_mapper.Map<ICollection<OrderDTO>>(paginatedOrders), totalPages, page, totalCount);
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new ServerErrorException($"An error occurred while querying orders: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new ServerErrorException($"An unexpected error occurred: {ex.Message}", ex);
+            }
+        }
+
+        private string ExceptionMessage(object? value = null) =>
+                value switch
+                {
+                    int idt when value is int => $"Замовлення з id: {idt} ще/вже не існує!",
+                    string namet when value is string => $"Замовлення з назвою {namet} вже існує",
+                    _ => "Something has gone wrong"
+                };
+    } 
 }

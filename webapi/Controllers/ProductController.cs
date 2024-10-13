@@ -19,6 +19,24 @@ namespace webapi.Controllers
             _productService = productService;
         }
 
+        [HttpPost("GetProductsByIds")]
+        public async Task<ActionResult<ICollection<ProductFullDTO>>> GetProductsByIds([FromBody] List<int> productIds)
+        {
+            if (productIds == null || !productIds.Any())
+            {
+                return BadRequest("Product IDs cannot be null or empty.");
+            }
+
+            var products = await _productService.GetProductsByIds(productIds);
+
+            if (products == null || !products.Any())
+            {
+                return NotFound("No products found for the given IDs.");
+            }
+
+            return Ok(products);
+        }
+
         [HttpPost("GetSimpleList")]
         public async Task<IActionResult> GetAllProducts([FromBody] ProductListFilterRequest filterRequest, int page = 1, int pageSize = 12)
         {

@@ -110,7 +110,7 @@ namespace Gamerize.BLL.Services
 
                 var sortedQuestions = allQuestions
                     .OrderByDescending(q => q.IsStarred)
-                    .ThenBy(q => q.Answer == null)
+                    .ThenBy(q => q.IsAnswered == true)
                     .ThenByDescending(q => q.DateTime)
                     .ToList();
 
@@ -274,7 +274,7 @@ namespace Gamerize.BLL.Services
         }
         #endregion
 
-        public async Task<(ICollection<QuestionDTO>, int totalPages)> SearchAsync(string term, int totalQuestions, int page)
+        public async Task<(ICollection<QuestionDTO>, int totalPages, int CurrentPage, int TotalMessages)> SearchAsync(string term, int totalQuestions, int page)
         {
             try
             {
@@ -293,7 +293,7 @@ namespace Gamerize.BLL.Services
                     .Take(totalQuestions)
                     .ToList();
 
-                return (_mapper.Map<ICollection<QuestionDTO>>(paginatedQuestions), totalPages);
+                return (_mapper.Map<ICollection<QuestionDTO>>(paginatedQuestions), totalPages, page, totalCount);
             }
             catch (DbUpdateException ex)
             {

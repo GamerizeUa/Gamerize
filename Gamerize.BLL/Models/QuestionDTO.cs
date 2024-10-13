@@ -8,6 +8,7 @@
 		public string Email { get; set; }
 		public DateTime DateTime { get; set; }
 		public bool IsStarred { get; set; }
+		public bool IsAnswered { get; set; }
 		public AnswerDTO? Answer { get; set; }
 	}
 }
