@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { ChevronDown, ChevronUp } from '@/assets/icons/Chevron';
 import styles from './OrderHistory.module.css';
+import {useDispatch, useSelector} from "react-redux";
+import {fetchStatuses} from "@/redux/statusesOrderSlice.js";
+import {changePage} from "@/redux/orderHistorySlice.js";
 
-const FilterOption = ({ id, value, filter, onChange, label }) => (
+const FilterOption = ({ id, status, onChange, filter }) => (
     <div className={styles.selectorItem}>
         <div className={styles.inputWrapper}>
             <span className={styles.fakeInput} />
@@ -10,39 +13,39 @@ const FilterOption = ({ id, value, filter, onChange, label }) => (
                 type="radio"
                 id={id}
                 name="filter"
-                value={value}
-                checked={filter === value}
+                value={status}
+                checked={filter.status === status}
                 onChange={onChange}
                 className={styles.selectorInput}
             />
         </div>
         <label htmlFor={id} className={styles.selectorLabel}>
-            {label}
+            {status}
         </label>
     </div>
 );
 
 export const OrderFilter = ({ filter, setFilter }) => {
     const [isSelectorOpen, setIsSelectorOpen] = useState(false);
+    const dispatch = useDispatch();
+    const {statusesOrder} = useSelector((state) => state.statusesOrder);
+
+    useEffect(() => {
+        dispatch(fetchStatuses())
+    }, []);
 
     const toggleSelector = () => setIsSelectorOpen((prev) => !prev);
 
-    const handleChangeFilter = (event) => {
-        setFilter(event.target.value);
+    const handleChangeFilter = (id, status) => {
+        dispatch(changePage(1));
+        setFilter({id, status});
         setIsSelectorOpen(false);
     };
-
-    const filterOptions = [
-        { id: 'all', value: 'Всі замовлення', label: 'Всі замовлення' },
-        { id: 'waiting', value: 'Очікуються', label: 'Очікуються' },
-        { id: 'delivered', value: 'Доставлені', label: 'Доставлені' },
-        { id: 'sent', value: 'Відправлені', label: 'Відправлені' },
-    ];
 
     return (
         <div>
             <button className={styles.selectingBtn} onClick={toggleSelector}>
-                <p className={styles.selectingBtnText}>{filter}</p>
+                <p className={styles.selectingBtnText}>{filter.status}</p>
                 {isSelectorOpen ? (
                     <ChevronDown className={styles.chevron} />
                 ) : (
@@ -52,12 +55,12 @@ export const OrderFilter = ({ filter, setFilter }) => {
             {isSelectorOpen && (
                 <div className={styles.selectorWrapper}>
                     <div className={styles.selectorContent}>
-                        {filterOptions.map((option) => (
+                        {statusesOrder.map((option) => (
                             <FilterOption
                                 key={option.id}
                                 {...option}
                                 filter={filter}
-                                onChange={handleChangeFilter}
+                                onChange={() => handleChangeFilter(option.id, option.status)}
                             />
                         ))}
                     </div>

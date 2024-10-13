@@ -24,42 +24,19 @@ const OrderHistoryContainer = ({ filter, setFilter, children }) => {
     );
 };
 
-const getStatusByFilterValue = (filterValue) => {
-    let statusValue;
-
-    switch (filterValue) {
-        case 'Всі замовлення':
-            statusValue = 'Усі';
-            break;
-        case 'Очікуються':
-            statusValue = 'Очікується';
-            break;
-        case 'Доставлені':
-            statusValue = 'Доставлено';
-            break;
-        case 'Відправлені':
-            statusValue = 'Відправлено';
-            break;
-        default:
-            break;
-    }
-
-    return statusValue;
-};
-
 const getMessageForEmptyOrders = (filterValue) => {
     switch (filterValue) {
-        case 'Доставлені':
+        case 'Доставлено':
             return {
                 title: 'Немає доставлених замовлень',
                 subtitle: 'Ми ще не доставили вам жодного замовлення.',
             };
-        case 'Відправлені':
+        case 'Відправлено':
             return {
                 title: 'Немає відправлених замовлень',
                 subtitle: 'Ми ще не відправили вам жодного замовлення.',
             };
-        case 'Очікуються':
+        case 'Очікується':
             return {
                 title: 'Немає очікуваних замовлень',
                 subtitle: 'Жодне замовлення ще не очікується на відправку.',
@@ -73,17 +50,14 @@ const getMessageForEmptyOrders = (filterValue) => {
 };
 
 const OrderHistory = () => {
-    const [filter, setFilter] = useState('Всі замовлення');
+    const [filter, setFilter] = useState({id: 0, status: 'Всі замовлення'});
     const [userId, setUserId] = useState(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const ordersPerPage = 3;
+    const ordersPerPage = 5;
 
-    const { orders, totalPages, page, totalOrders, isLoading, error } =
-        useSelector((state) =>
-            selectOrdersByUserAndStatus(state, getStatusByFilterValue(filter))
-        );
+    const { orders, totalPages, page, totalOrders, isLoading, error } = useSelector(selectOrdersByUserAndStatus);
 
     useEffect(() => {
         getAccountInformation().then((user) => setUserId(user.id));
@@ -93,11 +67,11 @@ const OrderHistory = () => {
         dispatch(
             fetchOrdersByUserId({
                 id: userId,
-                page,
                 totalOrder: ordersPerPage,
+                statusId: filter.id
             })
         );
-    }, [userId, dispatch, page]);
+    }, [userId, dispatch, page, filter]);
 
     useEffect(() => {
         window.scrollTo({
@@ -122,7 +96,7 @@ const OrderHistory = () => {
     else if (orders.length === 0)
         return (
             <OrderHistoryContainer filter={filter} setFilter={setFilter}>
-                <Message {...getMessageForEmptyOrders(filter)} />
+                <Message {...getMessageForEmptyOrders(filter.status)} />
             </OrderHistoryContainer>
         );
     else if (error)

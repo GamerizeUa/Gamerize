@@ -67,16 +67,4 @@ export const selectViewsHistory = createSelector(
 );
 
 export const selectProducts = (state) => state.productsCatalog;
-export const selectOrdersByUserAndStatus = ({ orderHistory }, status) => {
-    if (status == 'Усі') return orderHistory;
-
-    const filteredOrders = orderHistory.orders.filter(
-        (order) => order.status.status == status
-    );
-    console.log(filteredOrders);
-
-    return {
-        ...orderHistory,
-        orders: filteredOrders,
-    };
-};
+export const selectOrdersByUserAndStatus = (state) => state.orderHistory;

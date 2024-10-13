@@ -15,10 +15,12 @@ const initialState = {
 
 export const fetchOrdersByUserId = createAsyncThunk(
     'Order/GetByUserId/',
-    async ({ id, page = 1, totalOrder = 10 }, { rejectWithValue }) => {
+    async ({ id, totalOrder = 5, statusId = 0 }, { getState,rejectWithValue }) => {
         try {
+            const state = getState();
+            const page = state.orderHistory.page;
             const response = await axios.get(`api/Order/GetByUserId/${id}`, {
-                params: { page, totalOrder },
+                params: { page, totalOrder, statusId },
             });
             return response.data;
         } catch ({ response }) {
@@ -28,7 +30,7 @@ export const fetchOrdersByUserId = createAsyncThunk(
 );
 
 const orderHistorySlice = createSlice({
-    name: 'orders',
+    name: 'orderHistory',
     initialState,
     reducers: {
         changePage: (state, action) => {
