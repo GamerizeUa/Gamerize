@@ -71,12 +71,12 @@ export const selectOrdersByUserAndStatus = ({ orderHistory }, status) => {
     if (status == 'Усі') return orderHistory;
 
     const filteredOrders = orderHistory.orders.filter(
-        (order) => order.status.status === status
+        (order) => order.status.status == status
     );
+    console.log(filteredOrders);
 
     return {
+        ...orderHistory,
         orders: filteredOrders,
-        isLoading: orderHistory.isLoading,
-        error: orderHistory.error,
     };
 };

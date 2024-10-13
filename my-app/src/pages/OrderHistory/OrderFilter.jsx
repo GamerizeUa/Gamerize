@@ -34,8 +34,9 @@ export const OrderFilter = ({ filter, setFilter }) => {
 
     const filterOptions = [
         { id: 'all', value: 'Всі замовлення', label: 'Всі замовлення' },
-        { id: 'received', value: 'Отримані', label: 'Отримані' },
-        { id: 'cancelled', value: 'Відмінені', label: 'Відмінені' },
+        { id: 'waiting', value: 'Очікуються', label: 'Очікуються' },
+        { id: 'delivered', value: 'Доставлені', label: 'Доставлені' },
+        { id: 'sent', value: 'Відправлені', label: 'Відправлені' },
     ];
 
     return (
