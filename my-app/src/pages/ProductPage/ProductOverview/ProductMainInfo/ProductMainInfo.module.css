@@ -204,8 +204,10 @@
 .product-info__btn--primary {
     background: #aac4ff;
     gap: 8px;
+    min-width: 288px;
+    flex-basis: 288px;
+    max-width: 400px;
     width: 100%;
-
 }
 
 .product-info__btn-buy {
