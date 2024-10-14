@@ -1,0 +1,126 @@
+.order-details {
+    position: fixed;
+    inset: 50% 0 auto 0;
+    margin-inline: auto;
+    transform: translateY(-50%);
+    inline-size: max(288px, 58.515%);
+}
+
+.order-details__header {
+    display: flex;
+    flex-direction: column;
+    gap: 2.285rem;
+    border-block-end: 1px solid #6566ac;
+    padding: 1.285rem 2.875rem;
+}
+
+.order-details__headline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-details__title {
+    font-size: clamp(1.5rem, 1.3571rem + 0.7143vw, 2rem);
+}
+
+.order-details__btn-close {
+    display: block;
+    margin-inline: auto 0;
+}
+
+.btn-close__cross {
+    display: block;
+    width: 14px;
+    height: 14px;
+    margin: 5px;
+    position: relative;
+    cursor: pointer;
+}
+
+.btn-close__cross::before,
+.btn-close__cross::after {
+    content: '';
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: inherit;
+    height: 2px;
+    background-color: #6566ac;
+}
+
+.btn-close__cross::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.btn-close__cross::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.payments {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.payment {
+    display: flex;
+    justify-content: space-between;
+}
+
+.payment__label {
+    font-weight: 500;
+}
+
+.payment__value {
+    color: #707070;
+}
+
+.order-details__products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.571rem;
+    padding: 1.285rem 2.875rem;
+}
+
+.order-details__products > * {
+    flex-basis: 320px;
+    flex-grow: 1;
+}
+
+.order-details__footer {
+    padding: 1.285rem 2.875rem;
+}
+
+.footer {
+    margin-bottom: 1.714rem;
+}
+.footer__title,
+.footer__subtitle {
+    font-family: 'Noto Sans', system-ui, sans-serif;
+}
+
+.footer__title {
+    font-weight: 500;
+    font-size: 1.142rem;
+}
+
+.footer__subtitle {
+    font-size: 1.285rem;
+}
+
+.footer__text {
+    font-size: 1rem;
+    color: #707070;
+}
+
+.footer__option {
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0px 0px 30px #b1b2ff4d;
+    display: grid;
+    gap: 1.142rem;
+
+    @media screen and (width >= 768px) {
+        padding: 1.714rem;
+    }
+}

@@ -1,0 +1,100 @@
+.question{
+    padding: 0 26px;
+    display: flex;
+    height: 62px;
+    align-items: center;
+    cursor: pointer;
+    gap: 32px;
+    border-bottom: 0.6px solid #DEDADA;
+}
+
+.question:last-of-type{
+    border-bottom: none !important;
+}
+
+.question:hover{
+    background-color: #F1F5FE;
+}
+
+.question a{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 94%;
+    height: 100%;
+}
+
+.question_leftPart{
+    display: flex;
+    align-items: center;
+    width: 6%;
+    gap: 32px;
+}
+
+.question_actions{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.question_actions span{
+    width: 20px;
+    height: 20px;
+    border: 1px solid #D2DAFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.question_checkbox span{
+    padding-top: 7px;
+    padding-left: 2px;
+}
+
+.question_checkbox input{
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checked{
+    background-color: #AAC4FF;
+}
+
+.question_read p{
+    color: #979797;
+}
+
+.question_name{
+    color: #1E1E1E;
+    font-family: "Noto Sans";
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.question_rightPart{
+    display: flex;
+    align-items: center;
+    width: 70%;
+    justify-content: space-between;
+}
+
+.question_text{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #000;
+    font-family: "Noto Sans";
+    font-size: 14px;
+    font-weight: 400;
+    width: 414px;
+}
+
+.question_time{
+    color: #000;
+    font-family: "Noto Sans";
+    font-size: 14px;
+    font-weight: 400;
+}

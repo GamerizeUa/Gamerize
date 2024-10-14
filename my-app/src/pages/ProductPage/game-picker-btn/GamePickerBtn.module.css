@@ -1,0 +1,23 @@
+.btn {
+    inline-size: max-content;
+    display: flex;
+    align-items: center;
+    margin-inline: auto;
+    margin-block: 33px 11px;
+    gap: 12px;
+
+    @media screen and (width >= 1280px) {
+        margin: 33px 0px 11px auto;
+    }
+}
+
+.btn__title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #6566ac;
+}
+
+.btn__icon {
+    width: 24px;
+    aspect-ratio: 1 / 1;
+}

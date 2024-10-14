@@ -5,7 +5,7 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.2);
-    z-index: 20;
+    z-index: 60;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,16 +13,19 @@
 
 .popUp{
     background: #FEFEFE;
-    width: 320px;
+    width: 100%;
+    max-width: 430px;
     position: fixed;
-    z-index: 50;
+    z-index: 70;
     right: 0;
     top: 0;
-    height: 100vh;
+    height: 100%;
+    overflow: hidden;
 }
 
 .popUp_container{
     padding: 24px 16px;
+    height: 100%;
 }
 
 .popUp_header{
@@ -67,16 +70,52 @@
     transform: translate(-50%, -50%) rotate(-45deg);
 }
 
+.confirmEmail{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 106px;
+    gap: 32px;
+}
+
+.confirmEmail_gif{
+    width: 254px;
+    height: 127px;
+}
+
+.confirmEmail_info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+.confirmEmail_title{
+    color: #2B2B2B;
+    font-family: Oswald;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.confirmEmail_subtitle{
+    color: #000;
+    text-align: center;
+    width: 258px;
+    font-family: "Noto Sans";
+    font-size: 16px;
+    font-weight: 400;
+}
+
 .popUp_form{
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    justify-content: center;
     align-items: center;
     width: 100%;
+    gap: 20px;
 }
 
-.popUp_fromGroup{
+.popUp_formGroup{
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -92,6 +131,7 @@
     display: flex;
     align-self: flex-start;
     z-index: 10;
+    margin-top: 3px;
 }
 
 .popUp_formGroup label{
@@ -147,6 +187,19 @@
     cursor: pointer;
 }
 
+.changePassword{
+    color: #2B2B2B;
+    font-family: Oswald;
+    font-size: 36px;
+    font-weight: 400;
+    margin: 34px 0 18px 0;
+    text-align: center;
+}
+
+.popUp a:hover{
+    font-weight: 500;
+}
+
 .popUp_registrationHr{
     padding-left: 0 !important;
     margin-left: 0 !important;
@@ -157,7 +210,7 @@
 .popUp hr{
     background: #DEE0E3;
     height: 1px;
-    width: 320px;
+    width: 120%;
     padding-left: 16px;
     margin-left: -16px;
 }
@@ -169,6 +222,28 @@
     font-weight: 400;
     text-align: center;
     margin: 32px 0;
+}
+
+.newPassword_button{
+    margin-top: 30px;
+}
+
+.newPassword_buttonLoading{
+    margin-top: 30px;
+    color: #8E8E8E !important;
+    filter: grayscale(20%);
+}
+
+@media screen and (min-width: 744px){
+    .popUp{
+        width: 320px;
+        height: 800px;
+        max-width: none;
+    }
+
+    .popUp hr{
+        width: 320px;
+    }
 }
 
 @media screen and (min-width: 1280px){
@@ -198,5 +273,11 @@
 
     .popUp button{
         width: 305px;
+    }
+}
+
+@media only screen and (max-device-width: 414px) {
+    .popup {
+        width: 320px !important;
     }
 }

@@ -1,0 +1,83 @@
+.emailPopup{
+    display: flex;
+    flex-direction: column;
+    background: #FEFEFE;
+    width: 100%;
+    max-width: 430px;
+    position: fixed;
+    z-index: 70;
+    right: 0;
+    top: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 16px;
+}
+
+.container hr{
+    width: 120%;
+    background: #D9D9D9;
+    height: 1px;
+    margin-bottom: 32px;
+}
+
+.header{
+    justify-content: flex-end;
+}
+
+.text{
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin: 32px 0 32px 0;
+}
+
+.title{
+    color: #2B2B2B;
+    font-family: Oswald;
+    font-size: 36px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.subtitle{
+    color: #000;
+    text-align: center;
+    font-family: "Noto Sans";
+    font-size: 16px;
+    font-weight: 400;
+    width: 258px;
+    line-height: 150%;
+}
+
+.submitButton{
+    border-radius: 10px;
+    background: #D2DAFF;
+    width: 305px;
+    height: 53px;
+    margin-top: 145px;
+    color: #2B2B2B;
+    text-align: center;
+    font-family: "Noto Sans";
+    font-size: 16px;
+    font-weight: 700;
+    transition: all 0.3s ease-in-out;
+}
+
+.submitButton:hover, submitButton:active{
+    background-color: #84A9FC;
+    border-color: #84A9FC;
+}
+
+@media screen and (min-width: 744px){
+    .emailPopup{
+        width: 394px;
+        max-width: none;
+        height: 588px;
+    }
+}

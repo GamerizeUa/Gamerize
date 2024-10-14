@@ -80,6 +80,11 @@ h1, h2, h3, h4, h5, h6 {
   padding-right: 16px;
 }
 
+.loadingButton{
+    color: #8E8E8E !important;
+    filter: grayscale(20%);
+}
+
 .no-scroll{
     overflow: hidden;
 }

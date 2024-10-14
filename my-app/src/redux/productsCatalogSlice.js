@@ -1,33 +1,202 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-const sortingOperations = {
-    'Ціна: Від нижчої': (a, b) => a.price - b.price,
-    'Назва: Я - А': (a, b) => b.name.localeCompare(a.name),
-    'Ціна: Від вищої': (a, b) => b.price - a.price,
-    'Назва: А - Я': (a, b) => a.name.localeCompare(b.name),
-};
+export const fetchProducts = createAsyncThunk(
+    'productsCatalog/fetchProducts',
+    async ({ page, pageSize, filters }, { rejectWithValue }) => {
+        try {
+            const response = await axios.post(
+                'https://gamerize.ltd.ua/api/Product/GetSimpleList',
+                filters,
+                {
+                    params: { page, pageSize },
+                }
+            );
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
+export const deleteProduct = createAsyncThunk(
+    'productsCatalog/delete',
+    async ({ productID }, { rejectWithValue }) => {
+        try {
+            await axios.delete(
+                `https://gamerize.ltd.ua/api/Product/Delete/${productID}`
+            );
+
+            return productID;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
+export const addProduct = createAsyncThunk(
+    'productsCatalog/add',
+    async ({ product }, { rejectWithValue }) => {
+        try {
+            const res = await axios.post(
+                `https://gamerize.ltd.ua/api/Product/Create/`,
+                product,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            );
+
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
+export const editProduct = createAsyncThunk(
+    'productsCatalog/edit',
+    async ({ id, product }, { rejectWithValue }) => {
+        try {
+            const res = await axios.put(
+                `https://gamerize.ltd.ua/api/Product/Update/${id}`,
+                product,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            );
+
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
+export const searchProduct = createAsyncThunk(
+    'productsCatalog/search',
+    async ({ searchTerm, page, pageSize }, { rejectWithValue }) => {
+        try {
+            const res = await axios.post(
+                `https://gamerize.ltd.ua/api/Product/SearchProduct`,
+                { searchTerm },
+                {
+                    params: { page, pageSize },
+                }
+            );
+
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
 
 const initialState = {
     products: [],
-    sortingMethod: ''
-}
+    totalPages: 0,
+    loading: false,
+    filters: {
+        categories: [],
+        genres: [],
+        languages: [],
+        mindGames: [],
+        puzzles: [],
+        themes: [],
+        ages: [],
+        playersAmount: [],
+        price: [],
+        gameTime: [],
+        sortOrder: '',
+        searchTerm: '',
+    },
+    page: 1,
+    pageSize: 12,
+};
 
 export const productsCatalogSlice = createSlice({
-    name: "productsCatalog",
+    name: 'productsCatalog',
     initialState,
     reducers: {
-        setProductsCatalog: (state, action) => {
-            state.products = action.payload;
-            if (state.sortingMethod && sortingOperations[state.sortingMethod]) {
-                state.products = state.products.sort(sortingOperations[state.sortingMethod]);
-            }
+        setPage: (state, action) => {
+            state.page = action.payload;
         },
-        setSortingMethod: (state, action) => {
-            state.sortingMethod = action.payload;
-            state.products = state.products.sort(sortingOperations[state.sortingMethod])
-        }
-    }
+        setFilters: (state, action) => {
+            state.filters = {
+                ...state.filters,
+                ...action.payload,
+                sortOrder: state.filters.sortOrder,
+                searchTerm: state.filters.searchTerm,
+            };
+        },
+        setSortOrder: (state, action) => {
+            state.filters.sortOrder = action.payload;
+        },
+        setPageSize: (state, action) => {
+            state.pageSize = action.payload;
+        },
+        setSearchTerm: (state, action) => {
+            state.filters.searchTerm = action.payload;
+        },
+        resetFilters: (state) => {
+            state.filters = initialState.filters;
+        },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchProducts.fulfilled, (state, action) => {
+                state.loading = false;
+                state.products = action.payload.products;
+                state.totalPages = action.payload.totalPages;
+            })
+            .addCase(deleteProduct.fulfilled, (state, action) => {
+                state.loading = false;
+                state.products = state.products.filter(
+                    (product) => product.id !== action.payload
+                );
+            })
+            .addCase(addProduct.fulfilled, (state, action) => {
+                state.loading = false;
+                state.products.push(action.payload);
+            })
+            .addCase(editProduct.fulfilled, (state, action) => {
+                state.loading = false;
+                const index = state.products.findIndex(
+                    ({ id }) => id === action.payload.id
+                );
+                if (index !== -1) state.products[index] = action.payload;
+            })
+            .addCase(searchProduct.fulfilled, (state, action) => {
+                state.loading = false;
+                state.products = action.payload.products;
+                state.totalPages = action.payload.totalPages;
+            })
+            .addMatcher(
+                (action) => action.type.endsWith('/pending'),
+                (state) => {
+                    state.loading = true;
+                    state.error = null;
+                }
+            )
+            .addMatcher(
+                (action) => action.type.endsWith('/rejected'),
+                (state, action) => {
+                    state.loading = false;
+                    state.error = action.payload;
+                }
+            );
+    },
 });
 
-export const {setProductsCatalog, setSortingMethod} = productsCatalogSlice.actions;
+export const {
+    setPage,
+    setFilters,
+    setSortOrder,
+    setPageSize,
+    setSearchTerm,
+    resetFilters,
+} = productsCatalogSlice.actions;
 export default productsCatalogSlice.reducer;

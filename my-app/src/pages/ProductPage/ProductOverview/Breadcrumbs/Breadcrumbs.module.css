@@ -1,0 +1,39 @@
+.breadcrumbs,
+.breadcrumbs__container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.breadcrumbs {
+    padding-bottom: 24px;
+    gap: 18px 24px;
+
+    @media screen and (width >= 744px) {
+        padding-bottom: 0;
+        column-gap: 16px;
+    }
+
+    @media screen and (width >= 1280px) {
+        padding-bottom: 56px;
+    }
+}
+
+.breadcrumbs__container {
+    gap: 18px;
+
+    @media screen and (width >= 744px) {
+        gap: 16px;
+    }
+}
+
+.breadcrumbs__item {
+    color: #8e8e8e;
+    font-family: Noto Sans;
+    font-size: 12px;
+    font-weight: 400;
+
+    &:hover {
+        color: #6566ac;
+    }
+}

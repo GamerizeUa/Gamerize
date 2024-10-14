@@ -1,0 +1,200 @@
+.product-gallery {
+    grid-column: 1/1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 24px;
+
+    @media screen and (width >= 1280px) {
+        align-items: flex-start;
+        gap: 32px;
+    }
+}
+
+.product-gallery__actions {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.product-gallery__container,
+.product-gallery__images {
+    display: flex;
+    align-items: flex-end;
+}
+
+.product-gallery__container {
+    width: 67.18vw;
+    min-width: 215px;
+    min-height: 250px;
+    max-width: 443px;
+    max-height: 585px;
+    padding-block: 24px 40px;
+    overflow: hidden;
+    background-size: contain;
+
+    @media screen and (width >= 744px) {
+        width: 59.54vw;
+        min-width: 443px;
+        min-height: 523px;
+        max-width: 455px;
+        max-height: 540px;
+        padding-block: 0;
+    }
+
+    @media screen and (width >= 1280px) {
+        width: 35.54vw;
+        min-width: 455px;
+        min-height: 540px;
+        max-width: 587px;
+        max-height: 690px;
+        justify-content: flex-start;
+    }
+
+    @media screen and (width >= 1440px) {
+        width: 40.76vw;
+        min-width: 587px;
+        min-height: 690px;
+        max-width: 587px;
+        max-height: 690px;
+    }
+}
+
+.product-gallery__images {
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.product-gallery__image {
+    width: 67.18vw;
+    height: 78.12%;
+    min-width: 215px;
+    min-height: 250px;
+    max-width: 443px;
+    max-height: 521px;
+    object-fit: contain;
+    border: 2px solid transparent;
+    cursor: pointer;
+
+    @media screen and (width >= 744px) {
+        width: 59.54vw;
+        height: 70.02%;
+        min-width: 443px;
+        min-height: 521px;
+        max-width: 455px;
+        max-height: 540px;
+    }
+
+    @media screen and (width >= 1280px) {
+        width: 35.54vw;
+        height: 42.18%;
+        min-width: 455px;
+        min-height: 540px;
+        max-width: 587px;
+        max-height: 690px;
+    }
+
+    @media screen and (width >= 1440px) {
+        width: 40.76vw;
+        height: 47.98%;
+        min-width: 587px;
+        min-height: 690px;
+        max-width: 587px;
+        max-height: 690px;
+    }
+}
+
+.product-gallery__control {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+
+    @media screen and (width >= 1280px) {
+        justify-content: flex-start;
+        gap: 15px;
+    }
+}
+
+.product-gallery__control-container {
+    width: 100%;
+    overflow: hidden;
+
+    @media screen and (width >= 744px) {
+        width: 74.7%;
+        max-width: 662px;
+    }
+
+    @media screen and (width >= 1280px) {
+        width: 74.34%;
+        max-width: 508px;
+    }
+
+    @media screen and (width >= 1440px) {
+        width: 72.77%;
+    }
+}
+
+.product-gallery__thumbnails {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 5.73%;
+    transition: all 0.3s ease;
+
+    @media screen and (width >= 744px) {
+        gap: 3.14%;
+    }
+}
+
+.product-gallery__arrow {
+    display: none;
+
+    @media screen and (width >= 744px) {
+        display: block;
+        cursor: pointer;
+
+        &:hover path {
+            stroke: #747bff;
+        }
+    }
+
+    @media screen and (width >= 1280px) {
+        padding: 0;
+    }
+}
+
+.product-gallery__thumbnail {
+    cursor: pointer;
+    min-width: 60px;
+    min-height: 66px;
+    object-fit: contain;
+
+    @media screen and (width >= 744px) {
+        height: 15.45vw;
+        min-width: 115px;
+        min-height: 115px;
+        max-width: 150px;
+        max-height: 150px;
+    }
+
+    @media screen and (width >= 1280px) {
+        height: 7.1vw;
+        min-width: 88px;
+        min-height: 91px;
+        max-width: 115px;
+        max-height: 115px;
+    }
+
+    @media screen and (width >= 1440px) {
+        height: 7.98vw;
+        min-width: 115px;
+        min-height: 115px;
+        max-width: 115px;
+        max-height: 115px;
+    }
+}

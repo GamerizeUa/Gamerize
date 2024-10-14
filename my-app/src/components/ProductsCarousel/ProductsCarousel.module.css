@@ -1,0 +1,153 @@
+.wrap {
+    width: 100%;
+    height: 382px;
+
+    background-color: var(--white-white);
+}
+.container {
+    max-width: 1440px;
+    margin: 0 auto;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 48px;
+    filter: drop-shadow(0px 0px 100px var(--blue-transparent));
+}
+.title_container {
+    text-align: center;
+    color: var(--dark-purple);
+
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+}
+.body_container {
+    overflow: hidden;
+    width: 100%;
+    /* border: 1px solid red */
+}
+.body {
+    height: 294px;
+    transition: 0.5s;
+    position: relative;
+    width: fit-content;
+    display: flex;
+}
+.product_wrap {
+    height: 100%;
+}
+.chevron {
+    z-index: 1;
+    position: absolute;
+    width: 30px;
+    height: 25px;
+    top: 120px;
+    cursor: pointer;
+}
+.chevron svg {
+    width: 100%;
+    height: 100%;
+}
+.chevron_right {
+    right: 5px;
+}
+.chevron_left {
+    left: 5px;
+}
+
+@media screen and (min-width: 400px) {
+    .chevron {
+        width: 35px;
+        height: 30px;
+    }
+    .chevron_right {
+        right: 13px;
+    }
+    .chevron_left {
+        left: 13px;
+    }
+}
+
+@media screen and (min-width: 744px) {
+    .wrap {
+        height: 462px;
+    }
+    .title_container {
+        font-size: 28px;
+    }
+    .container {
+        padding-bottom: 51px;
+    }
+    .body {
+        height: 355px;
+    }
+    .chevron {
+        top: 150px;
+        width: 40px;
+        height: 35px;
+    }
+    .chevron_right {
+        right: 23px;
+    }
+    .chevron_left {
+        left: 23px;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .wrap {
+        height: 630px;
+    }
+    .title_container {
+        font-size: 36px;
+    }
+    .container {
+        padding-bottom: 96px;
+    }
+    .body {
+        height: 455px;
+    }
+    .product_wrap {
+        transition: 0.5s;
+        height: 435px;
+    }
+    .product_wrap:hover {
+        height: 455px;
+    }
+    .chevron {
+        width: 43.75px;
+        height: 39.611px;
+        top: 215px;
+    }
+    .chevron_right {
+        right: 80px;
+    }
+    .chevron_left {
+        left: 80px;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .wrap {
+        height: 708px;
+    }
+    .container {
+        padding-bottom: 112px;
+    }
+    .body {
+        height: 517px;
+    }
+    .product_wrap {
+        height: 497px;
+    }
+    .product_wrap:hover {
+        height: 517px;
+    }
+    .chevron {
+        width: 50px;
+        height: 50px;
+        top: 230px;
+    }
+}

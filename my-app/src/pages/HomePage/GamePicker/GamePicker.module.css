@@ -1,0 +1,204 @@
+.wrap {
+    width: 100%;
+    height: 453px;
+}
+.container {
+    height: 100%;
+    padding-top: 24px;
+    padding-bottom: 48px;
+}
+.content {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    padding-bottom: 46px;
+}
+.left {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: var(--light-blue-gray);
+}
+.left::after {
+    content: "";
+    bottom: -46px;
+    width: 100%;
+    height: 46px;
+    position: absolute;
+    background-color: var(--light-blue-gray);
+    clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 0 100%);
+}
+.title_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 73px;
+    width: 100%;
+    background-color: var(--light-blue);
+    clip-path: polygon(0% 0%, 100% 0%, 86% 100%, 0 100%);
+    padding-bottom: 8px;
+}
+.title {
+    text-align: center;
+    color: var(--black);
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 400;
+}
+.form {
+    width: 89%;
+    height: 234px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.button {
+    display: flex;
+    width: 100%;
+    height: 48px;
+    padding: 16px 0;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background: var(--light-blue);
+    border: 1px solid var(--White, #fefefe);
+    box-shadow: 0px 0px 120px 0px rgba(177, 178, 255, 0.35);
+}
+.button_text {
+    text-align: center;
+    color: var(--black);
+
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+}
+@media screen and (min-width: 744px) {
+    .wrap {
+        height: 503px;
+    }
+    .container {
+        padding-top: 32px;
+        padding-bottom: 64px;
+    }
+    .content {
+        padding-bottom: 0;
+    }
+    .right {
+        width: 38.4%;
+        height: 100%;
+        padding-top: 116px;
+        background-color: var(--light-blue-gray);
+        clip-path: polygon(0% 0%, 215% 0%, 67% 100%, 0 100%);
+    }
+    .right img {
+        filter: drop-shadow(30px 0px 20px var(--light-blue));
+    }
+    .left {
+        width: 61.6%;
+        align-items: flex-start;
+        padding-bottom: 43px;
+    }
+    .left::after {
+        display: none;
+    }
+    .title_container {
+        justify-content: flex-start;
+        height: 87px;
+        width: 132%;
+        padding-left: 7.7%;
+        padding-bottom: 0;
+        clip-path: polygon(0% 0%, 100% 0%, 86% 100%, 0 100%);
+    }
+    .title {
+        font-size: 32px;
+    }
+    .form {
+        width: 71.5%;
+        margin-left: 7.7%;
+        height: 232px;
+        margin-right: 0;
+    }
+    .button {
+        height: 48px;
+        width: 100%;
+    }
+    .button_text {
+        font-size: 16px;
+    }
+    .image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+    }
+}
+@media screen and (min-width: 1280px) {
+    .wrap {
+        height: 870px;
+    }
+    .container {
+        padding-top: 50px;
+        padding-bottom: 120px;
+    }
+    .left {
+        width: 59%;
+        padding-bottom: 153px;
+    }
+    .right {
+        width: 41%;
+        padding-top: 136px;
+        clip-path: polygon(0% 0%, 231% 0%, 74% 100%, 0 100%);
+    }
+    .right img {
+        filter: drop-shadow(40px 10px 20px var(--light-blue));
+    }
+    .title_container {
+        padding-left: 14%;
+        height: 173px;
+        width: 107%;
+        clip-path: polygon(0% 0%, 100% 0%, 78% 100%, 0 100%);
+    }
+    .title {
+        font-size: 56px;
+    }
+    .form {
+        height: 292px;
+        width: 70%;
+        margin-left: 14%;
+    }
+    .button {
+        margin-top: 8px;
+        width: 100%;
+        height: 53px;
+    }
+    .button:hover {
+        background: var(--blue);
+    }
+}
+@media screen and (min-width: 1440px) {
+    .wrap {
+        height: 907px;
+    }
+    .left {
+        padding-bottom: 192px;
+    }
+    .right {
+        padding-right: 3.5%;
+    }
+    .title_container {
+        width: 108%;
+        padding-left: 14.5%;
+    }
+    .title {
+        font-size: 64px;
+    }
+    .form {
+        margin-left: 14.5%;
+    }
+}

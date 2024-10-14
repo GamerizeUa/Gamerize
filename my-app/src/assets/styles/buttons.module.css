@@ -1,0 +1,43 @@
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    font-size: 1rem;
+    border-radius: 12px;
+    transition: background 250ms, color 250ms, filter 250ms;
+}
+
+.btn--secondary {
+    background: #fafafa;
+    color: #718096;
+
+    &:hover,
+    &:focus {
+        filter: brightness(0.95);
+    }
+}
+
+.btn--primary {
+    background: #4d88ef;
+    color: #fff;
+
+    &:hover,
+    &:focus {
+        filter: brightness(1.2);
+    }
+}
+.btn--danger {
+    background: #ff0000;
+    color: #fff;
+
+    &:hover,
+    &:focus {
+        filter: brightness(1.2);
+    }
+}
+
+.btn--icon {
+    background: transparent;
+}

@@ -1,4 +1,15 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import { categoriesReducer } from "./categories/categoriesSlice";
 import { genresReducer } from "./categories/genresSlice.js";
 import translationTabReducer from "./translationTab.js";
@@ -7,6 +18,24 @@ import productsCatalogReducer from "./productsCatalogSlice.js";
 import { wishListReducer } from "./wishListSlice.js";
 import { puzzlesReducer } from "./categories/puzzlesSlice.js";
 import { mindGamesReducer } from "./categories/mindGamesSlice.js";
+import { languagesReducer } from "./categories/languagesSlice.js";
+import cartSlice from "./cartSlice.js";
+import discountReducer from "./discountSlice";
+import viewsHistorySlice from "./viewsHistory.js";
+import { carouselProductsReducer } from "./productsSlice.js";
+import { orderHistoryReducer } from "./orderHistorySlice.js";
+import {formsDisplayingReducer} from "./formsDisplaying.js";
+import {profileReducer} from "./profileSlice.js";
+import questionsReducer from './questionsSlice.js'
+import newOrderSlice from "./newOrderSlice.js";
+import ordersReducer from "./ordersSlice.js"
+import {statusesOrderReducer} from "@/redux/statusesOrderSlice.js";
+
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["cart", "views"],
+};
 
 const rootReducer = combineReducers({
   categories: categoriesReducer,
@@ -14,13 +43,33 @@ const rootReducer = combineReducers({
   themes: themesReducer,
   puzzles: puzzlesReducer,
   mindGames: mindGamesReducer,
+  languages: languagesReducer,
   translationTab: translationTabReducer,
   productsCatalog: productsCatalogReducer,
   wishList: wishListReducer,
+  formsDisplaying: formsDisplayingReducer,
+  cart: cartSlice,
+  views: viewsHistorySlice,
+  discount: discountReducer,
+  carouselProducts: carouselProductsReducer,
+  orderHistory: orderHistoryReducer,
+  profile: profileReducer,
+  questions: questionsReducer,
+  newOrder: newOrderSlice,
+  orders: ordersReducer,
+  statusesOrder: statusesOrderReducer
 });
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) => [
+    ...getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+  ],
 });
-
-//  export const persistor = persistStore(store);
+export const persistor = persistStore(store);

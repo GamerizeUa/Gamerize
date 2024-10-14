@@ -1,0 +1,32 @@
+.form-control__input {
+    display: block;
+    inline-size: 100%;
+    color: #6a6363;
+    padding: 0.714rem 1.142rem;
+    margin-block-start: 1rem;
+    border-radius: 8px;
+    border: 1px solid #dedada;
+    translate: border-color 250ms, color 250ms;
+
+    &:is(textarea) {
+        resize: none;
+    }
+
+    &:is(select) {
+        appearance: none;
+        background-image: url('../../assets/icons/chevron-down.svg');
+        background-repeat: no-repeat;
+        background-size: 1rem;
+        background-position: calc(100% - 1.142rem) 50%;
+    }
+
+    &[aria-invalid='true'] {
+        border-color: red;
+        color: red;
+    }
+}
+
+.form-control__error {
+    color: red;
+    margin-block-start: 1rem;
+}

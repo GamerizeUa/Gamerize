@@ -1,180 +1,152 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createAppSlice} from "./createAppSlice";
+import axios from "axios";
 
 const initialState = {
-    productsIdList: [2, 3, 6, 21, 22, 23, 24, 25, 26, 27, 28],
-    productsList: [
-        {
-            id: 21,
-            discount: 20,
-            name: "Дюна імперіум21",
-            minPlayers: 4,
-            maxPlayers: 6,
-            minAge: 16,
-            price: 2250,
-            oldPrice: 2812,
-            gameTimeMinutes: 80,
-            photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
-        },
-        {
-            id: 22,
-            discount: 20,
-            name: "Дюна імперіум22",
-            minPlayers: 4,
-            maxPlayers: 6,
-            minAge: 16,
-            price: 2250,
-            oldPrice: 2812,
-            gameTimeMinutes: 80,
-            photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
-        },
-        {
-            id: 23,
-            discount: 20,
-            name: "Дюна імперіум23",
-            minPlayers: 4,
-            maxPlayers: 6,
-            minAge: 16,
-            price: 2250,
-            oldPrice: 2812,
-            gameTimeMinutes: 80,
-            photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
-        },
-        {
-            id: 24,
-            discount: 20,
-            name: "Дюна імперіум24",
-            minPlayers: 4,
-            maxPlayers: 6,
-            minAge: 16,
-            price: 2250,
-            oldPrice: 2812,
-            gameTimeMinutes: 80,
-            photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
-        },
-        {
-            id: 25,
-            discount: 20,
-            name: "Дюна імперіум25",
-            minPlayers: 4,
-            maxPlayers: 6,
-            minAge: 16,
-            price: 2250,
-            oldPrice: 2812,
-            gameTimeMinutes: 80,
-            photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
-        },
-        {
-            id: 26,
-            discount: 20,
-            name: "Дюна імперіум26",
-            minPlayers: 4,
-            maxPlayers: 6,
-            minAge: 16,
-            price: 2250,
-            oldPrice: 2812,
-            gameTimeMinutes: 80,
-            photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
-        },
-        {
-            id: 27,
-            discount: 20,
-            name: "Дюна імперіум27",
-            minPlayers: 4,
-            maxPlayers: 6,
-            minAge: 16,
-            price: 2250,
-            oldPrice: 2812,
-            gameTimeMinutes: 80,
-            photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
-        },
-        {
-            id: 28,
-            discount: 20,
-            name: "Дюна імперіум28",
-            minPlayers: 4,
-            maxPlayers: 6,
-            minAge: 16,
-            price: 2250,
-            oldPrice: 2812,
-            gameTimeMinutes: 80,
-            photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
-        },
-        {
-            id: 2,
-            discount: 20,
-            name: "Дюна імперіум2",
-            minPlayers: 4,
-            maxPlayers: 6,
-            minAge: 16,
-            price: 2250,
-            oldPrice: 2812,
-            gameTimeMinutes: 80,
-            photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
-        },
-        {
-            id: 3,
-            discount: 20,
-            name: "Дюна імперіум3",
-            minPlayers: 4,
-            maxPlayers: 6,
-            minAge: 16,
-            price: 2250,
-            oldPrice: 2812,
-            gameTimeMinutes: 80,
-            photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
-        },
-        {
-            id: 6,
-            discount: 20,
-            name: "Дюна імперіум6",
-            minPlayers: 4,
-            maxPlayers: 6,
-            minAge: 16,
-            price: 2250,
-            oldPrice: 2812,
-            gameTimeMinutes: 80,
-            photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
-        },
-    ],
+    productsIdList: [],
+    productsIdStatus: "no auth",
+    productsStatus: "loading",
+    statusOfWishing: "ready",
+    productsList: [],
+    pagesAmount: 0,
 };
 
-const wishListSlice = createSlice({
+const wishListSlice = createAppSlice({
     name: "wishList",
     initialState,
-    reducers: {
-        addToWishList: (state, action) => {
-            state.productsIdList.push(action.payload);
-            state.productsList.push({
-                id: action.payload,
-                discount: 20,
-                name: "Дюна імперіум" + action.payload,
-                minPlayers: 4,
-                maxPlayers: 6,
-                minAge: 16,
-                price: 2250,
-                oldPrice: 2812,
-                gameTimeMinutes: 80,
-                photo: "https://geekach.com.ua/content/images/25/429x480l99nn0/duna-imperium-ukr-dune-imperium-39895584897046.png",
-            });
-        },
-        removeOneFromWishList: (state, action) => {
-            state.productsIdList.splice(
-                state.productsIdList.findIndex((id) => id === action.payload),
-                1
-            );
-            state.productsList.splice(
-                state.productsList.findIndex(
-                    ({ id }) => id === action.payload
-                ),
-                1
-            );
-        },
-        removeAllFromWishList: (state) => {
+    reducers: (create) => ({
+        getWishListProductsIds: create.asyncThunk(
+            async () => {
+                const response = await axios.get("/api/WishList/OnlyProductId");
+                return {
+                    data: response.data.map(({productId}) => productId),
+                };
+            },
+            {
+                pending: (state) => {
+                    state.statusOfWishing = "loading";
+                    state.productsIdStatus = "loading";
+                },
+                fulfilled: (state, action) => {
+                    state.statusOfWishing = "ready";
+                    state.productsIdStatus = "synced";
+                    state.productsIdList = action.payload.data;
+                },
+                rejected: (state) => {
+                    state.statusOfWishing = "ready";
+                    state.productsIdStatus = "failed";
+                },
+            }
+        ),
+        getWishListProducts: create.asyncThunk(
+            async ({page, pageSize}) => {
+                const response = await axios.get("/api/WishList/GetAllItemsFromWishList", {
+                    params: {
+                        page, pageSize,
+                    },
+                });
+                return {
+                    products: response.data.wishList.map(({product}) => product),
+                    pagesAmount: response.data.totalPages,
+                };
+            },
+            {
+                pending: (state) => {
+                    state.productsStatus = "loading";
+                },
+                fulfilled: (state, action) => {
+                    state.productsStatus = "fulfilled";
+                    state.productsList = action.payload.products;
+                    state.pagesAmount = action.payload.pagesAmount;
+                },
+                rejected: (state) => {
+                    state.productsStatus = "failed";
+                },
+            }
+        ),
+        logoutWishList: (state) => {
             state.productsIdList = [];
             state.productsList = [];
+            state.productsIdStatus = "no auth";
         },
-    },
+        removeAllFromWishList: create.asyncThunk(
+            async (idList) => {
+                await axios.delete("/api/WishList/RemoveFromWishList", {data: idList})
+            },
+            {
+                pending: (state) => {
+                    state.statusOfWishing = "loading";
+                },
+                fulfilled: (state) => {
+                    state.statusOfWishing = "ready";
+                    state.productsIdList = [];
+                    state.productsList = [];
+                },
+                rejected: (state) => {
+                    state.statusOfWishing = "ready";
+                },
+            }
+        ),
+        addToWishList: create.asyncThunk(
+            async (id) => {
+                await axios.post("/api/WishList/AddProductInWishList",
+                    {"ProductId": id},
+                    {
+                        headers: {
+                            "Content-Type": "multipart/form-data"
+                        }
+                    }
+                );
+                return {
+                    id,
+                };
+            },
+            {
+                pending: (state) => {
+                    state.statusOfWishing = "loading";
+                },
+                fulfilled: (state, action) => {
+                    state.statusOfWishing = "ready";
+                    state.productsIdList.push(action.payload.id);
+                },
+                rejected: (state) => {
+                    state.statusOfWishing = "ready";
+                },
+            }
+        ),
+        removeOneFromWishList: create.asyncThunk(
+            async (id) => {
+                await axios.delete("/api/WishList/RemoveFromWishList", {
+                    data: [id],
+                });
+                return {
+                    id,
+                };
+            },
+            {
+                pending: (state) => {
+                    state.statusOfWishing = "loading";
+                },
+                fulfilled: (state, action) => {
+                    state.statusOfWishing = "ready";
+                    state.productsIdList.splice(
+                        state.productsIdList.findIndex((id) => id === action.payload.id),
+                        1
+                    );
+                },
+                rejected: (state) => {
+                    state.statusOfWishing = "ready";
+                },
+            }
+        ),
+    }),
 });
 
 export const wishListReducer = wishListSlice.reducer;
-export const { addToWishList, removeOneFromWishList, removeAllFromWishList } = wishListSlice.actions;
+export const {
+    addToWishList,
+    removeOneFromWishList,
+    removeAllFromWishList,
+    logoutWishList,
+    getWishListProductsIds,
+    getWishListProducts,
+} = wishListSlice.actions;

@@ -1,0 +1,66 @@
+h2 {
+    font-family: 'Noto Sans', system-ui, serif;
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-block-end: 1.125rem;
+}
+
+fieldset {
+    margin-block-end: 2rem;
+}
+
+.dialog {
+    inset-block-start: 50%;
+    transform: translateY(-50%);
+    margin-inline: auto;
+    border-radius: 8px;
+}
+
+.dialog__container {
+    padding: 1.5rem;
+}
+
+.dialog__row {
+    display: flex;
+    align-items: start;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.dialog__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.125rem;
+}
+
+.dialog__field {
+    display: block;
+    margin-block-start: 0.875rem;
+    padding: 0.714rem;
+    border-radius: 8px;
+    border: 1px solid #dedada;
+    transition: background 250ms, color 250ms;
+
+    &[aria-invalid='true'] {
+        border-color: red;
+        color: red;
+    }
+
+    > input[type='checkbox'] {
+        appearance: none;
+    }
+}
+
+.dialog__field:has(input[type='checkbox']:checked) {
+    background: #4880ff;
+    color: #dedada;
+}
+
+.dialog__actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding-block: 1.5rem;
+    border-block-start: 0.4px solid #979797;
+}

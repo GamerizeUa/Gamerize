@@ -1,109 +1,148 @@
-import styles from "./LoginAndRegistration.module.css";
-import React, { useEffect, useState } from "react";
-import { Registration } from "./Registration.jsx";
-import sprite from "../../assets/icons/sprite.svg";
-import * as yup from "yup";
-import {useForm} from "react-hook-form";
-import {yupResolver} from "@hookform/resolvers/yup";
-import Axios from "axios";
+import styles from './LoginAndRegistration.module.css';
+import { useState } from 'react';
+import sprite from '@/assets/icons/sprite.svg';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import useNoScroll from '@/hooks/useNoScroll.js';
+import Cookies from 'js-cookie';
+import { sendRequestWithLoading } from '@/utils/sendRequestWithLoading.js';
+import { getWishListProductsIds } from '@/redux/wishListSlice.js';
+import { useDispatch } from 'react-redux';
+import {
+    assignIsDisplayedEmailForm,
+    assignIsDisplayedLoginPopUp,
+    assignIsDisplayedRegistrationPopUp,
+} from '@/redux/formsDisplaying.js';
+import { loginSchema } from '@/validators/authSchema';
 
-export const Login = ({ setDisplayedLoginPopUp }) => {
-  const [isVisible, setIsVisible] = useState(true);
-  const [isDisplayedRegistrationPopUp, setIsDisplayedRegistrationPopUp] =
-    useState(false);
-  const [isErrorVisible, setIsErrorVisible] = useState(false);
+export const Login = () => {
+    const [isErrorVisible, setIsErrorVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+    useNoScroll(true);
 
-  useEffect(() => {
-    if (isVisible) {
-      document.body.classList.add("no-scroll");
-    } else {
-      document.body.classList.remove("no-scroll");
-      setDisplayedLoginPopUp(false);
-    }
-    return () => {
-      document.body.classList.remove("no-scroll");
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(loginSchema),
+    });
+
+    const onSubmit = (data) => {
+        const link = 'https://gamerize.ltd.ua/api/Login/login';
+
+        const toDoInTimeout = () => {
+            setLoading(false);
+            Cookies.set('auth', 'true');
+            dispatch(getWishListProductsIds());
+            closePopUp();
+        };
+
+        const toDoInCatch = () => {
+            setIsErrorVisible(true);
+        };
+
+        sendRequestWithLoading(
+            data,
+            link,
+            setLoading,
+            toDoInTimeout,
+            toDoInCatch
+        );
     };
-  }, [isVisible]);
 
-  const schema = yup.object().shape({
-    email: yup.string().email("Введіть коректну е-пошту").required("Введіть е-пошту")
-        .matches(/^[a-zA-Z0-9._-]+@[a-zA-Z]+\.[a-zA-Z]+$/i, "Введіть коректну е-пошту"),
-    password: yup.string().required("Введіть пароль"),
-  });
+    const closePopupByClicking = (event) => {
+        if (event.currentTarget === event.target) {
+            closePopUp();
+        }
+    };
 
-  const {register, handleSubmit, formState: {errors}, reset} = useForm({
-    resolver: yupResolver(schema)
-  });
+    const closePopUp = () => {
+        dispatch(assignIsDisplayedLoginPopUp(false));
+    };
 
-  const onSubmit = (data) =>{
-    console.log(data)
-    Axios.post('https://gamerize.ltd.ua/api/Account/login', data)
-        .then(changeVisibility)
-        .catch((err) => {
-          setIsErrorVisible(true)
-          console.log(err)
-        })
-  }
-
-  const changeVisibility = () => {
-    setIsVisible(!isVisible);
-  };
-
-  return (
-    <div className={styles.popUp_background}>
-      <div className={styles.popUp}>
-        <div className={styles.popUp_header}>
-          <p className={styles.popUp_title}>Вхід</p>
-          <div className={styles.popUp_cross} onClick={changeVisibility}></div>
-        </div>
-        <div className={styles.popUp_container}>
-          <form className={styles.popUp_form} onSubmit={handleSubmit(onSubmit)}>
-            <div className={styles.popUp_fromGroup}>
-              <label>Електронна пошта*</label>
-              <div className={styles.popUp_inputContainer}>
-                <svg width="24" height="24">
-                  <use
-                      href={sprite + "#icon-email"}
-                      fill="#EEF1FF"
-                      stroke="currentColor"
-                  ></use>
-                </svg>
-                <input type="email"  {...register("email")}/>
-              </div>
-              <p className={styles.input_error}>{errors.email?.message}</p>
+    return (
+        <div className={styles.popUp_background} onClick={closePopupByClicking}>
+            <div className={styles.popUp}>
+                <div className={styles.popUp_header}>
+                    <p className={styles.popUp_title}>Вхід</p>
+                    <div
+                        className={styles.popUp_cross}
+                        onClick={closePopUp}
+                    ></div>
+                </div>
+                <div className={styles.popUp_container}>
+                    <form
+                        className={styles.popUp_form}
+                        onSubmit={handleSubmit(onSubmit)}
+                    >
+                        <div className={styles.popUp_formGroup}>
+                            <label>Електронна пошта*</label>
+                            <div className={styles.popUp_inputContainer}>
+                                <svg width="24" height="24">
+                                    <use
+                                        href={sprite + '#icon-email'}
+                                        fill="#EEF1FF"
+                                        stroke="currentColor"
+                                    ></use>
+                                </svg>
+                                <input type="text" {...register('email')} />
+                            </div>
+                            <p className={styles.input_error}>
+                                {errors.email?.message}
+                            </p>
+                        </div>
+                        <div className={styles.popUp_formGroup}>
+                            <label>Пароль*</label>
+                            <div className={styles.popUp_inputContainer}>
+                                <svg width="24" height="24">
+                                    <use
+                                        href={sprite + '#icon-lock'}
+                                        fill="#EEF1FF"
+                                        stroke="currentColor"
+                                    ></use>
+                                </svg>
+                                <input
+                                    type="password"
+                                    {...register('password')}
+                                />
+                            </div>
+                            <p className={styles.input_error}>
+                                {errors.password?.message}
+                            </p>
+                        </div>
+                        <button
+                            type="submit"
+                            className={loading ? 'loadingButton' : ''}
+                        >
+                            {loading ? 'Вхід в акаунт...' : 'Увійти'}
+                        </button>
+                        {isErrorVisible && (
+                            <p className={styles.input_userError}>
+                                Помилка входу. Перевірте правильність е-пошти та
+                                пароля.
+                            </p>
+                        )}
+                        <a
+                            onClick={() =>
+                                dispatch(assignIsDisplayedEmailForm(true))
+                            }
+                        >
+                            Забули пароль?
+                        </a>
+                    </form>
+                    <hr />
+                    <p className={styles.popUp_question}>Досі немає акаунту?</p>
+                    <button
+                        onClick={() =>
+                            dispatch(assignIsDisplayedRegistrationPopUp(true))
+                        }
+                    >
+                        Зареєструватись
+                    </button>
+                </div>
             </div>
-            <div className={styles.popUp_fromGroup}>
-              <label>Пароль*</label>
-              <div className={styles.popUp_inputContainer}>
-                <svg width="24" height="24">
-                  <use
-                      href={sprite + "#icon-lock"}
-                      fill="#EEF1FF"
-                      stroke="currentColor"
-                  ></use>
-                </svg>
-                <input type="password" {...register("password")}/>
-              </div>
-              <p className={styles.input_error}>{errors.password?.message}</p>
-            </div>
-            <button type="submit">Увійти</button>
-            {isErrorVisible && <p className={styles.input_userError}>
-              Помилка входу. Перевірте правильність е-пошти та пароля.
-            </p>}
-            <a>Забули пароль?</a>
-          </form>
-          <hr />
-          <p className={styles.popUp_question}>Досі немає акаунту?</p>
-          <button onClick={() => setIsDisplayedRegistrationPopUp(true)}>
-            Зареєструватись
-          </button>
         </div>
-        {isDisplayedRegistrationPopUp && (
-          <Registration
-            setIsDisplayedRegistrationPopUp={setIsDisplayedRegistrationPopUp}
-          />
-        )}
-      </div>
-    </div>
-  );
+    );
 };

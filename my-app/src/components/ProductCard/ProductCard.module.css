@@ -1,0 +1,342 @@
+.all_content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 11px;
+    width: 100%;
+    height: 100%;
+}
+.all_card_link {
+    position: absolute;
+    z-index: 1;
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+.card_top {
+    height: 68%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 8px 8px 15px;
+    align-items: center;
+    background: var(--white);
+}
+.card_bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    /* padding-top: 11px; */
+    justify-content: space-between;
+    height: 32%;
+}
+.icons_bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 7px;
+}
+.wish_list_icon_container {
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+}
+.wish_list_icon_container svg {
+    width: 20px;
+    height: 20px;
+}
+.hit_icon {
+    width: 30px;
+    height: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: 33px;
+    color: var(--white);
+    text-align: center;
+
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 700;
+    background: var(--blue);
+}
+.discount_icon_container {
+    color: var(--white);
+    font-family: Oswald;
+    position: relative;
+    font-size: 7.442px;
+    font-style: normal;
+    font-weight: 500;
+}
+.discount_icon_container svg {
+    width: 24px;
+    height: 24px;
+}
+.discount_icon_container p {
+    position: absolute;
+    top: 8px;
+    left: 4px;
+}
+.image_container {
+    margin: 0 auto;
+    width: 100%;
+    height: 119px;
+}
+.image_container img {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+}
+.features_bar {
+    display: flex;
+    width: 100%;
+    text-align: center;
+    min-height: 12px;
+    padding: 2px 8px;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 11px;
+    border-radius: 27px;
+    background-color: var(--light-blue-gray);
+}
+.features_bar_element {
+    margin: 0 5px;
+    width: fit-content;
+    color: var(--black);
+
+    font-size: 7px;
+    font-style: normal;
+    font-weight: 500;
+}
+.title {
+    text-align: center;
+    color: var(--black);
+
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 500;
+}
+.prices {
+    display: flex;
+    align-items: end;
+    line-height: 0.7;
+}
+.price {
+    font-style: normal;
+    font-weight: 700;
+}
+.current_price {
+    font-size: 16px;
+    color: var(--blue);
+}
+.old_price {
+    font-size: 12px;
+    margin-right: 10px;
+    color: var(--light-blue);
+    text-decoration-line: line-through;
+}
+.buy_btn {
+    position: relative;
+    z-index: 2;
+    padding: 13px 24px;
+    width: fit-content;
+    background-color: var(--blue);
+    border-radius: 13px;
+
+    color: var(--black);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1;
+}
+
+@media screen and (min-width: 744px) {
+    .all_content {
+        gap: 15px;
+    }
+    .card_top {
+        padding: 8px 12px 14px;
+        height: 70.7%;
+    }
+    .card_bottom {
+        /* padding-top: 16px; */
+        height: 29.3%;
+    }
+    .icons_bar {
+        padding: 0;
+    }
+    .discount_icon_container {
+        font-size: 9.382px;
+    }
+    .discount_icon_container svg {
+        width: 39.5px;
+        height: 39.5px;
+    }
+    .discount_icon_container p {
+        top: 15px;
+        left: 9px;
+    }
+    .hit_icon {
+        margin-top: 5px;
+        width: 35px;
+        height: 19px;
+        font-size: 11.079px;
+    }
+    .wish_list_icon_container {
+        margin-top: 8px;
+    }
+    .wish_list_icon_container svg {
+        width: 17px;
+        height: 17px;
+    }
+    .image_container {
+        width: 91%;
+        height: 143px;
+    }
+    .features_bar {
+        min-height: 14px;
+        padding: 2px 10%;
+    }
+    .features_bar_element {
+        font-size: 9.694px;
+    }
+    .title {
+        font-size: 16px;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .all_content{
+        gap: 20px;
+    }
+    .card_top {
+        height: 72.5%;
+        padding: 18px 18px 19px;
+    }
+    .card_bottom {
+        height: 27.5%;
+        /* padding-top: 20px; */
+    }
+    .icons_bar {
+        padding: 0;
+    }
+    .discount_icon_container {
+        font-size: 13px;
+    }
+    .discount_icon_container svg {
+        width: 50px;
+        height: 50px;
+    }
+    .discount_icon_container p {
+        top: 18px;
+        left: 11px;
+    }
+    .hit_icon {
+        height: 24px;
+        width: 44px;
+        margin-top: 6px;
+        font-size: 13px;
+    }
+    .wish_list_icon_container svg {
+        width: 20px;
+        height: 20px;
+    }
+    .left_icon {
+        width: 50px;
+        height: 28px;
+        padding: 4px 14px;
+        font-size: 16px;
+    }
+    .image_container {
+        width: 85%;
+        height: 179px;
+    }
+    .features_bar {
+        min-height: 17px;
+    }
+    .features_bar_element {
+        font-size: 12.188px;
+    }
+    .title {
+        font-size: 18px;
+    }
+    .prices {
+        margin-bottom: 7px;
+    }
+    .current_price {
+        font-size: 20px;
+    }
+    .old_price {
+        margin-right: 5px;
+        font-size: 16px;
+    }
+    .buy_btn {
+        font-size: 16px;
+    }
+    .buy_btn:hover {
+        background: var(--dark-blue);
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .all_content{
+        gap: 24px;
+    }
+    .icons_bar {
+        align-items: center;
+    }
+    .card_top {
+        height: 73%;
+        padding: 13px 18px 21px;
+    }
+    .discount_icon_container {
+        font-size: 16px;
+    }
+    .discount_icon_container svg {
+        width: 55px;
+        height: 55px;
+    }
+    .hit_icon {
+        margin-top: 11px;
+        width: 43.53px;
+        height: 24.377px;
+        font-size: 13.93px;
+    }
+    .wish_list_icon_container {
+        margin-top: 11px;
+    }
+    .wish_list_icon_container svg {
+        width: 24px;
+        height: 24px;
+    }
+    .image_container {
+        width: 80%;
+        height: 206px;
+    }
+    .features_bar {
+        min-height: 20px;
+    }
+    .features_bar_element {
+        font-size: 14px;
+    }
+    .card_bottom {
+        height: 27%;
+        /* padding-top: 24px; */
+    }
+    .title {
+        font-size: 20px;
+    }
+    .prices {
+        margin-bottom: 8px;
+    }
+    .current_price {
+        font-size: 24px;
+    }
+    .old_price {
+        font-size: 19px;
+    }
+}

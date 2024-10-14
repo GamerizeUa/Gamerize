@@ -1,0 +1,149 @@
+@keyframes set-opacity {
+    0% {
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.share {
+    margin-inline: auto;
+    inset-block-start: 50%;
+    transform: translateY(-50%);
+    border-radius: 16px;
+    background: #fefefe;
+    width: 576px;
+    padding: 32px;
+}
+
+.share__header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 48px;
+}
+
+.share__title {
+    color: #6566ac;
+    font-family: Noto Sans;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.share__cross {
+    display: block;
+    width: 14px;
+    height: 14px;
+    margin: 5px;
+    position: relative;
+    cursor: pointer;
+}
+
+.share__cross::before,
+.share__cross::after {
+    content: '';
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: inherit;
+    height: 2px;
+    background-color: #6566ac;
+}
+
+.share__cross::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.share__cross::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.share__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 43px;
+}
+
+.share__social-media {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.share__icon {
+    width: 64px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    transition: all 150ms;
+}
+
+.share__icon:hover {
+    transform: scale(1.07);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.share__name,
+.share__text,
+.share__link {
+    color: #6566ac;
+    font-family: Noto Sans;
+}
+
+.share__name,
+.share__text {
+    font-size: 12px;
+    text-align: center;
+}
+
+.share__name {
+    font-weight: 400;
+}
+
+.share__text {
+    padding-bottom: 24px;
+    font-weight: 700;
+}
+
+.share__field {
+    box-sizing: border-box;
+    position: relative;
+    border-radius: 10px;
+    background: #eef1ff;
+    height: 53px;
+    display: flex;
+    align-items: center;
+    padding: 15px 16px;
+}
+
+.share__field[data-copied='true']::before {
+    content: 'Скопійовано!';
+    position: absolute;
+    inset: 2px 12px auto auto;
+    font-family: Noto Sans;
+    font-size: 10px;
+    font-weight: 400;
+    color: #6566ac;
+    opacity: 0;
+    animation: set-opacity 2s ease-in-out;
+}
+
+.share__link {
+    font-size: 14px;
+    font-weight: 400;
+    width: 440px;
+}
+
+.share__copy-icon {
+    display: block;
+    background: #000;
+}

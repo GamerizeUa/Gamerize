@@ -1,0 +1,180 @@
+.pageWrapper {
+    padding: 24px 16px 48px 16px;
+}
+
+.title {
+    min-width: 289px;
+    padding: 34px 16px;
+    margin-bottom: 30px;
+    font-family: 'Oswald';
+    font-size: 28px;
+    font-weight: 400;
+    background-color: var(--light-blue-gray);
+}
+
+.orderWrapper {
+    position: relative;
+}
+
+.selectingBtn {
+    display: flex;
+    align-items: flex-end;
+    gap: 11px;
+    margin-bottom: 13px;
+    background-color: transparent;
+}
+
+.selectingBtnText {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.chevron {
+    width: 20px;
+    height: 20px;
+}
+
+.ordersAmount {
+    margin-bottom: 40px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #8e8e8e;
+}
+
+.orderList {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+}
+
+.selectorWrapper {
+    position: absolute;
+    top: 40px;
+    width: 204px;
+    height: max-content;
+    background-color: var(--white);
+    padding: 20px 16px;
+    border-radius: 4px;
+}
+
+.selectorWrapper::after {
+    display: block;
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    right: 50%;
+    border: 6px solid transparent;
+    top: -15px;
+    border-bottom: 10px solid var(--white);
+}
+
+.selectorContent {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.selectorItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.inputWrapper {
+    position: relative;
+}
+
+.fakeInput {
+    position: absolute;
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #dee0e3;
+    background-color: var(--white-white);
+    pointer-events: none;
+}
+
+.selectorInput {
+    width: 20px;
+    height: 20px;
+}
+
+.selectorInput:checked::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--blue);
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
+.selectorLabel {
+    display: flex;
+    gap: 8px;
+    font-family: 'Inter';
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.368px;
+}
+
+@media (min-width: 744px) {
+    .pageWrapper {
+        padding: 0 32px 131px 32px;
+    }
+
+    .title {
+        padding: 45px 46px;
+        margin-bottom: 64px;
+        font-size: 36px;
+    }
+
+    .selectingBtn {
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .selectingBtnText {
+        font-size: 24px;
+    }
+
+    .chevron {
+        width: 24px;
+        height: 24px;
+    }
+
+    .ordersAmount {
+        margin-bottom: 56px;
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .pageWrapper {
+        padding: 0 80px 120px 80px;
+    }
+
+    .title {
+        padding: 56px 95px;
+        margin-bottom: 59px;
+    }
+
+    .selectingBtn {
+        gap: 16px;
+    }
+
+    .orderList {
+        gap: 48px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .title {
+        width: 1280px;
+        padding: 56px 108px;
+    }
+}

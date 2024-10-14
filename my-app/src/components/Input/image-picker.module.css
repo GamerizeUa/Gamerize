@@ -1,0 +1,78 @@
+.image-picker {
+    max-inline-size: 100%;
+    align-items: stretch;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    &:has(input[aria-invalid='true']) {
+        border-color: red;
+        color: red;
+    }
+}
+
+.image-picker__container {
+    display: block;
+    position: relative;
+    min-width: 128px;
+    block-size: 128px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.image-picker__input {
+    position: absolute;
+    inset: 0 auto auto 0;
+    inline-size: 100%;
+    block-size: 100%;
+    opacity: 0;
+}
+
+.image-picker__placeholder {
+    block-size: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.image-picker__gallery {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+}
+
+.image-picker__item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid #fafafa;
+    padding: 0.5rem;
+}
+
+.image-picker__image {
+    inline-size: 128px;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    transition: all 250ms;
+    background: #fff;
+    cursor: pointer;
+}
+
+.image-picker__btn {
+    visibility: hidden;
+    position: absolute;
+    inset: 50% 0 auto 0;
+    block-size: 100%;
+    transform: translateY(-50%);
+    transition: all 350ms;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.image-picker__item:hover > .image-picker__btn {
+    visibility: visible;
+    background: rgba(0, 0, 0, 0.5);
+}

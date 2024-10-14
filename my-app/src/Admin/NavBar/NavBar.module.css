@@ -1,0 +1,45 @@
+.navbar{
+    display: inline-block;
+    min-width: 277px;
+    background-color: #fefefe;
+    padding: 12px 31px 433px 31px;
+    border-radius: 0 0 10px 0;
+    max-height: 685px;
+}
+
+.navbar_list{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.navbar_item{
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    border-radius: 18px;
+    gap: 16px;
+    height: 56px;
+    cursor: pointer;
+}
+
+.navbar_item:hover{
+    border: 1px solid #6566AC;
+    box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
+}
+
+.active{
+   background-color: #6566AC;
+    gap: 32px;
+}
+
+.active p{
+    color: #FFF;
+}
+
+.navbar_itemTitle{
+    color: #6566AC;
+    font-family: "Noto Sans";
+    font-size: 16px;
+    font-weight: 500;
+}
