@@ -14,7 +14,7 @@ import {
 import { setFilters } from '@/redux/productsCatalogSlice.js';
 import handleLinkClick from '@/utils/ScrollToTop.js';
 
-export const CatalogFilters = ({ openFiltersFunc }) => {
+export const CatalogFilters = ({ openFiltersFunc, setGlobalReset }) => {
     const age = ['3 - 6', '6 - 9', '9 - 12', '12 - 18', '18+'];
     const players = ['1 - 3', '4 - 6', 'більше 6'];
     const timeGame = ['15 - 30', '40 - 60', '70 - 90', '115 - 180', '240'];
@@ -56,6 +56,8 @@ export const CatalogFilters = ({ openFiltersFunc }) => {
         if (openFiltersFunc) {
             openFiltersFunc(false);
         }
+        console.log('VV')
+        setGlobalReset(true);
     };
 
     const handleResetFilters = () => {

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { CatalogFilters } from '@/pages/Catalog/CatalogFilters/CatalogFilters.jsx';
 import useNoScroll from '@/hooks/useNoScroll.js';
 
-export const CatalogMobileTabs = ({ setChosenDisplaying }) => {
+export const CatalogMobileTabs = ({ setChosenDisplaying, setGlobalReset }) => {
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     useNoScroll(isFiltersVisible);
 
@@ -20,7 +20,9 @@ export const CatalogMobileTabs = ({ setChosenDisplaying }) => {
 
     return (
         <div className={styles.tabs}>
-            <CatalogSorting setChosenDisplaying={setChosenDisplaying} />
+            <CatalogSorting setChosenDisplaying={setChosenDisplaying}
+                            setGlobalReset={setGlobalReset}
+            />
             <div
                 className={styles.tabs_filters}
                 onClick={() => handleOpenFilters(true)}
@@ -40,6 +42,7 @@ export const CatalogMobileTabs = ({ setChosenDisplaying }) => {
                             ></div>
                             <CatalogFilters
                                 openFiltersFunc={handleOpenFilters}
+                                setGlobalReset={setGlobalReset}
                             />
                         </div>
                     </div>

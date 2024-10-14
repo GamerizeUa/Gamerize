@@ -37,6 +37,7 @@ const Footer = () => {
                             <Link
                                 to="/catalog"
                                 className={styles.footerListLink}
+                                state={{categories: [21, 22, 27, 28, 29, 30, 31]}}
                             >
                                 Настільні ігри
                             </Link>
@@ -45,6 +46,7 @@ const Footer = () => {
                             <Link
                                 to="/catalog"
                                 className={styles.footerListLink}
+                                state={{genres: [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]}}
                             >
                                 Жанри
                             </Link>
@@ -53,6 +55,7 @@ const Footer = () => {
                             <Link
                                 to="/catalog"
                                 className={styles.footerListLink}
+                                state={{themes: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]}}
                             >
                                 Тематика
                             </Link>
@@ -61,6 +64,7 @@ const Footer = () => {
                             <Link
                                 to="/catalog"
                                 className={styles.footerListLink}
+                                state={{puzzles: [4, 5, 6, 7, 8, 9]}}
                             >
                                 Пазли
                             </Link>
@@ -69,6 +73,7 @@ const Footer = () => {
                             <Link
                                 to="/catalog"
                                 className={styles.footerListLink}
+                                state={{mindGames: [4, 5, 6, 7, 8, 9, 10]}}
                             >
                                 Головоломки
                             </Link>

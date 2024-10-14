@@ -20,6 +20,13 @@
     width: 100%;
 }
 
+.catalog_searchTerm{
+    font-size: 12px;
+    margin: 10px 0 -5px 0;
+    color: #8e8e8e;
+    font-family: Noto Sans;
+}
+
 .catalog_empty{
     color: #000;
     font-family: "Noto Sans";
@@ -52,6 +59,11 @@
         align-items: center;
         padding-left: 108px;
         margin-top: -56px;
+    }
+
+    .catalog_searchTerm{
+        font-size: 18px;
+        margin: 15px 0 -10px 0;
     }
 
     .catalog_pageTitle{

@@ -7,7 +7,7 @@ import { DisplayFourIcon } from '@/assets/icons/DisplayFourIcon.jsx';
 import useWindowWidth from '@/hooks/useWindowWidth.js';
 import {setPageSize, setSortOrder} from '@/redux/productsCatalogSlice.js';
 
-export const CatalogSorting = ({ setChosenDisplaying }) => {
+export const CatalogSorting = ({ setChosenDisplaying , setGlobalReset}) => {
     const [isSortingVisible, setIsSortingVisible] = useState(false);
     const [chosenOption, setChosenOption] = useState('За ціною');
     const [isActive, setIsActive] = useState({
@@ -31,6 +31,7 @@ export const CatalogSorting = ({ setChosenDisplaying }) => {
             setChosenDisplaying(true)
             dispatch(setPageSize(20))
         }
+        setGlobalReset(true);
     }, [isActive]);
 
     const handleClickSorting = () => {
@@ -41,6 +42,7 @@ export const CatalogSorting = ({ setChosenDisplaying }) => {
         setChosenOption(optionText);
         dispatch(setSortOrder(sorting[optionText]));
         setIsSortingVisible(false);
+        setGlobalReset(true);
     };
 
     return (

@@ -32,9 +32,9 @@ const Catalog = () => {
     useEffect(() => {
         const setLocalStates = async () => {
             await dispatch(resetFilters());
-            if (location.state.searchTerm) {
+            if (location.state && location.state.searchTerm) {
                 await dispatch(setSearchTerm(location.state.searchTerm));
-            } else {
+            } else if (location.state){
                 for (const key of Object.keys(location.state)) {
                     if (location.state[key]) {
                         await dispatch(setFilters({ [key]: location.state[key] }));
@@ -47,6 +47,7 @@ const Catalog = () => {
         if (location.state) {
             setLocalStates();
         }else{
+            dispatch(resetFilters());
             setIsReadyForResetting(true);
         }
     }, [location.state]);
@@ -54,6 +55,7 @@ const Catalog = () => {
     useEffect(() => {
         if (isReadyForResetting) {
             dispatch(fetchProducts({ page, pageSize, filters }));
+            setIsReadyForResetting(false)
         }
     }, [dispatch, page, pageSize, filters, isReadyForResetting]);
 
@@ -83,20 +85,27 @@ const Catalog = () => {
                     <div className={styles.catalog_header}>
                         <p className={styles.catalog_pageTitle}>Каталог</p>
                     </div>
+                    {location.state?.searchTerm &&
+                        <p className={styles.catalog_searchTerm}>
+                            Пошук за запитом: <b>{location.state?.searchTerm}</b>
+                        </p>
+                    }
                     <div className={styles.catalog_mainContainer}>
                         {windowWidth >= 1280 && (
                             <div className={styles.catalog_filters}>
-                                <CatalogFilters />
+                                <CatalogFilters setGlobalReset={setIsReadyForResetting}/>
                             </div>
                         )}
                         <div className={styles.catalog_displaying}>
                             {windowWidth >= 1280 ? (
                                 <CatalogSorting
                                     setChosenDisplaying={setIsDefaultChosenDisplaying}
+                                    setGlobalReset={setIsReadyForResetting}
                                 />
                             ) : (
                                 <CatalogMobileTabs
                                     setChosenDisplaying={setIsDefaultChosenDisplaying}
+                                    setGlobalReset={setIsReadyForResetting}
                                 />
                             )}
                             {loading && products.length === 0 ? (
