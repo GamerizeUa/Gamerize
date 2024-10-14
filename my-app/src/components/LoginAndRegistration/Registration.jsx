@@ -27,7 +27,6 @@ export const Registration = () => {
         formState: { errors },
     } = useForm({
         resolver: yupResolver(registerSchema),
-        mode: 'onChange',
     });
 
     const closePopupByClicking = (event) => {

@@ -30,7 +30,6 @@ export const NewPasswordForm = () => {
         formState: { errors },
     } = useForm({
         resolver: yupResolver(newPasswordSchema(emailParam)),
-        mode: 'onChange',
     });
 
     const closePopupByClicking = (event) => {

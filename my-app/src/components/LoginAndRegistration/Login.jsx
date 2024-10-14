@@ -27,7 +27,6 @@ export const Login = () => {
         formState: { errors },
     } = useForm({
         resolver: yupResolver(loginSchema),
-        mode: 'onChange',
     });
 
     const onSubmit = (data) => {
