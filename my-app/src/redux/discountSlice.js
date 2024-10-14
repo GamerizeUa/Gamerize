@@ -47,6 +47,10 @@ const discountSlice = createSlice({
           state.discountValue = action.payload.discount;
           state.discountId = action.payload.id;
         })
+        .addCase(sendPromoCode.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        })
         .addMatcher(
             (action) => action.type.endsWith('/pending'),
             (state) => {
@@ -54,13 +58,6 @@ const discountSlice = createSlice({
               state.error = null;
             }
         )
-        .addMatcher(
-            (action) => action.type.endsWith('/rejected'),
-            (state, action) => {
-              state.loading = false;
-              state.error = action.payload;
-            }
-        );
 }});
 
 export const { setPromoCode, clearDiscounts } =

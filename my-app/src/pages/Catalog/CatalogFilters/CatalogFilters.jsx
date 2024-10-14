@@ -56,7 +56,6 @@ export const CatalogFilters = ({ openFiltersFunc, setGlobalReset }) => {
         if (openFiltersFunc) {
             openFiltersFunc(false);
         }
-        console.log('VV')
         setGlobalReset(true);
     };
 
@@ -122,7 +121,7 @@ export const CatalogFilters = ({ openFiltersFunc, setGlobalReset }) => {
                 updateSelectedCategories={(newMindGames) => updateFilter('mindGames', newMindGames)}
             ></DropdownFilters>
             <PriceFilter
-                setPriceRange={(newPriceRange) => updateFilter('price', newPriceRange)}
+                setPriceRange={setChosenFilters}
             />
             <DropdownFilters
                 title={'Вік'}

@@ -4,12 +4,15 @@ export const PriceFilter = ({setPriceRange}) => {
 
     const handlePriceInputChange = (event, type) => {
         const value = event.target.value.replace(/[^0-9]/g, '');
-        setPriceRange((prevRange) => [
-            {
-                ...prevRange[0],
-                [type]: value ? parseInt(value, 10) : 0,
-            },
-        ]);
+        const numericValue = parseInt(value, 10);
+
+        setPriceRange(prev => ({
+            ...prev,
+            price: [{
+                ...prev.price[0],
+                [type]: numericValue || 0
+            }]
+        }));
     };
 
     return (

@@ -71,6 +71,7 @@ const Catalog = () => {
             behavior: 'smooth',
         });
         dispatch(setPage(newPage));
+        setIsReadyForResetting(true);
     };
 
     return (
