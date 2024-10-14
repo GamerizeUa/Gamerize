@@ -16,7 +16,7 @@ export const registerSchema = yup.object().shape({
         .string()
         .required("Введіть ім'я та прізвище")
         .matches(
-            /^[a-zA-Zа-яіА-ЯІ'\-]+\s[a-zA-Zа-яіА-ЯІ'\-]+$/i,
+            /^[a-zA-Zа-яіА-ЯІїЇ'\-]+\s[a-zA-Zа-яіА-ЯІїЇ'\-]+$/i,
             "Введіть ім'я та прізвище"
         ),
     email: yup

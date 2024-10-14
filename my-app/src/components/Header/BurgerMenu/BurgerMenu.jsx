@@ -145,7 +145,6 @@ const BurgerMenu = () => {
                         >
                             Умови повернення
                         </Link>
-                        я
                     </li>
                 </ul>
                 <div className={styles.logOutBloc}>
