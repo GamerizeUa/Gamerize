@@ -126,7 +126,11 @@ export default function ProductCard({
                 <div className={styles.features_bar}>
                     <p
                         className={styles.features_bar_element}
-                    >{`${minGameTimeMinutes}-${maxGameTimeMinutes} хв`}</p>
+                    >
+                        {minGameTimeMinutes === maxGameTimeMinutes
+                            ? `${minGameTimeMinutes} хв`
+                            : `${minGameTimeMinutes}-${maxGameTimeMinutes} хв`}
+                    </p>
                     <p className={styles.features_bar_element}>
                         {maxPlayers
                             ? `${minPlayers}-${maxPlayers} гравців`

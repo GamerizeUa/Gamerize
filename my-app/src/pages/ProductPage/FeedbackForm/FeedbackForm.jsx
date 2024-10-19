@@ -46,7 +46,11 @@ const FeedbackForm = () => {
 
         dispatch(addFeedback(feedback))
             .then(unwrapResult)
-            .then(() => reset({ text: '', rate: 0 }));
+            .then(() => {
+                reset({ text: '', rate: 0 })
+                setRate(null);
+                setHover(null);
+            });
     };
 
     if (!isAuthenticated) return null;

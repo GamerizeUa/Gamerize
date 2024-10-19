@@ -1,145 +1,140 @@
 .about {
-    padding: 1.714rem;
-
-    @media screen and (width >= 1280px) {
-        padding: 4.428rem 5.714rem 8.571rem 7.714rem;
-    }
+    padding: 24px 0 50px 0;
 }
 
-.about__container {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.142rem;
-
-    @media screen and (width >= 1280px) {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 9.142rem;
-    }
-}
-
-h1.about__title {
-    padding: 2.285rem 1.142rem;
-    font-family: 'Oswald';
-    font-size: 2rem;
-    font-weight: 400;
-    background-color: var(--light-blue-gray);
-    margin-block-end: 1.142rem;
-
-    @media screen and (width >=1280px) {
-        padding: 3.785rem 7.714rem;
-        font-size: 3.142rem;
-        margin-block-end: 4.428rem;
-    }
-}
-
-h2.about__title {
-    margin-block-start: 54px;
-    font-family: 'Oswald';
+.about__title{
+    background-color: #EEF1FF;
+    color: #2B2B2B;
+    font-family: Oswald;
     font-size: 28px;
-    font-weight: 500;
-    margin-block-start: 1.5rem;
-}
-
-h3.about__title {
-    font-family: 'Oswald';
-    font-size: 24px;
-    margin-block-end: 1.5rem;
-}
-
-.about__text {
-    font-family: 'Noto Sans';
     font-weight: 400;
-    font-size: 16px;
-    line-height: 150%;
-    margin-block-end: 1.5rem;
+    line-height: 28%;
+    padding: 33px 0 33px 16px;
+    margin-bottom: 24px;
 }
 
-.row {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-auto-rows: 1fr;
-    gap: 1.5rem;
-    margin-block-start: 1.5rem;
-
-    @media screen and (width >=1280px) {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0;
-    }
-}
-
-.column {
+.about__content{
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    margin-block-start: 1.5rem;
+    gap: 33px;
 }
 
-.card {
-    block-size: 100%;
-    padding: 2.142rem;
+.about__text{
+    color: #000;
+    font-family: Oswald;
+    font-size: 20px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.about__cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
+    gap: 6vw;
+}
+
+.about__card{
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 8px;
+}
+
+.about__image__container{
+    width: 100%;
+    max-width: 155px;
+    height: 180px;
+}
+
+.about__image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.about__name{
+    color: #000;
     text-align: center;
-    gap: 16px;
-}
-
-.card__icon {
-    inline-size: 3.642rem;
-    aspect-ratio: 1 / 1;
-    margin-inline: auto;
-}
-
-.card__title {
-    font-size: 36px;
-    font-weight: 600;
-    color: var(--dark-purple);
-}
-
-.card__text {
-    font-family: 'Noto Sans';
-    font-weight: 500;
-    font-size: 16px;
-}
-
-.item__title {
-    margin-bottom: 12px;
-    font-weight: 500;
     font-size: 14px;
-    color: #161616;
+    font-weight: 400;
 }
 
-.item__link {
-    font-weight: 700;
+.about__position{
+    color: #707070;
+    text-align: center;
     font-size: 14px;
-    color: var(--dark-purple);
+    font-weight: 400;
 }
 
-.about__advantages {
-    padding-block: 1.642rem 2.714rem;
+a.about__position:hover{
+    color: #6566AC;
+}
 
-    > * {
-        background-color: var(--light-blue-gray);
+.about__info{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 8px;
+    align-items: center;
+}
+
+.about__info div{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+}
+
+@media screen and (min-width: 744px) {
+    .about {
+        padding: 32px 0 80px 0;
+    }
+
+    .about__title {
+        font-size: 36px;
+        padding: 45px 0 45px 45px;
+        margin-bottom: 40px;
+    }
+
+    .about__text {
+        font-size: 24px;
+        text-align: start;
+    }
+
+    .about__cards {
+        grid-template-columns: repeat(auto-fit, minmax(158px, 1fr));
+        gap: 2.15vw;
+    }
+
+    .about__image__container {
+        max-width: none;
+        height: 240px;
+    }
+
+    .about__info{
+        gap: 10px;
+    }
+
+    .about__name, .about__position {
+        font-size: 16px;
     }
 }
 
-.about__features {
-    margin-block-start: 54px;
-}
+@media screen and (min-width: 1280px){
+    .about {
+        padding: 62px 0 92px 0;
+    }
 
-.about__location,
-.about__contacts {
-    margin-top: 54px;
-}
+    .about__title {
+        font-size: 44px;
+        padding: 53px 0 53px 95px;
+    }
 
-.about__img {
-    order: -1;
-    inline-size: 100%;
+    .about__info{
+        gap: 12px;
+    }
 
-    object-fit: cover;
-
-    @media screen and (width >= 1280px) {
-        order: initial;
-        aspect-ratio: 2/3;
+    .about__name, .about__position {
+        font-size: 18px;
     }
 }

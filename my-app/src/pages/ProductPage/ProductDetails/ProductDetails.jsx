@@ -1,37 +1,31 @@
 import styles from './ProductDetails.module.css';
 import Dropdown from './Dropdown.jsx';
-import { useContext } from 'react';
-import { ProductContext } from '../Product.jsx';
-import { Entry } from './Entry.jsx';
+import {useContext} from 'react';
+import {ProductContext} from '../Product.jsx';
+import {Entry} from './Entry.jsx';
 
 const getProductCharacteristics = ({
-    minPlayers,
-    maxPlayers,
-    minAge,
-    minGameTimeMinutes,
-    maxGameTimeMinutes,
-    description,
-    category,
-    language: { name: languageName },
-}) => {
-    const categoryName = category? category.name: "Немає";
+                                       minPlayers,
+                                       maxPlayers,
+                                       minAge,
+                                       minGameTimeMinutes,
+                                       maxGameTimeMinutes,
+                                       description,
+                                       category,
+                                       language: {name: languageName},
+                                   }) => {
+    const categoryName = category ? category.name : "Немає";
     const details = {
         characteristics: {
-            playersQuantity: `${minPlayers}-${maxPlayers}`,
+            playersQuantity: maxPlayers
+                ? `${minPlayers}-${maxPlayers} гравців`
+                : `від ${minPlayers} гравців`,
             age: `${minAge}+`,
-            gameTime: `${minGameTimeMinutes}-${maxGameTimeMinutes} хв`,
+            gameTime: minGameTimeMinutes === maxGameTimeMinutes
+                ? `${minGameTimeMinutes} хв`
+                : `${minGameTimeMinutes}-${maxGameTimeMinutes} хв`,
             language: languageName,
             category: categoryName,
-            // equipment: [
-            //     'Ігрове поле',
-            //     '240 жетонів',
-            //     '108 жетонів валют',
-            //     '72 видових карти',
-            //     '50 карт джерел',
-            //     '50 карт бункерів',
-            //     '50 карт променевих веж',
-            //     'Правила гри',
-            // ],
         },
         description,
         returnPolicy:
@@ -50,7 +44,7 @@ const ProductDetails = () => {
         <section className={styles.details + ' container'}>
             <Dropdown title="Xарактеристики">
                 {characteristics.map(([key, value]) => (
-                    <Entry title={key} body={value} key={key} />
+                    <Entry title={key} body={value} key={key}/>
                 ))}
             </Dropdown>
             <Dropdown title="Опис">
