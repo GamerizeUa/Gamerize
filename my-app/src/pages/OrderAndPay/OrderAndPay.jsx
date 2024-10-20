@@ -1,6 +1,9 @@
 import styles from "./OrderAndPay.module.css";
+import useScrollToTop from "@/hooks/useScrollToTop.js";
 
 export default function OrderAndPay() {
+  useScrollToTop();
+
   return (
     <div className={styles.pageWrapper + " container"}>
       <h1 className={styles.mainTitle}>Оплата і доставка</h1>

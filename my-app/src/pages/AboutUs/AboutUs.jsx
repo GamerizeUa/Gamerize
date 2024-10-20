@@ -11,6 +11,7 @@ import NastiaQA from '@/assets/images/team/nastiaQA.jpg';
 import Julia from '@/assets/images/team/julia.jpg';
 import Grygorii from '@/assets/images/team/grygorii.jpg';
 import Natalia from '@/assets/images/team/natalia.jpg';
+import useScrollToTop from "@/hooks/useScrollToTop.js";
 
 
 export default function AboutUs() {
@@ -88,6 +89,7 @@ export default function AboutUs() {
             image: Grygorii
         },
     ]
+    useScrollToTop();
 
     return (
         <div className={styles['about']}>
@@ -98,7 +100,7 @@ export default function AboutUs() {
                         <p className={styles['about__text']}>Команда, яка створила сайт</p>
                         <div className={styles['about__cards']}>
                             {teamMembers.map((member, index) => (
-                                <div>
+                                <div key={index}>
                                     <div key={index} className={styles['about__card']}>
                                         <div className={styles['about__image__container']}>
                                             <img src={member.image} alt={member.name}

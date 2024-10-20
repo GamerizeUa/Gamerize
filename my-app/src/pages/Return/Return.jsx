@@ -1,8 +1,11 @@
 import { cn } from '@/utils/classnames';
 import styles from './Return.module.css';
 import returnPolicy from '@/assets/images/return-policy.png';
+import useScrollToTop from "@/hooks/useScrollToTop.js";
 
 export default function Return() {
+    useScrollToTop();
+
     return (
         <div className={styles['return-policy']}>
             <h2 className={styles['return-policy__title']}>Умови повернення</h2>

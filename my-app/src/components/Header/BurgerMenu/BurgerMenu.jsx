@@ -107,12 +107,17 @@ const BurgerMenu = () => {
                             className={styles.burgerMenuLink}
                             onClick={() => handleCloseBurgerMenu()}
                         >
-                            <HeartIcon strokeColor="#AAC4FF" />
+                            <svg width="24" height="24">
+                                <use
+                                    href={sprite + '#icon-heart'}
+                                    fill="none"
+                                ></use>
+                            </svg>
                         </Link>
                     </li>
                 </ul>
                 <ul className={styles.burgerMenuList}>
-                    <CategoriesItem categories={categories} title={'Настільні ігри'} stateName={'categories'} />
+                    <CategoriesItem categories={categories} title={'Настільні ігри'} stateName={'categories'}/>
                     <CategoriesItem categories={genres} title={'Жанри'} stateName={'genres'}/>
                     <CategoriesItem categories={themes} title={'Тематика'} stateName={'themes'} />
                     <CategoriesItem categories={puzzles} title={'Пазли'} stateName={'puzzles'}/>
