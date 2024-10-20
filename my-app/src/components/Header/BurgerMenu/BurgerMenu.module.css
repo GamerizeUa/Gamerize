@@ -62,11 +62,9 @@
   font-weight: 500;
 }
 
-.menuInfoListItem {
-  padding: 22px 12px;
-}
-
 .menuInfoListLink {
+  display: block;
+  padding: 22px 12px;
   width: 100%;
   color: #000;
 }

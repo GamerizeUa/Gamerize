@@ -1,6 +1,4 @@
 import styles from './AboutUs.module.css';
-import imageAboutUs from '@/assets/images/about_us_photo.png';
-import {cn} from '../../utils/classnames';
 import Anton from '@/assets/images/team/anton.jpg';
 import Oleksandr from '@/assets/images/team/oleksandr.jpg';
 import NastiaDev from '@/assets/images/team/nastiaDev.jpg';
